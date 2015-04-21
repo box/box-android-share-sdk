@@ -18,15 +18,19 @@ You will need a BoxSession and the BoxItem from the [box-content-sdk](https://gi
     BoxFolder folder = new BoxApiFolder(session).getInfo("<FOLDER_ID>").send();
 ```
 
-To launch the activity to manage an item Shared Link (in this case a Folder but it works also for Files):
+####File or Folder Shared Link
+To manage an item Shared Link, launch the following activity:
 ```java
     startActivity(BoxSharedLinkActivity.getLaunchIntent((MainActivity.this, folder, session));
 ```
+This activity allows you to manage all the settings of a Shared Link (for a specific File or Folder): password restriction, permissions, expiration date, access level, etc.
 
-To launch the activity to manage Folder Collaborators:
+####Folder Collaborators
+To manage Folder collaborators, launch the following activity:
 ```java
     startActivity(BoxCollaborationsActivity.getLaunchIntent(MainActivity.this, folder, session));
 ```
+This activity allows you to manage user access and permissions to a specific Folder. 
 
 Sample App
 --------------
