@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="box_primary_text">@color/primary_text_default_material_light</color>
+    <color name="box_hint_foreground">@color/hint_foreground_material_light</color>
+    <color name="box_accent">@color/link_text_material_light</color>
+    <color name="box_link_text">@color/box_accent</color>
+    <color name="box_background">@color/background_material_light</color>
+
+    <!-- Custom colors -->
+    <color name="box_primary">#ffe0e0e0</color>
+    <color name="box_primary_dark">#ff9e9e9e</color>
+    <color name="box_togglebar_background">#ffe6e6e6</color>
+    <color name="box_blue_text">#1a74ba</color>
+    <color name="box_button_back">#ffd5d5d5</color>
+    <color name="box_divider">#ffd6d6d6</color>
+    <color name="box_warning_color">#ffb71c1c</color>
+</resources>

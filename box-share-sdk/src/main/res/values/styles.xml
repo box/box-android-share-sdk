@@ -1,0 +1,102 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="ShareTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/box_background</item>
+        <item name="colorPrimaryDark">@color/box_primary_dark</item>
+        <item name="colorAccent">@color/box_accent</item>
+        <item name="android:buttonStyle">@style/ButtonAppTheme</item>
+    </style>
+
+    <style name="ButtonAppTheme" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/box_ripple_btn</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textColor">#ff7c7c7c</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_gravity">left|start|center_vertical</item>
+        <item name="android:gravity">left|start|center_vertical</item>
+        <item name="android:scrollHorizontally">false</item>
+    </style>
+    <style name="RaisedButton"  parent="@android:style/Widget.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/box_button_height</item>
+        <item name="android:background">@drawable/box_ripple_raised_btn</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:scrollHorizontally">false</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:textColor">@color/box_background</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
+    </style>
+    <style name="RaisedGrayButton"  parent="@style/RaisedButton">
+        <item name="android:background">@drawable/box_ripple_raised_gray_btn</item>
+        <item name="android:textColor">@color/box_primary_text</item>
+    </style>
+
+    <style name="BoxHeaderText"  parent="@android:style/Widget.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body2</item>
+        <item name="android:textColor">@color/box_accent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/header_cell_height</item>
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+    </style>
+
+    <style name="BoxLabelIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+    </style>
+
+    <style name="BoxBodyText"  parent="@android:style/Widget.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="android:textColor">@color/box_primary_text</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/activity_vertical_margin</item>
+    </style>
+
+    <style name="BoxLabelText" parent="@android:style/Widget.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+        <item name="android:textColor">@color/box_primary_text</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/activity_vertical_margin</item>
+    </style>
+
+    <style name="BoxHintText"  parent="@android:style/Widget.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="android:textColor">@color/box_hint_foreground</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BoxOptionsLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_margin">@dimen/keyline_margin</item>
+    </style>
+
+    <style name="BoxSwitch"  parent="@android:style/Widget.CompoundButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/header_cell_height</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:gravity">left|start|center_vertical</item>
+        <item name="android:layout_gravity">left|start|center_vertical</item>
+    </style>
+
+    <style name="BoxDivider">
+        <item name="android:layout_height">@dimen/box_horizontal_rule_height</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:background">@color/box_divider</item>
+    </style>
+
+</resources>

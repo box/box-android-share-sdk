@@ -1,0 +1,36 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    android:paddingBottom="@dimen/activity_horizontal_margin" tools:context=".MainActivity">
+
+    <Button
+        style="@style/ButtonAppTheme"
+        android:visibility="gone"
+        android:text="@string/box_sharesdk_title_share_link"
+        android:onClick="onShareLinkButtonClick"
+        android:id="@+id/launchShare" />
+    <Button
+        android:text="@string/box_sharesdk_invite_collaborators"
+        android:visibility="gone"
+        android:onClick="onInvitePeopleButtonClick"
+        style="@style/ButtonAppTheme"
+        android:id="@+id/launchCollabs" />
+    <Button
+        android:text="@string/create_sample_folder"
+        android:visibility="gone"
+        android:onClick="onCreateSampleClick"
+        style="@style/ButtonAppTheme"
+        android:id="@+id/createSampleFolder" />
+
+    <Button
+        android:text="@string/remove_sample_folder"
+        android:visibility="gone"
+        android:onClick="onRemoveSampleClick"
+        style="@style/ButtonAppTheme"
+        android:id="@+id/removeSampleFolder" />
+
+</LinearLayout>

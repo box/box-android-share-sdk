@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity">
+    <item android:id="@+id/box_sharesdk_action_send"
+        android:title="@string/box_sharesdk_action_send"
+        android:icon="@drawable/ic_box_sharesdk_send_grey_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
+</menu>

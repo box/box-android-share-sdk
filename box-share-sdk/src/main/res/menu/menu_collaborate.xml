@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.box.androidsdk.share.activities.BoxCollaborationsActivity">
+    <item android:id="@+id/box_sharesdk_action_add" android:title="@string/box_sharesdk_action_add" android:icon="@drawable/ic_box_sharesdk_add_grey_24dp" app:showAsAction="always"/>
+</menu>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+ <RadioGroup
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+    >
+     
+     <RadioButton
+         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+         android:id="@+id/public_access_radio"
+         android:text="@string/box_sharesdk_access_public"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/collaboration_cell_height" />
+     <RadioButton
+         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+         android:id="@+id/company_access_radio"
+         android:text="@string/box_sharesdk_access_company"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/collaboration_cell_height" />
+     <RadioButton
+         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+         android:id="@+id/collaborator_access_radio"
+         android:text="@string/box_sharesdk_access_collaborator"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/collaboration_cell_height" />
+
+
+ </RadioGroup>
