@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -45,10 +46,12 @@ public abstract class BoxThreadPoolExecutorActivity extends ActionBarActivity {
     protected BoxItem mShareItem;
 
     protected static final int DEFAULT_TIMEOUT = 30 * 1000;
+    private static final int  DEFAULT_SPINNER_DELAY = 500;
     protected static final String ACTION_STARTING_TASK  = "com.box.androidsdk.share.starting_task";
     protected static final String ACTION_ENDING_TASK  = "com.box.androidsdk.share.ending_task";
 
     private ProgressDialog mDialog;
+    private LastRunnableHandler mDialogHandler;
 
     /**
      * Broadcast receiver for handilng when the spinner should be shown or hidden
@@ -68,6 +71,7 @@ public abstract class BoxThreadPoolExecutorActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDialogHandler = new LastRunnableHandler();
         String userId = null;
         if (savedInstanceState != null && savedInstanceState.getSerializable(EXTRA_ITEM) != null){
             userId = savedInstanceState.getString(EXTRA_USER_ID);
@@ -221,6 +225,7 @@ public abstract class BoxThreadPoolExecutorActivity extends ActionBarActivity {
         if (mDialog != null && mDialog.isShowing()){
             mDialog.dismiss();
         }
+        mDialogHandler.cancelLastRunnable();
     }
 
     /**
@@ -237,7 +242,7 @@ public abstract class BoxThreadPoolExecutorActivity extends ActionBarActivity {
      * @param stringRes string resource for the spinner description
      */
     protected void showSpinner(final int stringTitleRes, final int stringRes) {
-        runOnUiThread(new Runnable() {
+        mDialogHandler.queue(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -253,7 +258,7 @@ public abstract class BoxThreadPoolExecutorActivity extends ActionBarActivity {
                     return;
                 }
             }
-        });
+        },DEFAULT_SPINNER_DELAY);
 
     }
 
@@ -342,6 +347,26 @@ public abstract class BoxThreadPoolExecutorActivity extends ActionBarActivity {
         accessSpannable.setSpan(new TextAppearanceSpan(this, R.style.Base_TextAppearance_AppCompat_Body1), title.length(),combined.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         accessSpannable.setSpan(new ForegroundColorSpan(R.color.box_hint_foreground), title.length(),combined.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return accessSpannable;
+    }
+
+    /**
+     * Helper class used to keep track of last runnable queued.
+     */
+    private class LastRunnableHandler extends Handler {
+        private Runnable mLastRunable;
+
+        public void queue(final Runnable runnable, final int delay){
+            cancelLastRunnable();
+            postDelayed(runnable, delay);
+            mLastRunable = runnable;
+        }
+
+        public void cancelLastRunnable(){
+            if (mLastRunable != null){
+                removeCallbacks(mLastRunable);
+            }
+        }
+
     }
 
 }
