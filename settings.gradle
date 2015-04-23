@@ -1,1 +1,1 @@
-include ':box-share-sample', 'box-share-sdk'
+include ':box-share-sdk', ':box-share-sample'
