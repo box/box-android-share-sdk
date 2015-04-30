@@ -51,14 +51,16 @@ public class CollaboratorsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = LayoutInflater.from(mContext).inflate(R.layout.list_item_collaboration, parent, false);
-        ViewHolder holder = (ViewHolder) rowView.getTag();
-        if (holder == null) {
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_collaboration, parent, false);
             holder = new ViewHolder();
-            holder.nameView = (TextView) rowView.findViewById(R.id.collaborator_role_title);
-            holder.roleView = (TextView) rowView.findViewById(R.id.collaborator_role);
-            holder.initialsView = (TextView) rowView.findViewById(R.id.collaborator_initials);
-            rowView.setTag(holder);
+            holder.nameView = (TextView) convertView.findViewById(R.id.collaborator_role_title);
+            holder.roleView = (TextView) convertView.findViewById(R.id.collaborator_role);
+            holder.initialsView = (TextView) convertView.findViewById(R.id.collaborator_initials);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
         BoxCollaboration collaboration = mItems.get(position);
         if (collaboration != null) {
@@ -79,7 +81,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
             holder.roleView.setText(description);
         }
 
-        return rowView;
+        return convertView;
     }
 
     public synchronized void setItems(Collection<BoxCollaboration> items) {
