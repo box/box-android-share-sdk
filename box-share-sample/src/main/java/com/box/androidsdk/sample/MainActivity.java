@@ -45,8 +45,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BoxConfig.IS_LOG_ENABLED = true;
-        BoxConfig.CLIENT_ID = "<YOUR_CLIENT_ID";
-        BoxConfig.CLIENT_SECRET = "<YOUR_CLIENT_SECRET>";
+        BoxConfig.CLIENT_ID = "your_client_id";
+        BoxConfig.CLIENT_SECRET = "your_client_secret";
 
         if (savedInstanceState != null) {
             mSampleFolder = (BoxFolder) savedInstanceState.getSerializable(EXTRA_SAMPLE_FOLDER);
