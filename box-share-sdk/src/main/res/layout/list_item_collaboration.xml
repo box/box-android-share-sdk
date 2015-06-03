@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="@dimen/collaboration_cell_height">
+    android:layout_height="@dimen/box_sharesdk_collaboration_cell_height">
     <TextView
         android:id="@+id/collaborator_initials"
-        android:layout_width="@dimen/collaboration_thumb_size"
-        android:layout_height="@dimen/collaboration_thumb_size"
+        android:layout_width="@dimen/box_sharesdk_collaboration_thumb_size"
+        android:layout_height="@dimen/box_sharesdk_collaboration_thumb_size"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:layout_marginLeft="@dimen/keyline_margin"
-        android:layout_marginRight="@dimen/keyline_margin"
+        android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin"
+        android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin"
         android:textAlignment="center"
         android:gravity="center"
         android:layout_gravity="center"
@@ -22,14 +22,14 @@
         <TextView
             android:id="@+id/collaborator_role_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@color/box_primary_text"
+            android:textColor="@color/box_sharesdk_primary_text"
             android:singleLine="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/collaborator_role"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/box_hint_foreground"
+            android:textColor="@color/box_sharesdk_hint"
             android:singleLine="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

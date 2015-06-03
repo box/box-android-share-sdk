@@ -345,7 +345,7 @@ public abstract class BoxThreadPoolExecutorActivity extends ActionBarActivity {
         Spannable accessSpannable = new SpannableString(combined);
 
         accessSpannable.setSpan(new TextAppearanceSpan(this, R.style.Base_TextAppearance_AppCompat_Body1), title.length(),combined.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        accessSpannable.setSpan(new ForegroundColorSpan(R.color.box_hint_foreground), title.length(),combined.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        accessSpannable.setSpan(new ForegroundColorSpan(R.color.box_sharesdk_hint), title.length(),combined.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return accessSpannable;
     }
 

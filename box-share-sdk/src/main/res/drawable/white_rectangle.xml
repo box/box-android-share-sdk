@@ -3,7 +3,7 @@
 
 
         <solid
-            android:color="@color/box_background"
+            android:color="@color/box_sharesdk_background"
             />
         <corners android:radius="3dp"/>
 

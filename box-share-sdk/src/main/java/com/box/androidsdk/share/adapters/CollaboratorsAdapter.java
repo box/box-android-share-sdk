@@ -139,6 +139,6 @@ public class CollaboratorsAdapter extends BaseAdapter {
         }
         initialsView.setText(initial1 + "" + initial2);
         initialsView.setTextAppearance(mContext, R.style.TextAppearance_AppCompat_Subhead);
-        initialsView.setTextColor(mContext.getResources().getColor(R.color.box_background));
+        initialsView.setTextColor(mContext.getResources().getColor(R.color.box_sharesdk_background));
     }
 }

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     tools:context="com.box.androidsdk.share.activities.BoxCollaborationsActivity"
     android:layout_height="match_parent"
-    android:background="@color/box_background"
+    android:background="@color/box_sharesdk_background"
     android:orientation="vertical"
     android:filterTouchesWhenObscured="true">
     <include layout="@layout/view_action_bar" />
@@ -22,7 +22,7 @@
                     android:id="@+id/shared_link_access_btn"
                     style="@style/BoxLabelText"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/collaboration_cell_height"
+                    android:layout_height="@dimen/box_sharesdk_collaboration_cell_height"
                      />
                 <Switch
                     style="@style/BoxSwitch"
@@ -30,8 +30,8 @@
                     android:id="@+id/shared_link_allow_download_btn"
                     />
                 <View style="@style/BoxDivider"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin"
+                    android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin"/>
 
                 <!-- Password -->
                 <TextView
@@ -49,11 +49,11 @@
                     android:id="@+id/shared_link_password_btn"
                     style="@style/BoxLabelText"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/collaboration_cell_height"
+                    android:layout_height="@dimen/box_sharesdk_collaboration_cell_height"
                     />
                 <View style="@style/BoxDivider"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin"
+                    android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin"/>
 
                 <!-- Link Expiration -->
                 <TextView
@@ -70,7 +70,7 @@
                     android:id="@+id/shared_link_expires_on_btn"
                     style="@style/BoxLabelText"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/collaboration_cell_height"
+                    android:layout_height="@dimen/box_sharesdk_collaboration_cell_height"
                     />
             </LinearLayout>
         </ScrollView>
