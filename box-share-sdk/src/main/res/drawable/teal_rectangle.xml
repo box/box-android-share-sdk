@@ -2,7 +2,7 @@
 <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <solid
-        android:color="@color/box_accent"
+        android:color="@color/box_sharesdk_accent"
         />
         <corners android:radius="3dp"/>
 

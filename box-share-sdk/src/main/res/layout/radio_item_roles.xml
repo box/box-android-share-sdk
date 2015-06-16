@@ -9,25 +9,25 @@
         android:layout_height="match_parent"
         android:gravity="top"
         android:layout_marginTop="6dp"
-        android:layout_marginLeft="@dimen/radio_margin"
-        android:layout_marginRight="@dimen/radio_margin"/>
+        android:layout_marginLeft="@dimen/box_sharesdk_radio_margin"
+        android:layout_marginRight="@dimen/box_sharesdk_radio_margin"/>
     <LinearLayout
         android:id="@+id/roles_text_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/radio_margin"
-        android:layout_marginBottom="@dimen/radio_margin"
+        android:layout_marginRight="@dimen/box_sharesdk_radio_margin"
+        android:layout_marginBottom="@dimen/box_sharesdk_radio_margin"
         android:orientation="vertical">
         <TextView
             android:id="@+id/roles_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@color/box_primary_text"
+            android:textColor="@color/box_sharesdk_primary_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/roles_description"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/box_hint_foreground"
+            android:textColor="@color/box_sharesdk_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

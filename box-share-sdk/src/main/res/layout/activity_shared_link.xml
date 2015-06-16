@@ -3,7 +3,7 @@
     tools:context="com.box.androidsdk.share.activities.BoxCollaborationsActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/box_background"
+    android:background="@color/box_sharesdk_background"
     android:orientation="vertical"
     android:filterTouchesWhenObscured="true">
     <include layout="@layout/view_action_bar" />
@@ -21,8 +21,8 @@
             <Switch
                 android:id="@+id/shared_link_url_switch"
                 style="@style/BoxSwitch"
-                android:layout_height="@dimen/collaboration_cell_height"
-                android:background="@color/box_togglebar_background"
+                android:layout_height="@dimen/box_sharesdk_collaboration_cell_height"
+                android:background="@color/box_sharesdk_togglebar_background"
                 android:text="@string/box_sharesdk_share_link_enabled"
                 android:checked="true"
                 />
@@ -30,7 +30,7 @@
                 android:id="@+id/enable_share_link_instructions"
                 style="@style/BoxBodyText"
                 android:text="@string/box_sharesdk_no_shared_link_instructions"
-                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:layout_margin="@dimen/box_sharesdk_horizontal_margin"
                 android:visibility="gone"
                 />
             <LinearLayout
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin"
                 android:animateLayoutChanges="true">
                 <LinearLayout
                     style="@style/BoxOptionsLayout">
@@ -51,35 +51,35 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/shared_link_url_text"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingLeft="@dimen/box_sharesdk_horizontal_margin"
                         />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/collaboration_cell_height"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginLeft="@dimen/box_sharesdk_collaboration_cell_height"
+                        android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin"
                         android:orientation="horizontal">
                         <Button
                             android:id="@+id/shared_link_copy_link_btn"
                             style="@style/RaisedButton"
-                            android:layout_height="@dimen/box_button_height"
+                            android:layout_height="@dimen/box_sharesdk_button_height"
                             android:onClick="onCopyLinkButtonClicked"
                             android:text="@string/box_sharesdk_copy_link"
                             />
                         <Button
                             android:id="@+id/shared_link_send_link_btn"
                             style="@style/RaisedButton"
-                            android:layout_height="@dimen/box_button_height"
+                            android:layout_height="@dimen/box_sharesdk_button_height"
                             android:onClick="onSendLinkButtonClicked"
-                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin"
                             android:text="@string/box_sharesdk_send_link"
                             />
                     </LinearLayout>
 
                     <View style="@style/BoxDivider"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                        android:layout_marginTop="@dimen/box_sharesdk_vertical_margin"
+                        android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin"/>
 
                 <!-- Shared Link Access -->
                     <TextView
@@ -136,9 +136,9 @@
                     <Button
                         android:id="@+id/share_edit_link_access"
                         style="@style/RaisedGrayButton"
-                        android:layout_height="@dimen/box_button_height"
-                        android:layout_marginLeft="@dimen/collaboration_cell_height"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_height="@dimen/box_sharesdk_button_height"
+                        android:layout_marginLeft="@dimen/box_sharesdk_collaboration_cell_height"
+                        android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin"
                         android:text="@string/box_sharesdk_edit_link_access"
                         />
                 </LinearLayout>
