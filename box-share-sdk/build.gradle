@@ -30,7 +30,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.0.0'
     // If using local dependency instead of maven, use the path pointing to the content sdk to replace
     // the maven dependency. e.g.:compile project(':box-android-content-sdk:box-content-sdk')
-    compile 'com.box:box-android-sdk:3.0.0'
+    compile 'com.box:box-android-sdk:3.0.1'
 }
 
 //apply from: '../maven_push.gradle'
