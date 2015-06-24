@@ -1,0 +1,88 @@
+<resources>
+    <string name="box_sharesdk_name">Jaa</string>
+    <string name="box_sharesdk_shared_with">Jaettu seuraavan henkilön kanssa:</string>
+    <string name="box_sharesdk_invite_collaborators">Kutsu henkilöitä</string>
+    <string name="box_sharesdk_session_is_not_authenticated">Istuntoa ei ole varmennettu</string>
+    <string name="box_sharesdk_no_item_selected">Kohdetta ei ole valittu</string>
+    <string name="box_sharesdk_copy_link" description="button to copy link to clipboard">KOPIOI LINKKI</string>
+    <string name="box_sharesdk_send_link" description="button to send link to another application">LÄHETÄ LINKKI</string>
+    <string name="box_sharesdk_accessible_public" description="description for public access">Sellaisten henkilöiden käytettävissä, joilla on linkki</string>
+    <string name="box_sharesdk_accessible_company" description="description for company access">Yrityksesi henkilöiden käytettävissä</string>
+    <string name="box_sharesdk_accessible_collaborator" description="description for collaborator access">Sellaisten henkilöiden käytettävissä, joille kansio on jaettu</string>
+    <string name="box_sharesdk_password_protected" description="description for if a shared link is password proceted">Suojattu salasanalla</string>
+    <string name="box_sharesdk_password_unprotected" description="description for if a shared link is not password proceted">Ei salasanaa</string>
+
+    <string name="box_sharesdk_share_link_enabled" description="shown if share link is enabled">Jakamislinkki käytössä</string>
+    <string name="box_sharesdk_share_link_disabled" description="shown if share link is disabled">Jakamislinkki poistettu käytöstä</string>
+    <string name="box_sharesdk_downloads_allowed" description="shown if user has permission to download link">Lataukset sallitaan</string>
+    <string name="box_sharesdk_downloads_disabled" description="shown if user has permission to download link">Lataukset poistettu käytöstä</string>
+    <string name="box_sharesdk_link_expires_not_set" description="shown if no expiration time is set">Ei vanhenemispäivää</string>
+    <string name="box_sharesdk_link_expires_on_x_date" description="start of the string telling when link expires">Linkki vanhenee %1$s</string>
+    <string name="box_sharesdk_edit_link_access" description="button to change access properties of link">MUOKKAA LINKIN KÄYTTÖOIKEUTTA</string>
+    <string name="box_sharesdk_cancel" description="button to cancel an action">PERUUTA</string>
+    <string name="box_sharesdk_ok" description="button to cancel an action">OK</string>
+    <string name="box_sharesdk_disable_share_link" description="button to disable a shared link">POISTA JAKAMISLINKKI KÄYTÖSTÄ</string>
+    <string name="box_sharesdk_disable_title" description="shown as title of warning dialog before disabling a shared link">Poistetaanko jakamislinkki käytöstä?</string>
+    <string name="box_sharesdk_disable_message" description="shown as message of warning dialog before disabling a shared link">Jos linkki poistetaan käytöstä, nykyinen jakamislinkki poistetaan pysyvästi. Jos linkki otetaan uudelleen käyttöön, luodaan täysin uusi jakamislinkki. Haluatko poistaa käytöstä jakamislinkin?</string>
+    <string name="box_sharesdk_link_access" description="separates ui between the shared link box and options to change access">Linkin käyttöoikeus</string>
+    <string name="box_sharesdk_access" description="header for different access types">Käyttöoikeus</string>
+    <string name="box_sharesdk_access_public" description="description for public access">Henkilöt, joilla on linkki</string>
+    <string name="box_sharesdk_access_company" description="description for company access">Yrityksesi henkilöt</string>
+    <string name="box_sharesdk_access_collaborator" description="description for collaborator access">Vain henkilöt, joille kansio on jaettu</string>
+    <string name="box_sharesdk_allow_downloads" description="toggle of whether to allow downloading">Salli lataukset</string>
+    <string name="box_sharesdk_password" description="header for password section">Salasana</string>
+    <string name="box_sharesdk_set_password" description="hint for password dialog">Määritä salasana</string>
+    <string name="box_sharesdk_require_password" description="toggle of using password or not">Vaadi salasana</string>
+    <string name="box_sharesdk_link_expiration" description="header for link expiration section">Linkin vanhentuminen</string>
+    <string name="box_sharesdk_link_expire_link" description="toggle of whether to expire links">Poista linkki käytöstä</string>
+    <string name="box_sharesdk_expire_on" description="header for date link expires">Vanhenee</string>
+    <string name="box_sharesdk_problem_accessing_this_shared_link" description="Description shown when there is a problem with a shared link">Ongelma jaetun linkin käyttämisessä.</string>
+    <string name="box_sharesdk_unable_to_modify" description="Toast shown if there is a problem modifying the shared link">Ongelma jaetun linkin muokkaamisessa/luomisessa.</string>
+    <string name="box_sharesdk_unable_to_modify_toast" description="Toast shown if there is a problem modifying the shared link">Ongelma jaetun linkin muokkaamisessa/luomisessa.</string>
+    <string name="box_sharesdk_title_link_access">Linkin käyttöoikeus</string>
+    <string name="box_sharesdk_title_share_link">Jaa linkki</string>
+    <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">Kun linkki otetaan käyttöön, luodaan jakamislinkki, jonka kautta käyttäjät voivat käyttää ja tarkastella sisältöä.</string>
+    <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">Linkki kopioitu leikepöydälle.</string>
+    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">Olen jakanut kohteen %1$ kanssasi Boxissa</string>
+    <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">Lähetä:</string>
+    <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">Verkkovirhe. Yritä uudelleen.</string>
+
+    <!-- menu items -->
+    <string name="box_sharesdk_refresh" description="menu item to refresh current item">Päivitä</string>
+    <string name="box_sharesdk_action_add" description="menu item to add a collaboration">Lisää</string>
+
+    <!-- role names -->
+    <string name="box_sharesdk_role_name_editor" description="Name of role, which is the level of permission the person will be granted">Muokkaaja</string>
+    <string name="box_sharesdk_role_name_viewer" description="Name of role, which is the level of permission the person will be granted">Katselu</string>
+    <string name="box_sharesdk_role_name_previewer" description="Name of role, which is the level of permission the person will be granted">Esikatselu</string>
+    <string name="box_sharesdk_role_name_uploader" description="Name of role, which is the level of permission the person will be granted">Lataus</string>
+    <string name="box_sharesdk_role_name_previewer_uploader" description="Name of role, which is the level of permission the person will be granted">Esikatselu-lataus</string>
+    <string name="box_sharesdk_role_name_viewer_uploader" description="Name of role, which is the level of permission the person will be granted">Katselu-lataus</string>
+    <string name="box_sharesdk_role_name_co_owner" description="Name of role, which is the level of permission the person will be granted">Yhteisomistus</string>
+    <string name="box_sharesdk_role_name_owner" description="Name of role, which is the level of permission the person will be granted">Omistaja</string>
+    <string name="box_sharesdk_role_remove_person" description="Name of role, which is the level of permission the person will be granted">Poista henkilö</string>
+    <string name="box_sharesdk_invited_status" description="The status to indicate that a person was invited, but they have not accepted the collaboration request">Kutsuttu</string>
+    <string name="box_sharesdk_rejected_status" description="The status to indicate that a person has rejected a collaboration request">Hylätty</string>
+
+    <!-- role descriptions -->
+    <string name="box_sharesdk_role_description_editor" description="Description of the role, which is the level of permission the person will be granted">Tiedostojen lataus, esikatselu, jakaminen ja muokkaaminen.</string>
+    <string name="box_sharesdk_role_description_viewer" description="Description of the role, which is the level of permission the person will be granted">Tiedostojen lataus, esikatselu ja jakaminen.</string>
+    <string name="box_sharesdk_role_description_previewer" description="Description of the role, which is the level of permission the person will be granted">Vain tiedostojen esikatselu.</string>
+    <string name="box_sharesdk_role_description_uploader" description="Description of the role, which is the level of permission the person will be granted">Vain tiedostojen lataus.</string>
+    <string name="box_sharesdk_role_description_previewer_uploader" description="Description of the role, which is the level of permission the person will be granted">Tiedostojen esikatselu ja lataus.</string>
+    <string name="box_sharesdk_role_description_viewer_uploader" description="Description of the role, which is the level of permission the person will be granted">Tiedostojen lataus, esikatselu ja jakaminen.</string>
+    <string name="box_sharesdk_role_description_co_owner" description="Description of the role, which is the level of permission the person will be granted">Samat oikeudet kuin omistajalla</string>
+    <string name="box_sharesdk_role_description_owner" description="Description of the role, which is the level of permission the person will be granted">Omistaja</string>
+
+    <!-- invite collaborators -->
+    <string name="box_sharesdk_action_send" description="Menu item for submitting the invite collaborators request">Lähetä</string>
+    <string name="box_sharesdk_to" description="The label for the field where users will enter the collaborators they would like to invite">Vastaanottaja</string>
+    <string name="box_sharesdk_selected_item_not_expected_type" description="Error message for when an incorrect object type is used to launch the collaborations page">Valittu kohde ei ole odotetun tyyppinen</string>
+    <string name="box_sharesdk_collaborators_invited" description="Success message for inviting collaborators">Yhteistyökumppaneita on kutsuttu</string>
+    <string name="box_sharesdk_cannot_view_collaborations" description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available">Et voi tarkastella tämän kohteen yhteiskäyttöä.</string>
+    <string name="box_sharesdk_another_person" description="Default name shown when a user without a Box account has been invited">Toinen henkilö</string>
+    <string name="box_sharesdk_no_collaborators" description="Message shown when no collaborators have been invited for the current folder">Kansiolla ei ole yhteistyökumppaneita.</string>
+    <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s on jo kutsuttu tähän kansioon</string>
+    <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s henkilöä on jo kutsuttu tähän kansioon</string>
+
+</resources>

@@ -1,0 +1,88 @@
+<resources>
+    <string name="box_sharesdk_name">Del</string>
+    <string name="box_sharesdk_shared_with">Delt med</string>
+    <string name="box_sharesdk_invite_collaborators">Inviter personer</string>
+    <string name="box_sharesdk_session_is_not_authenticated">Økten er ikke godkjent</string>
+    <string name="box_sharesdk_no_item_selected">Du har ikke valgt noe element</string>
+    <string name="box_sharesdk_copy_link" description="button to copy link to clipboard">KOPIER KOBLING</string>
+    <string name="box_sharesdk_send_link" description="button to send link to another application">SEND KOBLING</string>
+    <string name="box_sharesdk_accessible_public" description="description for public access">Tilgjengelig for personer som har koblingen</string>
+    <string name="box_sharesdk_accessible_company" description="description for company access">Tilgjengelig for personer i firmaet</string>
+    <string name="box_sharesdk_accessible_collaborator" description="description for collaborator access">Tilgjengelig for personer som mappen er delt med</string>
+    <string name="box_sharesdk_password_protected" description="description for if a shared link is password proceted">Passordbeskyttet</string>
+    <string name="box_sharesdk_password_unprotected" description="description for if a shared link is not password proceted">Ikke noe passord</string>
+
+    <string name="box_sharesdk_share_link_enabled" description="shown if share link is enabled">Delingskobling er aktivert</string>
+    <string name="box_sharesdk_share_link_disabled" description="shown if share link is disabled">Delingskobling er deaktivert</string>
+    <string name="box_sharesdk_downloads_allowed" description="shown if user has permission to download link">Nedlastinger er aktivert</string>
+    <string name="box_sharesdk_downloads_disabled" description="shown if user has permission to download link">Nedlastinger er deaktivert</string>
+    <string name="box_sharesdk_link_expires_not_set" description="shown if no expiration time is set">Ingen utløpsdato</string>
+    <string name="box_sharesdk_link_expires_on_x_date" description="start of the string telling when link expires">Kobligen utløper %1$s</string>
+    <string name="box_sharesdk_edit_link_access" description="button to change access properties of link">REDIGER KOBLINGSTILGANG</string>
+    <string name="box_sharesdk_cancel" description="button to cancel an action">AVBRYT</string>
+    <string name="box_sharesdk_ok" description="button to cancel an action">OK</string>
+    <string name="box_sharesdk_disable_share_link" description="button to disable a shared link">DEAKTIVER DELINGSKOBLING</string>
+    <string name="box_sharesdk_disable_title" description="shown as title of warning dialog before disabling a shared link">Vil du deaktivere delingskoblingen?</string>
+    <string name="box_sharesdk_disable_message" description="shown as message of warning dialog before disabling a shared link">Hvis du deaktiverer koblingen for godt, slettes den gjeldende delingskoblingen. Hvis du aktiverer koblingen på nytt, genereres det en helt ny og unik delingskobling. Vil du deaktivere delingskoblingen?</string>
+    <string name="box_sharesdk_link_access" description="separates ui between the shared link box and options to change access">Koblingstilgang</string>
+    <string name="box_sharesdk_access" description="header for different access types">Tilgang</string>
+    <string name="box_sharesdk_access_public" description="description for public access">Personer med koblingen</string>
+    <string name="box_sharesdk_access_company" description="description for company access">Personer i firmaet</string>
+    <string name="box_sharesdk_access_collaborator" description="description for collaborator access">Bare personer mappen er delt med</string>
+    <string name="box_sharesdk_allow_downloads" description="toggle of whether to allow downloading">Tillat nedlastinger</string>
+    <string name="box_sharesdk_password" description="header for password section">Passord</string>
+    <string name="box_sharesdk_set_password" description="hint for password dialog">Angi passord</string>
+    <string name="box_sharesdk_require_password" description="toggle of using password or not">Krev passord</string>
+    <string name="box_sharesdk_link_expiration" description="header for link expiration section">Utløpsdato for kobling</string>
+    <string name="box_sharesdk_link_expire_link" description="toggle of whether to expire links">La kobling utløpe</string>
+    <string name="box_sharesdk_expire_on" description="header for date link expires">Utløp</string>
+    <string name="box_sharesdk_problem_accessing_this_shared_link" description="Description shown when there is a problem with a shared link">Får ikke tilgang til denne delte koblingen.</string>
+    <string name="box_sharesdk_unable_to_modify" description="Toast shown if there is a problem modifying the shared link">Kan ikke endre/opprette denne delte koblingen.</string>
+    <string name="box_sharesdk_unable_to_modify_toast" description="Toast shown if there is a problem modifying the shared link">Kan ikke endre/opprette denne delte koblingen.</string>
+    <string name="box_sharesdk_title_link_access">Koblingstilgang</string>
+    <string name="box_sharesdk_title_share_link">Delingskobling</string>
+    <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">Hvis du aktiverer en kobling, genereres det en delingskobling som andre kan bruke til å få tilgang til dette innholdet.</string>
+    <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">Koblingen er kopiert til utklippstavlen.</string>
+    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">Jeg har delt %1$s med deg i Box.</string>
+    <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">Send med:</string>
+    <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">Nettverksfeil. Prøv på nytt.</string>
+
+    <!-- menu items -->
+    <string name="box_sharesdk_refresh" description="menu item to refresh current item">Oppdater</string>
+    <string name="box_sharesdk_action_add" description="menu item to add a collaboration">Legg til</string>
+
+    <!-- role names -->
+    <string name="box_sharesdk_role_name_editor" description="Name of role, which is the level of permission the person will be granted">Redaktør</string>
+    <string name="box_sharesdk_role_name_viewer" description="Name of role, which is the level of permission the person will be granted">Seer</string>
+    <string name="box_sharesdk_role_name_previewer" description="Name of role, which is the level of permission the person will be granted">Forhåndsviser</string>
+    <string name="box_sharesdk_role_name_uploader" description="Name of role, which is the level of permission the person will be granted">Opplaster</string>
+    <string name="box_sharesdk_role_name_previewer_uploader" description="Name of role, which is the level of permission the person will be granted">Forhåndsvisning og opplasting</string>
+    <string name="box_sharesdk_role_name_viewer_uploader" description="Name of role, which is the level of permission the person will be granted">Visning og opplasting</string>
+    <string name="box_sharesdk_role_name_co_owner" description="Name of role, which is the level of permission the person will be granted">Medeier</string>
+    <string name="box_sharesdk_role_name_owner" description="Name of role, which is the level of permission the person will be granted">Eier</string>
+    <string name="box_sharesdk_role_remove_person" description="Name of role, which is the level of permission the person will be granted">Fjern person</string>
+    <string name="box_sharesdk_invited_status" description="The status to indicate that a person was invited, but they have not accepted the collaboration request">Invitert</string>
+    <string name="box_sharesdk_rejected_status" description="The status to indicate that a person has rejected a collaboration request">Avvist</string>
+
+    <!-- role descriptions -->
+    <string name="box_sharesdk_role_description_editor" description="Description of the role, which is the level of permission the person will be granted">Opplasting, nedlasting, forhåndsvisning, deling og redigering av filer.</string>
+    <string name="box_sharesdk_role_description_viewer" description="Description of the role, which is the level of permission the person will be granted">Nedlasting, forhåndsvisning og deling av filer.</string>
+    <string name="box_sharesdk_role_description_previewer" description="Description of the role, which is the level of permission the person will be granted">Bare forhåndsvisning av filer.</string>
+    <string name="box_sharesdk_role_description_uploader" description="Description of the role, which is the level of permission the person will be granted">Bare opplasting av filer.</string>
+    <string name="box_sharesdk_role_description_previewer_uploader" description="Description of the role, which is the level of permission the person will be granted">Forhåndsvisning og opplasting av filer.</string>
+    <string name="box_sharesdk_role_description_viewer_uploader" description="Description of the role, which is the level of permission the person will be granted">Opplasting, nedlasting og deling av filer.</string>
+    <string name="box_sharesdk_role_description_co_owner" description="Description of the role, which is the level of permission the person will be granted">Samme tillatelser som eieren</string>
+    <string name="box_sharesdk_role_description_owner" description="Description of the role, which is the level of permission the person will be granted">Eier</string>
+
+    <!-- invite collaborators -->
+    <string name="box_sharesdk_action_send" description="Menu item for submitting the invite collaborators request">Send</string>
+    <string name="box_sharesdk_to" description="The label for the field where users will enter the collaborators they would like to invite">Til</string>
+    <string name="box_sharesdk_selected_item_not_expected_type" description="Error message for when an incorrect object type is used to launch the collaborations page">Det valgte elementet var ikke av den forventede typen</string>
+    <string name="box_sharesdk_collaborators_invited" description="Success message for inviting collaborators">Samarbeidspartnere er invitert</string>
+    <string name="box_sharesdk_cannot_view_collaborations" description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available">Du kan ikke vise samarbeidspartnerne for dette elementet.</string>
+    <string name="box_sharesdk_another_person" description="Default name shown when a user without a Box account has been invited">En annen person</string>
+    <string name="box_sharesdk_no_collaborators" description="Message shown when no collaborators have been invited for the current folder">Ingen samarbeidspartnere for denne mappen.</string>
+    <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s er allerede invitert til denne mappen</string>
+    <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s personer er allerede invitert til denne mappen</string>
+
+</resources>
