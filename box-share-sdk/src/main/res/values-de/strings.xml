@@ -1,0 +1,88 @@
+<resources>
+    <string name="box_sharesdk_name">Freigeben</string>
+    <string name="box_sharesdk_shared_with">Freigegeben für</string>
+    <string name="box_sharesdk_invite_collaborators">Personen einladen</string>
+    <string name="box_sharesdk_session_is_not_authenticated">Sitzung ist nicht authentifiziert</string>
+    <string name="box_sharesdk_no_item_selected">Kein Element ausgewählt</string>
+    <string name="box_sharesdk_copy_link" description="button to copy link to clipboard">LINK KOPIEREN</string>
+    <string name="box_sharesdk_send_link" description="button to send link to another application">LINK SENDEN</string>
+    <string name="box_sharesdk_accessible_public" description="description for public access">Verfügbar für Personen mit entsprechendem Link</string>
+    <string name="box_sharesdk_accessible_company" description="description for company access">Verfügbar für Personen in Ihrem Unternehmen</string>
+    <string name="box_sharesdk_accessible_collaborator" description="description for collaborator access">Verfügbar für Personen, für die der Ordner freigegeben wurde</string>
+    <string name="box_sharesdk_password_protected" description="description for if a shared link is password proceted">Kennwortgeschützt</string>
+    <string name="box_sharesdk_password_unprotected" description="description for if a shared link is not password proceted">Kein Kennwort</string>
+
+    <string name="box_sharesdk_share_link_enabled" description="shown if share link is enabled">Freigabe-Link aktiviert</string>
+    <string name="box_sharesdk_share_link_disabled" description="shown if share link is disabled">Freigabe-Link deaktiviert</string>
+    <string name="box_sharesdk_downloads_allowed" description="shown if user has permission to download link">Downloads zulässig</string>
+    <string name="box_sharesdk_downloads_disabled" description="shown if user has permission to download link">Downloads deaktiviert</string>
+    <string name="box_sharesdk_link_expires_not_set" description="shown if no expiration time is set">Kein Ablaufdatum</string>
+    <string name="box_sharesdk_link_expires_on_x_date" description="start of the string telling when link expires">Link läuft am %1$s ab</string>
+    <string name="box_sharesdk_edit_link_access" description="button to change access properties of link">LINK-ZUGRIFF BEARBEITEN</string>
+    <string name="box_sharesdk_cancel" description="button to cancel an action">ABBRECHEN</string>
+    <string name="box_sharesdk_ok" description="button to cancel an action">OK</string>
+    <string name="box_sharesdk_disable_share_link" description="button to disable a shared link">FREIGABE-LINK DEAKTIVIEREN</string>
+    <string name="box_sharesdk_disable_title" description="shown as title of warning dialog before disabling a shared link">Freigabe-Link deaktivieren?</string>
+    <string name="box_sharesdk_disable_message" description="shown as message of warning dialog before disabling a shared link">Wenn Sie den Link deaktivieren, wird der aktuelle Freigabe-Link dauerhaft gelöscht. Durch erneutes Aktivieren des Links wird ein vollständig neuer eindeutiger Freigabe-Link generiert. Möchten Sie den Freigabe-Link wirklich deaktivieren?</string>
+    <string name="box_sharesdk_link_access" description="separates ui between the shared link box and options to change access">Link-Zugriff</string>
+    <string name="box_sharesdk_access" description="header for different access types">Zugriff</string>
+    <string name="box_sharesdk_access_public" description="description for public access">Personen mit entsprechendem Link</string>
+    <string name="box_sharesdk_access_company" description="description for company access">Personen in Ihrem Unternehmen</string>
+    <string name="box_sharesdk_access_collaborator" description="description for collaborator access">Nur Personen, für die der Ordner freigegeben wurde</string>
+    <string name="box_sharesdk_allow_downloads" description="toggle of whether to allow downloading">Downloads zulassen</string>
+    <string name="box_sharesdk_password" description="header for password section">Kennwort</string>
+    <string name="box_sharesdk_set_password" description="hint for password dialog">Kennwort festlegen</string>
+    <string name="box_sharesdk_require_password" description="toggle of using password or not">Kennwort erforderlich</string>
+    <string name="box_sharesdk_link_expiration" description="header for link expiration section">Ablaufdatum des Links</string>
+    <string name="box_sharesdk_link_expire_link" description="toggle of whether to expire links">Link befristen</string>
+    <string name="box_sharesdk_expire_on" description="header for date link expires">Läuft ab am</string>
+    <string name="box_sharesdk_problem_accessing_this_shared_link" description="Description shown when there is a problem with a shared link">Beim Zugriff auf diesen Freigabe-Link ist ein Problem aufgetreten.</string>
+    <string name="box_sharesdk_unable_to_modify" description="Toast shown if there is a problem modifying the shared link">Beim Ändern/Erstellen dieses Freigabe-Links ist ein Problem aufgetreten.</string>
+    <string name="box_sharesdk_unable_to_modify_toast" description="Toast shown if there is a problem modifying the shared link">Beim Ändern/Erstellen dieses Freigabe-Links ist ein Problem aufgetreten.</string>
+    <string name="box_sharesdk_title_link_access">Link-Zugriff</string>
+    <string name="box_sharesdk_title_share_link">Link freigeben</string>
+    <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">Wenn Sie einen Link aktivieren, wird ein Freigabe-Link generiert, mit dem andere auf diesen Inhalt zugreifen und diesen anzeigen können.</string>
+    <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">Link wurde in Zwischenablage kopiert.</string>
+    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">Ich habe \'%1$s\' für Sie auf Box freigegeben.</string>
+    <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">Senden mit:</string>
+    <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">Netzwerkfehler. Versuchen Sie es erneut.</string>
+
+    <!-- menu items -->
+    <string name="box_sharesdk_refresh" description="menu item to refresh current item">Aktualisieren</string>
+    <string name="box_sharesdk_action_add" description="menu item to add a collaboration">Hinzufügen</string>
+
+    <!-- role names -->
+    <string name="box_sharesdk_role_name_editor" description="Name of role, which is the level of permission the person will be granted">Editor</string>
+    <string name="box_sharesdk_role_name_viewer" description="Name of role, which is the level of permission the person will be granted">Viewer</string>
+    <string name="box_sharesdk_role_name_previewer" description="Name of role, which is the level of permission the person will be granted">Previewer</string>
+    <string name="box_sharesdk_role_name_uploader" description="Name of role, which is the level of permission the person will be granted">Uploader</string>
+    <string name="box_sharesdk_role_name_previewer_uploader" description="Name of role, which is the level of permission the person will be granted">Previewer Uploader</string>
+    <string name="box_sharesdk_role_name_viewer_uploader" description="Name of role, which is the level of permission the person will be granted">Viewer Uploader</string>
+    <string name="box_sharesdk_role_name_co_owner" description="Name of role, which is the level of permission the person will be granted">Co-Owner</string>
+    <string name="box_sharesdk_role_name_owner" description="Name of role, which is the level of permission the person will be granted">Eigentümer</string>
+    <string name="box_sharesdk_role_remove_person" description="Name of role, which is the level of permission the person will be granted">Person entfernen</string>
+    <string name="box_sharesdk_invited_status" description="The status to indicate that a person was invited, but they have not accepted the collaboration request">Eingeladen</string>
+    <string name="box_sharesdk_rejected_status" description="The status to indicate that a person has rejected a collaboration request">Abgelehnt</string>
+
+    <!-- role descriptions -->
+    <string name="box_sharesdk_role_description_editor" description="Description of the role, which is the level of permission the person will be granted">Dateien hochladen, herunterladen, in der Vorschau anzeigen, freigeben und bearbeiten.</string>
+    <string name="box_sharesdk_role_description_viewer" description="Description of the role, which is the level of permission the person will be granted">Dateien herunterladen, in der Vorschau anzeigen und freigeben.</string>
+    <string name="box_sharesdk_role_description_previewer" description="Description of the role, which is the level of permission the person will be granted">Nur Dateivorschau.</string>
+    <string name="box_sharesdk_role_description_uploader" description="Description of the role, which is the level of permission the person will be granted">Nur Dateien hochladen.</string>
+    <string name="box_sharesdk_role_description_previewer_uploader" description="Description of the role, which is the level of permission the person will be granted">Dateien in der Vorschau anzeigen und hochladen.</string>
+    <string name="box_sharesdk_role_description_viewer_uploader" description="Description of the role, which is the level of permission the person will be granted">Dateien hochladen, herunterladen, in der Vorschau anzeigen und freigeben.</string>
+    <string name="box_sharesdk_role_description_co_owner" description="Description of the role, which is the level of permission the person will be granted">Gleiche Zugriffsrechte wie der Eigentümer</string>
+    <string name="box_sharesdk_role_description_owner" description="Description of the role, which is the level of permission the person will be granted">Eigentümer</string>
+
+    <!-- invite collaborators -->
+    <string name="box_sharesdk_action_send" description="Menu item for submitting the invite collaborators request">Senden</string>
+    <string name="box_sharesdk_to" description="The label for the field where users will enter the collaborators they would like to invite">An</string>
+    <string name="box_sharesdk_selected_item_not_expected_type" description="Error message for when an incorrect object type is used to launch the collaborations page">Das ausgewählte Element wies nicht den erwarteten Typ auf.</string>
+    <string name="box_sharesdk_collaborators_invited" description="Success message for inviting collaborators">Mitarbeiter wurden eingeladen</string>
+    <string name="box_sharesdk_cannot_view_collaborations" description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available">Sie können die Mitarbeiter, die an diesem Element zusammenarbeiten, nicht anzeigen.</string>
+    <string name="box_sharesdk_another_person" description="Default name shown when a user without a Box account has been invited">Eine andere Person</string>
+    <string name="box_sharesdk_no_collaborators" description="Message shown when no collaborators have been invited for the current folder">Keine Mitarbeiter für diesen Ordner.</string>
+    <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s wurde bereits zu diesem Ordner eingeladen.</string>
+    <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s Personen wurden bereits zu diesem Ordner eingeladen.</string>
+
+</resources>
