@@ -36,12 +36,12 @@
     <string name="box_sharesdk_link_expiration" description="header for link expiration section">Scadenza collegamento</string>
     <string name="box_sharesdk_link_expire_link" description="toggle of whether to expire links">Scadenza collegamento</string>
     <string name="box_sharesdk_expire_on" description="header for date link expires">Scadenza in data</string>
-    <string name="box_sharesdk_problem_accessing_this_shared_link" description="Description shown when there is a problem with a shared link">Si è verificato un problema durante l'accesso al collegamento condiviso.</string>
+    <string name="box_sharesdk_problem_accessing_this_shared_link" description="Description shown when there is a problem with a shared link">Si è verificato un problema durante l\'accesso al collegamento condiviso.</string>
     <string name="box_sharesdk_unable_to_modify" description="Toast shown if there is a problem modifying the shared link">Problema durante la modifica/creazione del collegamento condiviso.</string>
     <string name="box_sharesdk_unable_to_modify_toast" description="Toast shown if there is a problem modifying the shared link">Problema durante la modifica/creazione del collegamento condiviso.</string>
     <string name="box_sharesdk_title_link_access">Accesso al collegamento</string>
     <string name="box_sharesdk_title_share_link">Collegamento di condivisione</string>
-    <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">L'abilitazione di un collegamento genera un collegamento condivisibile che altri utenti possono utilizzare per accedere a questo contenuto e visualizzarlo.</string>
+    <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">L\'abilitazione di un collegamento genera un collegamento condivisibile che altri utenti possono utilizzare per accedere a questo contenuto e visualizzarlo.</string>
     <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">Collegamento copiato negli appunti.</string>
     <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">Ho condiviso \"%1$s\" con te su Box.</string>
     <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">Invia con:</string>
@@ -77,12 +77,12 @@
     <!-- invite collaborators -->
     <string name="box_sharesdk_action_send" description="Menu item for submitting the invite collaborators request">Invia</string>
     <string name="box_sharesdk_to" description="The label for the field where users will enter the collaborators they would like to invite">A</string>
-    <string name="box_sharesdk_selected_item_not_expected_type" description="Error message for when an incorrect object type is used to launch the collaborations page">Il tipo dell'elemento selezionato non è quello previsto</string>
+    <string name="box_sharesdk_selected_item_not_expected_type" description="Error message for when an incorrect object type is used to launch the collaborations page">Il tipo dell\'elemento selezionato non è quello previsto</string>
     <string name="box_sharesdk_collaborators_invited" description="Success message for inviting collaborators">I collaboratori sono stati invitati</string>
     <string name="box_sharesdk_cannot_view_collaborations" description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available">Non puoi visualizzare le collaborazioni per questo elemento.</string>
-    <string name="box_sharesdk_another_person" description="Default name shown when a user without a Box account has been invited">Un'altra persona</string>
+    <string name="box_sharesdk_another_person" description="Default name shown when a user without a Box account has been invited">Un\'altra persona</string>
     <string name="box_sharesdk_no_collaborators" description="Message shown when no collaborators have been invited for the current folder">Nessun collaboratore per questa cartella.</string>
-    <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s ha già ricevuto l'invito per questa cartella</string>
-    <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s persone hanno già ricevuto l'invito per questa cartella</string>
+    <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s ha già ricevuto l\'invito per questa cartella</string>
+    <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s persone hanno già ricevuto l\'invito per questa cartella</string>
 
 </resources>
