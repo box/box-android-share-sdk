@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="box_sharesdk_primary_text">@color/primary_text_default_material_light</color>
-    <color name="box_sharesdk_hint">@color/hint_foreground_material_light</color>
-    <color name="box_sharesdk_accent">@color/link_text_material_light</color>
+    <color name="box_sharesdk_primary_text">#de000000</color>
+    <color name="box_sharesdk_hint">#80000000</color>
+    <color name="box_sharesdk_accent">#ff009688</color>
     <color name="box_sharesdk_link_text">@color/box_sharesdk_accent</color>
-    <color name="box_sharesdk_background">@color/background_material_light</color>
+    <color name="box_sharesdk_background">#ffeeeeee</color>
 
     <!-- Custom colors -->
     <color name="box_sharesdk_primary">#ffe0e0e0</color>
