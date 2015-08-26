@@ -12,12 +12,27 @@ This SDK enables the ability to easily manage shared links and collaborators on 
 <img src="https://cloud.box.com/shared/static/pz3ujyihzwd7du9bqtrn5cqveg5pzdqo.png" width="200"/>
 <img src="https://cloud.box.com/shared/static/7r90gmo7zq3q4zs5otjvi0bf4s1ya01g.png" width="200"/>
 
+
 Developer Setup
 --------------
 The SDK can be obtained by adding it as a maven dependency, cloning the source into your project, or by downloading one of the precompiled JARs from the releases page on GitHub.
 
-This SDK has the following dependencies and will need to be included in your project:
-* [box-android-sdk](https://github.com/box/box-android-content-sdk) (maven: 'com.box:box-android-sdk:3.0.2')
+Gradle: 
+```groovy 
+compile 'com.box:box-android-share-sdk:1.0.0'
+```
+Maven: 
+```xml
+<dependency>
+    <groupId>com.box</groupId>
+    <artifactId>box-android-share-sdk</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+If not using Gradle or Maven, this SDK has the following dependencies and will need to be included in your project:
+* [box-android-sdk](https://github.com/box/box-android-sdk) (maven: `com.box:box-android-sdk:3.0.2`)
+
 
 Quickstart
 --------------
