@@ -58,7 +58,7 @@ public class BoxSharedLinkAccessActivity extends BoxThreadPoolExecutorActivity i
     /**
      * The required fields that must be returned from the API when making a share link request
      */
-    public static final String[] REQUIRED_FIELDS = new String[]{BoxItem.FIELD_SHARED_LINK, BoxItem.FIELD_NAME, BoxItem.FIELD_ALLOWED_SHARED_LINK_ACCESS_LEVELS};
+    public static String[] REQUIRED_FIELDS = new String[]{BoxItem.FIELD_SHARED_LINK, BoxItem.FIELD_NAME, BoxItem.FIELD_ALLOWED_SHARED_LINK_ACCESS_LEVELS};
 
     private BoxApiFile mFileApi;
     private BoxApiFolder mFolderApi;
