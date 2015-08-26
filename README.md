@@ -17,7 +17,7 @@ Developer Setup
 The SDK can be obtained by adding it as a maven dependency, cloning the source into your project, or by downloading one of the precompiled JARs from the releases page on GitHub.
 
 This SDK has the following dependencies and will need to be included in your project:
-* [box-android-sdk](https://github.com/box/box-android-content-sdk) (maven: 'com.box:box-android-sdk:3.0.1')
+* [box-android-sdk](https://github.com/box/box-android-content-sdk) (maven: 'com.box:box-android-sdk:3.0.2')
 
 Quickstart
 --------------
