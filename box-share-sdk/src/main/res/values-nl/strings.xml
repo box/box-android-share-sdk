@@ -43,7 +43,7 @@
     <string name="box_sharesdk_title_share_link">Link delen</string>
     <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">Door een link in te schakelen ontstaat een gedeelde link waarmee anderen deze inhoud kunnen gebruiken en bekijken.</string>
     <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">Link naar klembord gekopieerd.</string>
-    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">Ik heb \'%1$s\' met u gedeeld op Box.</string>
+    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user\'s email when item is shared">Ik heb \'%1$s\' met u gedeeld op Box.</string>
     <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">Verzenden met:</string>
     <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">Netwerkfout. Probeer het opnieuw.</string>
 

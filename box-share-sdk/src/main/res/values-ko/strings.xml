@@ -43,7 +43,7 @@
     <string name="box_sharesdk_title_share_link">공유 링크</string>
     <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">링크를 활성화하면 다른 사용자가 이 콘텐츠에 액세스하여 콘텐츠를 볼 수 있는 공유 가능한 링크가 생성됩니다.</string>
     <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">클립보드로 링크를 복사했습니다.</string>
-    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">Box에서 \'%1$s\' 항목을 공유합니다.</string>
+    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user\'s email when item is shared">Box에서 \'%1$s\' 항목을 공유합니다.</string>
     <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">함께 보내기:</string>
     <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">네트워크 오류입니다. 다시 시도하십시오.</string>
 

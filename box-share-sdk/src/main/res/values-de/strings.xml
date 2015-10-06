@@ -43,7 +43,7 @@
     <string name="box_sharesdk_title_share_link">Link freigeben</string>
     <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">Wenn Sie einen Link aktivieren, wird ein Freigabe-Link generiert, mit dem andere auf diesen Inhalt zugreifen und diesen anzeigen können.</string>
     <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">Link wurde in Zwischenablage kopiert.</string>
-    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">Ich habe \'%1$s\' für Sie auf Box freigegeben.</string>
+    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user\'s email when item is shared">Ich habe \'%1$s\' für Sie auf Box freigegeben.</string>
     <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">Senden mit:</string>
     <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">Netzwerkfehler. Versuchen Sie es erneut.</string>
 

@@ -43,7 +43,7 @@
     <string name="box_sharesdk_title_share_link">Compartilhar link</string>
     <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">Habilitar um link gera um link compartilhável que outras pessoas podem usar para acessar e visualizar este conteúdo.</string>
     <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">Link copiado para a área de transferência.</string>
-    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">Compartilhei \'%1$s\' com você no Box.</string>
+    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user\'s email when item is shared">Compartilhei \'%1$s\' com você no Box.</string>
     <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">Enviar com:</string>
     <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">Erro de rede. Tente novamente.</string>
 

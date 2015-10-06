@@ -43,7 +43,7 @@
     <string name="box_sharesdk_title_share_link">共享链接</string>
     <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">启用链接会生成一个可共享的链接，其他人员使用此链接可访问和查看这些内容。</string>
     <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">将链接复制到剪贴板。</string>
-    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">我在 Box 上与您共享了  \'%1$s\' 。</string>
+    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user\'s email when item is shared">我在 Box 上与您共享了  \'%1$s\' 。</string>
     <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">通过以下方式发送：</string>
     <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">网络出错。请重试。</string>
 

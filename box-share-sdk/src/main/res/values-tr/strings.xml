@@ -43,7 +43,7 @@
     <string name="box_sharesdk_title_share_link">Paylaşım Bağlantısı</string>
     <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">Bir bağlantıyı etkinleştirmek, içeriğe ulaşmak ve bu içeriği görüntülemek için diğer kişilerin kullanabileceği paylaşılabilir bir link oluşturur.</string>
     <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">Bağlantı panoya kopyalandı.</string>
-    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">"Sizinle Box üzerinden \'%1$s\' öğesini paylaştım."</string>
+    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user\'s email when item is shared">"Sizinle Box üzerinden \'%1$s\' öğesini paylaştım."</string>
     <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">Şununla gönder:</string>
     <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">Ağ hatası. Lütfen tekrar deneyin.</string>
 

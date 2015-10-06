@@ -43,7 +43,7 @@
     <string name="box_sharesdk_title_share_link">Del link</string>
     <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">Aktivering af link genererer et link, der kan deles, som andre kan få adgang til og se dette indhold.</string>
     <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">Link kopieret til udklipsholder.</string>
-    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">Jeg har delt \'%1$s\' med dig på Box.</string>
+    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user\'s email when item is shared">Jeg har delt \'%1$s\' med dig på Box.</string>
     <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">Send med:</string>
     <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">Netværksfejl. Prøv igen.</string>
 

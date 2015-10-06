@@ -43,7 +43,7 @@
     <string name="box_sharesdk_title_share_link">リンクを共有</string>
     <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">リンクを有効化すると、 他のユーザーがこのコンテンツにアクセスして閲覧できる共有リンクが生成されます。</string>
     <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">リンクをクリップボードにコピーしました。</string>
-    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">Boxであなたに「%1$s」をシェアしました。</string>
+    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user\'s email when item is shared">Boxであなたに「%1$s」をシェアしました。</string>
     <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">以下の方法で送信:</string>
     <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">ネットワークエラーが発生しました。もう一度やり直してください。</string>
 
