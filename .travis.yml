@@ -1,15 +1,25 @@
 language: android
-script: ./gradlew build
+
+before_script:
+- echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+- emulator -avd test -no-skin -no-audio -no-window &
+- android-wait-for-emulator
+- adb shell input keyevent 82 &
+
 android:
   components:
-    # The BuildTools version used by your project
-    - build-tools-22.0.0
+  - build-tools-22.0.1
+  - android-22
+  - extra-google-google_play_services
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - addon-google_apis-google-22
+  - sys-img-armeabi-v7a-android-19
 
-    # The SDK version used to compile your project
-    - android-22
+after_success:
+  - .utility/initiate-publish.sh
 
-    # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
-    - addon-google_apis-google-22
+env:
+  global:
+  - secure: gNr1SEJoYKRxBap0ihqollmQiG9iTx3L5i5w7AW6fFdgv5JN8srAVaoyQZScuFsd9H2murqTNmVuYLbL3M0YtegOF4h6EMicAKemtNAdAmLMYKG1QCTVkKCM8fdI6tpfvVp7nq8EdFPWDAUruJnEnC8zfrZ+4TdRehucMzjV74c=
+  - secure: kbMhn10M49EHvopZwQ2H+DuNZGp6gRhjJsgta1XQ/2kBOK7iSJoPTpklgAdIQJ/vNgYTgagtRyK/3AqcE8SV7iyyTWIXCIF/u5Jz/57TTeWhYJRUCncu0P9fLim+wPzst52FWLOvSXT/9NADCygQPtRioKztqswaQtzFExDLM9o=
