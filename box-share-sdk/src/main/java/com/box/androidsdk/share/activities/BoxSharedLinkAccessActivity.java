@@ -39,8 +39,7 @@ import com.box.androidsdk.share.fragments.DatePickerFragment;
 import com.box.androidsdk.share.fragments.PasswordDialogFragment;
 import com.box.androidsdk.share.fragments.PositiveNegativeDialogFragment;
 
-import org.apache.http.HttpStatus;
-
+import java.net.HttpURLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -194,7 +193,7 @@ public class BoxSharedLinkAccessActivity extends BoxThreadPoolExecutorActivity i
             }
         } else {
             if (response.getException() instanceof BoxException){
-                if (((BoxException)response.getException()).getResponseCode() == HttpStatus.SC_NOT_MODIFIED){
+                if (((BoxException)response.getException()).getResponseCode() == HttpURLConnection.HTTP_NOT_MODIFIED){
                     return;
                 }
             }
