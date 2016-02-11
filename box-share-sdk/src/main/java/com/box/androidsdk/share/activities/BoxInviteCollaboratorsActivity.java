@@ -33,8 +33,6 @@ import com.box.androidsdk.share.adapters.InviteeAdapter;
 import com.box.androidsdk.share.fragments.CollaborationRolesDialog;
 import com.box.androidsdk.share.internal.BoxListInvitees;
 
-import org.apache.http.HttpStatus;
-
 import java.net.HttpURLConnection;
 import java.util.Locale;
 import java.util.Queue;
@@ -312,7 +310,7 @@ public class BoxInviteCollaboratorsActivity extends BoxThreadPoolExecutorActivit
         String name = "";
         for (BoxResponse<BoxCollaboration> r : responses.getResponses()) {
             if (!r.isSuccess()) {
-                if (r.getException() instanceof BoxException && ((BoxException) r.getException()).getResponseCode() == HttpStatus.SC_BAD_REQUEST) {
+                if (r.getException() instanceof BoxException && ((BoxException) r.getException()).getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
                     String code = ((BoxException) r.getException()).getAsBoxError().getCode();
                     if (!SdkUtils.isBlank(code) && code.equals(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR)) {
                         alreadyAddedCount++;

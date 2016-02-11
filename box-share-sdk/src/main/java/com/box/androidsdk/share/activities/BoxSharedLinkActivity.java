@@ -33,8 +33,7 @@ import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.fragments.PositiveNegativeDialogFragment;
 
-import org.apache.http.HttpStatus;
-
+import java.net.HttpURLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Queue;
@@ -160,7 +159,7 @@ public class BoxSharedLinkActivity extends BoxThreadPoolExecutorActivity impleme
             }
         } else {
             if (response.getException() instanceof BoxException){
-                if (((BoxException)response.getException()).getResponseCode() == HttpStatus.SC_NOT_MODIFIED){
+                if (((BoxException)response.getException()).getResponseCode() == HttpURLConnection.HTTP_NOT_MODIFIED) {
                     if (!hasSetupUi){
                         // if we have never shown ui before do it now.
                         updateUi(getMainItem());
