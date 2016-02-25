@@ -28,10 +28,10 @@ public class BoxInvitee extends BoxJsonObject {
     /**
      * Constructs a BoxEntity with the provided map values
      *
-     * @param map - map of keys and values of the object
+     * @param object - json representing this object
      */
-    public BoxInvitee(Map<String, Object> map) {
-        super(map);
+    public BoxInvitee(JsonObject object) {
+        super(object);
     }
 
     /**
@@ -55,11 +55,7 @@ public class BoxInvitee extends BoxJsonObject {
      * @return the name of the invitee
      */
     public String getName() {
-        String id = (String) mProperties.get(FIELD_NAME);
-        if (id == null) {
-            return (String) mProperties.get(FIELD_NAME);
-        }
-        return id;
+        return getPropertyAsString(FIELD_NAME);
     }
 
     /**
@@ -68,26 +64,7 @@ public class BoxInvitee extends BoxJsonObject {
      * @return the entity type
      */
     public String getEmail() {
-        String type = (String) mProperties.get(FIELD_EMAIL);
-        if (type == null) {
-            return (String) mProperties.get(FIELD_EMAIL);
-        }
-        return type;
-    }
-
-    @Override
-    protected void parseJSONMember(JsonObject.Member member) {
-        String memberName = member.getName();
-        JsonValue value = member.getValue();
-        if (memberName.equals(FIELD_NAME)) {
-            this.mProperties.put(FIELD_NAME, value.asString());
-            return;
-        } else if (memberName.equals(FIELD_EMAIL)) {
-            this.mProperties.put(FIELD_EMAIL, value.asString());
-            return;
-        }
-
-        super.parseJSONMember(member);
+        return getPropertyAsString(FIELD_EMAIL);
     }
 
     @Override

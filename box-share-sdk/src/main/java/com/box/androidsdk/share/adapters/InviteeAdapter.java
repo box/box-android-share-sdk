@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.internal.BoxInvitee;
+import com.box.androidsdk.share.internal.BoxListInvitees;
+import com.eclipsesource.json.JsonObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,10 +55,10 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
                     String name = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                     String email = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
                     if (name.contains(constraint) || email.contains(constraint)) {
-                        HashMap<String, Object> inviteeMap = new HashMap<String, Object>();
-                        inviteeMap.put(BoxInvitee.FIELD_NAME, name);
-                        inviteeMap.put(BoxInvitee.FIELD_EMAIL, email);
-                        filteredList.add(new BoxInvitee(inviteeMap));
+                        JsonObject object = new JsonObject();
+                        object.add(BoxInvitee.FIELD_NAME, name);
+                        object.add(BoxInvitee.FIELD_EMAIL, email);
+                        filteredList.add(new BoxInvitee(object));
                     }
                 }
             }
@@ -119,9 +121,11 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
         return mInviteeFilter;
     }
 
-    public void setInvitees(Collection<BoxInvitee> invitees) {
+    public void setInvitees(BoxListInvitees invitees) {
         mInvitees.clear();
-        mInvitees.addAll(invitees);
+        for (BoxInvitee invitee: invitees) {
+            mInvitees.add(invitee);
+        }
     }
 
 

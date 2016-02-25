@@ -19,7 +19,7 @@ import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
-import com.box.androidsdk.content.models.BoxListCollaborations;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestsFolder;
 import com.box.androidsdk.content.requests.BoxRequestsShare;
@@ -45,7 +45,7 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
     public static final String EXTRA_FOLDER_ID = "extraFolderId";
 
     /**
-     * Extra serializable parameter to save the {@link com.box.androidsdk.content.models.BoxListCollaborations} in the saved instance state bundle
+     * Extra serializable parameter to save the {@link com.box.androidsdk.content.models.BoxIteratorCollaborations} in the saved instance state bundle
      */
     protected static final String EXTRA_COLLABORATIONS_LIST = "extraCollaborationsList";
 
@@ -59,7 +59,7 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
 
     private static final ConcurrentLinkedQueue<BoxResponse> COLLABORATIONS_RESPONSE_QUEUE = new ConcurrentLinkedQueue<BoxResponse>();
     private static ThreadPoolExecutor mApiExecutor;
-    private BoxListCollaborations mCollaborationsList;
+    private BoxIteratorCollaborations mCollaborationsList;
 
     @Override
     public ThreadPoolExecutor getApiExecutor(Application application) {
@@ -96,7 +96,7 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
 
         // Get serialized collaborations or fetch them if they are not available
         if (savedInstanceState != null && savedInstanceState.getSerializable(EXTRA_COLLABORATIONS_LIST) != null){
-            mCollaborationsList = (BoxListCollaborations) savedInstanceState.getSerializable(EXTRA_COLLABORATIONS_LIST);
+            mCollaborationsList = (BoxIteratorCollaborations) savedInstanceState.getSerializable(EXTRA_COLLABORATIONS_LIST);
             updateUi(mCollaborationsList);
         } else {
             fetchCollaborations();
@@ -157,7 +157,7 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
         }
     }
 
-    private void updateUi(final BoxListCollaborations collabs){
+    private void updateUi(final BoxIteratorCollaborations collabs){
         if (collabs != null && collabs.size() > 0) {
             hideView(mNoCollaboratorsText);
             showView(mCollaboratorsListView);
@@ -176,7 +176,7 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
                 mRoles = folder.getAllowedInviteeRoles();
                 mShareItem = folder;
             } else if (response.getRequest() instanceof BoxRequestsFolder.GetCollaborations) {
-                BoxListCollaborations collabs = (BoxListCollaborations) response.getResult();
+                BoxIteratorCollaborations collabs = (BoxIteratorCollaborations) response.getResult();
                 mCollaborationsList = collabs;
                 updateUi(collabs);
             } else if (response.getRequest() instanceof BoxRequestsShare.UpdateCollaboration) {
@@ -240,7 +240,7 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
      *
      * @param collabs list of collaborations
      */
-    private void setCollaborations(BoxListCollaborations collabs) {
+    private void setCollaborations(BoxIteratorCollaborations collabs) {
         if (collabs != null && collabs.size() > 0) {
             hideView(mNoCollaboratorsText);
             showView(mCollaboratorsListView);
@@ -326,8 +326,8 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
             super(intent);
         }
 
-        public BoxListCollaborations getCollaborations(){
-            return (BoxListCollaborations)mIntent.getSerializableExtra(EXTRA_COLLABORATIONS);
+        public BoxIteratorCollaborations getCollaborations(){
+            return (BoxIteratorCollaborations)mIntent.getSerializableExtra(EXTRA_COLLABORATIONS);
         }
     }
 
