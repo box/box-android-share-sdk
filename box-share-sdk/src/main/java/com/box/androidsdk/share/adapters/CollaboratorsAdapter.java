@@ -12,12 +12,14 @@ import android.widget.TextView;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborator;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class CollaboratorsAdapter extends BaseAdapter {
 
@@ -84,13 +86,12 @@ public class CollaboratorsAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public synchronized void setItems(Collection<BoxCollaboration> items) {
+    public synchronized void setItems(BoxIteratorCollaborations items) {
         mItems.clear();
         mPositionMap.clear();
-        BoxCollaboration[] itemsArr = items.toArray(new BoxCollaboration[items.size()]);
-        for (int i = 0; i < itemsArr.length; ++i) {
-            mItems.add(itemsArr[i]);
-            mPositionMap.put(itemsArr[i].getId(), i);
+        for (int i = 0; i < items.size(); i++) {
+            mItems.add(items.get(i));
+            mPositionMap.put(items.get(i).getId(), i);
         }
         notifyDataSetChanged();
     }
