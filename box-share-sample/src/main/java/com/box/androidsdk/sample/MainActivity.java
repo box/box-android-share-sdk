@@ -9,20 +9,21 @@ import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxConfig;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
+import com.box.androidsdk.content.models.BoxIteratorItems;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.models.BoxEntity;
 import com.box.androidsdk.content.models.BoxError;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
-import com.box.androidsdk.content.models.BoxListCollaborations;
-import com.box.androidsdk.content.models.BoxListItems;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
+import com.box.androidsdk.content.models.BoxIteratorItems;
 import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.share.activities.BoxCollaborationsActivity;
 import com.box.androidsdk.share.activities.BoxSharedLinkActivity;
 
-import org.apache.http.HttpStatus;
-
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
@@ -76,7 +77,7 @@ public class MainActivity extends ActionBarActivity {
                     setSampleFolder(mFolderApi.getCreateRequest("0", SHARE_SAMPLE_FOLDER_NAME).send());
                 } catch (BoxException e){
                     BoxError error = e.getAsBoxError();
-                    if (error != null && error.getStatus() == HttpStatus.SC_CONFLICT){
+                    if (error != null && error.getStatus() == HttpURLConnection.HTTP_CONFLICT){
                         ArrayList<BoxEntity> conflicts = error.getContextInfo().getConflicts();
                         if (conflicts != null && conflicts.size() == 1 && conflicts.get(0) instanceof BoxFolder){
                             setSampleFolder( (BoxFolder)conflicts.get(0));
@@ -146,7 +147,7 @@ public class MainActivity extends ActionBarActivity {
                     if (mSampleFolder != null){
                         mFolderApi.getDeleteRequest(mSampleFolder.getId()).send();
                     } else {
-                        BoxListItems items = mFolderApi.getItemsRequest("0").send();
+                        BoxIteratorItems items = mFolderApi.getItemsRequest("0").send();
                         for (BoxItem item : items){
                             if (item.getName().equals(SHARE_SAMPLE_FOLDER_NAME)){
                                 mSampleFolder = (BoxFolder)item;
@@ -188,7 +189,7 @@ public class MainActivity extends ActionBarActivity {
                 // update current data to the latest one returned from the shared link creation.
                 mSampleFolder = (BoxFolder) BoxCollaborationsActivity.createResultInterpreter(data).getBoxItem();
                 // if your user created or removed collaborations during this flow you can use this list for your own purposes.
-                BoxListCollaborations collaborations = BoxCollaborationsActivity.createResultInterpreter(data).getCollaborations();
+                BoxIteratorCollaborations collaborations = BoxCollaborationsActivity.createResultInterpreter(data).getCollaborations();
                 if (collaborations != null) {
                     Toast.makeText(this, "Number of collaborators: " + collaborations.size(), Toast.LENGTH_LONG).show();
                 }
