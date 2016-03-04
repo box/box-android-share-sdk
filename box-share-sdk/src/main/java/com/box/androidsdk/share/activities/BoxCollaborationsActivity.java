@@ -95,7 +95,7 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
         if (fragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-            fragment = CollaborationsFragment.newInstance();
+            fragment = CollaborationsFragment.newInstance(mFolder, mSession.getUserId());
 
             ft.add(R.id.fragmentContainer, fragment);
             ft.commit();
@@ -292,15 +292,15 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        CollaboratorsAdapter.ViewHolder holder = (CollaboratorsAdapter.ViewHolder) view.getTag();
-        if (holder != null && holder.collaboration != null && holder.collaboration.getItem() != null) {
-            BoxCollaboration.Role[] rolesArr = mRoles.toArray(new BoxCollaboration.Role[mRoles.size()]);
-            BoxCollaborator collaborator = holder.collaboration.getAccessibleBy();
-            BoxCollaboration.Role role = holder.collaboration.getRole();
-            String name = collaborator == null ? getString(R.string.box_sharesdk_another_person) : collaborator.getName();
-            CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(rolesArr, role, name, true, holder.collaboration);
-            rolesDialog.show(getFragmentManager(), TAG);
-        }
+//        CollaboratorsAdapter.ViewHolder holder = (CollaboratorsAdapter.ViewHolder) view.getTag();
+//        if (holder != null && holder.collaboration != null && holder.collaboration.getItem() != null) {
+//            BoxCollaboration.Role[] rolesArr = mRoles.toArray(new BoxCollaboration.Role[mRoles.size()]);
+//            BoxCollaborator collaborator = holder.collaboration.getAccessibleBy();
+//            BoxCollaboration.Role role = holder.collaboration.getRole();
+//            String name = collaborator == null ? getString(R.string.box_sharesdk_another_person) : collaborator.getName();
+//            CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(rolesArr, role, name, true, holder.collaboration);
+//            rolesDialog.show(getFragmentManager(), TAG);
+//        }
     }
 
     @Override

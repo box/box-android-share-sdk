@@ -174,10 +174,10 @@ public class BoxInviteCollaboratorsActivity extends BoxThreadPoolExecutorActivit
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.invite_collaborator_role) {
-            CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(mRoles, mSelectedRole, getString(R.string.box_sharesdk_access), false, null);
-            rolesDialog.show(getFragmentManager(), TAG);
-        }
+//        if (v.getId() == R.id.invite_collaborator_role) {
+//            CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(mRoles, mSelectedRole, getString(R.string.box_sharesdk_access), false, null);
+//            rolesDialog.show(getFragmentManager(), TAG);
+//        }
     }
 
     @Override
