@@ -29,6 +29,8 @@ import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.CollaboratorsAdapter;
+import com.box.androidsdk.share.api.BoxShareController;
+import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.CollaborationRolesDialog;
 import com.box.androidsdk.share.fragments.CollaborationsFragment;
 
@@ -86,12 +88,13 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity {
         }
         mFolder = (BoxFolder) mShareItem;
 
+        ShareController controller = new BoxShareController(new BoxApiFolder(mSession), new BoxApiCollaboration(mSession));
         mFragment = (CollaborationsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
             mFragment = CollaborationsFragment.newInstance(mFolder, mSession.getUserId());
-
+            mFragment.SetController(controller);
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }

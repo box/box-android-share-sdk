@@ -15,6 +15,7 @@ import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
+import com.box.androidsdk.share.api.ShareController;
 
 /**
  * Base class for Fragments in Share SDK
@@ -24,7 +25,6 @@ public abstract class BoxFragment extends Fragment {
     public static final String EXTRA_ITEM = "BoxFragment.ExtraItem";
     public static final String EXTRA_USER_ID = "BoxFragment.ExtraUserId";
 
-    protected BoxSession mSession;
     protected BoxItem mShareItem;
 
     private static final int  DEFAULT_SPINNER_DELAY = 500;
@@ -32,11 +32,12 @@ public abstract class BoxFragment extends Fragment {
     private ProgressDialog mDialog;
     private LastRunnableHandler mDialogHandler;
 
-    protected BoxShareController mController;
+    protected ShareController mController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         mDialogHandler = new LastRunnableHandler();
         String userId = null;
 
@@ -59,40 +60,17 @@ public abstract class BoxFragment extends Fragment {
             getActivity().finish();
             return;
         }
-        mSession = new BoxSession(getActivity(), userId);
-        mSession.setSessionAuthListener(new BoxAuthentication.AuthListener() {
-            @Override
-            public void onRefreshed(BoxAuthentication.BoxAuthenticationInfo info) {
-
-            }
-
-            @Override
-            public void onAuthCreated(BoxAuthentication.BoxAuthenticationInfo info) {
-
-            }
-
-            @Override
-            public void onAuthFailure(BoxAuthentication.BoxAuthenticationInfo info, Exception ex) {
-                Toast.makeText(getActivity(), R.string.box_sharesdk_session_is_not_authenticated, Toast.LENGTH_LONG).show();
-                getActivity().finish();
-            }
-
-            @Override
-            public void onLoggedOut(BoxAuthentication.BoxAuthenticationInfo info, Exception ex) {
-
-            }
-        });
-        mSession.authenticate();
-        mController = new BoxShareController(new BoxApiFolder(mSession), new BoxApiCollaboration(mSession));
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(EXTRA_ITEM,mShareItem);
-        outState.putString(EXTRA_USER_ID, mSession.getUser().getId());
+        outState.putSerializable(EXTRA_ITEM, mShareItem);
         super.onSaveInstanceState(outState);
     }
 
+    public void SetController(ShareController controller) {
+        mController = controller;
+    }
 
     /**
      * Dismisses the spinner if it is currently showing
