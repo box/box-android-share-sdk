@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +31,11 @@ import com.box.androidsdk.internal.BoxInviteeResponse;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.InviteeAdapter;
+import com.box.androidsdk.share.api.BoxShareController;
+import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.CollaborationRolesDialog;
+import com.box.androidsdk.share.fragments.CollaborationsFragment;
+import com.box.androidsdk.share.fragments.InviteCollaboratorsFragment;
 import com.box.androidsdk.share.internal.BoxListInvitees;
 
 import java.net.HttpURLConnection;
@@ -65,14 +70,14 @@ public class BoxInviteCollaboratorsActivity extends BoxThreadPoolExecutorActivit
     private static ThreadPoolExecutor mApiExecutor;
     private static final ConcurrentLinkedQueue<BoxResponse> INVITE_COLLABORATOR_RESPONSE_QUEUE = new ConcurrentLinkedQueue<BoxResponse>();
     private BoxCollaboration.Role mSelectedRole;
-    private BoxFolder mFolder;
     private BoxCollaboration.Role[] mRoles;
-    private BoxSession mSession;
     private BoxListInvitees mInvitees;
 
     private Button mRoleButton;
     private MultiAutoCompleteTextView mAutoComplete;
     private InviteeAdapter mAdapter;
+
+    private InviteCollaboratorsFragment mFragment;
 
     @Override
     public ThreadPoolExecutor getApiExecutor(Application application) {
@@ -93,35 +98,46 @@ public class BoxInviteCollaboratorsActivity extends BoxThreadPoolExecutorActivit
         setContentView(R.layout.activity_invite_collaborators);
         initToolbar();
 
-        mRoleButton = (Button) findViewById(R.id.invite_collaborator_role);
-        mRoleButton.setOnClickListener(this);
-        mAutoComplete = (MultiAutoCompleteTextView) findViewById(R.id.invite_collaborator_autocomplete);
-        mAutoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        mAdapter = new InviteeAdapter(this);
-        mAutoComplete.setAdapter(mAdapter);
-
-        Intent intent = getIntent();
-        String userId = intent.getStringExtra(EXTRA_USER_ID);
-        mSession = new BoxSession(this, userId);
-        mFolder = (BoxFolder) mShareItem;
-
-        // Get serialized roles or fetch them if they are not available
-        if (mFolder != null && mFolder.getAllowedInviteeRoles() != null) {
-            mRoles = mFolder.getAllowedInviteeRoles().toArray(new BoxCollaboration.Role[mFolder.getAllowedInviteeRoles().size()]);
-            BoxCollaboration.Role selectedRole = (BoxCollaboration.Role) intent.getSerializableExtra(EXTRA_SELECTED_ROLE);
-            setSelectedRole(selectedRole);
-        } else {
-            fetchRoles();
+        ShareController controller = new BoxShareController(new BoxApiFolder(mSession), new BoxApiCollaboration(mSession));
+        mFragment = (InviteCollaboratorsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (mFragment == null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+            mFragment = InviteCollaboratorsFragment.newInstance((BoxFolder) mShareItem, mSession);
+            mFragment.SetController(controller);
+            ft.add(R.id.fragmentContainer, mFragment);
+            ft.commit();
         }
-
-        // Get serialized invitees or fetch them if they are not available
-        if (savedInstanceState != null && savedInstanceState.getSerializable(EXTRA_INVITEES) != null) {
-            mInvitees = (BoxListInvitees) savedInstanceState.getSerializable(EXTRA_INVITEES);
-            mAdapter.setInvitees(mInvitees);
-        } else {
-            fetchInvitees();
-        }
-
+//
+//        mRoleButton = (Button) findViewById(R.id.invite_collaborator_role);
+//        mRoleButton.setOnClickListener(this);
+//        mAutoComplete = (MultiAutoCompleteTextView) findViewById(R.id.invite_collaborator_autocomplete);
+//        mAutoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+//        mAdapter = new InviteeAdapter(this);
+//        mAutoComplete.setAdapter(mAdapter);
+//
+//        Intent intent = getIntent();
+//        String userId = intent.getStringExtra(EXTRA_USER_ID);
+//        mSession = new BoxSession(this, userId);
+//        mFolder = (BoxFolder) mShareItem;
+//
+//        // Get serialized roles or fetch them if they are not available
+//        if (mFolder != null && mFolder.getAllowedInviteeRoles() != null) {
+//            mRoles = mFolder.getAllowedInviteeRoles().toArray(new BoxCollaboration.Role[mFolder.getAllowedInviteeRoles().size()]);
+//            BoxCollaboration.Role selectedRole = (BoxCollaboration.Role) intent.getSerializableExtra(EXTRA_SELECTED_ROLE);
+//            setSelectedRole(selectedRole);
+//        } else {
+//            fetchRoles();
+//        }
+//
+//        // Get serialized invitees or fetch them if they are not available
+//        if (savedInstanceState != null && savedInstanceState.getSerializable(EXTRA_INVITEES) != null) {
+//            mInvitees = (BoxListInvitees) savedInstanceState.getSerializable(EXTRA_INVITEES);
+//            mAdapter.setInvitees(mInvitees);
+//        } else {
+//            fetchInvitees();
+//        }
+//
     }
 
     @Override
@@ -174,10 +190,10 @@ public class BoxInviteCollaboratorsActivity extends BoxThreadPoolExecutorActivit
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.invite_collaborator_role) {
-            CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(mRoles, mSelectedRole, getString(R.string.box_sharesdk_access), false, null);
-            rolesDialog.show(getFragmentManager(), TAG);
-        }
+//        if (v.getId() == R.id.invite_collaborator_role) {
+//            CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(mRoles, mSelectedRole, getString(R.string.box_sharesdk_access), false, null);
+//            rolesDialog.show(getFragmentManager(), TAG);
+//        }
     }
 
     @Override
@@ -249,53 +265,53 @@ public class BoxInviteCollaboratorsActivity extends BoxThreadPoolExecutorActivit
      * Executes the request to retrieve the available roles for the folder
      */
     private void fetchRoles() {
-        BoxRequestsFolder.GetFolderInfo rolesReq = new BoxApiFolder(mSession)
-                .getInfoRequest(mFolder.getId())
-                .setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES);
-
-        executeRequest(rolesReq);
+//        BoxRequestsFolder.GetFolderInfo rolesReq = new BoxApiFolder(mSession)
+//                .getInfoRequest(mFolder.getId())
+//                .setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES);
+//
+//        executeRequest(rolesReq);
     }
 
     /**
      * Executes the request to retrieve the invitees that can be auto-completed
      */
     private void fetchInvitees() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                BoxInviteeResponse response = new BoxApiInvitee().getInviteesForFolder(mFolder.getId(), mSession.getAuthInfo().accessToken());
-
-                if (response.getResponseCode() >= HttpURLConnection.HTTP_OK && response.getResponseCode() < HttpURLConnection.HTTP_MULT_CHOICE) {
-                    final BoxListInvitees invitees = new BoxListInvitees();
-                    invitees.createFromJson(response.getResponse());
-                    mInvitees = invitees;
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mAdapter.setInvitees(invitees);
-                        }
-                    });
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                BoxInviteeResponse response = new BoxApiInvitee().getInviteesForFolder(mFolder.getId(), mSession.getAuthInfo().accessToken());
+//
+//                if (response.getResponseCode() >= HttpURLConnection.HTTP_OK && response.getResponseCode() < HttpURLConnection.HTTP_MULT_CHOICE) {
+//                    final BoxListInvitees invitees = new BoxListInvitees();
+//                    invitees.createFromJson(response.getResponse());
+//                    mInvitees = invitees;
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            mAdapter.setInvitees(invitees);
+//                        }
+//                    });
+//                }
+//            }
+//        }).start();
     }
 
     /**
      * Executes the request to add collaborations to the folder
      */
     private void addCollaborations() {
-        String emails = mAutoComplete.getText().toString();
-        if (!SdkUtils.isBlank(emails)) {
-            BoxRequestBatch batchRequest = new BoxRequestBatch();
-            String[] emailParts = emails.split(",");
-            for (int i = 0; i < emailParts.length; ++i) {
-                String email = emailParts[i].trim();
-                if (!SdkUtils.isBlank(email)) {
-                    batchRequest.addRequest(new BoxApiCollaboration(mSession).getAddRequest(mFolder.getId(), mSelectedRole, email));
-                }
-            }
-            executeRequest(batchRequest);
-        }
+//        String emails = mAutoComplete.getText().toString();
+//        if (!SdkUtils.isBlank(emails)) {
+//            BoxRequestBatch batchRequest = new BoxRequestBatch();
+//            String[] emailParts = emails.split(",");
+//            for (int i = 0; i < emailParts.length; ++i) {
+//                String email = emailParts[i].trim();
+//                if (!SdkUtils.isBlank(email)) {
+//                    batchRequest.addRequest(new BoxApiCollaboration(mSession).getAddRequest(mFolder.getId(), mSelectedRole, email));
+//                }
+//            }
+//            executeRequest(batchRequest);
+//        }
     }
 
     /**
