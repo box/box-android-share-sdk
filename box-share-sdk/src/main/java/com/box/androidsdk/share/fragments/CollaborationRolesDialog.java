@@ -40,6 +40,8 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
     protected Serializable mExtra;
     protected ArrayList<RadioButton> mRolesOptions = new ArrayList<RadioButton>();
 
+    protected OnRoleSelectedListener mOnRoleSelectedListener;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         String userId = getArguments().getString(ARGS_USER_ID);
@@ -138,14 +140,17 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {
             case DialogInterface.BUTTON_POSITIVE:
-                OnRoleSelectedListener listener = (OnRoleSelectedListener) getActivity();
-                listener.onRoleSelected(this);
+                mOnRoleSelectedListener.onRoleSelected(this);
                 break;
             case DialogInterface.BUTTON_NEGATIVE:
             default:
                 // Do nothing
                 break;
         }
+    }
+
+    public void setOnRoleSelectedListener(OnRoleSelectedListener listener) {
+        mOnRoleSelectedListener = listener;
     }
 
     public BoxCollaboration.Role getSelectedRole() {

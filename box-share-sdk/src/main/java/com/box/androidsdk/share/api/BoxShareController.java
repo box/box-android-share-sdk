@@ -1,10 +1,13 @@
 package com.box.androidsdk.share.api;
 
+import com.box.androidsdk.content.BoxApiCollaboration;
 import com.box.androidsdk.content.BoxApiFile;
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxFutureTask;
+import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
+import com.box.androidsdk.content.models.BoxVoid;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -15,9 +18,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class BoxShareController implements ShareController {
     private BoxApiFolder mFolderApi;
+    private BoxApiCollaboration mCollabApi;
 
-    public BoxShareController(BoxApiFolder folderApi) {
+    public BoxShareController(BoxApiFolder folderApi, BoxApiCollaboration collaborationApi) {
         mFolderApi = folderApi;
+        mCollabApi = collaborationApi;
     }
 
     @Override
@@ -31,6 +36,20 @@ public class BoxShareController implements ShareController {
     @Override
     public void fetchRoles(BoxFolder boxFolder, BoxFutureTask.OnCompletedListener<BoxFolder> onCompletedListener) {
         BoxFutureTask<BoxFolder> task = mFolderApi.getInfoRequest(boxFolder.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES).toTask();
+        task.addOnCompletedListener(onCompletedListener);
+        getApiExecutor().submit(task);
+    }
+
+    @Override
+    public void updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role selectedRole, BoxFutureTask.OnCompletedListener<BoxCollaboration> onCompletedListener) {
+        BoxFutureTask<BoxCollaboration> task = mCollabApi.getUpdateRequest(collaboration.getId()).setNewRole(selectedRole).toTask();
+        task.addOnCompletedListener(onCompletedListener);
+        getApiExecutor().submit(task);
+    }
+
+    @Override
+    public void deleteCollaboration(BoxCollaboration collaboration, BoxFutureTask.OnCompletedListener<BoxVoid> onCompletedListener) {
+        BoxFutureTask<BoxVoid> task = mCollabApi.getDeleteRequest(collaboration.getId()).toTask();
         task.addOnCompletedListener(onCompletedListener);
         getApiExecutor().submit(task);
     }

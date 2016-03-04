@@ -28,7 +28,6 @@ public class CollaboratorsAdapter extends BaseAdapter {
             0xff4dc6fc, 0xff501785, 0xffee6832, 0xffffb11d, 0xffde7ff1 };
 
     private ArrayList<BoxCollaboration> mItems = new ArrayList<BoxCollaboration>();
-    private HashMap<String, Integer> mPositionMap = new HashMap<String, Integer>();
     private Context mContext;
 
     public CollaboratorsAdapter(Context context) {
@@ -88,16 +87,14 @@ public class CollaboratorsAdapter extends BaseAdapter {
 
     public synchronized void setItems(BoxIteratorCollaborations items) {
         mItems.clear();
-        mPositionMap.clear();
         for (int i = 0; i < items.size(); i++) {
             mItems.add(items.get(i));
-            mPositionMap.put(items.get(i).getId(), i);
         }
         notifyDataSetChanged();
     }
 
     public synchronized void update(BoxCollaboration item) {
-        Integer position = mPositionMap.get(item.getId());
+        Integer position = getPosition(item.getId());
         if (position != null) {
             mItems.set(position.intValue(), item);
         }
@@ -105,11 +102,22 @@ public class CollaboratorsAdapter extends BaseAdapter {
     }
 
     public synchronized void delete(String collabId) {
-        Integer position = mPositionMap.get(collabId);
+        Integer position = getPosition(collabId);
         if (position != null) {
             mItems.remove(position.intValue());
         }
         notifyDataSetChanged();
+    }
+
+    public Integer getPosition(String id) {
+        Integer position = null;
+        for (int i = 0; i < mItems.size(); i++) {
+            if (mItems.get(i).getId().equals(id)) {
+                position = i;
+                break;
+            }
+        }
+        return position;
     }
 
     public static class ViewHolder {
