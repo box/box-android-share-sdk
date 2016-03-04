@@ -47,11 +47,6 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity {
      */
     public static final String EXTRA_FOLDER_ID = "extraFolderId";
 
-    /**
-     * Extra serializable parameter to save the {@link com.box.androidsdk.content.models.BoxIteratorCollaborations} in the saved instance state bundle
-     */
-    protected static final String EXTRA_COLLABORATIONS_LIST = "extraCollaborationsList";
-
     protected static final String TAG = BoxCollaborationsActivity.class.getName();
     protected static final int INVITE_COLLABS_REQUEST_CODE = 1;
     protected BoxFolder mFolder;
