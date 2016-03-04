@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/box_sharesdk_horizontal_margin"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin"
+                android:textColor="@color/box_sharesdk_hint"
+                android:text="@string/box_sharesdk_to" />
+            <MultiAutoCompleteTextView
+                android:id="@+id/invite_collaborator_autocomplete"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/box_sharesdk_primary_text"
+                android:background="@null"
+                android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+        </LinearLayout>
+        <View style="@style/BoxDivider" />
+        <Button
+            android:id="@+id/invite_collaborator_role"
+            style="@style/BoxLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/box_sharesdk_collaboration_cell_height"
+            />
+        <View style="@style/BoxDivider" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@drawable/box_toolbar_dropshadow" />
+</LinearLayout>

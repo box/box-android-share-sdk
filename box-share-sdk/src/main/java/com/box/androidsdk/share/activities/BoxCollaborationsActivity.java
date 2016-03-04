@@ -7,34 +7,21 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxApiCollaboration;
 import com.box.androidsdk.content.BoxApiFolder;
-import com.box.androidsdk.content.models.BoxFile;
-import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxCollaboration;
-import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
-import com.box.androidsdk.content.models.BoxIteratorCollaborations;
-import com.box.androidsdk.content.requests.BoxRequest;
-import com.box.androidsdk.content.requests.BoxRequestsFolder;
-import com.box.androidsdk.content.requests.BoxRequestsShare;
+import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.adapters.CollaboratorsAdapter;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
-import com.box.androidsdk.share.fragments.CollaborationRolesDialog;
 import com.box.androidsdk.share.fragments.CollaborationsFragment;
 
-import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -51,7 +38,6 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity {
 
     protected static final String TAG = BoxCollaborationsActivity.class.getName();
     protected static final int INVITE_COLLABS_REQUEST_CODE = 1;
-    protected BoxFolder mFolder;
 
     private static final ConcurrentLinkedQueue<BoxResponse> COLLABORATIONS_RESPONSE_QUEUE = new ConcurrentLinkedQueue<BoxResponse>();
     private static ThreadPoolExecutor mApiExecutor;
@@ -86,24 +72,17 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity {
             finish();
             return;
         }
-        mFolder = (BoxFolder) mShareItem;
 
         ShareController controller = new BoxShareController(new BoxApiFolder(mSession), new BoxApiCollaboration(mSession));
         mFragment = (CollaborationsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-            mFragment = CollaborationsFragment.newInstance(mFolder, mSession.getUserId());
+            mFragment = CollaborationsFragment.newInstance((BoxFolder) mShareItem, mSession.getUserId());
             mFragment.SetController(controller);
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
-    }
-
-    @Override
-    protected void setMainItem(BoxItem boxItem) {
-        mFolder = (BoxFolder) boxItem;
-        super.setMainItem(boxItem);
     }
 
     @Override
@@ -120,7 +99,7 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity {
         if (id == R.id.box_sharesdk_action_add) {
             BoxCollaboration.Role[] rolesArr = mFragment.getRoles();
             if (rolesArr != null) {
-                Intent inviteCollabsIntent = BoxInviteCollaboratorsActivity.getLaunchIntent(this, mFolder, mSession, rolesArr, rolesArr[0]);
+                Intent inviteCollabsIntent = BoxInviteCollaboratorsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession, rolesArr, rolesArr[0]);
                 startActivityForResult(inviteCollabsIntent, INVITE_COLLABS_REQUEST_CODE);
             }
         }
