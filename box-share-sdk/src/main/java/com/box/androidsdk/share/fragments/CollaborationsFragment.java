@@ -115,7 +115,7 @@ public class CollaborationsFragment extends Fragment implements AdapterView.OnIt
     /**
      * Executes the request to retrieve collaborations for the folder
      */
-    private void fetchCollaborations() {
+    public void fetchCollaborations() {
         if (mFolder == null || SdkUtils.isBlank(mFolder.getId())) {
             Toast.makeText(getActivity(), getString(R.string.box_sharesdk_cannot_view_collaborations), Toast.LENGTH_LONG).show();
             return;
@@ -162,6 +162,13 @@ public class CollaborationsFragment extends Fragment implements AdapterView.OnIt
      */
     protected void showView(View view){
         view.setVisibility(View.VISIBLE);
+    }
+
+    public BoxCollaboration.Role[] getRoles() {
+        if (mRoles != null) {
+            return mRoles.toArray(new BoxCollaboration.Role[mRoles.size()]);
+        }
+        return null;
     }
 
     private BoxFutureTask.OnCompletedListener<BoxIteratorCollaborations> mCollaborationsListener =

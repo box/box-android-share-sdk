@@ -40,7 +40,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 /**
  * Activity used to show and modify the collaborations of a folder. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
-public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity implements AdapterView.OnItemClickListener, CollaborationRolesDialog.OnRoleSelectedListener {
+public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity {
 
     /**
      * Extra intent parameter to specify the folder id of the collaborations that should be retrieved
@@ -55,14 +55,10 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
     protected static final String TAG = BoxCollaborationsActivity.class.getName();
     protected static final int INVITE_COLLABS_REQUEST_CODE = 1;
     protected BoxFolder mFolder;
-    protected ListView mCollaboratorsListView;
-    protected TextView mNoCollaboratorsText;
-    protected CollaboratorsAdapter mCollaboratorsAdapter;
-    protected ArrayList<BoxCollaboration.Role> mRoles = null;
 
     private static final ConcurrentLinkedQueue<BoxResponse> COLLABORATIONS_RESPONSE_QUEUE = new ConcurrentLinkedQueue<BoxResponse>();
     private static ThreadPoolExecutor mApiExecutor;
-    private BoxIteratorCollaborations mCollaborationsList;
+    private CollaborationsFragment mFragment;
 
     @Override
     public ThreadPoolExecutor getApiExecutor(Application application) {
@@ -78,6 +74,11 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
     }
 
     @Override
+    protected void handleBoxResponse(BoxResponse response) {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collaborations);
@@ -90,52 +91,21 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
         }
         mFolder = (BoxFolder) mShareItem;
 
-        Intent intent = getIntent();
-        CollaborationsFragment fragment = (CollaborationsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (fragment == null) {
+        mFragment = (CollaborationsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-            fragment = CollaborationsFragment.newInstance(mFolder, mSession.getUserId());
+            mFragment = CollaborationsFragment.newInstance(mFolder, mSession.getUserId());
 
-            ft.add(R.id.fragmentContainer, fragment);
+            ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
-
-        /*
-        mCollaboratorsListView = (ListView) findViewById(R.id.collaboratorsList);
-        mCollaboratorsListView.setDivider(null);
-        mCollaboratorsAdapter = new CollaboratorsAdapter(this);
-        mCollaboratorsListView.setAdapter(mCollaboratorsAdapter);
-        mCollaboratorsListView.setOnItemClickListener(this);
-        mNoCollaboratorsText = (TextView) findViewById(R.id.no_collaborators_text);
-
-        // Get serialized collaborations or fetch them if they are not available
-        if (savedInstanceState != null && savedInstanceState.getSerializable(EXTRA_COLLABORATIONS_LIST) != null){
-            mCollaborationsList = (BoxIteratorCollaborations) savedInstanceState.getSerializable(EXTRA_COLLABORATIONS_LIST);
-            updateUi(mCollaborationsList);
-        } else {
-            fetchCollaborations();
-        }
-
-        // Get serialized roles or fetch them if they are not available
-        if (mFolder.getAllowedInviteeRoles() == null) {
-            fetchRoles();
-        } else {
-            mRoles = mFolder.getAllowedInviteeRoles();
-        }
-        */
     }
 
     @Override
     protected void setMainItem(BoxItem boxItem) {
         mFolder = (BoxFolder) boxItem;
         super.setMainItem(boxItem);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(EXTRA_COLLABORATIONS_LIST, mCollaborationsList);
-        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -150,8 +120,8 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
         int id = item.getItemId();
 
         if (id == R.id.box_sharesdk_action_add) {
-            if (mRoles != null) {
-                BoxCollaboration.Role[] rolesArr = mRoles.toArray(new BoxCollaboration.Role[mRoles.size()]);
+            BoxCollaboration.Role[] rolesArr = mFragment.getRoles();
+            if (rolesArr != null) {
                 Intent inviteCollabsIntent = BoxInviteCollaboratorsActivity.getLaunchIntent(this, mFolder, mSession, rolesArr, rolesArr[0]);
                 startActivityForResult(inviteCollabsIntent, INVITE_COLLABS_REQUEST_CODE);
             }
@@ -167,104 +137,9 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
             case INVITE_COLLABS_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
                     // New collaborators have been invited so we should refresh
-                    fetchCollaborations();
+                    mFragment.fetchCollaborations();
                 }
                 break;
-        }
-    }
-
-    private void updateUi(final BoxIteratorCollaborations collabs){
-        if (collabs != null && collabs.size() > 0) {
-            hideView(mNoCollaboratorsText);
-            showView(mCollaboratorsListView);
-            mCollaboratorsAdapter.setItems(collabs);
-        } else {
-            hideView(mCollaboratorsListView);
-            showView(mNoCollaboratorsText);
-        }
-    }
-
-    @Override
-    public void handleBoxResponse(BoxResponse response){
-        if (response.isSuccess()) {
-            if (response.getRequest() instanceof  BoxRequestsFolder.GetFolderInfo) {
-                BoxFolder folder = (BoxFolder) response.getResult();
-                mRoles = folder.getAllowedInviteeRoles();
-                mShareItem = folder;
-            } else if (response.getRequest() instanceof BoxRequestsFolder.GetCollaborations) {
-                BoxIteratorCollaborations collabs = (BoxIteratorCollaborations) response.getResult();
-                mCollaborationsList = collabs;
-                updateUi(collabs);
-            } else if (response.getRequest() instanceof BoxRequestsShare.UpdateCollaboration) {
-                mCollaboratorsAdapter.update((BoxCollaboration) response.getResult());
-            } else if (response.getRequest() instanceof BoxRequestsShare.DeleteCollaboration) {
-                BoxRequestsShare.DeleteCollaboration req = (BoxRequestsShare.DeleteCollaboration) response.getRequest();
-                mCollaboratorsAdapter.delete(req.getId());
-                if (mCollaboratorsAdapter.getCount() == 0) {
-                    hideView(mCollaboratorsListView);
-                    showView(mNoCollaboratorsText);
-                };
-            }
-        } else {
-            int resId;
-            if (response.getRequest() instanceof BoxRequestsFolder.GetFolderInfo) {
-                resId = R.string.box_sharesdk_cannot_view_collaborations;
-            } else {
-                resId = R.string.box_sharesdk_network_error;
-            }
-
-            Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    /**
-     * Uses the ThreadPoolExecutor provided by getApiExecutor to execute the {@link com.box.androidsdk.content.requests.BoxRequest}
-     *
-     * @param request the request to be executed
-     */
-    protected void executeRequest(BoxRequest request){
-        getApiExecutor(getApplication()).execute(request.setTimeOut(DEFAULT_TIMEOUT).toTask());
-    }
-
-    /**
-     * Executes the request to retrieve collaborations for the folder
-     */
-    private void fetchCollaborations() {
-        if (mFolder == null || SdkUtils.isBlank(mFolder.getId())) {
-            Toast.makeText(this, getString(R.string.box_sharesdk_cannot_view_collaborations), Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
-        BoxRequestsFolder.GetCollaborations collabsReq = new BoxApiFolder(mSession).getCollaborationsRequest(mFolder.getId());
-        executeRequest(collabsReq);
-    }
-
-    /**
-     * Executes the request to retrieve the available roles for the folder
-     */
-    private void fetchRoles() {
-        BoxRequestsFolder.GetFolderInfo rolesReq = new BoxApiFolder(mSession)
-                .getInfoRequest(mFolder.getId())
-                .setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES);
-
-        executeRequest(rolesReq);
-    }
-
-    /**
-     * Updates the UI with the provided collaborations
-     *
-     * @param collabs list of collaborations
-     */
-    private void setCollaborations(BoxIteratorCollaborations collabs) {
-        if (collabs != null && collabs.size() > 0) {
-            hideView(mNoCollaboratorsText);
-            showView(mCollaboratorsListView);
-            mCollaborationsList = collabs;
-            mCollaboratorsAdapter.setItems(collabs);
-        } else {
-            hideView(mCollaboratorsListView);
-            showView(mNoCollaboratorsText);
         }
     }
 
@@ -288,66 +163,5 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
         collabIntent.putExtra(EXTRA_FOLDER_ID, folder.getId());
         collabIntent.putExtra(EXTRA_USER_ID, session.getUser().getId());
         return collabIntent;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        CollaboratorsAdapter.ViewHolder holder = (CollaboratorsAdapter.ViewHolder) view.getTag();
-//        if (holder != null && holder.collaboration != null && holder.collaboration.getItem() != null) {
-//            BoxCollaboration.Role[] rolesArr = mRoles.toArray(new BoxCollaboration.Role[mRoles.size()]);
-//            BoxCollaborator collaborator = holder.collaboration.getAccessibleBy();
-//            BoxCollaboration.Role role = holder.collaboration.getRole();
-//            String name = collaborator == null ? getString(R.string.box_sharesdk_another_person) : collaborator.getName();
-//            CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(rolesArr, role, name, true, holder.collaboration);
-//            rolesDialog.show(getFragmentManager(), TAG);
-//        }
-    }
-
-    @Override
-    public void onRoleSelected(CollaborationRolesDialog rolesDialog) {
-        BoxRequest req;
-        BoxCollaboration collaboration = (BoxCollaboration) rolesDialog.getSerializableExtra();
-        if (collaboration == null)
-            return;
-
-        if (rolesDialog.getIsRemoveCollaborationSelected()) {
-            req = new BoxApiCollaboration(mSession).getDeleteRequest(collaboration.getId());
-        } else {
-            BoxCollaboration.Role selectedRole = rolesDialog.getSelectedRole();
-            if (selectedRole == null || selectedRole == collaboration.getRole())
-                return;
-
-            req = new BoxApiCollaboration(mSession)
-                    .getUpdateRequest(collaboration.getId())
-                    .setNewRole(selectedRole);
-        }
-
-        executeRequest(req);
-    }
-
-    @Override
-    public void finish() {
-        Intent data = new Intent();
-        data.putExtra(ResultInterpreter.EXTRA_BOX_ITEM, mFolder);
-        data.putExtra(ResultInterpreter.EXTRA_COLLABORATIONS, mCollaborationsList);
-        setResult(RESULT_OK, data);
-        super.finish();
-    }
-
-    public static class ResultInterpreter extends BoxSharedLinkAccessActivity.ResultInterpreter {
-
-        public static String EXTRA_COLLABORATIONS = "extraCollaborations";
-
-        public ResultInterpreter(final Intent intent){
-            super(intent);
-        }
-
-        public BoxIteratorCollaborations getCollaborations(){
-            return (BoxIteratorCollaborations)mIntent.getSerializableExtra(EXTRA_COLLABORATIONS);
-        }
-    }
-
-    public static ResultInterpreter createResultInterpreter(final Intent data){
-        return new ResultInterpreter(data);
     }
 }
