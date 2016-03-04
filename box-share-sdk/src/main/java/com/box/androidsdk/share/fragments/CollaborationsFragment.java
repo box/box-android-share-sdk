@@ -100,19 +100,17 @@ public class CollaborationsFragment extends Fragment implements AdapterView.OnIt
         }
 
         mController.fetchCollaborations(mFolder, mCollaborationsListener);
-//        BoxRequestsFolder.GetCollaborations collabsReq = new BoxApiFolder(mSession).getCollaborationsRequest(mFolder.getId());
-//        executeRequest(collabsReq);
     }
 
     /**
      * Executes the request to retrieve the available roles for the folder
      */
     private void fetchRoles() {
-//        BoxRequestsFolder.GetFolderInfo rolesReq = new BoxApiFolder(mSession)
-//                .getInfoRequest(mFolder.getId())
-//                .setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES);
-//
-//        executeRequest(rolesReq);
+        if (mFolder == null || SdkUtils.isBlank(mFolder.getId())) {
+            return;
+        }
+
+        mController.fetchRoles(mFolder, mRolesListener);
     }
 
     private void updateUi(final BoxIteratorCollaborations collabs){
@@ -156,7 +154,7 @@ public class CollaborationsFragment extends Fragment implements AdapterView.OnIt
                     @Override
                     public void run() {
                         if (response.isSuccess() && mFolder != null) {
-                            BoxIteratorCollaborations collabs = (BoxIteratorCollaborations) response.getResult();
+                            BoxIteratorCollaborations collabs = response.getResult();
                             mCollaborationsList = collabs;
                             updateUi(collabs);
                         } else {
@@ -167,6 +165,29 @@ public class CollaborationsFragment extends Fragment implements AdapterView.OnIt
                 });
             }
         };
+
+    private BoxFutureTask.OnCompletedListener<BoxFolder> mRolesListener =
+            new BoxFutureTask.OnCompletedListener<BoxFolder>() {
+                @Override
+                public void onCompleted(final BoxResponse<BoxFolder> response) {
+                    final Activity activity = getActivity();
+                    if (activity == null) {
+                        return;
+                    }
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (response.isSuccess() && mFolder != null) {
+                                BoxFolder folder = response.getResult();
+                                mRoles = folder.getAllowedInviteeRoles();
+                            } else {
+                                BoxLogUtils.e(CollaborationsFragment.class.getName(), getString(R.string.box_sharesdk_network_error),
+                                        response.getException());
+                            }
+                        }
+                    });
+                }
+            };
 
     public static CollaborationsFragment newInstance(BoxFolder folder, String sessionUserId) {
         Bundle args = new Bundle();

@@ -28,6 +28,13 @@ public class BoxShareController implements ShareController {
         getApiExecutor().submit(task);
     }
 
+    @Override
+    public void fetchRoles(BoxFolder boxFolder, BoxFutureTask.OnCompletedListener<BoxFolder> onCompletedListener) {
+        BoxFutureTask<BoxFolder> task = mFolderApi.getInfoRequest(boxFolder.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES).toTask();
+        task.addOnCompletedListener(onCompletedListener);
+        getApiExecutor().submit(task);
+    }
+
     private static ThreadPoolExecutor mApiExecutor;
 
     protected ThreadPoolExecutor getApiExecutor() {
