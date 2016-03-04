@@ -42,7 +42,6 @@ public class CollaborationsFragment extends Fragment implements AdapterView.OnIt
     protected TextView mNoCollaboratorsText;
     protected CollaboratorsAdapter mCollaboratorsAdapter;
     protected ArrayList<BoxCollaboration.Role> mRoles = null;
-    private BoxIteratorCollaborations mCollaborationsList;
 
     private BoxSession mSession;
     protected BoxShareController mController;
@@ -97,7 +96,6 @@ public class CollaborationsFragment extends Fragment implements AdapterView.OnIt
 
     @Override
     public void onRoleSelected(CollaborationRolesDialog rolesDialog) {
-        BoxRequest req;
         BoxCollaboration collaboration = (BoxCollaboration) rolesDialog.getSerializableExtra();
         if (collaboration == null)
             return;
@@ -184,7 +182,6 @@ public class CollaborationsFragment extends Fragment implements AdapterView.OnIt
                     public void run() {
                         if (response.isSuccess() && mFolder != null) {
                             BoxIteratorCollaborations collabs = response.getResult();
-                            mCollaborationsList = collabs;
                             updateUi(collabs);
                         } else {
                             BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch Collaborators request failed",
