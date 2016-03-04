@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxApiCollaboration;
 import com.box.androidsdk.content.BoxApiFolder;
+import com.box.androidsdk.content.models.BoxFile;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborator;
@@ -28,6 +30,7 @@ import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.CollaboratorsAdapter;
 import com.box.androidsdk.share.fragments.CollaborationRolesDialog;
+import com.box.androidsdk.share.fragments.CollaborationsFragment;
 
 import java.util.ArrayList;
 import java.util.Queue;
@@ -87,6 +90,18 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
         }
         mFolder = (BoxFolder) mShareItem;
 
+        Intent intent = getIntent();
+        CollaborationsFragment fragment = (CollaborationsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (fragment == null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+            fragment = CollaborationsFragment.newInstance();
+
+            ft.add(R.id.fragmentContainer, fragment);
+            ft.commit();
+        }
+
+        /*
         mCollaboratorsListView = (ListView) findViewById(R.id.collaboratorsList);
         mCollaboratorsListView.setDivider(null);
         mCollaboratorsAdapter = new CollaboratorsAdapter(this);
@@ -108,6 +123,7 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity imp
         } else {
             mRoles = mFolder.getAllowedInviteeRoles();
         }
+        */
     }
 
     @Override
