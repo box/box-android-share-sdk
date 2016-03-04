@@ -1,7 +1,6 @@
 package com.box.androidsdk.share.fragments;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,48 +11,34 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.box.androidsdk.content.BoxApiCollaboration;
-import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
-import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxVoid;
-import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestsShare;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.CollaboratorsAdapter;
-import com.box.androidsdk.share.api.BoxShareController;
 
 import java.util.ArrayList;
 
-public class CollaborationsFragment extends Fragment implements AdapterView.OnItemClickListener, CollaborationRolesDialog.OnRoleSelectedListener {
+public class CollaborationsFragment extends BoxFragment implements AdapterView.OnItemClickListener, CollaborationRolesDialog.OnRoleSelectedListener {
 
     protected static final String TAG = CollaborationsFragment.class.getName();
-    public static final String BOX_FOLDER = "CollaborationsFragment.BoxFolder";
-    public static final String BOX_SESSION_USER_ID = "CommentsFragment.BoxSession.UserId";
     protected BoxFolder mFolder;
     protected ListView mCollaboratorsListView;
     protected TextView mNoCollaboratorsText;
     protected CollaboratorsAdapter mCollaboratorsAdapter;
     protected ArrayList<BoxCollaboration.Role> mRoles = null;
 
-    private BoxSession mSession;
-    protected BoxShareController mController;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        Bundle args = getArguments();
-        mFolder = (BoxFolder) args.getSerializable(BOX_FOLDER);
-        mSession = new BoxSession(getActivity(), args.getString(BOX_SESSION_USER_ID));
-        mController = new BoxShareController(new BoxApiFolder(mSession), new BoxApiCollaboration(mSession));
+        mFolder = (BoxFolder) mShareItem;
     }
 
     @Nullable
@@ -119,6 +104,7 @@ public class CollaborationsFragment extends Fragment implements AdapterView.OnIt
             return;
         }
 
+        showSpinner();
         mController.fetchCollaborations(mFolder, mCollaborationsListener);
     }
 
@@ -144,24 +130,6 @@ public class CollaborationsFragment extends Fragment implements AdapterView.OnIt
         }
     }
 
-    /**
-     * Helper method to hide a view ie. set the visibility to View.GONE
-     *
-     * @param view the view that should be hidden
-     */
-    protected void hideView(View view){
-        view.setVisibility(View.GONE);
-    }
-
-    /**
-     * Helper method to show a view ie. set the visibility to View.VISIBLE
-     *
-     * @param view the view that should be shown
-     */
-    protected void showView(View view){
-        view.setVisibility(View.VISIBLE);
-    }
-
     public BoxCollaboration.Role[] getRoles() {
         if (mRoles != null) {
             return mRoles.toArray(new BoxCollaboration.Role[mRoles.size()]);
@@ -173,6 +141,7 @@ public class CollaborationsFragment extends Fragment implements AdapterView.OnIt
         new BoxFutureTask.OnCompletedListener<BoxIteratorCollaborations>() {
             @Override
             public void onCompleted(final BoxResponse<BoxIteratorCollaborations> response) {
+                dismissSpinner();
                 final Activity activity = getActivity();
                 if (activity == null) {
                     return;
@@ -269,13 +238,9 @@ public class CollaborationsFragment extends Fragment implements AdapterView.OnIt
         };
 
     public static CollaborationsFragment newInstance(BoxFolder folder, String sessionUserId) {
-        Bundle args = new Bundle();
-        args.putSerializable(BOX_FOLDER, folder);
-        args.putString(BOX_SESSION_USER_ID, sessionUserId);
+        Bundle args = BoxFragment.getBundle(folder, sessionUserId);
         CollaborationsFragment fragment = new CollaborationsFragment();
         fragment.setArguments(args);
         return fragment;
     }
-
-
 }
