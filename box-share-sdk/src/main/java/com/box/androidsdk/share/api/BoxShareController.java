@@ -8,6 +8,10 @@ import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxVoid;
+import com.box.androidsdk.content.requests.BoxRequestBatch;
+import com.box.androidsdk.content.requests.BoxResponseBatch;
+import com.box.androidsdk.content.utils.SdkUtils;
+import com.box.androidsdk.internal.BoxApiInvitee;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -50,6 +54,21 @@ public class BoxShareController implements ShareController {
     @Override
     public void deleteCollaboration(BoxCollaboration collaboration, BoxFutureTask.OnCompletedListener<BoxVoid> onCompletedListener) {
         BoxFutureTask<BoxVoid> task = mCollabApi.getDeleteRequest(collaboration.getId()).toTask();
+        task.addOnCompletedListener(onCompletedListener);
+        getApiExecutor().submit(task);
+    }
+
+    @Override
+    public void addCollaborations(BoxFolder boxFolder, BoxCollaboration.Role selectedRole, String[] emails, BoxFutureTask.OnCompletedListener<BoxResponseBatch> onCompletedListener) {
+        BoxRequestBatch batchRequest = new BoxRequestBatch();
+        for (String email: emails) {
+            String trimmedEmail = email.trim();
+            if (!SdkUtils.isBlank(trimmedEmail)) {
+                batchRequest.addRequest(mCollabApi.getAddRequest(boxFolder.getId(), selectedRole, trimmedEmail));
+            }
+        }
+
+        BoxFutureTask<BoxResponseBatch> task = batchRequest.toTask();
         task.addOnCompletedListener(onCompletedListener);
         getApiExecutor().submit(task);
     }

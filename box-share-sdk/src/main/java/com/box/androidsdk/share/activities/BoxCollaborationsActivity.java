@@ -17,6 +17,7 @@ import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.SdkUtils;
+import com.box.androidsdk.internal.BoxApiInvitee;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
@@ -99,7 +100,7 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity {
         if (id == R.id.box_sharesdk_action_add) {
             BoxCollaboration.Role[] rolesArr = mFragment.getRoles();
             if (rolesArr != null) {
-                Intent inviteCollabsIntent = BoxInviteCollaboratorsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession, rolesArr, rolesArr[0]);
+                Intent inviteCollabsIntent = BoxInviteCollaboratorsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession);
                 startActivityForResult(inviteCollabsIntent, INVITE_COLLABS_REQUEST_CODE);
             }
         }

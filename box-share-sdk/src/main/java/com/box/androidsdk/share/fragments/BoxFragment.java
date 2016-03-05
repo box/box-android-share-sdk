@@ -4,6 +4,10 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.widget.Toast;
 
@@ -37,6 +41,7 @@ public abstract class BoxFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         setRetainInstance(true);
         mDialogHandler = new LastRunnableHandler();
         String userId = null;
@@ -159,5 +164,21 @@ public abstract class BoxFragment extends Fragment {
             }
         }
 
+    }
+
+    /**
+     * Helper method that returns formatted text that is meant to be shown in a Button
+     *
+     * @param title the title text that should be emphasized
+     * @param description the description text that should be de-emphasized
+     * @return Spannable that is the formatted text
+     */
+    protected Spannable createTitledSpannable(final String title, final String description){
+        String combined = title +"\n"+ description;
+        Spannable accessSpannable = new SpannableString(combined);
+
+        accessSpannable.setSpan(new TextAppearanceSpan(getActivity(), R.style.Base_TextAppearance_AppCompat_Body1), title.length(),combined.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        accessSpannable.setSpan(new ForegroundColorSpan(R.color.box_sharesdk_hint), title.length(),combined.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return accessSpannable;
     }
 }
