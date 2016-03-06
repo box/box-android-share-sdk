@@ -102,24 +102,6 @@ public class BoxSharedLinkAccessActivity extends BoxThreadPoolExecutorActivity {
     public void handleBoxResponse(final BoxResponse response){
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_sharedlink, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.box_sharesdk_refresh){
-            mFragment.refreshShareItemInfo();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-
     @Override
     public void finish() {
         Intent data = new Intent();

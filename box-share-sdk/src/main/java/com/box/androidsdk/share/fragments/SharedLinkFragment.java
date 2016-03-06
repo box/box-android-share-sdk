@@ -148,16 +148,6 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
     }
 
     @Override
-    public void onPause() {
-        PositiveNegativeDialogFragment fragment = (PositiveNegativeDialogFragment)getFragmentManager().findFragmentByTag(UNSHARE_WARNING_TAG);
-        if (fragment != null){
-            fragment.dismiss();
-        }
-
-        super.onPause();
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.box_sharesdk_refresh){
             refreshShareItemInfo();

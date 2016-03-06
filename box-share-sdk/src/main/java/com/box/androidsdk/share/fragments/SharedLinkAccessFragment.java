@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -139,11 +142,17 @@ public class SharedLinkAccessFragment extends BoxFragment
     }
 
     @Override
-    public void onPause() {
-        dismissAccessChooserDialog();
-        dismissDatePicker();
-        dismissPasswordChooserDialog();
-        super.onPause();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_sharedlink, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.box_sharesdk_refresh){
+            refreshShareItemInfo();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -170,23 +179,14 @@ public class SharedLinkAccessFragment extends BoxFragment
 
     /**
      * Updates the UI with the provided BoxItem
-     *
-     * @param sharedItem BoxItem to update the UI with
      */
-    private void updateUi(final BoxItem sharedItem){
-        if (!checkIfHasRequiredFields(sharedItem)){
-            refreshShareItemInfo();
-            return;
-        }
-        if (mShareItem.getId().equals(sharedItem.getId())) {
-            mShareItem = sharedItem;
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    setupUi();
-                }
-            });
-        }
+    private void updateUi(){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setupUi();
+            }
+        });
     }
 
     /**
@@ -202,13 +202,6 @@ public class SharedLinkAccessFragment extends BoxFragment
         fragment.show(getActivity().getSupportFragmentManager(), DATE_FRAGMENT_TAG);
     }
 
-    private void dismissDatePicker() {
-        DialogFragment fragment = (DialogFragment)getFragmentManager().findFragmentByTag(DATE_FRAGMENT_TAG);
-        if (fragment != null) {
-            fragment.dismiss();
-        }
-    }
-
     /**
      * Displays the dialog for the user to set a password for the shared link
      */
@@ -220,13 +213,6 @@ public class SharedLinkAccessFragment extends BoxFragment
         fragment.show(getActivity().getSupportFragmentManager(), PASSWORD_FRAGMENT_TAG);
     }
 
-    private void dismissPasswordChooserDialog() {
-        DialogFragment fragment = (DialogFragment)getFragmentManager().findFragmentByTag(PASSWORD_FRAGMENT_TAG);
-        if (fragment != null) {
-            fragment.dismiss();
-        }
-    }
-
     /**
      * Displays the access dialog for the user to select the appropriate access
      */
@@ -236,13 +222,6 @@ public class SharedLinkAccessFragment extends BoxFragment
         }
         AccessRadialDialogFragment fragment = AccessRadialDialogFragment.createFragment(mShareItem, this);
         fragment.show(getActivity().getSupportFragmentManager(), ACCESS_RADIAL_FRAGMENT_TAG);
-    }
-
-    private void dismissAccessChooserDialog() {
-        DialogFragment fragment = (DialogFragment)getFragmentManager().findFragmentByTag(ACCESS_RADIAL_FRAGMENT_TAG);
-        if (fragment != null) {
-            fragment.dismiss();
-        }
     }
 
     /**
@@ -308,9 +287,11 @@ public class SharedLinkAccessFragment extends BoxFragment
      */
     private void changeDownloadPermission(boolean canDownload){
         if (mShareItem instanceof BoxFile) {
+            showSpinner();
             mController.executeRequest(BoxItem.class, ((BoxRequestsFile.UpdatedSharedFile) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload), mBoxItemListener);
         }
         else if (mShareItem instanceof BoxFolder) {
+            showSpinner();
             mController.executeRequest(BoxItem.class, ((BoxRequestsFolder.UpdateSharedFolder) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload), mBoxItemListener);
         }
         else if (mShareItem instanceof BoxBookmark) {
@@ -405,7 +386,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                             if (response.isSuccess()) {
                                 if (response.getRequest() instanceof BoxRequestItem) {
                                     mShareItem = response.getResult();
-                                    updateUi(mShareItem);
+                                    updateUi();
                                 }
                             } else {
                                 if (response.getException() instanceof BoxException) {
