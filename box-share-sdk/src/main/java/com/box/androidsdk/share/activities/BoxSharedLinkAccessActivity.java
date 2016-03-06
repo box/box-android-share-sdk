@@ -47,7 +47,7 @@ public class BoxSharedLinkAccessActivity extends BoxActivity {
     @Override
     public void finish() {
         Intent data = new Intent();
-        data.putExtra(ResultInterpreter.EXTRA_BOX_ITEM, mShareItem);
+        data.putExtra(BoxActivity.EXTRA_ITEM, mShareItem);
         setResult(Activity.RESULT_OK, data);
         super.finish();
     }
@@ -70,36 +70,5 @@ public class BoxSharedLinkAccessActivity extends BoxActivity {
         intent.putExtra(EXTRA_ITEM, item);
         intent.putExtra(EXTRA_USER_ID, session.getUser().getId());
         return intent;
-    }
-
-    /**
-     * Result interpreter that allows the updated BoxItem information to be retrieved from another activity
-     *
-     * @param data the intent data to set
-     * @return the ResultInterpreter
-     */
-    public static ResultInterpreter createResultInterpreter(final Intent data){
-        return new ResultInterpreter(data);
-    }
-
-    /**
-     * Data object that can serialize data across activities
-     */
-    public static class ResultInterpreter {
-        protected final Intent mIntent;
-
-        static final String EXTRA_BOX_ITEM = "extraBoxItem";
-
-        /**
-         * Construct an object to easily access objects in an intent created from this activity.
-         * @param intent an intent created by this activity that follows the rules if the interpreter.
-         */
-        public ResultInterpreter(final Intent intent){
-            mIntent = intent;
-        }
-
-        public BoxItem getBoxItem(){
-            return (BoxItem)mIntent.getSerializableExtra(EXTRA_BOX_ITEM);
-        }
     }
 }
