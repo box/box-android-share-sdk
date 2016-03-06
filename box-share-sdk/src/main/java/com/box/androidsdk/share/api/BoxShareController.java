@@ -1,13 +1,18 @@
 package com.box.androidsdk.share.api;
 
+import com.box.androidsdk.content.BoxApiBookmark;
 import com.box.androidsdk.content.BoxApiCollaboration;
 import com.box.androidsdk.content.BoxApiFile;
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxFutureTask;
+import com.box.androidsdk.content.models.BoxBookmark;
 import com.box.androidsdk.content.models.BoxCollaboration;
+import com.box.androidsdk.content.models.BoxFile;
 import com.box.androidsdk.content.models.BoxFolder;
+import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxVoid;
+import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestBatch;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.SdkUtils;
@@ -21,12 +26,64 @@ import java.util.concurrent.TimeUnit;
  * Created by varungupta on 3/4/2016.
  */
 public class BoxShareController implements ShareController {
+    private BoxApiFile mFileApi;
     private BoxApiFolder mFolderApi;
+    private BoxApiBookmark mBookmarkApi;
     private BoxApiCollaboration mCollabApi;
 
-    public BoxShareController(BoxApiFolder folderApi, BoxApiCollaboration collaborationApi) {
+    public BoxShareController(BoxApiFile fileApi, BoxApiFolder folderApi, BoxApiBookmark bookmarkApi, BoxApiCollaboration collaborationApi) {
+        mFileApi = fileApi;
         mFolderApi = folderApi;
+        mBookmarkApi = bookmarkApi;
         mCollabApi = collaborationApi;
+    }
+
+    @Override
+    public void fetchItemInfo(BoxItem boxItem, BoxFutureTask.OnCompletedListener<BoxItem> onCompletedListener) {
+        BoxRequest request = null;
+        if (boxItem instanceof BoxFile) {
+            request = mFileApi.getInfoRequest(boxItem.getId());
+        } else if (boxItem instanceof BoxFolder) {
+            request = mFolderApi.getInfoRequest(boxItem.getId());
+        } else if (boxItem instanceof BoxBookmark) {
+            request = mBookmarkApi.getInfoRequest(boxItem.getId());
+        }
+
+        BoxFutureTask<BoxItem> task = new BoxFutureTask<BoxItem>(BoxItem.class, request);
+        task.addOnCompletedListener(onCompletedListener);
+        getApiExecutor().submit(task);
+    }
+
+    @Override
+    public void createDefaultSharedLink(BoxItem boxItem, BoxFutureTask.OnCompletedListener<BoxItem> onCompletedListener) {
+        BoxRequest request = null;
+        if (boxItem instanceof BoxFile) {
+            request = mFileApi.getCreateSharedLinkRequest(boxItem.getId());
+        } else if (boxItem instanceof BoxFolder) {
+            request = mFolderApi.getCreateSharedLinkRequest(boxItem.getId());
+        } else if (boxItem instanceof BoxBookmark) {
+            request = mBookmarkApi.getCreateSharedLinkRequest(boxItem.getId());
+        }
+
+        BoxFutureTask<BoxItem> task = new BoxFutureTask<BoxItem>(BoxItem.class, request);
+        task.addOnCompletedListener(onCompletedListener);
+        getApiExecutor().submit(task);
+    }
+
+    @Override
+    public void disableShareLink(BoxItem boxItem, BoxFutureTask.OnCompletedListener<BoxItem> onCompletedListener) {
+        BoxRequest request = null;
+        if (boxItem instanceof BoxFile) {
+            request = mFileApi.getDisableSharedLinkRequest(boxItem.getId());
+        } else if (boxItem instanceof BoxFolder) {
+            request = mFolderApi.getDisableSharedLinkRequest(boxItem.getId());
+        } else if (boxItem instanceof BoxBookmark) {
+            request = mBookmarkApi.getDisableSharedLinkRequest(boxItem.getId());
+        }
+
+        BoxFutureTask<BoxItem> task = new BoxFutureTask<BoxItem>(BoxItem.class, request);
+        task.addOnCompletedListener(onCompletedListener);
+        getApiExecutor().submit(task);
     }
 
     @Override

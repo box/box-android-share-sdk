@@ -14,31 +14,36 @@ public class PositiveNegativeDialogFragment extends DialogFragment{
     protected static final String ARGUMENT_POSITIVE_ID = "positive_res_id";
     protected static final String ARGUMENT_NEGATIVE_ID = "negative_res_id";
 
+    private OnPositiveOrNegativeButtonClickedListener mButtonClickedListener;
 
     @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            int title = getArguments().getInt(ARGUMENT_TITLE_ID);
-            int msg = getArguments().getInt(ARGUMENT_MESSAGE_ID);
-            int positive = getArguments().getInt(ARGUMENT_POSITIVE_ID);
-            int negative = getArguments().getInt(ARGUMENT_NEGATIVE_ID);
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(title).setMessage(msg)
-            .setPositiveButton(getText(positive), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (getActivity() instanceof OnPositiveOrNegativeButtonClickedListener){
-                        ((OnPositiveOrNegativeButtonClickedListener)getActivity()).onPositiveButtonClicked(PositiveNegativeDialogFragment.this);
-                    }
-                }
-            } ).setNegativeButton(getText(negative), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (getActivity() instanceof OnPositiveOrNegativeButtonClickedListener){
-                                ((OnPositiveOrNegativeButtonClickedListener)getActivity()).onNegativeButtonClicked(PositiveNegativeDialogFragment.this);
-                            }
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        int title = getArguments().getInt(ARGUMENT_TITLE_ID);
+        int msg = getArguments().getInt(ARGUMENT_MESSAGE_ID);
+        int positive = getArguments().getInt(ARGUMENT_POSITIVE_ID);
+        int negative = getArguments().getInt(ARGUMENT_NEGATIVE_ID);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(title).setMessage(msg)
+                .setPositiveButton(getText(positive), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (mButtonClickedListener != null) {
+                            mButtonClickedListener.onPositiveButtonClicked(PositiveNegativeDialogFragment.this);
                         }
-                    });
-            return builder.create();
-        }
+            }
+        } ).setNegativeButton(getText(negative), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (mButtonClickedListener != null){
+                            mButtonClickedListener.onNegativeButtonClicked(PositiveNegativeDialogFragment.this);
+                        }
+                    }
+                });
+        return builder.create();
+    }
+
+    public void setOnPositiveOrNegativeButtonClickedListener(OnPositiveOrNegativeButtonClickedListener listener) {
+        mButtonClickedListener = listener;
+    }
 
 
     public static interface OnPositiveOrNegativeButtonClickedListener {
@@ -57,7 +62,11 @@ public class PositiveNegativeDialogFragment extends DialogFragment{
      * @param negativeButtonResId resource id for string for negative button.
      * @return fragment displaying a simple dialog.
      */
-    public static PositiveNegativeDialogFragment createFragment(final int titleResId, final int messageResId, int positiveButtonResId, int negativeButtonResId){
+    public static PositiveNegativeDialogFragment createFragment(final int titleResId,
+                                                                final int messageResId,
+                                                                int positiveButtonResId,
+                                                                int negativeButtonResId,
+                                                                OnPositiveOrNegativeButtonClickedListener listener){
         PositiveNegativeDialogFragment fragment = new PositiveNegativeDialogFragment();
         Bundle b = new Bundle();
         b.putInt(ARGUMENT_TITLE_ID, titleResId);
@@ -65,6 +74,7 @@ public class PositiveNegativeDialogFragment extends DialogFragment{
         b.putInt(ARGUMENT_POSITIVE_ID, positiveButtonResId);
         b.putInt(ARGUMENT_NEGATIVE_ID, negativeButtonResId);
         fragment.setArguments(b);
+        fragment.setOnPositiveOrNegativeButtonClickedListener(listener);
         return fragment;
     }
 

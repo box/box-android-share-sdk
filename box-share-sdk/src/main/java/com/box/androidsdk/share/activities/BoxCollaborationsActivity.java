@@ -9,7 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.box.androidsdk.content.BoxApiBookmark;
 import com.box.androidsdk.content.BoxApiCollaboration;
+import com.box.androidsdk.content.BoxApiFile;
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxFolder;
@@ -74,7 +76,8 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity {
             return;
         }
 
-        ShareController controller = new BoxShareController(new BoxApiFolder(mSession), new BoxApiCollaboration(mSession));
+        ShareController controller = new BoxShareController(new BoxApiFile(mSession),
+                new BoxApiFolder(mSession), new BoxApiBookmark(mSession), new BoxApiCollaboration(mSession));
         mFragment = (CollaborationsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

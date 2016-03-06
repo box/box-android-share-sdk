@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
+import com.box.androidsdk.content.BoxApiBookmark;
 import com.box.androidsdk.content.BoxApiCollaboration;
+import com.box.androidsdk.content.BoxApiFile;
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxSession;
@@ -50,7 +52,8 @@ public class BoxInviteCollaboratorsActivity extends BoxThreadPoolExecutorActivit
         setContentView(R.layout.activity_invite_collaborators);
         initToolbar();
 
-        ShareController controller = new BoxShareController(new BoxApiFolder(mSession), new BoxApiCollaboration(mSession));
+        ShareController controller = new BoxShareController(new BoxApiFile(mSession),
+                new BoxApiFolder(mSession), new BoxApiBookmark(mSession), new BoxApiCollaboration(mSession));
         mFragment = (InviteCollaboratorsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
