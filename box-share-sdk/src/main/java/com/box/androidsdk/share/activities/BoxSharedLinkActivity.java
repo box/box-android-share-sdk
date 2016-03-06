@@ -1,60 +1,28 @@
 package com.box.androidsdk.share.activities;
 
-import android.app.Activity;
-import android.app.Application;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxApiBookmark;
 import com.box.androidsdk.content.BoxApiCollaboration;
 import com.box.androidsdk.content.BoxApiFile;
 import com.box.androidsdk.content.BoxApiFolder;
-import com.box.androidsdk.content.models.BoxSession;
-import com.box.androidsdk.content.BoxException;
-import com.box.androidsdk.content.models.BoxBookmark;
-import com.box.androidsdk.content.models.BoxFile;
-import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
-import com.box.androidsdk.content.models.BoxSharedLink;
-import com.box.androidsdk.content.requests.BoxRequestItem;
-import com.box.androidsdk.content.requests.BoxRequest;
-import com.box.androidsdk.content.requests.BoxResponse;
-import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
+import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
-import com.box.androidsdk.share.fragments.PositiveNegativeDialogFragment;
 import com.box.androidsdk.share.fragments.SharedLinkFragment;
-
-import java.net.HttpURLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Activity used to share/unshare an item from Box. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
-public class BoxSharedLinkActivity extends BoxThreadPoolExecutorActivity implements View.OnClickListener{
-
-    private static ThreadPoolExecutor mApiExecutor;
-    private static final ConcurrentLinkedQueue<BoxResponse> SHARED_LINK_RESPONSE_QUEUE = new ConcurrentLinkedQueue<BoxResponse>();
+public class BoxSharedLinkActivity extends BoxActivity implements View.OnClickListener{
 
     private SharedLinkFragment mFragment;
-
     private static final int REQUEST_SHARED_LINK_ACCESS = 100;
 
     @Override
@@ -79,7 +47,7 @@ public class BoxSharedLinkActivity extends BoxThreadPoolExecutorActivity impleme
 
     @Override
     public void onClick(View v) {
-        startActivityForResult(BoxSharedLinkAccessActivity.getLaunchIntent(BoxSharedLinkActivity.this, getMainItem(), mSession), REQUEST_SHARED_LINK_ACCESS);
+        startActivityForResult(BoxSharedLinkAccessActivity.getLaunchIntent(BoxSharedLinkActivity.this, mShareItem, mSession), REQUEST_SHARED_LINK_ACCESS);
     }
 
     @Override
@@ -88,23 +56,6 @@ public class BoxSharedLinkActivity extends BoxThreadPoolExecutorActivity impleme
             mFragment.refreshShareItemInfo();
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public Queue<BoxResponse> getResponseQueue() {
-        return SHARED_LINK_RESPONSE_QUEUE;
-    }
-
-    @Override
-    public ThreadPoolExecutor getApiExecutor(Application application) {
-        if (mApiExecutor == null){
-            mApiExecutor = BoxThreadPoolExecutorActivity.createTaskMessagingExecutor(application, getResponseQueue());
-        }
-        return mApiExecutor;
-    }
-
-    @Override
-    public void handleBoxResponse(BoxResponse response){
     }
 
     /**

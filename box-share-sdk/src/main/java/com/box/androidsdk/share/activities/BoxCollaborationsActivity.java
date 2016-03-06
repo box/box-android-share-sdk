@@ -1,6 +1,5 @@
 package com.box.androidsdk.share.activities;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,24 +14,17 @@ import com.box.androidsdk.content.BoxApiFile;
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxFolder;
-import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxSession;
-import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.SdkUtils;
-import com.box.androidsdk.internal.BoxApiInvitee;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.CollaborationsFragment;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-
 /**
  * Activity used to show and modify the collaborations of a folder. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
-public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity {
+public class BoxCollaborationsActivity extends BoxActivity {
 
     /**
      * Extra intent parameter to specify the folder id of the collaborations that should be retrieved
@@ -42,27 +34,7 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity {
     protected static final String TAG = BoxCollaborationsActivity.class.getName();
     protected static final int INVITE_COLLABS_REQUEST_CODE = 1;
 
-    private static final ConcurrentLinkedQueue<BoxResponse> COLLABORATIONS_RESPONSE_QUEUE = new ConcurrentLinkedQueue<BoxResponse>();
-    private static ThreadPoolExecutor mApiExecutor;
     private CollaborationsFragment mFragment;
-
-    @Override
-    public ThreadPoolExecutor getApiExecutor(Application application) {
-        if (mApiExecutor == null){
-            mApiExecutor = BoxThreadPoolExecutorActivity.createTaskMessagingExecutor(application, getResponseQueue());
-        }
-        return mApiExecutor;
-    }
-
-    @Override
-    public Queue<BoxResponse> getResponseQueue() {
-        return COLLABORATIONS_RESPONSE_QUEUE;
-    }
-
-    @Override
-    protected void handleBoxResponse(BoxResponse response) {
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

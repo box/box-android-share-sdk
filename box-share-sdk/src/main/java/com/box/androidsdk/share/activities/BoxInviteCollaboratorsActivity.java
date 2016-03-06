@@ -1,6 +1,5 @@
 package com.box.androidsdk.share.activities;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,39 +11,19 @@ import com.box.androidsdk.content.BoxApiFile;
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxSession;
-import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.InviteCollaboratorsFragment;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-
 /**
  * Activity used to allow users to invite additional collaborators to the folder. Email addresses will auto complete from the phones address book
  * as well as Box's internal invitee endpoint. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
-public class BoxInviteCollaboratorsActivity extends BoxThreadPoolExecutorActivity {
+public class BoxInviteCollaboratorsActivity extends BoxActivity {
 
-    private static ThreadPoolExecutor mApiExecutor;
-    private static final ConcurrentLinkedQueue<BoxResponse> INVITE_COLLABORATOR_RESPONSE_QUEUE = new ConcurrentLinkedQueue<BoxResponse>();
     private InviteCollaboratorsFragment mFragment;
-
-    @Override
-    public ThreadPoolExecutor getApiExecutor(Application application) {
-        if (mApiExecutor == null){
-            mApiExecutor = BoxThreadPoolExecutorActivity.createTaskMessagingExecutor(application, getResponseQueue());
-        }
-        return mApiExecutor;
-    }
-
-    @Override
-    public Queue<BoxResponse> getResponseQueue() {
-        return INVITE_COLLABORATOR_RESPONSE_QUEUE;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +42,6 @@ public class BoxInviteCollaboratorsActivity extends BoxThreadPoolExecutorActivit
             ft.commit();
         }
         mFragment.SetController(controller);
-    }
-
-
-    @Override
-    protected void handleBoxResponse(BoxResponse response) {
     }
 
     /**
