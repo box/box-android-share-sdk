@@ -11,13 +11,19 @@ import com.box.androidsdk.content.models.BoxFile;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
+import com.box.androidsdk.content.models.BoxObject;
+import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.content.models.BoxVoid;
 import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestBatch;
+import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
+import com.box.androidsdk.content.requests.BoxRequestsFile;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.internal.BoxApiInvitee;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -54,36 +60,42 @@ public class BoxShareController implements ShareController {
         getApiExecutor().submit(task);
     }
 
+    /**
+     * Gets the request to create a shared link with
+     *
+     * @return the shared link update request
+     */
+    @Override
+    public BoxRequestUpdateSharedItem getCreatedSharedLinkRequest(BoxItem boxItem){
+        if (boxItem instanceof BoxFile) {
+            return mFileApi.getCreateSharedLinkRequest(boxItem.getId()).setFields(BoxFile.ALL_FIELDS);
+        } else if (boxItem instanceof BoxFolder) {
+            return mFolderApi.getCreateSharedLinkRequest(boxItem.getId()).setFields(BoxFolder.ALL_FIELDS);
+        } else if (boxItem instanceof BoxBookmark) {
+            return mBookmarkApi.getCreateSharedLinkRequest(boxItem.getId()).setFields(BoxBookmark.ALL_FIELDS);
+        }
+        // should never hit this scenario.
+        return null;
+    }
+
     @Override
     public void createDefaultSharedLink(BoxItem boxItem, BoxFutureTask.OnCompletedListener<BoxItem> onCompletedListener) {
-        BoxRequest request = null;
-        if (boxItem instanceof BoxFile) {
-            request = mFileApi.getCreateSharedLinkRequest(boxItem.getId());
-        } else if (boxItem instanceof BoxFolder) {
-            request = mFolderApi.getCreateSharedLinkRequest(boxItem.getId());
-        } else if (boxItem instanceof BoxBookmark) {
-            request = mBookmarkApi.getCreateSharedLinkRequest(boxItem.getId());
-        }
-
-        BoxFutureTask<BoxItem> task = new BoxFutureTask<BoxItem>(BoxItem.class, request);
-        task.addOnCompletedListener(onCompletedListener);
-        getApiExecutor().submit(task);
+        BoxRequest request = getCreatedSharedLinkRequest(boxItem);
+        executeRequest(BoxItem.class, request, onCompletedListener);
     }
 
     @Override
     public void disableShareLink(BoxItem boxItem, BoxFutureTask.OnCompletedListener<BoxItem> onCompletedListener) {
         BoxRequest request = null;
         if (boxItem instanceof BoxFile) {
-            request = mFileApi.getDisableSharedLinkRequest(boxItem.getId());
+            request = mFileApi.getDisableSharedLinkRequest(boxItem.getId()).setFields(BoxFile.ALL_FIELDS);
         } else if (boxItem instanceof BoxFolder) {
-            request = mFolderApi.getDisableSharedLinkRequest(boxItem.getId());
+            request = mFolderApi.getDisableSharedLinkRequest(boxItem.getId()).setFields(BoxFolder.ALL_FIELDS);
         } else if (boxItem instanceof BoxBookmark) {
-            request = mBookmarkApi.getDisableSharedLinkRequest(boxItem.getId());
+            request = mBookmarkApi.getDisableSharedLinkRequest(boxItem.getId()).setFields(BoxBookmark.ALL_FIELDS);
         }
 
-        BoxFutureTask<BoxItem> task = new BoxFutureTask<BoxItem>(BoxItem.class, request);
-        task.addOnCompletedListener(onCompletedListener);
-        getApiExecutor().submit(task);
+        executeRequest(BoxItem.class, request, onCompletedListener);
     }
 
     @Override
@@ -126,6 +138,13 @@ public class BoxShareController implements ShareController {
         }
 
         BoxFutureTask<BoxResponseBatch> task = batchRequest.toTask();
+        task.addOnCompletedListener(onCompletedListener);
+        getApiExecutor().submit(task);
+    }
+
+    @Override
+    public <E extends BoxObject> void executeRequest(Class<E> clazz, BoxRequest request, BoxFutureTask.OnCompletedListener<E> onCompletedListener) {
+        BoxFutureTask<E> task = new BoxFutureTask<E>(clazz, request);
         task.addOnCompletedListener(onCompletedListener);
         getApiExecutor().submit(task);
     }

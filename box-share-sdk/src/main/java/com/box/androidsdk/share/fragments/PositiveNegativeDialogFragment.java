@@ -14,7 +14,7 @@ public class PositiveNegativeDialogFragment extends DialogFragment {
     protected static final String ARGUMENT_POSITIVE_ID = "positive_res_id";
     protected static final String ARGUMENT_NEGATIVE_ID = "negative_res_id";
 
-    private OnPositiveOrNegativeButtonClickedListener mButtonClickedListener;
+    protected OnPositiveOrNegativeButtonClickedListener mButtonClickedListener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
