@@ -1,7 +1,6 @@
 package com.box.androidsdk.share.fragments;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxFolder;
-import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxUser;
 import com.box.androidsdk.content.requests.BoxRequestBatch;
@@ -120,6 +118,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             return;
         }
 
+        showSpinner();
         mController.fetchRoles(getFolder(), mRolesListener);
     }
 
@@ -127,6 +126,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             new BoxFutureTask.OnCompletedListener<BoxFolder>() {
                 @Override
                 public void onCompleted(final BoxResponse<BoxFolder> response) {
+                    dismissSpinner();
                     final Activity activity = getActivity();
                     if (activity == null) {
                         return;

@@ -2,13 +2,9 @@ package com.box.androidsdk.share.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +14,6 @@ import android.widget.DatePicker;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.box.androidsdk.content.BoxApiBookmark;
-import com.box.androidsdk.content.BoxApiFile;
-import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxBookmark;
@@ -30,7 +23,6 @@ import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.content.requests.BoxRequestItem;
 import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
-import com.box.androidsdk.content.requests.BoxRequestsBookmark;
 import com.box.androidsdk.content.requests.BoxRequestsFile;
 import com.box.androidsdk.content.requests.BoxRequestsFolder;
 import com.box.androidsdk.content.requests.BoxResponse;
@@ -42,10 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * Created by varungupta on 3/6/2016.
- */
-public class SharedLinkAccessFragment extends BoxFragment 
+public class SharedLinkAccessFragment extends BoxFragment
         implements DatePickerDialog.OnDateSetListener, PositiveNegativeDialogFragment.OnPositiveOrNegativeButtonClickedListener  {
 
     private static final String DATE_FRAGMENT_TAG = "datePicker";
@@ -111,6 +100,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                 if (isChecked) {
                     showPasswordChooserDialog();
                 } else {
+                    showSpinner();
                     mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setPassword(null), mBoxItemListener);
                 }
             }
@@ -127,9 +117,10 @@ public class SharedLinkAccessFragment extends BoxFragment
                     showDatePicker(new Date());
                 } else {
                     try {
+                        showSpinner();
                         mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setRemoveUnsharedAtDate(), mBoxItemListener);
                     } catch (ParseException e) {
-
+                        dismissSpinner();
                     }
                 }
             }
@@ -159,8 +150,10 @@ public class SharedLinkAccessFragment extends BoxFragment
     public void onPositiveButtonClicked(PositiveNegativeDialogFragment fragment) {
         if (fragment instanceof PasswordDialogFragment){
             try {
+                showSpinner();
                 changePassword(((PasswordDialogFragment) fragment).getPassword());
             } catch (Exception e){
+                dismissSpinner();
                 Toast.makeText(getActivity(), "invalid password", Toast.LENGTH_LONG).show();
             }
         }
@@ -336,6 +329,8 @@ public class SharedLinkAccessFragment extends BoxFragment
             Toast.makeText(getActivity(), "No access chosen", Toast.LENGTH_LONG).show();
             return;
         }
+
+        showSpinner();
         mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setAccess(access), mBoxItemListener);
     }
 
@@ -359,8 +354,10 @@ public class SharedLinkAccessFragment extends BoxFragment
         // Do something with the date chosen by the user
         GregorianCalendar calendar = new GregorianCalendar(year, month, day);
         try {
+            showSpinner();
             mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setUnsharedAt(calendar.getTime()), mBoxItemListener);
         } catch (Exception e){
+            dismissSpinner();
             Toast.makeText(getActivity(), "invalid time selected", Toast.LENGTH_LONG).show();
         }
     }
@@ -389,6 +386,7 @@ public class SharedLinkAccessFragment extends BoxFragment
      * Refreshes the information of the shared link
      */
     public void refreshShareItemInfo() {
+        showSpinner();
         mController.fetchItemInfo(mShareItem, mBoxItemListener);
     }
 

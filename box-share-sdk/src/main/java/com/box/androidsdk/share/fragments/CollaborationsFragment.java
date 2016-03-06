@@ -24,8 +24,6 @@ import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.CollaboratorsAdapter;
 
-import java.util.ArrayList;
-
 public class CollaborationsFragment extends BoxFragment implements AdapterView.OnItemClickListener, CollaborationRolesDialog.OnRoleSelectedListener {
 
     public static final String EXTRA_COLLABORATIONS = "CollaborationsFragment.ExtraCollaborations";
@@ -94,11 +92,14 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             return;
 
         if (rolesDialog.getIsRemoveCollaborationSelected()) {
+            showSpinner();
             mController.deleteCollaboration(collaboration, mDeleteCollaborationListener);
         } else {
             BoxCollaboration.Role selectedRole = rolesDialog.getSelectedRole();
             if (selectedRole == null || selectedRole == collaboration.getRole())
                 return;
+
+            showSpinner();
             mController.updateCollaboration(collaboration, selectedRole, mUpdateCollaborationListener);
         }
     }
@@ -128,6 +129,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             return;
         }
 
+        showSpinner();
         mController.fetchRoles(getFolder(), mRolesListener);
     }
 
@@ -178,6 +180,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         new BoxFutureTask.OnCompletedListener<BoxFolder>() {
             @Override
             public void onCompleted(final BoxResponse<BoxFolder> response) {
+                dismissSpinner();
                 final Activity activity = getActivity();
                 if (activity == null) {
                     return;
@@ -202,6 +205,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         new BoxFutureTask.OnCompletedListener<BoxVoid>() {
             @Override
             public void onCompleted(final BoxResponse<BoxVoid> response) {
+                dismissSpinner();
                 final Activity activity = getActivity();
                 if (activity == null) {
                     return;
@@ -230,6 +234,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         new BoxFutureTask.OnCompletedListener<BoxCollaboration>() {
             @Override
             public void onCompleted(final BoxResponse<BoxCollaboration> response) {
+                dismissSpinner();
                 final Activity activity = getActivity();
                 if (activity == null) {
                     return;

@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxItem;
-import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.content.requests.BoxRequestItem;
 import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
