@@ -1,13 +1,13 @@
 package com.box.androidsdk.share.fragments;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 
 
-public class PositiveNegativeDialogFragment extends DialogFragment{
+public class PositiveNegativeDialogFragment extends DialogFragment {
 
     protected static final String ARGUMENT_TITLE_ID = "title_res_id";
     protected static final String ARGUMENT_MESSAGE_ID = "message_res_id";

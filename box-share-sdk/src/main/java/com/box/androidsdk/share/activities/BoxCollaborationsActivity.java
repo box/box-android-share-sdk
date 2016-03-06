@@ -82,11 +82,11 @@ public class BoxCollaborationsActivity extends BoxThreadPoolExecutorActivity {
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-            mFragment = CollaborationsFragment.newInstance((BoxFolder) mShareItem, mSession.getUserId());
-            mFragment.SetController(controller);
+            mFragment = CollaborationsFragment.newInstance((BoxFolder) mShareItem);
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
+        mFragment.SetController(controller);
     }
 
     @Override

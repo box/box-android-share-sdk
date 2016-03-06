@@ -21,6 +21,9 @@ import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Base class for Fragments in Share SDK
  * This fragment contains common code for all fragments
@@ -38,28 +41,22 @@ public abstract class BoxFragment extends Fragment {
 
     protected ShareController mController;
 
+    private Lock mSpinnerLock;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        setRetainInstance(true);
         mDialogHandler = new LastRunnableHandler();
-        String userId = null;
+        mSpinnerLock = new ReentrantLock();
 
         if (savedInstanceState != null && savedInstanceState.getSerializable(EXTRA_ITEM) != null){
-            userId = savedInstanceState.getString(EXTRA_USER_ID);
             mShareItem = (BoxItem)savedInstanceState.getSerializable(EXTRA_ITEM);
         } else if (getArguments() != null) {
             Bundle args = getArguments();
-            userId = args.getString(EXTRA_USER_ID);
             mShareItem = (BoxItem)args.getSerializable(EXTRA_ITEM);
         }
 
-        if (SdkUtils.isBlank(userId)) {
-            Toast.makeText(getActivity(), R.string.box_sharesdk_session_is_not_authenticated, Toast.LENGTH_LONG).show();
-            getActivity().finish();
-            return;
-        }
         if (mShareItem == null){
             Toast.makeText(getActivity(), R.string.box_sharesdk_no_item_selected, Toast.LENGTH_LONG).show();
             getActivity().finish();
@@ -81,10 +78,16 @@ public abstract class BoxFragment extends Fragment {
      * Dismisses the spinner if it is currently showing
      */
     protected void dismissSpinner(){
-        if (mDialog != null && mDialog.isShowing()){
-            mDialog.dismiss();
+        mSpinnerLock.lock();
+        try {
+            mDialogHandler.cancelLastRunnable();
+            if (mDialog != null && mDialog.isShowing()){
+                mDialog.dismiss();
+            }
         }
-        mDialogHandler.cancelLastRunnable();
+        finally {
+            mSpinnerLock.unlock();
+        }
     }
 
     /**
@@ -104,17 +107,22 @@ public abstract class BoxFragment extends Fragment {
         mDialogHandler.queue(new Runnable() {
             @Override
             public void run() {
-                try {
-                    if (mDialog != null && mDialog.isShowing()) {
+                if (mSpinnerLock.tryLock()) {
+                    try {
+                        if (mDialog != null && mDialog.isShowing()) {
+                            return;
+                        }
+
+                        mDialog = ProgressDialog.show(getActivity(), getText(stringTitleRes), getText(stringRes));
+                        mDialog.show();
+                    } catch (Exception e) {
+                        // WindowManager$BadTokenException will be caught and the app would not display
+                        // the 'Force Close' message
+                        mDialog = null;
                         return;
+                    } finally {
+                        mSpinnerLock.unlock();
                     }
-                    mDialog = ProgressDialog.show(getActivity(), getText(stringTitleRes), getText(stringRes));
-                    mDialog.show();
-                } catch (Exception e) {
-                    // WindowManager$BadTokenException will be caught and the app would not display
-                    // the 'Force Close' message
-                    mDialog = null;
-                    return;
                 }
             }
         }, DEFAULT_SPINNER_DELAY);
@@ -139,10 +147,9 @@ public abstract class BoxFragment extends Fragment {
         view.setVisibility(View.VISIBLE);
     }
 
-    public static Bundle getBundle(BoxItem boxItem, String userId) {
+    public static Bundle getBundle(BoxItem boxItem) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(EXTRA_ITEM, boxItem);
-        bundle.putString(EXTRA_USER_ID, userId);
         return bundle;
     }
 

@@ -249,8 +249,8 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             }
         };
 
-    public static CollaborationsFragment newInstance(BoxFolder folder, String sessionUserId) {
-        Bundle args = BoxFragment.getBundle(folder, sessionUserId);
+    public static CollaborationsFragment newInstance(BoxFolder folder) {
+        Bundle args = BoxFragment.getBundle(folder);
         CollaborationsFragment fragment = new CollaborationsFragment();
         fragment.setArguments(args);
         return fragment;

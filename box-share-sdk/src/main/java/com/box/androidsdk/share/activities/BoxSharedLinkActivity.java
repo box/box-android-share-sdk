@@ -69,11 +69,11 @@ public class BoxSharedLinkActivity extends BoxThreadPoolExecutorActivity impleme
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-            mFragment = SharedLinkFragment.newInstance(mShareItem, mSession);
-            mFragment.SetController(controller);
+            mFragment = SharedLinkFragment.newInstance(mShareItem);
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
+        mFragment.SetController(controller);
         mFragment.setOnEditLinkAccessButtonClickListener(this);
     }
 

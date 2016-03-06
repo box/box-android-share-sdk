@@ -149,6 +149,16 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
     }
 
     @Override
+    public void onPause() {
+        PositiveNegativeDialogFragment fragment = (PositiveNegativeDialogFragment)getFragmentManager().findFragmentByTag(UNSHARE_WARNING_TAG);
+        if (fragment != null){
+            fragment.dismiss();
+        }
+
+        super.onPause();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.box_sharesdk_refresh){
             refreshShareItemInfo();
@@ -178,7 +188,7 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
         PositiveNegativeDialogFragment.createFragment(R.string.box_sharesdk_disable_title,
                 R.string.box_sharesdk_disable_message, R.string.box_sharesdk_disable_share_link,
                 R.string.box_sharesdk_cancel, this)
-                .show(getActivity().getFragmentManager(), UNSHARE_WARNING_TAG);
+                .show(getActivity().getSupportFragmentManager(), UNSHARE_WARNING_TAG);
     }
 
     /**
@@ -314,8 +324,8 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
                 }
             };
 
-    public static SharedLinkFragment newInstance(BoxItem item, BoxSession session) {
-        Bundle args = BoxFragment.getBundle(item, session.getUserId());
+    public static SharedLinkFragment newInstance(BoxItem item) {
+        Bundle args = BoxFragment.getBundle(item);
         SharedLinkFragment fragment = new SharedLinkFragment();
         fragment.setArguments(args);
         return fragment;

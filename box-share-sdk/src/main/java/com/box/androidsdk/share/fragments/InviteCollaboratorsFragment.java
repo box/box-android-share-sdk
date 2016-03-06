@@ -267,7 +267,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     }
 
     public static InviteCollaboratorsFragment newInstance(BoxFolder folder, BoxSession session) {
-        Bundle args = BoxFragment.getBundle(folder, session.getUserId());
+        Bundle args = BoxFragment.getBundle(folder);
         args.putString(EXTRA_ACCESS_TOKEN, session.getAuthInfo().accessToken());
         InviteCollaboratorsFragment fragment = new InviteCollaboratorsFragment();
         fragment.setArguments(args);

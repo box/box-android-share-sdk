@@ -59,10 +59,10 @@ public class BoxInviteCollaboratorsActivity extends BoxThreadPoolExecutorActivit
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
             mFragment = InviteCollaboratorsFragment.newInstance((BoxFolder) mShareItem, mSession);
-            mFragment.SetController(controller);
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
+        mFragment.SetController(controller);
     }
 
 

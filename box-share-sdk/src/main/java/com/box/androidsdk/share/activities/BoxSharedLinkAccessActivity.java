@@ -370,7 +370,7 @@ public class BoxSharedLinkAccessActivity extends BoxThreadPoolExecutorActivity i
             return;
         }
         PasswordDialogFragment fragment = PasswordDialogFragment.createFragment(R.string.box_sharesdk_password, R.string.box_sharesdk_set_password, R.string.box_sharesdk_ok, R.string.box_sharesdk_cancel );
-        fragment.show(getFragmentManager(), PASSWORD_FRAGMENT_TAG);
+        fragment.show(getSupportFragmentManager(), PASSWORD_FRAGMENT_TAG);
     }
 
     /**
@@ -381,7 +381,7 @@ public class BoxSharedLinkAccessActivity extends BoxThreadPoolExecutorActivity i
             return;
         }
         AccessRadialDialogFragment fragment = AccessRadialDialogFragment.createFragment(getMainItem());
-        fragment.show(getFragmentManager(), ACCESS_RADIAL_FRAGMENT_TAG);
+        fragment.show(getSupportFragmentManager(), ACCESS_RADIAL_FRAGMENT_TAG);
     }
 
     /**
