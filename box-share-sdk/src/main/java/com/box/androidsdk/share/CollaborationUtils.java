@@ -1,14 +1,35 @@
 package com.box.androidsdk.share;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
+import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 
 public class CollaborationUtils {
 
     public static final String EXTRA_ITEM = "com.box.androidsdk.share.CollaborationUtils.ExtraItem";
     public static final String EXTRA_USER_ID = "com.box.androidsdk.share.CollaborationUtils.ExtraUserId";
     public static final String EXTRA_COLLABORATIONS = "com.box.androidsdk.share.CollaborationUtils.ExtraCollaborations";
+
+    // Class to interpret result from share SDK activities
+    public static class ResultInterpreter {
+
+        Intent mData;
+
+        public ResultInterpreter(Intent data){
+            mData = data;
+        }
+
+        public BoxItem getBoxItem() {
+            return (BoxItem) mData.getSerializableExtra(EXTRA_ITEM);
+        }
+
+        public BoxIteratorCollaborations getCollaborations() {
+            return (BoxIteratorCollaborations) mData.getSerializableExtra(EXTRA_COLLABORATIONS);
+        }
+    }
 
     public static String getRoleName(Context context, BoxCollaboration.Role role) {
         switch(role) {
