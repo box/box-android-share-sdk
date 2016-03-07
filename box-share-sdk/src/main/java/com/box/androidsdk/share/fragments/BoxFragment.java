@@ -1,6 +1,7 @@
 package com.box.androidsdk.share.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,9 @@ import com.box.androidsdk.content.auth.BoxAuthentication;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
+import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.activities.BoxActivity;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
 
@@ -29,8 +32,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * This fragment contains common code for all fragments
  */
 public abstract class BoxFragment extends Fragment {
-    public static final String EXTRA_ITEM = "BoxFragment.ExtraItem";
-    public static final String EXTRA_USER_ID = "BoxFragment.ExtraUserId";
 
     protected BoxItem mShareItem;
 
@@ -50,11 +51,11 @@ public abstract class BoxFragment extends Fragment {
         mDialogHandler = new LastRunnableHandler();
         mSpinnerLock = new ReentrantLock();
 
-        if (savedInstanceState != null && savedInstanceState.getSerializable(EXTRA_ITEM) != null){
-            mShareItem = (BoxItem)savedInstanceState.getSerializable(EXTRA_ITEM);
+        if (savedInstanceState != null && savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM) != null){
+            mShareItem = (BoxItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
         } else if (getArguments() != null) {
             Bundle args = getArguments();
-            mShareItem = (BoxItem)args.getSerializable(EXTRA_ITEM);
+            mShareItem = (BoxItem)args.getSerializable(CollaborationUtils.EXTRA_ITEM);
         }
 
         if (mShareItem == null){
@@ -66,8 +67,12 @@ public abstract class BoxFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(EXTRA_ITEM, mShareItem);
+        outState.putSerializable(CollaborationUtils.EXTRA_ITEM, mShareItem);
         super.onSaveInstanceState(outState);
+    }
+
+    public void AddResult(Intent data) {
+        data.putExtra(CollaborationUtils.EXTRA_ITEM, mShareItem);
     }
 
     public void SetController(ShareController controller) {
@@ -149,7 +154,7 @@ public abstract class BoxFragment extends Fragment {
 
     public static Bundle getBundle(BoxItem boxItem) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(EXTRA_ITEM, boxItem);
+        bundle.putSerializable(CollaborationUtils.EXTRA_ITEM, boxItem);
         return bundle;
     }
 

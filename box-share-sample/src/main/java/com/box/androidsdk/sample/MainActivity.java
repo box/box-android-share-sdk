@@ -20,6 +20,8 @@ import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxIteratorItems;
 import com.box.androidsdk.content.models.BoxSharedLink;
+import com.box.androidsdk.share.CollaborationUtils;
+import com.box.androidsdk.share.activities.BoxActivity;
 import com.box.androidsdk.share.activities.BoxCollaborationsActivity;
 import com.box.androidsdk.share.activities.BoxSharedLinkActivity;
 
@@ -176,7 +178,7 @@ public class MainActivity extends ActionBarActivity {
         if (requestCode == REQUEST_CODE_SHARE_LINK){
             if (data != null){
                 // update current data to the latest one returned from the shared link creation.
-                mSampleFolder = (BoxFolder) BoxSharedLinkActivity.createResultInterpreter(data).getBoxItem();
+                mSampleFolder = (BoxFolder) data.getSerializableExtra(CollaborationUtils.EXTRA_ITEM);
                 // if your user created or modified a shared link during this flow you can use it for your own purposes.
                 BoxSharedLink link = mSampleFolder.getSharedLink();
                 if (link != null) {
@@ -187,9 +189,9 @@ public class MainActivity extends ActionBarActivity {
         else if (requestCode == REQUEST_CODE_INVITE_PEOPLE){
             if (data != null){
                 // update current data to the latest one returned from the shared link creation.
-                mSampleFolder = (BoxFolder) BoxCollaborationsActivity.createResultInterpreter(data).getBoxItem();
+                mSampleFolder = (BoxFolder) data.getSerializableExtra(CollaborationUtils.EXTRA_ITEM);
                 // if your user created or removed collaborations during this flow you can use this list for your own purposes.
-                BoxIteratorCollaborations collaborations = BoxCollaborationsActivity.createResultInterpreter(data).getCollaborations();
+                BoxIteratorCollaborations collaborations = (BoxIteratorCollaborations)data.getSerializableExtra(CollaborationUtils.EXTRA_COLLABORATIONS);
                 if (collaborations != null) {
                     Toast.makeText(this, "Number of collaborators: " + collaborations.size(), Toast.LENGTH_LONG).show();
                 }

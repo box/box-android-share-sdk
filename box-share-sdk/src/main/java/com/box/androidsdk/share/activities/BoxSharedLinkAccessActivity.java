@@ -12,6 +12,7 @@ import com.box.androidsdk.content.BoxApiFile;
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxSession;
+import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
@@ -22,8 +23,6 @@ import com.box.androidsdk.share.fragments.SharedLinkAccessFragment;
  * Activity used to modify the share link access of an item from Box. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
 public class BoxSharedLinkAccessActivity extends BoxActivity {
-
-    SharedLinkAccessFragment mFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +43,6 @@ public class BoxSharedLinkAccessActivity extends BoxActivity {
         mFragment.SetController(controller);
     }
 
-    @Override
-    public void finish() {
-        Intent data = new Intent();
-        data.putExtra(BoxActivity.EXTRA_ITEM, mShareItem);
-        setResult(Activity.RESULT_OK, data);
-        super.finish();
-    }
-
 
     /**
      * Gets a fully formed intent that can be used to start the activity with
@@ -67,8 +58,8 @@ public class BoxSharedLinkAccessActivity extends BoxActivity {
 
         Intent intent = new Intent(context, BoxSharedLinkAccessActivity.class);
 
-        intent.putExtra(EXTRA_ITEM, item);
-        intent.putExtra(EXTRA_USER_ID, session.getUser().getId());
+        intent.putExtra(CollaborationUtils.EXTRA_ITEM, item);
+        intent.putExtra(CollaborationUtils.EXTRA_USER_ID, session.getUser().getId());
         return intent;
     }
 }

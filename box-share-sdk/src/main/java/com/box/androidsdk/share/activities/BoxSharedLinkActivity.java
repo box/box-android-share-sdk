@@ -1,5 +1,6 @@
 package com.box.androidsdk.share.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.box.androidsdk.content.BoxApiFile;
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxSession;
+import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
@@ -22,7 +24,6 @@ import com.box.androidsdk.share.fragments.SharedLinkFragment;
  */
 public class BoxSharedLinkActivity extends BoxActivity implements View.OnClickListener{
 
-    private SharedLinkFragment mFragment;
     private static final int REQUEST_SHARED_LINK_ACCESS = 100;
 
     @Override
@@ -42,7 +43,7 @@ public class BoxSharedLinkActivity extends BoxActivity implements View.OnClickLi
             ft.commit();
         }
         mFragment.SetController(controller);
-        mFragment.setOnEditLinkAccessButtonClickListener(this);
+        ((SharedLinkFragment)mFragment).setOnEditLinkAccessButtonClickListener(this);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class BoxSharedLinkActivity extends BoxActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SHARED_LINK_ACCESS){
-            mFragment.refreshShareItemInfo();
+            ((SharedLinkFragment)mFragment).refreshShareItemInfo();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -71,8 +72,8 @@ public class BoxSharedLinkActivity extends BoxActivity implements View.OnClickLi
             throw new IllegalArgumentException("Invalid user associated with Box session.");
 
         Intent intent = new Intent(context, BoxSharedLinkActivity.class);
-        intent.putExtra(EXTRA_ITEM, item);
-        intent.putExtra(EXTRA_USER_ID, session.getUser().getId());
+        intent.putExtra(CollaborationUtils.EXTRA_ITEM, item);
+        intent.putExtra(CollaborationUtils.EXTRA_USER_ID, session.getUser().getId());
         return intent;
     }
 }

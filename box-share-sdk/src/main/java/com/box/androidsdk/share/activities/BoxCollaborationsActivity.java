@@ -1,5 +1,6 @@
 package com.box.androidsdk.share.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
+import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
@@ -26,15 +28,8 @@ import com.box.androidsdk.share.fragments.CollaborationsFragment;
  */
 public class BoxCollaborationsActivity extends BoxActivity {
 
-    /**
-     * Extra intent parameter to specify the folder id of the collaborations that should be retrieved
-     */
-    public static final String EXTRA_FOLDER_ID = "extraFolderId";
-
     protected static final String TAG = BoxCollaborationsActivity.class.getName();
     protected static final int INVITE_COLLABS_REQUEST_CODE = 1;
-
-    private CollaborationsFragment mFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +68,7 @@ public class BoxCollaborationsActivity extends BoxActivity {
         int id = item.getItemId();
 
         if (id == R.id.box_sharesdk_action_add) {
-            BoxCollaboration.Role[] rolesArr = mFragment.getRoles();
+            BoxCollaboration.Role[] rolesArr = ((CollaborationsFragment)mFragment).getRoles();
             if (rolesArr != null) {
                 Intent inviteCollabsIntent = BoxInviteCollaboratorsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession);
                 startActivityForResult(inviteCollabsIntent, INVITE_COLLABS_REQUEST_CODE);
@@ -90,7 +85,7 @@ public class BoxCollaborationsActivity extends BoxActivity {
             case INVITE_COLLABS_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
                     // New collaborators have been invited so we should refresh
-                    mFragment.fetchCollaborations();
+                    ((CollaborationsFragment)mFragment).fetchCollaborations();
                 }
                 break;
         }
@@ -112,9 +107,8 @@ public class BoxCollaborationsActivity extends BoxActivity {
 
         Intent collabIntent = new Intent(context, BoxCollaborationsActivity.class);
 
-        collabIntent.putExtra(EXTRA_ITEM, folder);
-        collabIntent.putExtra(EXTRA_FOLDER_ID, folder.getId());
-        collabIntent.putExtra(EXTRA_USER_ID, session.getUser().getId());
+        collabIntent.putExtra(CollaborationUtils.EXTRA_ITEM, folder);
+        collabIntent.putExtra(CollaborationUtils.EXTRA_USER_ID, session.getUser().getId());
         return collabIntent;
     }
 }

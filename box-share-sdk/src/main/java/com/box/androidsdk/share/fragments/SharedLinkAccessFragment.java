@@ -2,6 +2,7 @@ package com.box.androidsdk.share.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -30,6 +31,7 @@ import com.box.androidsdk.content.requests.BoxRequestsFile;
 import com.box.androidsdk.content.requests.BoxRequestsFolder;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.activities.BoxActivity;
 
 import java.net.HttpURLConnection;
 import java.text.ParseException;

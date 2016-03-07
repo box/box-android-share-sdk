@@ -1,6 +1,7 @@
 package com.box.androidsdk.share.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -21,12 +22,12 @@ import com.box.androidsdk.content.requests.BoxRequestsShare;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.content.utils.SdkUtils;
+import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.CollaboratorsAdapter;
 
 public class CollaborationsFragment extends BoxFragment implements AdapterView.OnItemClickListener, CollaborationRolesDialog.OnRoleSelectedListener {
 
-    public static final String EXTRA_COLLABORATIONS = "CollaborationsFragment.ExtraCollaborations";
     protected static final String TAG = CollaborationsFragment.class.getName();
     protected ListView mCollaboratorsListView;
     protected TextView mNoCollaboratorsText;
@@ -53,7 +54,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         if (savedInstanceState == null) {
             fetchCollaborations();
         }else {
-            mCollaborations = (BoxIteratorCollaborations)savedInstanceState.getSerializable(EXTRA_COLLABORATIONS);
+            mCollaborations = (BoxIteratorCollaborations)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_COLLABORATIONS);
             updateUi();
         }
 
@@ -66,8 +67,14 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
     @Override
+    public void AddResult(Intent data) {
+        data.putExtra(CollaborationUtils.EXTRA_COLLABORATIONS, mCollaborations);
+        super.AddResult(data);
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(EXTRA_COLLABORATIONS, mCollaborations);
+        outState.putSerializable(CollaborationUtils.EXTRA_COLLABORATIONS, mCollaborations);
         super.onSaveInstanceState(outState);
     }
 

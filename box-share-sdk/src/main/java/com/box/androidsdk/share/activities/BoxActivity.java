@@ -1,6 +1,8 @@
 package com.box.androidsdk.share.activities;
 
+import android.app.Activity;
 import android.app.Application;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,7 +26,9 @@ import com.box.androidsdk.content.auth.BoxAuthentication;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.SdkUtils;
+import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.fragments.BoxFragment;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -39,24 +43,22 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class BoxActivity extends ActionBarActivity {
 
-    public static final String EXTRA_ITEM = "extraItem";
-    public static final String EXTRA_USER_ID = "extraUserId";
-
     protected BoxSession mSession;
     protected BoxItem mShareItem;
+    protected BoxFragment mFragment;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String userId = null;
-        if (savedInstanceState != null && savedInstanceState.getSerializable(EXTRA_ITEM) != null){
-            userId = savedInstanceState.getString(EXTRA_USER_ID);
-            mShareItem = (BoxItem)savedInstanceState.getSerializable(EXTRA_ITEM);
+        if (savedInstanceState != null && savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM) != null){
+            userId = savedInstanceState.getString(CollaborationUtils.EXTRA_USER_ID);
+            mShareItem = (BoxItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
 
         } else if (getIntent() != null) {
-            userId = getIntent().getStringExtra(EXTRA_USER_ID);
-            mShareItem = (BoxItem)getIntent().getSerializableExtra(EXTRA_ITEM);
+            userId = getIntent().getStringExtra(CollaborationUtils.EXTRA_USER_ID);
+            mShareItem = (BoxItem)getIntent().getSerializableExtra(CollaborationUtils.EXTRA_ITEM);
         }
 
         if (SdkUtils.isBlank(userId)) {
@@ -97,9 +99,17 @@ public abstract class BoxActivity extends ActionBarActivity {
 
 
     @Override
+    public void finish() {
+        Intent data = new Intent();
+        mFragment.AddResult(data);
+        setResult(Activity.RESULT_OK, data);
+        super.finish();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
-       outState.putSerializable(EXTRA_ITEM,mShareItem);
-       outState.putString(EXTRA_USER_ID, mSession.getUser().getId());
+       outState.putSerializable(CollaborationUtils.EXTRA_ITEM,mShareItem);
+       outState.putString(CollaborationUtils.EXTRA_USER_ID, mSession.getUser().getId());
         super.onSaveInstanceState(outState);
     }
 

@@ -271,6 +271,8 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
         mController.fetchItemInfo(mShareItem, mBoxItemListener);
     }
 
+
+
     private BoxFutureTask.OnCompletedListener<BoxItem> mBoxItemListener =
             new BoxFutureTask.OnCompletedListener<BoxItem>() {
                 @Override

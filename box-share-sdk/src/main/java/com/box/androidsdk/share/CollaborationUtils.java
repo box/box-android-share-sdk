@@ -6,6 +6,10 @@ import com.box.androidsdk.content.models.BoxCollaboration;
 
 public class CollaborationUtils {
 
+    public static final String EXTRA_ITEM = "com.box.androidsdk.share.CollaborationUtils.ExtraItem";
+    public static final String EXTRA_USER_ID = "com.box.androidsdk.share.CollaborationUtils.ExtraUserId";
+    public static final String EXTRA_COLLABORATIONS = "com.box.androidsdk.share.CollaborationUtils.ExtraCollaborations";
+
     public static String getRoleName(Context context, BoxCollaboration.Role role) {
         switch(role) {
             case EDITOR:
