@@ -38,15 +38,15 @@ public class PasswordDialogFragment extends PositiveNegativeDialogFragment{
         builder.setPositiveButton(getText(positive), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (getActivity() instanceof OnPositiveOrNegativeButtonClickedListener) {
-                    ((OnPositiveOrNegativeButtonClickedListener) getActivity()).onPositiveButtonClicked(PasswordDialogFragment.this);
+                if (mButtonClickedListener != null) {
+                    mButtonClickedListener.onPositiveButtonClicked(PasswordDialogFragment.this);
                 }
             }
         }).setNegativeButton(getText(negative), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (getActivity() instanceof OnPositiveOrNegativeButtonClickedListener) {
-                    ((OnPositiveOrNegativeButtonClickedListener) getActivity()).onNegativeButtonClicked(PasswordDialogFragment.this);
+                if (mButtonClickedListener != null) {
+                    mButtonClickedListener.onNegativeButtonClicked(PasswordDialogFragment.this);
                 }
             }
         });
@@ -70,7 +70,11 @@ public class PasswordDialogFragment extends PositiveNegativeDialogFragment{
         super.onSaveInstanceState(outState);
     }
 
-    public static final PasswordDialogFragment createFragment(final int titleResId, final int messageResId, int positiveButtonResId, int negativeButtonResId){
+    public static final PasswordDialogFragment createFragment(final int titleResId,
+                                                              final int messageResId,
+                                                              int positiveButtonResId,
+                                                              int negativeButtonResId,
+                                                              OnPositiveOrNegativeButtonClickedListener listener){
         PasswordDialogFragment fragment = new PasswordDialogFragment();
         Bundle b = new Bundle();
         b.putInt(ARGUMENT_TITLE_ID, titleResId);
@@ -78,6 +82,7 @@ public class PasswordDialogFragment extends PositiveNegativeDialogFragment{
         b.putInt(ARGUMENT_POSITIVE_ID, positiveButtonResId);
         b.putInt(ARGUMENT_NEGATIVE_ID, negativeButtonResId);
         fragment.setArguments(b);
+        fragment.setOnPositiveOrNegativeButtonClickedListener(listener);
         return fragment;
     }
 

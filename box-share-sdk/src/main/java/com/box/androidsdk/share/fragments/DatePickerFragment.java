@@ -1,12 +1,11 @@
 package com.box.androidsdk.share.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
@@ -14,9 +13,10 @@ import java.util.Date;
 
 
 public class DatePickerFragment extends DialogFragment
-        implements DatePickerDialog.OnDateSetListener, Dialog.OnDismissListener {
+        implements DatePickerDialog.OnDateSetListener {
 
     DatePickerDialog mDialog;
+    private DatePickerDialog.OnDateSetListener mOnDateSetListener;
 
     private static final String EXTRA_START_DATE = "extraStartDate";
     private final String EXTRA_KEY_YEAR = "extraYear";
@@ -49,6 +49,10 @@ public class DatePickerFragment extends DialogFragment
         return mDialog;
     }
 
+    public void setOnDateSetListener(DatePickerDialog.OnDateSetListener listener) {
+        mOnDateSetListener = listener;
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt(EXTRA_KEY_YEAR,  mDialog.getDatePicker().getYear());
@@ -65,26 +69,18 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         Activity activity = getActivity();
-        if (activity instanceof DatePickerDialog.OnDateSetListener){
-            ((DatePickerDialog.OnDateSetListener) activity).onDateSet(view, year, month, day);
-        }
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        Activity activity = getActivity();
-        if (activity instanceof DialogInterface.OnDismissListener){
-            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
+        if (mOnDateSetListener != null){
+            mOnDateSetListener.onDateSet(view, year, month, day);
         }
     }
 
 
-    public static final DatePickerFragment createFragment(final Date date){
+    public static final DatePickerFragment createFragment(final Date date, DatePickerDialog.OnDateSetListener listener){
         DatePickerFragment fragment = new DatePickerFragment();
         Bundle b = new Bundle();
         b.putSerializable(EXTRA_START_DATE, date);
         fragment.setArguments(b);
+        fragment.setOnDateSetListener(listener);
         return fragment;
     }
 }
