@@ -43,8 +43,6 @@ public class BoxCollaborationsActivity extends BoxActivity {
             return;
         }
 
-        ShareController controller = new BoxShareController(new BoxApiFile(mSession),
-                new BoxApiFolder(mSession), new BoxApiBookmark(mSession), new BoxApiCollaboration(mSession));
         mFragment = (CollaborationsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -53,7 +51,7 @@ public class BoxCollaborationsActivity extends BoxActivity {
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
-        mFragment.SetController(controller);
+        mFragment.SetController(mController);
     }
 
     @Override

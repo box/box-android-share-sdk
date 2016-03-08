@@ -30,8 +30,6 @@ public class BoxSharedLinkAccessActivity extends BoxActivity {
         setContentView(R.layout.activity_shared_link_access);
         initToolbar();
 
-        ShareController controller = new BoxShareController(new BoxApiFile(mSession),
-                new BoxApiFolder(mSession), new BoxApiBookmark(mSession), new BoxApiCollaboration(mSession));
         mFragment = (SharedLinkAccessFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -40,7 +38,7 @@ public class BoxSharedLinkAccessActivity extends BoxActivity {
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
-        mFragment.SetController(controller);
+        mFragment.SetController(mController);
     }
 
 

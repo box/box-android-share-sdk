@@ -20,6 +20,10 @@ import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.widget.Toast;
 
+import com.box.androidsdk.content.BoxApiBookmark;
+import com.box.androidsdk.content.BoxApiCollaboration;
+import com.box.androidsdk.content.BoxApiFile;
+import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
@@ -29,6 +33,8 @@ import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.api.BoxShareController;
+import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.BoxFragment;
 
 import java.util.Queue;
@@ -47,6 +53,7 @@ public abstract class BoxActivity extends ActionBarActivity {
     protected BoxSession mSession;
     protected BoxItem mShareItem;
     protected BoxFragment mFragment;
+    protected ShareController mController;
 
 
     @Override
@@ -96,6 +103,8 @@ public abstract class BoxActivity extends ActionBarActivity {
             }
         });
         mSession.authenticate();
+        mController = new BoxShareController(new BoxApiFile(mSession),
+                new BoxApiFolder(mSession), new BoxApiBookmark(mSession), new BoxApiCollaboration(mSession));
     }
 
 

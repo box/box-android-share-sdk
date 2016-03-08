@@ -31,8 +31,6 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity {
         setContentView(R.layout.activity_invite_collaborators);
         initToolbar();
 
-        ShareController controller = new BoxShareController(new BoxApiFile(mSession),
-                new BoxApiFolder(mSession), new BoxApiBookmark(mSession), new BoxApiCollaboration(mSession));
         mFragment = (InviteCollaboratorsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -41,7 +39,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity {
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
-        mFragment.SetController(controller);
+        mFragment.SetController(mController);
     }
 
     /**
