@@ -13,24 +13,6 @@ public class CollaborationUtils {
     public static final String EXTRA_USER_ID = "com.box.androidsdk.share.CollaborationUtils.ExtraUserId";
     public static final String EXTRA_COLLABORATIONS = "com.box.androidsdk.share.CollaborationUtils.ExtraCollaborations";
 
-    // Class to interpret result from share SDK activities
-    public static class ResultInterpreter {
-
-        Intent mData;
-
-        public ResultInterpreter(Intent data){
-            mData = data;
-        }
-
-        public BoxItem getBoxItem() {
-            return (BoxItem) mData.getSerializableExtra(EXTRA_ITEM);
-        }
-
-        public BoxIteratorCollaborations getCollaborations() {
-            return (BoxIteratorCollaborations) mData.getSerializableExtra(EXTRA_COLLABORATIONS);
-        }
-    }
-
     public static String getRoleName(Context context, BoxCollaboration.Role role) {
         switch(role) {
             case EDITOR:

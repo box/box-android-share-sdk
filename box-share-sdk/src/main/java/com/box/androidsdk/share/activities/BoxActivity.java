@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxFutureTask;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.auth.BoxAuthentication;
 import com.box.androidsdk.content.models.BoxItem;
@@ -129,5 +130,23 @@ public abstract class BoxActivity extends ActionBarActivity {
                 finish();
             }
         });
+    }
+
+    // Class to interpret result from share SDK activities
+    public static class ResultInterpreter {
+
+        Intent mData;
+
+        public ResultInterpreter(Intent data){
+            mData = data;
+        }
+
+        public BoxItem getBoxItem() {
+            return (BoxItem) mData.getSerializableExtra(CollaborationUtils.EXTRA_ITEM);
+        }
+
+        public BoxIteratorCollaborations getCollaborations() {
+            return (BoxIteratorCollaborations) mData.getSerializableExtra(CollaborationUtils.EXTRA_COLLABORATIONS);
+        }
     }
 }

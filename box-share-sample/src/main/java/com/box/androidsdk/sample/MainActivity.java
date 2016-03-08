@@ -178,7 +178,7 @@ public class MainActivity extends ActionBarActivity {
         if (requestCode == REQUEST_CODE_SHARE_LINK){
             if (data != null){
                 // update current data to the latest one returned from the shared link creation.
-                mSampleFolder = (BoxFolder) new CollaborationUtils.ResultInterpreter(data).getBoxItem();
+                mSampleFolder = (BoxFolder) new BoxActivity.ResultInterpreter(data).getBoxItem();
                 // if your user created or modified a shared link during this flow you can use it for your own purposes.
                 BoxSharedLink link = mSampleFolder.getSharedLink();
                 if (link != null) {
@@ -189,9 +189,9 @@ public class MainActivity extends ActionBarActivity {
         else if (requestCode == REQUEST_CODE_INVITE_PEOPLE){
             if (data != null){
                 // update current data to the latest one returned from the shared link creation.
-                mSampleFolder = (BoxFolder) new CollaborationUtils.ResultInterpreter(data).getBoxItem();
+                mSampleFolder = (BoxFolder) new BoxActivity.ResultInterpreter(data).getBoxItem();
                 // if your user created or removed collaborations during this flow you can use this list for your own purposes.
-                BoxIteratorCollaborations collaborations = new CollaborationUtils.ResultInterpreter(data).getCollaborations();
+                BoxIteratorCollaborations collaborations = new BoxActivity.ResultInterpreter(data).getCollaborations();
                 if (collaborations != null) {
                     Toast.makeText(this, "Number of collaborators: " + collaborations.size(), Toast.LENGTH_LONG).show();
                 }
