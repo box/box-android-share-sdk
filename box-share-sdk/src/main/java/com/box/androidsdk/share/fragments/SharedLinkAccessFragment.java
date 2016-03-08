@@ -106,7 +106,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                     showPasswordChooserDialog();
                 } else {
                     showSpinner();
-                    mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setPassword(null), mBoxItemListener);
+                    mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setPassword(null)).addOnCompletedListener(mBoxItemListener);
                 }
             }
         });
@@ -123,7 +123,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                 } else {
                     try {
                         showSpinner();
-                        mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setRemoveUnsharedAtDate(), mBoxItemListener);
+                        mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setRemoveUnsharedAtDate()).addOnCompletedListener(mBoxItemListener);
                     } catch (ParseException e) {
                         dismissSpinner();
                     }
@@ -276,11 +276,11 @@ public class SharedLinkAccessFragment extends BoxFragment
     private void changeDownloadPermission(boolean canDownload){
         if (mShareItem instanceof BoxFile) {
             showSpinner();
-            mController.executeRequest(BoxItem.class, ((BoxRequestsFile.UpdatedSharedFile) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload), mBoxItemListener);
+            mController.executeRequest(BoxItem.class, ((BoxRequestsFile.UpdatedSharedFile) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload)).addOnCompletedListener(mBoxItemListener);
         }
         else if (mShareItem instanceof BoxFolder) {
             showSpinner();
-            mController.executeRequest(BoxItem.class, ((BoxRequestsFolder.UpdateSharedFolder) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload), mBoxItemListener);
+            mController.executeRequest(BoxItem.class, ((BoxRequestsFolder.UpdateSharedFolder) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload)).addOnCompletedListener(mBoxItemListener);
         }
         else if (mShareItem instanceof BoxBookmark) {
             mController.showToast(getActivity(), "Bookmarks do not have a permission that can be changed.");
@@ -300,7 +300,7 @@ public class SharedLinkAccessFragment extends BoxFragment
         }
 
         showSpinner();
-        mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setAccess(access), mBoxItemListener);
+        mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setAccess(access)).addOnCompletedListener(mBoxItemListener);
     }
 
     
@@ -324,7 +324,7 @@ public class SharedLinkAccessFragment extends BoxFragment
         GregorianCalendar calendar = new GregorianCalendar(year, month, day);
         try {
             showSpinner();
-            mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setUnsharedAt(calendar.getTime()), mBoxItemListener);
+            mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setUnsharedAt(calendar.getTime())).addOnCompletedListener(mBoxItemListener);
         } catch (Exception e){
             dismissSpinner();
             mController.showToast(getActivity(), "invalid time selected");
@@ -338,7 +338,7 @@ public class SharedLinkAccessFragment extends BoxFragment
      * @throws ParseException
      */
     private void changePassword(final String password) throws ParseException{
-        mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setPassword(password), mBoxItemListener);
+        mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setPassword(password)).addOnCompletedListener(mBoxItemListener);
     }
 
     /**
@@ -356,7 +356,7 @@ public class SharedLinkAccessFragment extends BoxFragment
      */
     public void refreshShareItemInfo() {
         showSpinner();
-        mController.fetchItemInfo(mShareItem, mBoxItemListener);
+        mController.fetchItemInfo(mShareItem).addOnCompletedListener(mBoxItemListener);
     }
 
     private BoxFutureTask.OnCompletedListener<BoxItem> mBoxItemListener =

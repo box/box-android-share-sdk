@@ -100,14 +100,14 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
         if (rolesDialog.getIsRemoveCollaborationSelected()) {
             showSpinner();
-            mController.deleteCollaboration(collaboration, mDeleteCollaborationListener);
+            mController.deleteCollaboration(collaboration).addOnCompletedListener(mDeleteCollaborationListener);
         } else {
             BoxCollaboration.Role selectedRole = rolesDialog.getSelectedRole();
             if (selectedRole == null || selectedRole == collaboration.getRole())
                 return;
 
             showSpinner();
-            mController.updateCollaboration(collaboration, selectedRole, mUpdateCollaborationListener);
+            mController.updateCollaboration(collaboration, selectedRole).addOnCompletedListener(mUpdateCollaborationListener);
         }
     }
 
@@ -125,7 +125,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         }
 
         showSpinner();
-        mController.fetchCollaborations(getFolder(), mCollaborationsListener);
+        mController.fetchCollaborations(getFolder()).addOnCompletedListener(mCollaborationsListener);
     }
 
     /**
@@ -137,7 +137,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         }
 
         showSpinner();
-        mController.fetchRoles(getFolder(), mRolesListener);
+        mController.fetchRoles(getFolder()).addOnCompletedListener(mRolesListener);
     }
 
     private void updateUi(){

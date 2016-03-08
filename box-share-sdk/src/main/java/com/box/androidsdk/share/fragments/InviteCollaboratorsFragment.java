@@ -98,7 +98,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
 
         showSpinner();
-        mController.fetchRoles(getFolder(), mRolesListener);
+        mController.fetchRoles(getFolder()).addOnCompletedListener(mRolesListener);
     }
 
     private BoxFutureTask.OnCompletedListener<BoxFolder> mRolesListener =
@@ -166,7 +166,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         if (!SdkUtils.isBlank(emails)) {
             BoxRequestBatch batchRequest = new BoxRequestBatch();
             String[] emailParts = emails.split(",");
-            mController.addCollaborations(getFolder(), mSelectedRole, emailParts, mAddCollaborationsListener);
+            mController.addCollaborations(getFolder(), mSelectedRole, emailParts).addOnCompletedListener(mAddCollaborationsListener);
         }
     }
 
