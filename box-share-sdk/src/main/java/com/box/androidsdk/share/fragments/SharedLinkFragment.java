@@ -101,7 +101,7 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
                     BoxSharedLink sharedLink = mShareItem.getSharedLink();
                     ClipData clipData = ClipData.newPlainText("", sharedLink.getURL());
                     clipboard.setPrimaryClip(clipData);
-                    Toast.makeText(getActivity(), R.string.box_sharesdk_link_copied_to_clipboard, Toast.LENGTH_LONG).show();
+                    mController.showToast(getActivity(), R.string.box_sharesdk_link_copied_to_clipboard);
                 }
             }
         });
@@ -124,11 +124,11 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
             mEditLinkAccessButton.setOnClickListener(mOnEditLinkAccessButtonClickListener);
         }
 
+        setupUi();
+
         // if we do not have a shared link try refreshing
         if (mShareItem.getSharedLink() == null){
             refreshShareItemInfo();
-        } else {
-            setupUi();
         }
 
         return view;
@@ -141,19 +141,6 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
         }
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_sharedlink, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.box_sharesdk_refresh){
-            refreshShareItemInfo();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onPositiveButtonClicked(PositiveNegativeDialogFragment fragment) {
@@ -252,7 +239,7 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
      */
     private void createDefaultShareItem(){
         showSpinner();
-        mController.createDefaultSharedLink(mShareItem, mBoxItemListener);
+        mController.createDefaultSharedLink(mShareItem).addOnCompletedListener(mBoxItemListener);
     }
 
     /**
@@ -260,7 +247,7 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
      */
     private void disableShareItem(){
         showSpinner();
-        mController.disableShareLink(mShareItem, mBoxItemListener);
+        mController.disableShareLink(mShareItem).addOnCompletedListener(mBoxItemListener);
     }
 
     /**
@@ -268,7 +255,7 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
      */
     public void refreshShareItemInfo(){
         showSpinner();
-        mController.fetchItemInfo(mShareItem, mBoxItemListener);
+        mController.fetchItemInfo(mShareItem).addOnCompletedListener(mBoxItemListener);
     }
 
 
@@ -303,9 +290,9 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
                                 // reset ui to previous object.
                                 if (response.getRequest() instanceof BoxRequestItem && mShareItem.getId().equals(((BoxRequestItem) response.getRequest()).getId())) {
                                     if (response.getRequest() instanceof BoxRequestUpdateSharedItem) {
-                                        Toast.makeText(getActivity(), R.string.box_sharesdk_unable_to_modify_toast, Toast.LENGTH_LONG).show();
+                                        mController.showToast(getActivity(), R.string.box_sharesdk_unable_to_modify_toast);
                                     } else {
-                                        Toast.makeText(getActivity(), R.string.box_sharesdk_problem_accessing_this_shared_link, Toast.LENGTH_LONG).show();
+                                        mController.showToast(getActivity(), R.string.box_sharesdk_problem_accessing_this_shared_link);
                                     }
                                 }
                                 setupUi();

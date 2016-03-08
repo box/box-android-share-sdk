@@ -20,7 +20,12 @@ import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.widget.Toast;
 
+import com.box.androidsdk.content.BoxApiBookmark;
+import com.box.androidsdk.content.BoxApiCollaboration;
+import com.box.androidsdk.content.BoxApiFile;
+import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxFutureTask;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.auth.BoxAuthentication;
 import com.box.androidsdk.content.models.BoxItem;
@@ -28,6 +33,8 @@ import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.api.BoxShareController;
+import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.BoxFragment;
 
 import java.util.Queue;
@@ -46,6 +53,7 @@ public abstract class BoxActivity extends ActionBarActivity {
     protected BoxSession mSession;
     protected BoxItem mShareItem;
     protected BoxFragment mFragment;
+    protected ShareController mController;
 
 
     @Override
@@ -62,12 +70,12 @@ public abstract class BoxActivity extends ActionBarActivity {
         }
 
         if (SdkUtils.isBlank(userId)) {
-            Toast.makeText(this, R.string.box_sharesdk_session_is_not_authenticated, Toast.LENGTH_LONG).show();
+            mController.showToast(this, R.string.box_sharesdk_session_is_not_authenticated);
             finish();
             return;
         }
         if (mShareItem == null){
-            Toast.makeText(this, R.string.box_sharesdk_no_item_selected, Toast.LENGTH_LONG).show();
+            mController.showToast(this, R.string.box_sharesdk_no_item_selected);
             finish();
             return;
         }
@@ -86,7 +94,7 @@ public abstract class BoxActivity extends ActionBarActivity {
             @Override
             public void onAuthFailure(BoxAuthentication.BoxAuthenticationInfo info, Exception ex) {
                 finish();
-                Toast.makeText(BoxActivity.this, R.string.box_sharesdk_session_is_not_authenticated, Toast.LENGTH_LONG).show();
+                mController.showToast(BoxActivity.this, R.string.box_sharesdk_session_is_not_authenticated);
             }
 
             @Override
@@ -95,6 +103,8 @@ public abstract class BoxActivity extends ActionBarActivity {
             }
         });
         mSession.authenticate();
+        mController = new BoxShareController(new BoxApiFile(mSession),
+                new BoxApiFolder(mSession), new BoxApiBookmark(mSession), new BoxApiCollaboration(mSession));
     }
 
 
@@ -129,5 +139,23 @@ public abstract class BoxActivity extends ActionBarActivity {
                 finish();
             }
         });
+    }
+
+    // Class to interpret result from share SDK activities
+    public static class ResultInterpreter {
+
+        Intent mData;
+
+        public ResultInterpreter(Intent data){
+            mData = data;
+        }
+
+        public BoxItem getBoxItem() {
+            return (BoxItem) mData.getSerializableExtra(CollaborationUtils.EXTRA_ITEM);
+        }
+
+        public BoxIteratorCollaborations getCollaborations() {
+            return (BoxIteratorCollaborations) mData.getSerializableExtra(CollaborationUtils.EXTRA_COLLABORATIONS);
+        }
     }
 }

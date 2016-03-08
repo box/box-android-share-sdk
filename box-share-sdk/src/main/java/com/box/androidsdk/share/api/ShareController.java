@@ -1,5 +1,7 @@
 package com.box.androidsdk.share.api;
 
+import android.content.Context;
+
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxFolder;
@@ -18,14 +20,16 @@ import java.util.Date;
  * Created by varungupta on 3/4/2016.
  */
 public interface ShareController {
-    void fetchItemInfo(BoxItem boxItem, BoxFutureTask.OnCompletedListener<BoxItem> onCompletedListener);
+    BoxFutureTask<BoxItem> fetchItemInfo(BoxItem boxItemr);
     BoxRequestUpdateSharedItem getCreatedSharedLinkRequest(BoxItem boxItem);
-    void createDefaultSharedLink(BoxItem boxItem, BoxFutureTask.OnCompletedListener<BoxItem> onCompletedListener);
-    void disableShareLink(BoxItem boxItem, BoxFutureTask.OnCompletedListener<BoxItem> onCompletedListener);
-    void fetchCollaborations(BoxFolder boxFolder, BoxFutureTask.OnCompletedListener<BoxIteratorCollaborations> onCompletedListener);
-    void fetchRoles(BoxFolder boxFolder, BoxFutureTask.OnCompletedListener<BoxFolder> onCompletedListener);
-    void updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role selectedRole, BoxFutureTask.OnCompletedListener<BoxCollaboration> onCompletedListener);
-    void deleteCollaboration(BoxCollaboration collaboration, BoxFutureTask.OnCompletedListener<BoxVoid> onCompletedListener);
-    void addCollaborations(BoxFolder boxFolder, BoxCollaboration.Role selectedRole, String[] emails, BoxFutureTask.OnCompletedListener<BoxResponseBatch> onCompletedListener);
-    <E extends BoxObject> void executeRequest(final Class<E> clazz, final BoxRequest request, BoxFutureTask.OnCompletedListener<E> onCompletedListener);
+    BoxFutureTask<BoxItem> createDefaultSharedLink(BoxItem boxItem);
+    BoxFutureTask<BoxItem> disableShareLink(BoxItem boxItemr);
+    BoxFutureTask<BoxIteratorCollaborations> fetchCollaborations(BoxFolder boxFolder);
+    BoxFutureTask<BoxFolder> fetchRoles(BoxFolder boxFolder);
+    BoxFutureTask<BoxCollaboration> updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role selectedRole);
+    BoxFutureTask<BoxVoid> deleteCollaboration(BoxCollaboration collaboration);
+    BoxFutureTask<BoxResponseBatch> addCollaborations(BoxFolder boxFolder, BoxCollaboration.Role selectedRole, String[] emails);
+    <E extends BoxObject> BoxFutureTask<E> executeRequest(final Class<E> clazz, final BoxRequest request);
+    void showToast(Context context, CharSequence text);
+    void showToast(Context context, int resId);
 }

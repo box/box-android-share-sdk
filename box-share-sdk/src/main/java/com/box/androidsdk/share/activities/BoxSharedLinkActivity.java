@@ -32,8 +32,6 @@ public class BoxSharedLinkActivity extends BoxActivity implements View.OnClickLi
         setContentView(R.layout.activity_shared_link);
         initToolbar();
 
-        ShareController controller = new BoxShareController(new BoxApiFile(mSession),
-                new BoxApiFolder(mSession), new BoxApiBookmark(mSession), new BoxApiCollaboration(mSession));
         mFragment = (SharedLinkFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -42,7 +40,7 @@ public class BoxSharedLinkActivity extends BoxActivity implements View.OnClickLi
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
-        mFragment.SetController(controller);
+        mFragment.SetController(mController);
         ((SharedLinkFragment)mFragment).setOnEditLinkAccessButtonClickListener(this);
     }
 

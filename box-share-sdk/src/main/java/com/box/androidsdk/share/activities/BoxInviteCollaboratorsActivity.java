@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.box.androidsdk.content.BoxApiBookmark;
 import com.box.androidsdk.content.BoxApiCollaboration;
@@ -31,8 +34,6 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity {
         setContentView(R.layout.activity_invite_collaborators);
         initToolbar();
 
-        ShareController controller = new BoxShareController(new BoxApiFile(mSession),
-                new BoxApiFolder(mSession), new BoxApiBookmark(mSession), new BoxApiCollaboration(mSession));
         mFragment = (InviteCollaboratorsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -41,7 +42,29 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity {
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
-        mFragment.SetController(controller);
+        mFragment.SetController(mController);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_invite_collaborators, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.box_sharesdk_action_send) {
+            ((InviteCollaboratorsFragment)mFragment).addCollaborations();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**

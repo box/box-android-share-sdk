@@ -26,6 +26,9 @@ public class DatePickerFragment extends DialogFragment
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        setRetainInstance(true);
+
         // Use the current date as the default date in the picker
         final Calendar c = Calendar.getInstance();
         if (getArguments() != null){
@@ -74,6 +77,18 @@ public class DatePickerFragment extends DialogFragment
         }
     }
 
+
+    @Override
+    public void onDestroyView()
+    {
+        Dialog dialog = getDialog();
+
+        // Work around bug: http://code.google.com/p/android/issues/detail?id=17423
+        if ((dialog != null) && getRetainInstance())
+            dialog.setDismissMessage(null);
+
+        super.onDestroyView();
+    }
 
     public static final DatePickerFragment createFragment(final Date date, DatePickerDialog.OnDateSetListener listener){
         DatePickerFragment fragment = new DatePickerFragment();

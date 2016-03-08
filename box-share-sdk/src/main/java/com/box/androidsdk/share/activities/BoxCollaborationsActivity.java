@@ -23,6 +23,8 @@ import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.CollaborationsFragment;
 
+import java.util.ArrayList;
+
 /**
  * Activity used to show and modify the collaborations of a folder. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
@@ -38,13 +40,11 @@ public class BoxCollaborationsActivity extends BoxActivity {
         initToolbar();
 
         if (mShareItem == null || mShareItem.getType() == null || !mShareItem.getType().equals(BoxFolder.TYPE)) {
-            Toast.makeText(this, R.string.box_sharesdk_selected_item_not_expected_type, Toast.LENGTH_LONG).show();
+            mController.showToast(this, R.string.box_sharesdk_selected_item_not_expected_type);
             finish();
             return;
         }
 
-        ShareController controller = new BoxShareController(new BoxApiFile(mSession),
-                new BoxApiFolder(mSession), new BoxApiBookmark(mSession), new BoxApiCollaboration(mSession));
         mFragment = (CollaborationsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -53,7 +53,7 @@ public class BoxCollaborationsActivity extends BoxActivity {
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
-        mFragment.SetController(controller);
+        mFragment.SetController(mController);
     }
 
     @Override
@@ -68,11 +68,8 @@ public class BoxCollaborationsActivity extends BoxActivity {
         int id = item.getItemId();
 
         if (id == R.id.box_sharesdk_action_add) {
-            BoxCollaboration.Role[] rolesArr = ((CollaborationsFragment)mFragment).getRoles();
-            if (rolesArr != null) {
-                Intent inviteCollabsIntent = BoxInviteCollaboratorsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession);
-                startActivityForResult(inviteCollabsIntent, INVITE_COLLABS_REQUEST_CODE);
-            }
+            Intent inviteCollabsIntent = BoxInviteCollaboratorsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession);
+            startActivityForResult(inviteCollabsIntent, INVITE_COLLABS_REQUEST_CODE);
         }
 
         return super.onOptionsItemSelected(item);

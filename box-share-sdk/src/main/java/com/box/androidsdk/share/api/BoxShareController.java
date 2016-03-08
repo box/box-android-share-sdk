@@ -1,5 +1,8 @@
 package com.box.androidsdk.share.api;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.box.androidsdk.content.BoxApiBookmark;
 import com.box.androidsdk.content.BoxApiCollaboration;
 import com.box.androidsdk.content.BoxApiFile;
@@ -21,6 +24,7 @@ import com.box.androidsdk.content.requests.BoxRequestsFile;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.internal.BoxApiInvitee;
+import com.box.androidsdk.share.R;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -45,7 +49,7 @@ public class BoxShareController implements ShareController {
     }
 
     @Override
-    public void fetchItemInfo(BoxItem boxItem, BoxFutureTask.OnCompletedListener<BoxItem> onCompletedListener) {
+    public BoxFutureTask<BoxItem> fetchItemInfo(BoxItem boxItem) {
         BoxRequest request = null;
         if (boxItem instanceof BoxFile) {
             request = mFileApi.getInfoRequest(boxItem.getId());
@@ -56,8 +60,8 @@ public class BoxShareController implements ShareController {
         }
 
         BoxFutureTask<BoxItem> task = new BoxFutureTask<BoxItem>(BoxItem.class, request);
-        task.addOnCompletedListener(onCompletedListener);
         getApiExecutor().submit(task);
+        return task;
     }
 
     /**
@@ -79,13 +83,13 @@ public class BoxShareController implements ShareController {
     }
 
     @Override
-    public void createDefaultSharedLink(BoxItem boxItem, BoxFutureTask.OnCompletedListener<BoxItem> onCompletedListener) {
+    public BoxFutureTask<BoxItem> createDefaultSharedLink(BoxItem boxItem) {
         BoxRequest request = getCreatedSharedLinkRequest(boxItem);
-        executeRequest(BoxItem.class, request, onCompletedListener);
+        return executeRequest(BoxItem.class, request);
     }
 
     @Override
-    public void disableShareLink(BoxItem boxItem, BoxFutureTask.OnCompletedListener<BoxItem> onCompletedListener) {
+    public BoxFutureTask<BoxItem> disableShareLink(BoxItem boxItem) {
         BoxRequest request = null;
         if (boxItem instanceof BoxFile) {
             request = mFileApi.getDisableSharedLinkRequest(boxItem.getId()).setFields(BoxFile.ALL_FIELDS);
@@ -95,40 +99,40 @@ public class BoxShareController implements ShareController {
             request = mBookmarkApi.getDisableSharedLinkRequest(boxItem.getId()).setFields(BoxBookmark.ALL_FIELDS);
         }
 
-        executeRequest(BoxItem.class, request, onCompletedListener);
+        return executeRequest(BoxItem.class, request);
     }
 
     @Override
-    public void fetchCollaborations(BoxFolder boxFolder, BoxFutureTask.OnCompletedListener<BoxIteratorCollaborations> onCompletedListener) {
+    public BoxFutureTask<BoxIteratorCollaborations> fetchCollaborations(BoxFolder boxFolder) {
         BoxFutureTask<BoxIteratorCollaborations> task = mFolderApi
                 .getCollaborationsRequest(boxFolder.getId()).toTask();
-        task.addOnCompletedListener(onCompletedListener);
         getApiExecutor().submit(task);
+        return task;
     }
 
     @Override
-    public void fetchRoles(BoxFolder boxFolder, BoxFutureTask.OnCompletedListener<BoxFolder> onCompletedListener) {
+    public BoxFutureTask<BoxFolder> fetchRoles(BoxFolder boxFolder) {
         BoxFutureTask<BoxFolder> task = mFolderApi.getInfoRequest(boxFolder.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES).toTask();
-        task.addOnCompletedListener(onCompletedListener);
         getApiExecutor().submit(task);
+        return task;
     }
 
     @Override
-    public void updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role selectedRole, BoxFutureTask.OnCompletedListener<BoxCollaboration> onCompletedListener) {
+    public BoxFutureTask<BoxCollaboration> updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role selectedRole) {
         BoxFutureTask<BoxCollaboration> task = mCollabApi.getUpdateRequest(collaboration.getId()).setNewRole(selectedRole).toTask();
-        task.addOnCompletedListener(onCompletedListener);
         getApiExecutor().submit(task);
+        return task;
     }
 
     @Override
-    public void deleteCollaboration(BoxCollaboration collaboration, BoxFutureTask.OnCompletedListener<BoxVoid> onCompletedListener) {
+    public BoxFutureTask<BoxVoid> deleteCollaboration(BoxCollaboration collaboration) {
         BoxFutureTask<BoxVoid> task = mCollabApi.getDeleteRequest(collaboration.getId()).toTask();
-        task.addOnCompletedListener(onCompletedListener);
         getApiExecutor().submit(task);
+        return task;
     }
 
     @Override
-    public void addCollaborations(BoxFolder boxFolder, BoxCollaboration.Role selectedRole, String[] emails, BoxFutureTask.OnCompletedListener<BoxResponseBatch> onCompletedListener) {
+    public BoxFutureTask<BoxResponseBatch> addCollaborations(BoxFolder boxFolder, BoxCollaboration.Role selectedRole, String[] emails) {
         BoxRequestBatch batchRequest = new BoxRequestBatch();
         for (String email: emails) {
             String trimmedEmail = email.trim();
@@ -138,15 +142,25 @@ public class BoxShareController implements ShareController {
         }
 
         BoxFutureTask<BoxResponseBatch> task = batchRequest.toTask();
-        task.addOnCompletedListener(onCompletedListener);
         getApiExecutor().submit(task);
+        return task;
     }
 
     @Override
-    public <E extends BoxObject> void executeRequest(Class<E> clazz, BoxRequest request, BoxFutureTask.OnCompletedListener<E> onCompletedListener) {
+    public <E extends BoxObject> BoxFutureTask<E> executeRequest(Class<E> clazz, BoxRequest request) {
         BoxFutureTask<E> task = new BoxFutureTask<E>(clazz, request);
-        task.addOnCompletedListener(onCompletedListener);
         getApiExecutor().submit(task);
+        return task;
+    }
+
+    @Override
+    public void showToast(Context context, CharSequence text) {
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showToast(Context context, int resId) {
+        showToast(context, context.getResources().getText(resId));
     }
 
     private static ThreadPoolExecutor mApiExecutor;

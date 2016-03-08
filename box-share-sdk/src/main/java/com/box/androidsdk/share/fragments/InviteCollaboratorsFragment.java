@@ -33,6 +33,7 @@ import com.box.androidsdk.share.adapters.InviteeAdapter;
 import com.box.androidsdk.share.internal.BoxListInvitees;
 
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener {
@@ -43,7 +44,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     private MultiAutoCompleteTextView mAutoComplete;
     private InviteeAdapter mAdapter;
     private BoxCollaboration.Role mSelectedRole;
-    private BoxCollaboration.Role[] mRoles;
+    private ArrayList<BoxCollaboration.Role> mRoles;
     private String mAccessToken;
 
     @Nullable
@@ -65,8 +66,8 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
 
         // Get serialized roles or fetch them if they are not available
         if (getFolder() != null && getFolder().getAllowedInviteeRoles() != null) {
-            mRoles = getFolder().getAllowedInviteeRoles().toArray(new BoxCollaboration.Role[getFolder().getAllowedInviteeRoles().size()]);
-            BoxCollaboration.Role selectedRole = mRoles[0];
+            mRoles = getFolder().getAllowedInviteeRoles();
+            BoxCollaboration.Role selectedRole = mRoles.get(0);
             setSelectedRole(selectedRole);
         } else {
             fetchRoles();
@@ -74,27 +75,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
 
         fetchInvitees();
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.menu_invite_collaborators, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.box_sharesdk_action_send) {
-            addCollaborations();
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -119,7 +99,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
 
         showSpinner();
-        mController.fetchRoles(getFolder(), mRolesListener);
+        mController.fetchRoles(getFolder()).addOnCompletedListener(mRolesListener);
     }
 
     private BoxFutureTask.OnCompletedListener<BoxFolder> mRolesListener =
@@ -136,18 +116,18 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                         public void run() {
                             if (response.isSuccess() && getFolder() != null) {
                                 BoxFolder folder = response.getResult();
-                                mRoles = folder.getAllowedInviteeRoles().toArray(new BoxCollaboration.Role[folder.getAllowedInviteeRoles().size()]);
+                                mRoles = folder.getAllowedInviteeRoles();
                                 if (mSelectedRole != null) {
                                     setSelectedRole(mSelectedRole);
                                 } else {
-                                    BoxCollaboration.Role selectedRole = mRoles != null && mRoles.length > 0 ? mRoles[0] : null;
+                                    BoxCollaboration.Role selectedRole = mRoles != null && mRoles.size() > 0 ? mRoles.get(0) : null;
                                     setSelectedRole(selectedRole);
                                 }
                                 mShareItem = folder;
                             } else {
                                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch roles request failed",
                                         response.getException());
-                                Toast.makeText(getActivity(), getString(R.string.box_sharesdk_network_error), Toast.LENGTH_LONG).show();
+                                mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
                             }
                         }
                     });
@@ -187,7 +167,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         if (!SdkUtils.isBlank(emails)) {
             BoxRequestBatch batchRequest = new BoxRequestBatch();
             String[] emailParts = emails.split(",");
-            mController.addCollaborations(getFolder(), mSelectedRole, emailParts, mAddCollaborationsListener);
+            mController.addCollaborations(getFolder(), mSelectedRole, emailParts).addOnCompletedListener(mAddCollaborationsListener);
         }
     }
 
@@ -244,7 +224,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         } else {
             msg = getString(R.string.box_sharesdk_collaborators_invited);
         }
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+        mController.showToast(getActivity(), msg);
         if (responses.getResponses().size() == alreadyAddedCount) {
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {

@@ -106,7 +106,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                     showPasswordChooserDialog();
                 } else {
                     showSpinner();
-                    mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setPassword(null), mBoxItemListener);
+                    mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setPassword(null)).addOnCompletedListener(mBoxItemListener);
                 }
             }
         });
@@ -123,7 +123,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                 } else {
                     try {
                         showSpinner();
-                        mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setRemoveUnsharedAtDate(), mBoxItemListener);
+                        mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setRemoveUnsharedAtDate()).addOnCompletedListener(mBoxItemListener);
                     } catch (ParseException e) {
                         dismissSpinner();
                     }
@@ -144,20 +144,6 @@ public class SharedLinkAccessFragment extends BoxFragment
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_sharedlink, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.box_sharesdk_refresh){
-            refreshShareItemInfo();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onPositiveButtonClicked(PositiveNegativeDialogFragment fragment) {
         if (fragment instanceof PasswordDialogFragment){
             try {
@@ -165,7 +151,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                 changePassword(((PasswordDialogFragment) fragment).getPassword());
             } catch (Exception e){
                 dismissSpinner();
-                Toast.makeText(getActivity(), "invalid password", Toast.LENGTH_LONG).show();
+                mController.showToast(getActivity(), "invalid password");
             }
         }
         else if (fragment instanceof AccessRadialDialogFragment){
@@ -277,7 +263,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                 hideView(mExpiresButton);
             }
         } else {
-            Toast.makeText(getActivity(),getText(R.string.box_sharesdk_problem_accessing_this_shared_link), Toast.LENGTH_LONG).show();
+            mController.showToast(getActivity(),getText(R.string.box_sharesdk_problem_accessing_this_shared_link));
             getActivity().finish();
         }
     }
@@ -290,14 +276,14 @@ public class SharedLinkAccessFragment extends BoxFragment
     private void changeDownloadPermission(boolean canDownload){
         if (mShareItem instanceof BoxFile) {
             showSpinner();
-            mController.executeRequest(BoxItem.class, ((BoxRequestsFile.UpdatedSharedFile) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload), mBoxItemListener);
+            mController.executeRequest(BoxItem.class, ((BoxRequestsFile.UpdatedSharedFile) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload)).addOnCompletedListener(mBoxItemListener);
         }
         else if (mShareItem instanceof BoxFolder) {
             showSpinner();
-            mController.executeRequest(BoxItem.class, ((BoxRequestsFolder.UpdateSharedFolder) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload), mBoxItemListener);
+            mController.executeRequest(BoxItem.class, ((BoxRequestsFolder.UpdateSharedFolder) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload)).addOnCompletedListener(mBoxItemListener);
         }
         else if (mShareItem instanceof BoxBookmark) {
-            Toast.makeText(getActivity(), "Bookmarks do not have a permission that can be changed.", Toast.LENGTH_LONG).show();
+            mController.showToast(getActivity(), "Bookmarks do not have a permission that can be changed.");
         }
     }
 
@@ -309,12 +295,12 @@ public class SharedLinkAccessFragment extends BoxFragment
     private void changeAccess(final BoxSharedLink.Access access){
         if (access == null){
             // Should not be possible to get here.
-            Toast.makeText(getActivity(), "No access chosen", Toast.LENGTH_LONG).show();
+            mController.showToast(getActivity(), "No access chosen");
             return;
         }
 
         showSpinner();
-        mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setAccess(access), mBoxItemListener);
+        mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setAccess(access)).addOnCompletedListener(mBoxItemListener);
     }
 
     
@@ -338,10 +324,10 @@ public class SharedLinkAccessFragment extends BoxFragment
         GregorianCalendar calendar = new GregorianCalendar(year, month, day);
         try {
             showSpinner();
-            mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setUnsharedAt(calendar.getTime()), mBoxItemListener);
+            mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setUnsharedAt(calendar.getTime())).addOnCompletedListener(mBoxItemListener);
         } catch (Exception e){
             dismissSpinner();
-            Toast.makeText(getActivity(), "invalid time selected", Toast.LENGTH_LONG).show();
+            mController.showToast(getActivity(), "invalid time selected");
         }
     }
 
@@ -352,7 +338,7 @@ public class SharedLinkAccessFragment extends BoxFragment
      * @throws ParseException
      */
     private void changePassword(final String password) throws ParseException{
-        mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setPassword(password), mBoxItemListener);
+        mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setPassword(password)).addOnCompletedListener(mBoxItemListener);
     }
 
     /**
@@ -370,7 +356,7 @@ public class SharedLinkAccessFragment extends BoxFragment
      */
     public void refreshShareItemInfo() {
         showSpinner();
-        mController.fetchItemInfo(mShareItem, mBoxItemListener);
+        mController.fetchItemInfo(mShareItem).addOnCompletedListener(mBoxItemListener);
     }
 
     private BoxFutureTask.OnCompletedListener<BoxItem> mBoxItemListener =
@@ -399,9 +385,9 @@ public class SharedLinkAccessFragment extends BoxFragment
                                 // reset ui to previous object.
                                 if (response.getRequest() instanceof BoxRequestItem && mShareItem.getId().equals(((BoxRequestItem) response.getRequest()).getId())) {
                                     if (response.getRequest() instanceof BoxRequestUpdateSharedItem) {
-                                        Toast.makeText(getActivity(), R.string.box_sharesdk_unable_to_modify_toast, Toast.LENGTH_LONG).show();
+                                        mController.showToast(getActivity(), R.string.box_sharesdk_unable_to_modify_toast);
                                     } else {
-                                        Toast.makeText(getActivity(), R.string.box_sharesdk_problem_accessing_this_shared_link, Toast.LENGTH_LONG).show();
+                                        mController.showToast(getActivity(), R.string.box_sharesdk_problem_accessing_this_shared_link);
                                     }
                                 }
                                 setupUi();
