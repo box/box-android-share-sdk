@@ -18,6 +18,7 @@ public class PositiveNegativeDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        setRetainInstance(true);
         int title = getArguments().getInt(ARGUMENT_TITLE_ID);
         int msg = getArguments().getInt(ARGUMENT_MESSAGE_ID);
         int positive = getArguments().getInt(ARGUMENT_POSITIVE_ID);
@@ -45,6 +46,17 @@ public class PositiveNegativeDialogFragment extends DialogFragment {
         mButtonClickedListener = listener;
     }
 
+    @Override
+    public void onDestroyView()
+    {
+        Dialog dialog = getDialog();
+
+        // Work around bug: http://code.google.com/p/android/issues/detail?id=17423
+        if ((dialog != null) && getRetainInstance())
+            dialog.setDismissMessage(null);
+
+        super.onDestroyView();
+    }
 
     public static interface OnPositiveOrNegativeButtonClickedListener {
 

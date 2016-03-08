@@ -44,6 +44,9 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        setRetainInstance(true);
+
         String userId = getArguments().getString(ARGS_USER_ID);
         String title = getArguments().getString(ARGS_TITLE);
         mRoles = (ArrayList<BoxCollaboration.Role>) getArguments().getSerializable(ARGS_ROLES);
@@ -147,6 +150,18 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
                 // Do nothing
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        Dialog dialog = getDialog();
+
+        // Work around bug: http://code.google.com/p/android/issues/detail?id=17423
+        if ((dialog != null) && getRetainInstance())
+            dialog.setDismissMessage(null);
+
+        super.onDestroyView();
     }
 
     public void setOnRoleSelectedListener(OnRoleSelectedListener listener) {
