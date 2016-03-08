@@ -124,11 +124,11 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
             mEditLinkAccessButton.setOnClickListener(mOnEditLinkAccessButtonClickListener);
         }
 
+        setupUi();
+
         // if we do not have a shared link try refreshing
         if (mShareItem.getSharedLink() == null){
             refreshShareItemInfo();
-        } else {
-            setupUi();
         }
 
         return view;
