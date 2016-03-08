@@ -144,20 +144,6 @@ public class SharedLinkAccessFragment extends BoxFragment
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_sharedlink, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.box_sharesdk_refresh){
-            refreshShareItemInfo();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onPositiveButtonClicked(PositiveNegativeDialogFragment fragment) {
         if (fragment instanceof PasswordDialogFragment){
             try {
