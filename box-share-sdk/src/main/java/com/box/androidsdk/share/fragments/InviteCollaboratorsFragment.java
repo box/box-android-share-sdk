@@ -147,7 +147,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                             } else {
                                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch roles request failed",
                                         response.getException());
-                                Toast.makeText(getActivity(), getString(R.string.box_sharesdk_network_error), Toast.LENGTH_LONG).show();
+                                mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
                             }
                         }
                     });
@@ -244,7 +244,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         } else {
             msg = getString(R.string.box_sharesdk_collaborators_invited);
         }
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+        mController.showToast(getActivity(), msg);
         if (responses.getResponses().size() == alreadyAddedCount) {
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {

@@ -59,7 +59,7 @@ public abstract class BoxFragment extends Fragment {
         }
 
         if (mShareItem == null){
-            Toast.makeText(getActivity(), R.string.box_sharesdk_no_item_selected, Toast.LENGTH_LONG).show();
+            mController.showToast(getActivity(), R.string.box_sharesdk_no_item_selected);
             getActivity().finish();
             return;
         }

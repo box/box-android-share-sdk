@@ -1,5 +1,8 @@
 package com.box.androidsdk.share.api;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.box.androidsdk.content.BoxApiBookmark;
 import com.box.androidsdk.content.BoxApiCollaboration;
 import com.box.androidsdk.content.BoxApiFile;
@@ -21,6 +24,7 @@ import com.box.androidsdk.content.requests.BoxRequestsFile;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.internal.BoxApiInvitee;
+import com.box.androidsdk.share.R;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -147,6 +151,16 @@ public class BoxShareController implements ShareController {
         BoxFutureTask<E> task = new BoxFutureTask<E>(clazz, request);
         task.addOnCompletedListener(onCompletedListener);
         getApiExecutor().submit(task);
+    }
+
+    @Override
+    public void showToast(Context context, CharSequence text) {
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showToast(Context context, int resId) {
+        showToast(context, context.getResources().getText(resId));
     }
 
     private static ThreadPoolExecutor mApiExecutor;

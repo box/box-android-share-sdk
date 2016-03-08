@@ -38,7 +38,7 @@ public class BoxCollaborationsActivity extends BoxActivity {
         initToolbar();
 
         if (mShareItem == null || mShareItem.getType() == null || !mShareItem.getType().equals(BoxFolder.TYPE)) {
-            Toast.makeText(this, R.string.box_sharesdk_selected_item_not_expected_type, Toast.LENGTH_LONG).show();
+            mController.showToast(this, R.string.box_sharesdk_selected_item_not_expected_type);
             finish();
             return;
         }

@@ -165,7 +165,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                 changePassword(((PasswordDialogFragment) fragment).getPassword());
             } catch (Exception e){
                 dismissSpinner();
-                Toast.makeText(getActivity(), "invalid password", Toast.LENGTH_LONG).show();
+                mController.showToast(getActivity(), "invalid password");
             }
         }
         else if (fragment instanceof AccessRadialDialogFragment){
@@ -277,7 +277,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                 hideView(mExpiresButton);
             }
         } else {
-            Toast.makeText(getActivity(),getText(R.string.box_sharesdk_problem_accessing_this_shared_link), Toast.LENGTH_LONG).show();
+            mController.showToast(getActivity(),getText(R.string.box_sharesdk_problem_accessing_this_shared_link));
             getActivity().finish();
         }
     }
@@ -297,7 +297,7 @@ public class SharedLinkAccessFragment extends BoxFragment
             mController.executeRequest(BoxItem.class, ((BoxRequestsFolder.UpdateSharedFolder) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload), mBoxItemListener);
         }
         else if (mShareItem instanceof BoxBookmark) {
-            Toast.makeText(getActivity(), "Bookmarks do not have a permission that can be changed.", Toast.LENGTH_LONG).show();
+            mController.showToast(getActivity(), "Bookmarks do not have a permission that can be changed.");
         }
     }
 
@@ -309,7 +309,7 @@ public class SharedLinkAccessFragment extends BoxFragment
     private void changeAccess(final BoxSharedLink.Access access){
         if (access == null){
             // Should not be possible to get here.
-            Toast.makeText(getActivity(), "No access chosen", Toast.LENGTH_LONG).show();
+            mController.showToast(getActivity(), "No access chosen");
             return;
         }
 
@@ -341,7 +341,7 @@ public class SharedLinkAccessFragment extends BoxFragment
             mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setUnsharedAt(calendar.getTime()), mBoxItemListener);
         } catch (Exception e){
             dismissSpinner();
-            Toast.makeText(getActivity(), "invalid time selected", Toast.LENGTH_LONG).show();
+            mController.showToast(getActivity(), "invalid time selected");
         }
     }
 
@@ -399,9 +399,9 @@ public class SharedLinkAccessFragment extends BoxFragment
                                 // reset ui to previous object.
                                 if (response.getRequest() instanceof BoxRequestItem && mShareItem.getId().equals(((BoxRequestItem) response.getRequest()).getId())) {
                                     if (response.getRequest() instanceof BoxRequestUpdateSharedItem) {
-                                        Toast.makeText(getActivity(), R.string.box_sharesdk_unable_to_modify_toast, Toast.LENGTH_LONG).show();
+                                        mController.showToast(getActivity(), R.string.box_sharesdk_unable_to_modify_toast);
                                     } else {
-                                        Toast.makeText(getActivity(), R.string.box_sharesdk_problem_accessing_this_shared_link, Toast.LENGTH_LONG).show();
+                                        mController.showToast(getActivity(), R.string.box_sharesdk_problem_accessing_this_shared_link);
                                     }
                                 }
                                 setupUi();

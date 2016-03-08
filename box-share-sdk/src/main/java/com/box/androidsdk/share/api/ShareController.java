@@ -1,5 +1,7 @@
 package com.box.androidsdk.share.api;
 
+import android.content.Context;
+
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxFolder;
@@ -28,4 +30,6 @@ public interface ShareController {
     void deleteCollaboration(BoxCollaboration collaboration, BoxFutureTask.OnCompletedListener<BoxVoid> onCompletedListener);
     void addCollaborations(BoxFolder boxFolder, BoxCollaboration.Role selectedRole, String[] emails, BoxFutureTask.OnCompletedListener<BoxResponseBatch> onCompletedListener);
     <E extends BoxObject> void executeRequest(final Class<E> clazz, final BoxRequest request, BoxFutureTask.OnCompletedListener<E> onCompletedListener);
+    void showToast(Context context, CharSequence text);
+    void showToast(Context context, int resId);
 }

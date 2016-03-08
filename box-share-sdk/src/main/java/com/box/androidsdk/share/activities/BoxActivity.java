@@ -70,12 +70,12 @@ public abstract class BoxActivity extends ActionBarActivity {
         }
 
         if (SdkUtils.isBlank(userId)) {
-            Toast.makeText(this, R.string.box_sharesdk_session_is_not_authenticated, Toast.LENGTH_LONG).show();
+            mController.showToast(this, R.string.box_sharesdk_session_is_not_authenticated);
             finish();
             return;
         }
         if (mShareItem == null){
-            Toast.makeText(this, R.string.box_sharesdk_no_item_selected, Toast.LENGTH_LONG).show();
+            mController.showToast(this, R.string.box_sharesdk_no_item_selected);
             finish();
             return;
         }
@@ -94,7 +94,7 @@ public abstract class BoxActivity extends ActionBarActivity {
             @Override
             public void onAuthFailure(BoxAuthentication.BoxAuthenticationInfo info, Exception ex) {
                 finish();
-                Toast.makeText(BoxActivity.this, R.string.box_sharesdk_session_is_not_authenticated, Toast.LENGTH_LONG).show();
+                mController.showToast(BoxActivity.this, R.string.box_sharesdk_session_is_not_authenticated);
             }
 
             @Override

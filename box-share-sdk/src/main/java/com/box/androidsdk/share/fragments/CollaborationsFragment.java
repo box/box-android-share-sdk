@@ -120,7 +120,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
      */
     public void fetchCollaborations() {
         if (getFolder() == null || SdkUtils.isBlank(getFolder().getId())) {
-            Toast.makeText(getActivity(), getString(R.string.box_sharesdk_cannot_view_collaborations), Toast.LENGTH_LONG).show();
+            mController.showToast(getActivity(), getString(R.string.box_sharesdk_cannot_view_collaborations));
             return;
         }
 
@@ -176,7 +176,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                         } else {
                             BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch Collaborators request failed",
                                     response.getException());
-                            Toast.makeText(getActivity(), getString(R.string.box_sharesdk_network_error), Toast.LENGTH_LONG).show();
+                            mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
                         }
                     }
                 });
@@ -201,7 +201,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                         } else {
                             BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch roles request failed",
                                     response.getException());
-                            Toast.makeText(getActivity(), getString(R.string.box_sharesdk_network_error), Toast.LENGTH_LONG).show();
+                            mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
                         }
                     }
                 });
@@ -230,7 +230,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                         } else {
                             BoxLogUtils.e(CollaborationsFragment.class.getName(), "Delete Collaborator request failed",
                                     response.getException());
-                            Toast.makeText(getActivity(), getString(R.string.box_sharesdk_network_error), Toast.LENGTH_LONG).show();
+                            mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
                         }
                     }
                 });
@@ -254,7 +254,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                         } else {
                             BoxLogUtils.e(CollaborationsFragment.class.getName(), "Update Collaborator request failed",
                                     response.getException());
-                            Toast.makeText(getActivity(), getString(R.string.box_sharesdk_network_error), Toast.LENGTH_LONG).show();
+                            mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
                         }
                     }
                 });
