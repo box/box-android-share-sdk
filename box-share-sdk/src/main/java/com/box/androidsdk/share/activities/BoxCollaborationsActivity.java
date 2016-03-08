@@ -23,6 +23,8 @@ import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.CollaborationsFragment;
 
+import java.util.ArrayList;
+
 /**
  * Activity used to show and modify the collaborations of a folder. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
@@ -66,11 +68,8 @@ public class BoxCollaborationsActivity extends BoxActivity {
         int id = item.getItemId();
 
         if (id == R.id.box_sharesdk_action_add) {
-            BoxCollaboration.Role[] rolesArr = ((CollaborationsFragment)mFragment).getRoles();
-            if (rolesArr != null) {
-                Intent inviteCollabsIntent = BoxInviteCollaboratorsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession);
-                startActivityForResult(inviteCollabsIntent, INVITE_COLLABS_REQUEST_CODE);
-            }
+            Intent inviteCollabsIntent = BoxInviteCollaboratorsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession);
+            startActivityForResult(inviteCollabsIntent, INVITE_COLLABS_REQUEST_CODE);
         }
 
         return super.onOptionsItemSelected(item);

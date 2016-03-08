@@ -26,6 +26,8 @@ import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.CollaboratorsAdapter;
 
+import java.util.ArrayList;
+
 public class CollaborationsFragment extends BoxFragment implements AdapterView.OnItemClickListener, CollaborationRolesDialog.OnRoleSelectedListener {
 
     protected static final String TAG = CollaborationsFragment.class.getName();
@@ -82,7 +84,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CollaboratorsAdapter.ViewHolder holder = (CollaboratorsAdapter.ViewHolder) view.getTag();
         if (holder != null && holder.collaboration != null && holder.collaboration.getItem() != null) {
-            BoxCollaboration.Role[] rolesArr = getRoles();
+            ArrayList<BoxCollaboration.Role> rolesArr = getRoles();
             BoxCollaborator collaborator = holder.collaboration.getAccessibleBy();
             BoxCollaboration.Role role = holder.collaboration.getRole();
             String name = collaborator == null ? getString(R.string.box_sharesdk_another_person) : collaborator.getName();
@@ -151,9 +153,9 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         }
     }
 
-    public BoxCollaboration.Role[] getRoles() {
+    public ArrayList<BoxCollaboration.Role> getRoles() {
         if (getFolder().getAllowedInviteeRoles() != null) {
-            return getFolder().getAllowedInviteeRoles().toArray(new BoxCollaboration.Role[getFolder().getAllowedInviteeRoles().size()]);
+            return getFolder().getAllowedInviteeRoles();
         }
         return null;
     }

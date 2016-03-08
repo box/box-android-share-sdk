@@ -33,7 +33,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
     protected BoxSession mSession;
     protected RadioGroup mRadioGroup;
 
-    protected BoxCollaboration.Role[] mRoles;
+    protected ArrayList<BoxCollaboration.Role> mRoles;
     protected BoxCollaboration.Role mSelectedRole;
     protected boolean mAllowRemove;
     protected boolean mIsRemoveCollaborationSelected;
@@ -46,7 +46,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         String userId = getArguments().getString(ARGS_USER_ID);
         String title = getArguments().getString(ARGS_TITLE);
-        mRoles = (BoxCollaboration.Role[]) getArguments().getSerializable(ARGS_ROLES);
+        mRoles = (ArrayList<BoxCollaboration.Role>) getArguments().getSerializable(ARGS_ROLES);
         mSelectedRole = (BoxCollaboration.Role) getArguments().getSerializable(ARGS_SELECTED_ROLE);
         mAllowRemove = getArguments().getBoolean(ARGS_ALLOW_REMOVE);
         mExtra = getArguments().getSerializable(ARGS_SERIALIZABLE_EXTRA);
@@ -71,7 +71,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
         return builder.create();
     }
 
-    private void addRolesToView(BoxCollaboration.Role[] roles) {
+    private void addRolesToView(ArrayList<BoxCollaboration.Role> roles) {
         LinearLayout rolesLayout = new LinearLayout(getActivity());
         rolesLayout.setOrientation(LinearLayout.VERTICAL);
         mRadioGroup.addView(rolesLayout);
@@ -109,7 +109,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
         }
     }
 
-    public static CollaborationRolesDialog newInstance(BoxCollaboration.Role[] roles, BoxCollaboration.Role selectedRole, String title, boolean allowRemove, Serializable serializableExtra) {
+    public static CollaborationRolesDialog newInstance(ArrayList<BoxCollaboration.Role> roles, BoxCollaboration.Role selectedRole, String title, boolean allowRemove, Serializable serializableExtra) {
         CollaborationRolesDialog dialog = new CollaborationRolesDialog();
 
         Bundle b = new Bundle();
