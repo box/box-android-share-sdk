@@ -33,11 +33,12 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public abstract class BoxFragment extends Fragment {
 
+    protected static final String TAG = BoxFragment.class.getName();
     protected BoxItem mShareItem;
 
     private static final int  DEFAULT_SPINNER_DELAY = 500;
 
-    private ProgressDialog mDialog;
+    private SpinnerDialogFragment mDialog;
     private LastRunnableHandler mDialogHandler;
 
     protected ShareController mController;
@@ -86,8 +87,9 @@ public abstract class BoxFragment extends Fragment {
         mSpinnerLock.lock();
         try {
             mDialogHandler.cancelLastRunnable();
-            if (mDialog != null && mDialog.isShowing()){
+            if (mDialog != null){
                 mDialog.dismiss();
+                mDialog = null;
             }
         }
         finally {
@@ -114,12 +116,12 @@ public abstract class BoxFragment extends Fragment {
             public void run() {
                 if (mSpinnerLock.tryLock()) {
                     try {
-                        if (mDialog != null && mDialog.isShowing()) {
+                        if (mDialog != null) {
                             return;
                         }
 
-                        mDialog = ProgressDialog.show(getActivity(), getText(stringTitleRes), getText(stringRes));
-                        mDialog.show();
+                        mDialog = SpinnerDialogFragment.createFragment(stringTitleRes,stringRes);
+                        mDialog.show(getFragmentManager(), TAG);
                     } catch (Exception e) {
                         // WindowManager$BadTokenException will be caught and the app would not display
                         // the 'Force Close' message
