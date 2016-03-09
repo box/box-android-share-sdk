@@ -13,6 +13,7 @@ import com.box.androidsdk.content.models.BoxVoid;
 import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
+import com.box.androidsdk.share.internal.models.BoxListInvitees;
 
 import java.util.Date;
 
@@ -29,6 +30,7 @@ public interface ShareController {
     BoxFutureTask<BoxCollaboration> updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role selectedRole);
     BoxFutureTask<BoxVoid> deleteCollaboration(BoxCollaboration collaboration);
     BoxFutureTask<BoxResponseBatch> addCollaborations(BoxFolder boxFolder, BoxCollaboration.Role selectedRole, String[] emails);
+    BoxFutureTask<BoxListInvitees> getInvitees(BoxFolder boxFolder);
     <E extends BoxObject> BoxFutureTask<E> executeRequest(final Class<E> clazz, final BoxRequest request);
     void showToast(Context context, CharSequence text);
     void showToast(Context context, int resId);

@@ -1,7 +1,8 @@
-package com.box.androidsdk.share.internal;
+package com.box.androidsdk.share.internal.models;
 
 import com.box.androidsdk.content.models.BoxEntity;
 import com.box.androidsdk.content.models.BoxIterator;
+import com.box.androidsdk.share.internal.models.BoxInvitee;
 
 /**
  * Class representing a list of items in Box Invitees.

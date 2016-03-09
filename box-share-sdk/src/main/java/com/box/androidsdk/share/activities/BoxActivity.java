@@ -36,6 +36,7 @@ import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.BoxFragment;
+import com.box.androidsdk.share.internal.BoxApiInvitee;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -104,7 +105,10 @@ public abstract class BoxActivity extends ActionBarActivity {
         });
         mSession.authenticate();
         mController = new BoxShareController(new BoxApiFile(mSession),
-                new BoxApiFolder(mSession), new BoxApiBookmark(mSession), new BoxApiCollaboration(mSession));
+                new BoxApiFolder(mSession),
+                new BoxApiBookmark(mSession),
+                new BoxApiCollaboration(mSession),
+                new BoxApiInvitee(mSession));
     }
 
 

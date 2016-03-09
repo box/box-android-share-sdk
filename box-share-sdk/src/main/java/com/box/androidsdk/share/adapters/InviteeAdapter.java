@@ -13,14 +13,11 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.internal.BoxInvitee;
-import com.box.androidsdk.share.internal.BoxListInvitees;
+import com.box.androidsdk.share.internal.models.BoxInvitee;
+import com.box.androidsdk.share.internal.models.BoxListInvitees;
 import com.eclipsesource.json.JsonObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 
 public class InviteeAdapter extends BaseAdapter implements Filterable {
 
