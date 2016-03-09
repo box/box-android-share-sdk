@@ -84,17 +84,22 @@ public abstract class BoxFragment extends Fragment {
      * Dismisses the spinner if it is currently showing
      */
     protected void dismissSpinner(){
-        mSpinnerLock.lock();
-        try {
-            mDialogHandler.cancelLastRunnable();
-            if (mDialog != null){
-                mDialog.dismiss();
-                mDialog = null;
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mSpinnerLock.lock();
+                try {
+                    mDialogHandler.cancelLastRunnable();
+                    if (mDialog != null){
+                        mDialog.dismiss();
+                        mDialog = null;
+                    }
+                }
+                finally {
+                    mSpinnerLock.unlock();
+                }
             }
-        }
-        finally {
-            mSpinnerLock.unlock();
-        }
+        });
     }
 
     /**
