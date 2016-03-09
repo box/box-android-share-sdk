@@ -15,19 +15,15 @@ import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxObject;
-import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.content.models.BoxVoid;
 import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestBatch;
 import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
-import com.box.androidsdk.content.requests.BoxRequestsFile;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.internal.BoxApiInvitee;
-import com.box.androidsdk.share.internal.models.BoxListInvitees;
+import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -149,8 +145,8 @@ public class BoxShareController implements ShareController {
     }
 
     @Override
-    public BoxFutureTask<BoxListInvitees> getInvitees(BoxFolder boxFolder) {
-        BoxFutureTask<BoxListInvitees> task = mInviteeApi.getInviteesRequest(boxFolder.getId()).toTask();
+    public BoxFutureTask<BoxIteratorInvitees> getInvitees(BoxFolder boxFolder) {
+        BoxFutureTask<BoxIteratorInvitees> task = mInviteeApi.getInviteesRequest(boxFolder.getId()).toTask();
         getApiExecutor().submit(task);
         return task;
     }

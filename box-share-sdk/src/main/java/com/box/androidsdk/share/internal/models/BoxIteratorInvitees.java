@@ -5,9 +5,9 @@ import com.box.androidsdk.content.models.BoxIterator;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 
 /**
- * Class representing a list of items in Box Invitees.
+ * Class representing a iterator of items in Box Invitees.
  */
-public class BoxListInvitees extends BoxIterator<BoxInvitee> {
+public class BoxIteratorInvitees extends BoxIterator<BoxInvitee> {
 
     private static final long serialVersionUID = 1900245905334373228L;
 

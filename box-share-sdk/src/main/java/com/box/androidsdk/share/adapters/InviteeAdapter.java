@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
-import com.box.androidsdk.share.internal.models.BoxListInvitees;
+import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 import com.eclipsesource.json.JsonObject;
 
 import java.util.ArrayList;
@@ -118,7 +118,7 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
         return mInviteeFilter;
     }
 
-    public void setInvitees(BoxListInvitees invitees) {
+    public void setInvitees(BoxIteratorInvitees invitees) {
         mInvitees.clear();
         for (BoxInvitee invitee: invitees) {
             mInvitees.add(invitee);

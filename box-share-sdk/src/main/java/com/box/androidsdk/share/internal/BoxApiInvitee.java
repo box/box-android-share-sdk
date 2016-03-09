@@ -5,9 +5,6 @@ import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.internal.BoxInternalApiInvitee;
 import com.box.androidsdk.share.internal.requests.BoxRequestsInvitee;
 
-/**
- * Created by varungupta on 3/8/2016.
- */
 public class BoxApiInvitee extends BoxApi {
     public static int LIMIT = 1000;
     /**

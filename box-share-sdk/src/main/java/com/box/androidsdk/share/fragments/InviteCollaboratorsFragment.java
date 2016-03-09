@@ -24,7 +24,7 @@ import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.InviteeAdapter;
-import com.box.androidsdk.share.internal.models.BoxListInvitees;
+import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -149,10 +149,10 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
     }
 
-    private BoxFutureTask.OnCompletedListener<BoxListInvitees> mGetInviteesListener =
-            new BoxFutureTask.OnCompletedListener<BoxListInvitees>() {
+    private BoxFutureTask.OnCompletedListener<BoxIteratorInvitees> mGetInviteesListener =
+            new BoxFutureTask.OnCompletedListener<BoxIteratorInvitees>() {
                 @Override
-                public void onCompleted(final BoxResponse<BoxListInvitees> response) {
+                public void onCompleted(final BoxResponse<BoxIteratorInvitees> response) {
                     dismissSpinner();
                     final Activity activity = getActivity();
                     if (activity == null) {
@@ -162,7 +162,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                         @Override
                         public void run() {
                             if (response.isSuccess()) {
-                                final BoxListInvitees invitees = response.getResult();
+                                final BoxIteratorInvitees invitees = response.getResult();
                                 mAdapter.setInvitees(invitees);
                             } else {
                                 BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",

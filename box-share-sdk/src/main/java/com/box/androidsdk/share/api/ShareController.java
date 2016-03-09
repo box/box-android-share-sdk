@@ -8,14 +8,11 @@ import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxObject;
-import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.content.models.BoxVoid;
 import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
-import com.box.androidsdk.share.internal.models.BoxListInvitees;
-
-import java.util.Date;
+import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
 /**
  * Created by varungupta on 3/4/2016.
@@ -30,7 +27,7 @@ public interface ShareController {
     BoxFutureTask<BoxCollaboration> updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role selectedRole);
     BoxFutureTask<BoxVoid> deleteCollaboration(BoxCollaboration collaboration);
     BoxFutureTask<BoxResponseBatch> addCollaborations(BoxFolder boxFolder, BoxCollaboration.Role selectedRole, String[] emails);
-    BoxFutureTask<BoxListInvitees> getInvitees(BoxFolder boxFolder);
+    BoxFutureTask<BoxIteratorInvitees> getInvitees(BoxFolder boxFolder);
     <E extends BoxObject> BoxFutureTask<E> executeRequest(final Class<E> clazz, final BoxRequest request);
     void showToast(Context context, CharSequence text);
     void showToast(Context context, int resId);
