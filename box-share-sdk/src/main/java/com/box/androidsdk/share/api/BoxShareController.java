@@ -15,19 +15,15 @@ import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxObject;
-import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.content.models.BoxVoid;
 import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestBatch;
 import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
-import com.box.androidsdk.content.requests.BoxRequestsFile;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.SdkUtils;
-import com.box.androidsdk.internal.BoxApiInvitee;
-import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.internal.BoxApiInvitee;
+import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -40,12 +36,14 @@ public class BoxShareController implements ShareController {
     private BoxApiFolder mFolderApi;
     private BoxApiBookmark mBookmarkApi;
     private BoxApiCollaboration mCollabApi;
+    private BoxApiInvitee mInviteeApi;
 
-    public BoxShareController(BoxApiFile fileApi, BoxApiFolder folderApi, BoxApiBookmark bookmarkApi, BoxApiCollaboration collaborationApi) {
+    public BoxShareController(BoxApiFile fileApi, BoxApiFolder folderApi, BoxApiBookmark bookmarkApi, BoxApiCollaboration collaborationApi, BoxApiInvitee inviteeApi) {
         mFileApi = fileApi;
         mFolderApi = folderApi;
         mBookmarkApi = bookmarkApi;
         mCollabApi = collaborationApi;
+        mInviteeApi = inviteeApi;
     }
 
     @Override
@@ -142,6 +140,13 @@ public class BoxShareController implements ShareController {
         }
 
         BoxFutureTask<BoxResponseBatch> task = batchRequest.toTask();
+        getApiExecutor().submit(task);
+        return task;
+    }
+
+    @Override
+    public BoxFutureTask<BoxIteratorInvitees> getInvitees(BoxFolder boxFolder) {
+        BoxFutureTask<BoxIteratorInvitees> task = mInviteeApi.getInviteesRequest(boxFolder.getId()).toTask();
         getApiExecutor().submit(task);
         return task;
     }

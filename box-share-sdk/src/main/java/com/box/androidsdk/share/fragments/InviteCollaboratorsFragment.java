@@ -4,14 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
@@ -25,12 +21,10 @@ import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.content.utils.SdkUtils;
-import com.box.androidsdk.internal.BoxApiInvitee;
-import com.box.androidsdk.internal.BoxInviteeResponse;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.InviteeAdapter;
-import com.box.androidsdk.share.internal.BoxListInvitees;
+import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -138,25 +132,8 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
      * Executes the request to retrieve the invitees that can be auto-completed
      */
     private void fetchInvitees() {
-        if (!SdkUtils.isBlank(mAccessToken)) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    BoxInviteeResponse response = new BoxApiInvitee().getInviteesForFolder(getFolder().getId(), mAccessToken);
-
-                    if (response.getResponseCode() >= HttpURLConnection.HTTP_OK && response.getResponseCode() < HttpURLConnection.HTTP_MULT_CHOICE) {
-                        final BoxListInvitees invitees = new BoxListInvitees();
-                        invitees.createFromJson(response.getResponse());
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mAdapter.setInvitees(invitees);
-                            }
-                        });
-                    }
-                }
-            }).start();
-        }
+        showSpinner();
+        mController.getInvitees(getFolder()).addOnCompletedListener(mGetInviteesListener);
     }
 
     /**
@@ -165,16 +142,43 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     public void addCollaborations() {
         String emails = mAutoComplete.getText().toString();
         if (!SdkUtils.isBlank(emails)) {
+            showSpinner();
             BoxRequestBatch batchRequest = new BoxRequestBatch();
             String[] emailParts = emails.split(",");
             mController.addCollaborations(getFolder(), mSelectedRole, emailParts).addOnCompletedListener(mAddCollaborationsListener);
         }
     }
 
+    private BoxFutureTask.OnCompletedListener<BoxIteratorInvitees> mGetInviteesListener =
+            new BoxFutureTask.OnCompletedListener<BoxIteratorInvitees>() {
+                @Override
+                public void onCompleted(final BoxResponse<BoxIteratorInvitees> response) {
+                    dismissSpinner();
+                    final Activity activity = getActivity();
+                    if (activity == null) {
+                        return;
+                    }
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (response.isSuccess()) {
+                                final BoxIteratorInvitees invitees = response.getResult();
+                                mAdapter.setInvitees(invitees);
+                            } else {
+                                BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",
+                                        response.getException());
+                                mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
+                            }
+                        }
+                    });
+                }
+            };
+
     private BoxFutureTask.OnCompletedListener<BoxResponseBatch> mAddCollaborationsListener =
             new BoxFutureTask.OnCompletedListener<BoxResponseBatch>() {
                 @Override
                 public void onCompleted(final BoxResponse<BoxResponseBatch> response) {
+                    dismissSpinner();
                     final Activity activity = getActivity();
                     if (activity == null) {
                         return;

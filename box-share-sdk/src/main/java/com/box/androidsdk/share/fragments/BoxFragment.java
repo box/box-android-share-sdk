@@ -84,17 +84,22 @@ public abstract class BoxFragment extends Fragment {
      * Dismisses the spinner if it is currently showing
      */
     protected void dismissSpinner(){
-        mSpinnerLock.lock();
-        try {
-            mDialogHandler.cancelLastRunnable();
-            if (mDialog != null){
-                mDialog.dismiss();
-                mDialog = null;
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mSpinnerLock.lock();
+                try {
+                    mDialogHandler.cancelLastRunnable();
+                    if (mDialog != null){
+                        mDialog.dismiss();
+                        mDialog = null;
+                    }
+                }
+                finally {
+                    mSpinnerLock.unlock();
+                }
             }
-        }
-        finally {
-            mSpinnerLock.unlock();
-        }
+        });
     }
 
     /**
@@ -114,23 +119,28 @@ public abstract class BoxFragment extends Fragment {
         mDialogHandler.queue(new Runnable() {
             @Override
             public void run() {
-                if (mSpinnerLock.tryLock()) {
-                    try {
-                        if (mDialog != null) {
-                            return;
-                        }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mSpinnerLock.tryLock()) {
+                            try {
+                                if (mDialog != null) {
+                                    return;
+                                }
 
-                        mDialog = SpinnerDialogFragment.createFragment(stringTitleRes,stringRes);
-                        mDialog.show(getFragmentManager(), TAG);
-                    } catch (Exception e) {
-                        // WindowManager$BadTokenException will be caught and the app would not display
-                        // the 'Force Close' message
-                        mDialog = null;
-                        return;
-                    } finally {
-                        mSpinnerLock.unlock();
+                                mDialog = SpinnerDialogFragment.createFragment(stringTitleRes,stringRes);
+                                mDialog.show(getFragmentManager(), TAG);
+                            } catch (Exception e) {
+                                // WindowManager$BadTokenException will be caught and the app would not display
+                                // the 'Force Close' message
+                                mDialog = null;
+                                return;
+                            } finally {
+                                mSpinnerLock.unlock();
+                            }
+                        }
                     }
-                }
+                });
             }
         }, DEFAULT_SPINNER_DELAY);
 

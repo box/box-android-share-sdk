@@ -15,10 +15,12 @@ public class PositiveNegativeDialogFragment extends DialogFragment {
     protected static final String ARGUMENT_NEGATIVE_ID = "negative_res_id";
 
     protected OnPositiveOrNegativeButtonClickedListener mButtonClickedListener;
+    private boolean mButtonClicked;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         setRetainInstance(true);
+        mButtonClicked = false;
         int title = getArguments().getInt(ARGUMENT_TITLE_ID);
         int msg = getArguments().getInt(ARGUMENT_MESSAGE_ID);
         int positive = getArguments().getInt(ARGUMENT_POSITIVE_ID);
@@ -27,6 +29,7 @@ public class PositiveNegativeDialogFragment extends DialogFragment {
                 .setPositiveButton(getText(positive), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        mButtonClicked = true;
                         if (mButtonClickedListener != null) {
                             mButtonClickedListener.onPositiveButtonClicked(PositiveNegativeDialogFragment.this);
                         }
@@ -34,6 +37,7 @@ public class PositiveNegativeDialogFragment extends DialogFragment {
         } ).setNegativeButton(getText(negative), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        mButtonClicked = true;
                         if (mButtonClickedListener != null){
                             mButtonClickedListener.onNegativeButtonClicked(PositiveNegativeDialogFragment.this);
                         }
@@ -44,6 +48,14 @@ public class PositiveNegativeDialogFragment extends DialogFragment {
 
     public void setOnPositiveOrNegativeButtonClickedListener(OnPositiveOrNegativeButtonClickedListener listener) {
         mButtonClickedListener = listener;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (mButtonClicked == false && mButtonClickedListener != null){
+            mButtonClickedListener.onNegativeButtonClicked(PositiveNegativeDialogFragment.this);
+        }
     }
 
     @Override
@@ -58,12 +70,9 @@ public class PositiveNegativeDialogFragment extends DialogFragment {
         super.onDestroyView();
     }
 
-    public static interface OnPositiveOrNegativeButtonClickedListener {
-
-        public void onPositiveButtonClicked(PositiveNegativeDialogFragment fragment);
-
-        public void onNegativeButtonClicked(PositiveNegativeDialogFragment fragment);
-
+    public interface OnPositiveOrNegativeButtonClickedListener {
+        void onPositiveButtonClicked(PositiveNegativeDialogFragment fragment);
+        void onNegativeButtonClicked(PositiveNegativeDialogFragment fragment);
     }
 
     /**
