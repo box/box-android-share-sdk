@@ -61,7 +61,7 @@ public class AccessRadialDialogFragment extends PositiveNegativeDialogFragment{
             }
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.ShareDialogTheme);
         builder.setView(accessRadioGroup);
 
         builder.setPositiveButton(getResources().getString(R.string.box_sharesdk_ok), new DialogInterface.OnClickListener() {

@@ -56,7 +56,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
         mSession = new BoxSession(getActivity(), userId);
 
         // Create AlertDialog builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.ShareDialogTheme);
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_collaboration_roles_dialog, null);
         builder.setView(view)
             .setNegativeButton(R.string.box_sharesdk_cancel, this)

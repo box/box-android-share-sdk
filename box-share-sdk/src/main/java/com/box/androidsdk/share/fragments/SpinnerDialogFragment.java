@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import com.box.androidsdk.share.R;
+
 public class SpinnerDialogFragment extends DialogFragment {
 
     private static String EXTRA_STRING_RES = "SpinnerDialogFragment.ExtraStringRes";
@@ -24,7 +26,7 @@ public class SpinnerDialogFragment extends DialogFragment {
             stringTitleRes = getArguments().getInt(EXTRA_STRING_TITLE_RES);
         }
 
-        mDialog = new ProgressDialog(getActivity());
+        mDialog = new ProgressDialog(getActivity(), R.style.ShareDialogTheme);
         mDialog.setTitle(getString(stringTitleRes));
         mDialog.setMessage(getString(stringRes));
         mDialog.setIndeterminate(true);
