@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
+import com.box.androidsdk.share.R;
+
 
 public class PositiveNegativeDialogFragment extends DialogFragment {
 
@@ -15,7 +17,7 @@ public class PositiveNegativeDialogFragment extends DialogFragment {
     protected static final String ARGUMENT_NEGATIVE_ID = "negative_res_id";
 
     protected OnPositiveOrNegativeButtonClickedListener mButtonClickedListener;
-    private boolean mButtonClicked;
+    protected boolean mButtonClicked;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -25,7 +27,7 @@ public class PositiveNegativeDialogFragment extends DialogFragment {
         int msg = getArguments().getInt(ARGUMENT_MESSAGE_ID);
         int positive = getArguments().getInt(ARGUMENT_POSITIVE_ID);
         int negative = getArguments().getInt(ARGUMENT_NEGATIVE_ID);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(title).setMessage(msg)
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.ShareDialogTheme).setTitle(title).setMessage(msg)
                 .setPositiveButton(getText(positive), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

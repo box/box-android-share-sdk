@@ -186,7 +186,7 @@ public class SharedLinkAccessFragment extends BoxFragment
         if (getFragmentManager().findFragmentByTag(DATE_FRAGMENT_TAG) != null){
             return;
         }
-        DatePickerFragment fragment = DatePickerFragment.createFragment(date, this);
+        DatePickerFragment fragment = DatePickerFragment.createFragment(date, this, this);
         fragment.show(getActivity().getSupportFragmentManager(), DATE_FRAGMENT_TAG);
     }
 
