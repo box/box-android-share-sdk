@@ -25,6 +25,7 @@ import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.InviteeAdapter;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
+import com.box.androidsdk.share.ui.ChipCollaborationView;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     protected static final String TAG = InviteCollaboratorsFragment.class.getName();
     public static final String EXTRA_ACCESS_TOKEN = "InviteCollaboratorsFragment.ExtraAccessToken";
     private Button mRoleButton;
-    private MultiAutoCompleteTextView mAutoComplete;
+    private ChipCollaborationView mAutoComplete;
     private InviteeAdapter mAdapter;
     private BoxCollaboration.Role mSelectedRole;
     private ArrayList<BoxCollaboration.Role> mRoles;
@@ -48,7 +49,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
 
         mRoleButton = (Button) view.findViewById(R.id.invite_collaborator_role);
         mRoleButton.setOnClickListener(this);
-        mAutoComplete = (MultiAutoCompleteTextView) view.findViewById(R.id.invite_collaborator_autocomplete);
+        mAutoComplete = (ChipCollaborationView) view.findViewById(R.id.invite_collaborator_autocomplete);
         mAutoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         mAdapter = new InviteeAdapter(getActivity());
         mAutoComplete.setAdapter(mAdapter);

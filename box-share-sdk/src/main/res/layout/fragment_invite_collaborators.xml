@@ -18,14 +18,17 @@
                 android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin"
                 android:textColor="@color/box_sharesdk_hint"
                 android:text="@string/box_sharesdk_to" />
-            <MultiAutoCompleteTextView
+            <com.box.androidsdk.share.ui.ChipCollaborationView
                 android:id="@+id/invite_collaborator_autocomplete"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
                 android:textColor="@color/box_sharesdk_primary_text"
-                android:background="@null"
-                android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+                android:textSize="19sp"
+                android:nextFocusDown="@+id/editText"
+                android:inputType="text|textNoSuggestions|textMultiLine"
+                android:focusableInTouchMode="true"
+                android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin"/>
         </LinearLayout>
         <View style="@style/BoxDivider" />
         <Button
