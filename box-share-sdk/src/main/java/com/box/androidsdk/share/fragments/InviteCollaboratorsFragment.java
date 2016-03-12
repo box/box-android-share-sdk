@@ -1,8 +1,12 @@
 package com.box.androidsdk.share.fragments;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +37,7 @@ import java.util.Locale;
 
 public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener {
 
+    private static final Integer MY_PERMISSIONS_REQUEST_READ_CONTACTS = 32;
     protected static final String TAG = InviteCollaboratorsFragment.class.getName();
     public static final String EXTRA_ACCESS_TOKEN = "InviteCollaboratorsFragment.ExtraAccessToken";
     private Button mRoleButton;
@@ -69,7 +74,17 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
 
         fetchInvitees();
+
+        requestPermissionsIfNecessary();
         return view;
+    }
+
+    private void requestPermissionsIfNecessary() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.READ_CONTACTS},
+                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+        }
     }
 
     @Override

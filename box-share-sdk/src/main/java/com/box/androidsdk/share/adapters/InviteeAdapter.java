@@ -1,9 +1,11 @@
 package com.box.androidsdk.share.adapters;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -156,8 +158,6 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
 
 
     private boolean isReadContactsPermissionAvailable() {
-        String readContactsPerm = "android.permission.READ_CONTACTS";
-        int res = mContext.checkCallingOrSelfPermission(readContactsPerm);
-        return res == PackageManager.PERMISSION_GRANTED;
+        return mContext.checkCallingOrSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
     }
 }
