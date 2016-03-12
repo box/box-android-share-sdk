@@ -12,6 +12,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
@@ -98,19 +99,24 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = LayoutInflater.from(mContext).inflate(R.layout.list_item_collaboration_invitee, null);
-        BoxInvitee invitee = mItems.get(position);
 
-        ViewHolder holder = (ViewHolder) rowView.getTag();
-        if (holder == null) {
-            TextView nameView = (TextView)rowView.findViewById(R.id.collaboration_invitee_name);
-            TextView emailView = (TextView)rowView.findViewById(R.id.collaboration_invitee_email);
-            holder = new ViewHolder(nameView, emailView);
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_collaboration_invitee, null);
+            TextView nameView = (TextView)convertView.findViewById(R.id.collaboration_invitee_name);
+            TextView emailView = (TextView)convertView.findViewById(R.id.collaboration_invitee_email);
+            TextView initialsView = (TextView) convertView.findViewById(R.id.collaborator_initials);
+            holder = new ViewHolder(nameView, emailView, initialsView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
+        BoxInvitee invitee = mItems.get(position);
         holder.getNameView().setText(invitee.getName());
         holder.getEmailView().setText(invitee.getEmail());
-        return rowView;
+        CollaborationUtils.setInitialsThumb(mContext, holder.getInitialsView(), invitee.getName());
+        return convertView;
     }
 
     @Override
@@ -129,10 +135,12 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
     public static class ViewHolder {
         private TextView mNameView;
         private TextView mEmailView;
+        private TextView mInitials;
 
-        public ViewHolder(TextView name, TextView email) {
+        public ViewHolder(TextView name, TextView email, TextView initials) {
             mNameView = name;
             mEmailView = email;
+            mInitials = initials;
         }
 
         public TextView getNameView() {
@@ -142,6 +150,8 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
         public TextView getEmailView() {
             return mEmailView;
         }
+
+        public TextView getInitialsView() { return mInitials; }
     }
 
 
