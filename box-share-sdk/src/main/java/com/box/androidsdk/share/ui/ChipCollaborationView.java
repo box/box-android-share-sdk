@@ -7,7 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.eclipsesource.json.JsonObject;
@@ -31,9 +34,14 @@ public class ChipCollaborationView extends TokenCompleteTextView<BoxInvitee> {
     @Override
     protected View getViewForObject(BoxInvitee person) {
 
-        LayoutInflater l = (LayoutInflater)getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        LinearLayout view = (LinearLayout)l.inflate(R.layout.chip_collaboration, (ViewGroup) ChipCollaborationView.this.getParent(), false);
-        ((TextView)view.findViewById(R.id.name)).setText(person.getEmail());
+        LayoutInflater layoutInflater = (LayoutInflater)getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        RelativeLayout view = (RelativeLayout)layoutInflater.inflate(R.layout.chip_collaboration, (ViewGroup) ChipCollaborationView.this.getParent(), false);
+
+        TextView tvName = ((TextView) view.findViewById(R.id.name));
+        tvName.setText(person.getName());
+
+        TextView tvInitials = (TextView) view.findViewById(R.id.collaborator_initials);
+        CollaborationUtils.setInitialsThumb(getContext(), tvInitials, person.getName());
 
         return view;
     }
