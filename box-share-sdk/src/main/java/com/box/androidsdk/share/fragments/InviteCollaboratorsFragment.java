@@ -28,11 +28,13 @@ import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.InviteeAdapter;
+import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 import com.box.androidsdk.share.ui.ChipCollaborationView;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener {
@@ -156,13 +158,14 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
      * Executes the request to add collaborations to the folder
      */
     public void addCollaborations() {
-        String emails = mAutoComplete.getText().toString();
-        if (!SdkUtils.isBlank(emails)) {
-            showSpinner();
-            BoxRequestBatch batchRequest = new BoxRequestBatch();
-            String[] emailParts = emails.split(",");
-            mController.addCollaborations(getFolder(), mSelectedRole, emailParts).addOnCompletedListener(mAddCollaborationsListener);
+        List<BoxInvitee> invitees = mAutoComplete.getObjects();
+        String[] emailParts = new String[invitees.size()];
+        for (int i = 0; i < invitees.size(); i++) {
+            emailParts[i] = invitees.get(i).getEmail();
         }
+
+        showSpinner();
+        mController.addCollaborations(getFolder(), mSelectedRole, emailParts).addOnCompletedListener(mAddCollaborationsListener);
     }
 
     private BoxFutureTask.OnCompletedListener<BoxIteratorInvitees> mGetInviteesListener =
@@ -259,7 +262,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
      */
     private void setSelectedRole(BoxCollaboration.Role role) {
         mSelectedRole = role;
-        mRoleButton.setText(createTitledSpannable(getString(R.string.box_sharesdk_access) , CollaborationUtils.getRoleName(getActivity(), role)));
+        mRoleButton.setText(createTitledSpannable(getString(R.string.box_sharesdk_access), CollaborationUtils.getRoleName(getActivity(), role)));
     }
 
     protected BoxFolder getFolder() {
