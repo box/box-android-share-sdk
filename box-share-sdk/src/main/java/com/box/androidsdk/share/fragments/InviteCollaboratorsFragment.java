@@ -66,6 +66,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         mAutoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         mAdapter = new InviteeAdapter(getActivity());
         mAutoComplete.setAdapter(mAdapter);
+        mAutoComplete.setTokenListener(this);
 
         // Get serialized roles or fetch them if they are not available
         if (getFolder() != null && getFolder().getAllowedInviteeRoles() != null) {
@@ -80,6 +81,14 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
 
         requestPermissionsIfNecessary();
         return view;
+    }
+
+    public boolean areCollaboratorsPresent() {
+        if (mAutoComplete != null) {
+            return mAutoComplete.getObjects().size() > 0;
+        }
+
+        return false;
     }
 
     public void setInviteCollaboratorsListener(InviteCollaboratorsListener listener) {
