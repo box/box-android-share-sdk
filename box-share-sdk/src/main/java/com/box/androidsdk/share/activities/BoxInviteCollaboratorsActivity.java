@@ -38,7 +38,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity {
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-            mFragment = InviteCollaboratorsFragment.newInstance((BoxFolder) mShareItem, mSession);
+            mFragment = InviteCollaboratorsFragment.newInstance((BoxFolder) mShareItem);
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
