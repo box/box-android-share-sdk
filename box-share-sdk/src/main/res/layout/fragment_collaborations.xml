@@ -14,8 +14,4 @@
         android:layout_gravity="top"
         android:gravity="center_horizontal"
         android:visibility="gone"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="@drawable/box_toolbar_dropshadow" />
 </LinearLayout>

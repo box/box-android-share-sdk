@@ -39,8 +39,4 @@
             />
         <View style="@style/BoxDivider" />
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="@drawable/box_toolbar_dropshadow" />
 </LinearLayout>
