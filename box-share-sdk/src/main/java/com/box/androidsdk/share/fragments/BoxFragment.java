@@ -202,7 +202,7 @@ public abstract class BoxFragment extends Fragment {
         Spannable accessSpannable = new SpannableString(combined);
 
         accessSpannable.setSpan(new TextAppearanceSpan(getActivity(), R.style.Base_TextAppearance_AppCompat_Body1), title.length(),combined.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        accessSpannable.setSpan(new ForegroundColorSpan(R.color.box_sharesdk_hint), title.length(),combined.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        accessSpannable.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.box_sharesdk_accent)), title.length(),combined.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return accessSpannable;
     }
 }
