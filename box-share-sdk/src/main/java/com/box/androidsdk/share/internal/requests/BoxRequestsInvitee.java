@@ -14,6 +14,7 @@ public class BoxRequestsInvitee {
      */
     public static class GetInvitees extends BoxRequestList<BoxIteratorInvitees, GetInvitees> implements BoxCacheableRequest<BoxIteratorInvitees> {
         private static final long serialVersionUID = 972965042279973942L;
+        private static final String FIELD_FILTER_TERM = "filter_term";
 
         /**
          * Creates a get invitees request with the below parameters.
@@ -34,6 +35,11 @@ public class BoxRequestsInvitee {
         @Override
         public BoxFutureTask<BoxIteratorInvitees> toTaskForCachedResult() throws BoxException {
             return handleToTaskForCachedResult();
+        }
+
+        public GetInvitees setFilterTerm(String filterTerm) {
+            mQueryMap.put(FIELD_FILTER_TERM, filterTerm);
+            return this;
         }
     }
 }

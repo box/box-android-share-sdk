@@ -24,9 +24,14 @@ import java.util.ArrayList;
 
 public class InviteeAdapter extends BaseAdapter implements Filterable {
 
+    public interface InviteeAdapterListener {
+        void onFilterTermChanged(CharSequence constraint);
+    }
+
     private Context mContext;
     private final ArrayList<BoxInvitee> mInvitees = new ArrayList<BoxInvitee>();
     private final ArrayList<BoxInvitee> mItems = new ArrayList<BoxInvitee>();
+    private InviteeAdapterListener mListener;
 
     private Filter mInviteeFilter = new Filter() {
         @Override
@@ -34,6 +39,10 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
             FilterResults results = new FilterResults();
             if (constraint == null) {
                 return results;
+            }
+
+            if (mListener != null) {
+                mListener.onFilterTermChanged(constraint);
             }
 
             ArrayList<BoxInvitee> filteredList = new ArrayList<BoxInvitee>();
@@ -82,6 +91,10 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
     public InviteeAdapter(Context context) {
         super();
         mContext = context;
+    }
+
+    public void setInviteeAdapterListener(InviteeAdapterListener listener) {
+        mListener = listener;
     }
 
     @Override

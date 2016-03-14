@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener, TokenCompleteTextView.TokenListener<BoxInvitee> {
+public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener, TokenCompleteTextView.TokenListener<BoxInvitee>, InviteeAdapter.InviteeAdapterListener {
 
     public interface InviteCollaboratorsListener {
         void onCollaboratorsPresent();
@@ -54,17 +56,20 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     private BoxCollaboration.Role mSelectedRole;
     private ArrayList<BoxCollaboration.Role> mRoles;
     private InviteCollaboratorsListener mInviteCollaboratorsListener;
+    private String mFilterTerm;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_invite_collaborators, container, false);
 
+        mFilterTerm = "";
         mRoleButton = (Button) view.findViewById(R.id.invite_collaborator_role);
         mRoleButton.setOnClickListener(this);
         mAutoComplete = (ChipCollaborationView) view.findViewById(R.id.invite_collaborator_autocomplete);
         mAutoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         mAdapter = new InviteeAdapter(getActivity());
+        mAdapter.setInviteeAdapterListener(this);
         mAutoComplete.setAdapter(mAdapter);
         mAutoComplete.setTokenListener(this);
 
@@ -110,6 +115,17 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                 mInviteCollaboratorsListener.onCollaboratorsPresent();
             } else {
                 mInviteCollaboratorsListener.onCollaboratorsAbsent();
+            }
+        }
+    }
+
+    @Override
+    public void onFilterTermChanged(CharSequence constraint) {
+        if (constraint.length() >= 3) {
+            String firstThreeChars = constraint.subSequence(0, 3).toString();
+            if (!firstThreeChars.equals(mFilterTerm)) {
+                mFilterTerm = firstThreeChars;
+                fetchInvitees();
             }
         }
     }
@@ -185,8 +201,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
      * Executes the request to retrieve the invitees that can be auto-completed
      */
     private void fetchInvitees() {
-        showSpinner();
-        mController.getInvitees(getFolder()).addOnCompletedListener(mGetInviteesListener);
+        mController.getInvitees(getFolder(), mFilterTerm).addOnCompletedListener(mGetInviteesListener);
     }
 
     /**
@@ -207,7 +222,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             new BoxFutureTask.OnCompletedListener<BoxIteratorInvitees>() {
                 @Override
                 public void onCompleted(final BoxResponse<BoxIteratorInvitees> response) {
-                    dismissSpinner();
                     final Activity activity = getActivity();
                     if (activity == null) {
                         return;
