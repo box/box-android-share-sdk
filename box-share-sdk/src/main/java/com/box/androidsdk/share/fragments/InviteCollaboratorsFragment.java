@@ -1,8 +1,14 @@
 package com.box.androidsdk.share.fragments;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,39 +30,48 @@ import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.InviteeAdapter;
+import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
+import com.box.androidsdk.share.ui.ChipCollaborationView;
+import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
-public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener {
+public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener, TokenCompleteTextView.TokenListener<BoxInvitee>, InviteeAdapter.InviteeAdapterListener {
 
+    public interface InviteCollaboratorsListener {
+        void onCollaboratorsPresent();
+        void onCollaboratorsAbsent();
+    }
+
+    private static final Integer MY_PERMISSIONS_REQUEST_READ_CONTACTS = 32;
     protected static final String TAG = InviteCollaboratorsFragment.class.getName();
     public static final String EXTRA_ACCESS_TOKEN = "InviteCollaboratorsFragment.ExtraAccessToken";
     private Button mRoleButton;
-    private MultiAutoCompleteTextView mAutoComplete;
+    private ChipCollaborationView mAutoComplete;
     private InviteeAdapter mAdapter;
     private BoxCollaboration.Role mSelectedRole;
     private ArrayList<BoxCollaboration.Role> mRoles;
-    private String mAccessToken;
+    private InviteCollaboratorsListener mInviteCollaboratorsListener;
+    private String mFilterTerm;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_invite_collaborators, container, false);
 
+        mFilterTerm = "";
         mRoleButton = (Button) view.findViewById(R.id.invite_collaborator_role);
         mRoleButton.setOnClickListener(this);
-        mAutoComplete = (MultiAutoCompleteTextView) view.findViewById(R.id.invite_collaborator_autocomplete);
+        mAutoComplete = (ChipCollaborationView) view.findViewById(R.id.invite_collaborator_autocomplete);
         mAutoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         mAdapter = new InviteeAdapter(getActivity());
+        mAdapter.setInviteeAdapterListener(this);
         mAutoComplete.setAdapter(mAdapter);
-
-        if (getArguments() != null) {
-            Bundle args = getArguments();
-            mAccessToken = args.getString(EXTRA_ACCESS_TOKEN);
-        }
+        mAutoComplete.setTokenListener(this);
 
         // Get serialized roles or fetch them if they are not available
         if (getFolder() != null && getFolder().getAllowedInviteeRoles() != null) {
@@ -68,7 +83,61 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
 
         fetchInvitees();
+
+        requestPermissionsIfNecessary();
         return view;
+    }
+
+    public boolean areCollaboratorsPresent() {
+        if (mAutoComplete != null) {
+            return mAutoComplete.getObjects().size() > 0;
+        }
+
+        return false;
+    }
+
+    public void setInviteCollaboratorsListener(InviteCollaboratorsListener listener) {
+        mInviteCollaboratorsListener = listener;
+    }
+
+    private void requestPermissionsIfNecessary() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.READ_CONTACTS},
+                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+        }
+    }
+
+    private void notifyInviteCollaboratorsListener() {
+        if (mInviteCollaboratorsListener != null) {
+            int count = mAutoComplete.getObjects().size();
+            if (count > 0) {
+                mInviteCollaboratorsListener.onCollaboratorsPresent();
+            } else {
+                mInviteCollaboratorsListener.onCollaboratorsAbsent();
+            }
+        }
+    }
+
+    @Override
+    public void onFilterTermChanged(CharSequence constraint) {
+        if (constraint.length() >= 3) {
+            String firstThreeChars = constraint.subSequence(0, 3).toString();
+            if (!firstThreeChars.equals(mFilterTerm)) {
+                mFilterTerm = firstThreeChars;
+                fetchInvitees();
+            }
+        }
+    }
+
+    @Override
+    public void onTokenAdded(BoxInvitee token) {
+        notifyInviteCollaboratorsListener();
+    }
+
+    @Override
+    public void onTokenRemoved(BoxInvitee token) {
+        notifyInviteCollaboratorsListener();
     }
 
     @Override
@@ -132,28 +201,27 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
      * Executes the request to retrieve the invitees that can be auto-completed
      */
     private void fetchInvitees() {
-        showSpinner();
-        mController.getInvitees(getFolder()).addOnCompletedListener(mGetInviteesListener);
+        mController.getInvitees(getFolder(), mFilterTerm).addOnCompletedListener(mGetInviteesListener);
     }
 
     /**
      * Executes the request to add collaborations to the folder
      */
     public void addCollaborations() {
-        String emails = mAutoComplete.getText().toString();
-        if (!SdkUtils.isBlank(emails)) {
-            showSpinner();
-            BoxRequestBatch batchRequest = new BoxRequestBatch();
-            String[] emailParts = emails.split(",");
-            mController.addCollaborations(getFolder(), mSelectedRole, emailParts).addOnCompletedListener(mAddCollaborationsListener);
+        List<BoxInvitee> invitees = mAutoComplete.getObjects();
+        String[] emailParts = new String[invitees.size()];
+        for (int i = 0; i < invitees.size(); i++) {
+            emailParts[i] = invitees.get(i).getEmail();
         }
+
+        showSpinner();
+        mController.addCollaborations(getFolder(), mSelectedRole, emailParts).addOnCompletedListener(mAddCollaborationsListener);
     }
 
     private BoxFutureTask.OnCompletedListener<BoxIteratorInvitees> mGetInviteesListener =
             new BoxFutureTask.OnCompletedListener<BoxIteratorInvitees>() {
                 @Override
                 public void onCompleted(final BoxResponse<BoxIteratorInvitees> response) {
-                    dismissSpinner();
                     final Activity activity = getActivity();
                     if (activity == null) {
                         return;
@@ -243,16 +311,15 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
      */
     private void setSelectedRole(BoxCollaboration.Role role) {
         mSelectedRole = role;
-        mRoleButton.setText(createTitledSpannable(getString(R.string.box_sharesdk_access) , CollaborationUtils.getRoleName(getActivity(), role)));
+        mRoleButton.setText(createTitledSpannable(getString(R.string.box_sharesdk_access), CollaborationUtils.getRoleName(getActivity(), role)));
     }
 
     protected BoxFolder getFolder() {
         return (BoxFolder)mShareItem;
     }
 
-    public static InviteCollaboratorsFragment newInstance(BoxFolder folder, BoxSession session) {
+    public static InviteCollaboratorsFragment newInstance(BoxFolder folder) {
         Bundle args = BoxFragment.getBundle(folder);
-        args.putString(EXTRA_ACCESS_TOKEN, session.getAuthInfo().accessToken());
         InviteCollaboratorsFragment fragment = new InviteCollaboratorsFragment();
         fragment.setArguments(args);
         return fragment;

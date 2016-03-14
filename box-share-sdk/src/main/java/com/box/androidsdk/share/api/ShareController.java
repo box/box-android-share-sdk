@@ -14,9 +14,6 @@ import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
-/**
- * Created by varungupta on 3/4/2016.
- */
 public interface ShareController {
     BoxFutureTask<BoxItem> fetchItemInfo(BoxItem boxItemr);
     BoxRequestUpdateSharedItem getCreatedSharedLinkRequest(BoxItem boxItem);
@@ -27,7 +24,7 @@ public interface ShareController {
     BoxFutureTask<BoxCollaboration> updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role selectedRole);
     BoxFutureTask<BoxVoid> deleteCollaboration(BoxCollaboration collaboration);
     BoxFutureTask<BoxResponseBatch> addCollaborations(BoxFolder boxFolder, BoxCollaboration.Role selectedRole, String[] emails);
-    BoxFutureTask<BoxIteratorInvitees> getInvitees(BoxFolder boxFolder);
+    BoxFutureTask<BoxIteratorInvitees> getInvitees(BoxFolder boxFolder, String filter);
     <E extends BoxObject> BoxFutureTask<E> executeRequest(final Class<E> clazz, final BoxRequest request);
     void showToast(Context context, CharSequence text);
     void showToast(Context context, int resId);

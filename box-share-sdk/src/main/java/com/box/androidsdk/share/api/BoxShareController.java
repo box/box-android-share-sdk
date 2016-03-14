@@ -145,8 +145,8 @@ public class BoxShareController implements ShareController {
     }
 
     @Override
-    public BoxFutureTask<BoxIteratorInvitees> getInvitees(BoxFolder boxFolder) {
-        BoxFutureTask<BoxIteratorInvitees> task = mInviteeApi.getInviteesRequest(boxFolder.getId()).toTask();
+    public BoxFutureTask<BoxIteratorInvitees> getInvitees(BoxFolder boxFolder, String filter) {
+        BoxFutureTask<BoxIteratorInvitees> task = mInviteeApi.getInviteesRequest(boxFolder.getId()).setFilterTerm(filter).toTask();
         getApiExecutor().submit(task);
         return task;
     }

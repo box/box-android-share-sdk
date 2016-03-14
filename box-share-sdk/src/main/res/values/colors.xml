@@ -13,4 +13,5 @@
     <color name="box_sharesdk_button_back">#ffffffff</color>
     <color name="box_sharesdk_divider">#ffd6d6d6</color>
     <color name="box_sharesdk_warning_color">#ffb71c1c</color>
+    <color name="box_sharesdk_chip_text_color">#ffb4b4b4</color>
 </resources>

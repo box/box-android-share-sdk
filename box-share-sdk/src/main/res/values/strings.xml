@@ -12,7 +12,7 @@
     <string name="box_sharesdk_password_protected" description="description for if a shared link is password proceted">Password protected</string>
     <string name="box_sharesdk_password_unprotected" description="description for if a shared link is not password proceted">No password</string>
 
-    <string name="box_sharesdk_share_link_enabled" description="shown if share link is enabled">Share link</string>
+    <string name="box_sharesdk_share_link_enabled" description="shown if share link is enabled">Share link enabled</string>
     <string name="box_sharesdk_share_link_disabled" description="shown if share link is disabled">Share link disabled</string>
     <string name="box_sharesdk_downloads_allowed" description="shown if user has permission to download link">Downloads allowed</string>
     <string name="box_sharesdk_downloads_disabled" description="shown if user has permission to download link">Downloads disabled</string>
@@ -24,7 +24,7 @@
     <string name="box_sharesdk_disable_share_link" description="button to disable a shared link">DISABLE SHARE LINK</string>
     <string name="box_sharesdk_disable_title" description="shown as title of warning dialog before disabling a shared link">Disable Share Link?</string>
     <string name="box_sharesdk_disable_message" description="shown as message of warning dialog before disabling a shared link">Disabling the link permanently deletes the current share link. Reenabling the link will generate a completely new and unique share link. Do you wish to disable the share link?</string>
-    <string name="box_sharesdk_link_access" description="separates ui between the shared link box and options to change access">Link Access</string>
+    <string name="box_sharesdk_link_access" description="separates ui between the shared link box and options to change access">Access</string>
     <string name="box_sharesdk_access" description="header for different access types">Link Access</string>
     <string name="box_sharesdk_access_public" description="description for public access">People with the link</string>
     <string name="box_sharesdk_access_company" description="description for company access">People in your company</string>

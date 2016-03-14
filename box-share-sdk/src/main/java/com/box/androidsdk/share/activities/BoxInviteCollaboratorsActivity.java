@@ -26,7 +26,9 @@ import com.box.androidsdk.share.fragments.InviteCollaboratorsFragment;
  * Activity used to allow users to invite additional collaborators to the folder. Email addresses will auto complete from the phones address book
  * as well as Box's internal invitee endpoint. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
-public class BoxInviteCollaboratorsActivity extends BoxActivity {
+public class BoxInviteCollaboratorsActivity extends BoxActivity implements InviteCollaboratorsFragment.InviteCollaboratorsListener {
+
+    private boolean mSendEnabled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +40,13 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity {
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-            mFragment = InviteCollaboratorsFragment.newInstance((BoxFolder) mShareItem, mSession);
+            mFragment = InviteCollaboratorsFragment.newInstance((BoxFolder) mShareItem);
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
         mFragment.SetController(mController);
+        ((InviteCollaboratorsFragment)mFragment).setInviteCollaboratorsListener(this);
+        mSendEnabled = ((InviteCollaboratorsFragment)mFragment).areCollaboratorsPresent();
     }
 
     @Override
@@ -50,6 +54,35 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_invite_collaborators, menu);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem sendMenuItem = menu.findItem(R.id.box_sharesdk_action_send);
+        if (mSendEnabled) {
+            sendMenuItem.setEnabled(true);
+            sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_grey_24dp);
+        } else {
+            sendMenuItem.setEnabled(false);
+            sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_light_24dp);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onCollaboratorsPresent() {
+        if (!mSendEnabled) {
+            mSendEnabled = true;
+            invalidateOptionsMenu();
+        }
+    }
+
+    @Override
+    public void onCollaboratorsAbsent() {
+        if (mSendEnabled) {
+            mSendEnabled = false;
+            invalidateOptionsMenu();
+        }
     }
 
     @Override
