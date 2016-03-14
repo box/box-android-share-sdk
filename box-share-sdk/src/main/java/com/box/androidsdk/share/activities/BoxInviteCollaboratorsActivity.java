@@ -14,6 +14,7 @@ import com.box.androidsdk.content.BoxApiCollaboration;
 import com.box.androidsdk.content.BoxApiFile;
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.models.BoxFolder;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
@@ -67,6 +68,12 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
             sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_light_24dp);
         }
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onShowCollaborators(BoxIteratorCollaborations collaborations) {
+        Intent collabsIntent = BoxCollaborationsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession);
+        startActivity(collabsIntent);
     }
 
     @Override

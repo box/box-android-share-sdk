@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,5 +36,29 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/box_sharesdk_collaboration_cell_height"
             />
+        <LinearLayout
+            android:id="@+id/collaborator_initials_list_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/invite_collaborator_initials_list_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin"
+                android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin"
+                android:textColor="@color/box_sharesdk_hint"
+                android:text="@string/box_sharesdk_shared_with"
+                android:visibility="gone"/>
+            <LinearLayout
+                android:id="@+id/invite_collaborator_initials_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin"
+                android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin">
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

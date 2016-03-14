@@ -8,4 +8,5 @@
     <dimen name="box_sharesdk_button_height">36dp</dimen>
     <dimen name="box_sharesdk_collaboration_thumb_size">40dp</dimen>
     <dimen name="box_sharesdk_horizontal_rule_height">1dp</dimen>
+    <dimen name="box_sharesdk_horizontal_list_item_margin">4dp</dimen>
 </resources>

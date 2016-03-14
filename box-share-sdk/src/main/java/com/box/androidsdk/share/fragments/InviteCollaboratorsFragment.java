@@ -13,12 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.TextView;
 
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
+import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFolder;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxUser;
 import com.box.androidsdk.content.requests.BoxRequestBatch;
@@ -43,6 +47,7 @@ import java.util.Locale;
 public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener, TokenCompleteTextView.TokenListener<BoxInvitee>, InviteeAdapter.InviteeAdapterListener {
 
     public interface InviteCollaboratorsListener {
+        void onShowCollaborators(BoxIteratorCollaborations collaborations);
         void onCollaboratorsPresent();
         void onCollaboratorsAbsent();
     }
@@ -57,6 +62,10 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     private ArrayList<BoxCollaboration.Role> mRoles;
     private InviteCollaboratorsListener mInviteCollaboratorsListener;
     private String mFilterTerm;
+    private TextView mInitialsListHeader;
+    private LinearLayout mInitialsListView;
+    private LinearLayout mInitialsListViewSection;
+    protected BoxIteratorCollaborations mCollaborations;
 
     @Nullable
     @Override
@@ -72,6 +81,17 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         mAdapter.setInviteeAdapterListener(this);
         mAutoComplete.setAdapter(mAdapter);
         mAutoComplete.setTokenListener(this);
+        mInitialsListView = (LinearLayout) view.findViewById(R.id.invite_collaborator_initials_list);
+        mInitialsListHeader = (TextView) view.findViewById(R.id.invite_collaborator_initials_list_header);
+        mInitialsListViewSection = (LinearLayout) view.findViewById(R.id.collaborator_initials_list_section);
+        mInitialsListViewSection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mInviteCollaboratorsListener != null) {
+                    mInviteCollaboratorsListener.onShowCollaborators(mCollaborations);
+                }
+            }
+        });
 
         // Get serialized roles or fetch them if they are not available
         if (getFolder() != null && getFolder().getAllowedInviteeRoles() != null) {
@@ -83,6 +103,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
 
         fetchInvitees();
+        fetchCollaborations();
 
         requestPermissionsIfNecessary();
         return view;
@@ -202,6 +223,89 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
      */
     private void fetchInvitees() {
         mController.getInvitees(getFolder(), mFilterTerm).addOnCompletedListener(mGetInviteesListener);
+    }
+
+    /**
+     * Executes the request to retrieve collaborations for the folder
+     */
+    public void fetchCollaborations() {
+        if (getFolder() == null || SdkUtils.isBlank(getFolder().getId())) {
+            mController.showToast(getActivity(), getString(R.string.box_sharesdk_cannot_view_collaborations));
+            return;
+        }
+
+        showSpinner();
+        mController.fetchCollaborations(getFolder()).addOnCompletedListener(mCollaborationsListener);
+    }
+
+    private BoxFutureTask.OnCompletedListener<BoxIteratorCollaborations> mCollaborationsListener =
+            new BoxFutureTask.OnCompletedListener<BoxIteratorCollaborations>() {
+                @Override
+                public void onCompleted(final BoxResponse<BoxIteratorCollaborations> response) {
+                    dismissSpinner();
+                    final Activity activity = getActivity();
+                    if (activity == null) {
+                        return;
+                    }
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (response.isSuccess() && getFolder() != null) {
+                                mCollaborations = response.getResult();
+                                updateUi();
+                            } else {
+                                BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch Collaborators request failed",
+                                        response.getException());
+                                mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
+                            }
+                        }
+                    });
+                }
+            };
+
+    private void updateUi() {
+        if (mCollaborations != null && mCollaborations.size() != 0) {
+
+            mInitialsListHeader.setVisibility(View.VISIBLE);
+            final int totalCollaborators = mCollaborations.fullSize().intValue();
+            final int remainingWidth = mInitialsListView.getWidth();
+            final ArrayList<BoxCollaboration> collaborations = mCollaborations.getEntries();
+            //Add the first item to calculate the width
+            final View initialsView = AddInitialsToList(collaborations.get(0).getAccessibleBy());
+            initialsView.post(new Runnable() {
+                @Override
+                public void run() {
+                    int viewWidth = initialsView.getWidth();
+                    int viewsCount = remainingWidth/viewWidth;
+                    for (int i = 1; i < viewsCount && i < collaborations.size(); i++) {
+                        View viewAdded = AddInitialsToList(collaborations.get(i).getAccessibleBy());
+                        if (i == viewsCount - 1) {
+                            // This is the last one, display count if needed
+                            int remaining = totalCollaborators - viewsCount;
+                            if (remaining > 0) {
+                                TextView initialsTextView = (TextView) viewAdded.findViewById(R.id.collaborator_initials);
+                                CollaborationUtils.setInitialsThumb(getActivity(), initialsTextView, remaining + 1);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private View AddInitialsToList(BoxCollaborator collaborator) {
+        LinearLayout initialsView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.view_initials, null);
+        TextView initialsTextView = (TextView) initialsView.findViewById(R.id.collaborator_initials);
+
+        if (collaborator == null) {
+            CollaborationUtils.setInitialsThumb(getActivity(), initialsTextView, "");
+        } else {
+            String name = collaborator.getName();
+            CollaborationUtils.setInitialsThumb(getActivity(), initialsTextView, name);
+        }
+
+        mInitialsListView.addView(initialsView);
+        return initialsView;
     }
 
     /**

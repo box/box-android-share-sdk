@@ -84,5 +84,6 @@
     <string name="box_sharesdk_no_collaborators" description="Message shown when no collaborators have been invited for the current folder">No collaborators for this folder.</string>
     <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s has already been invited to this folder</string>
     <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s people have already been invited to this folder</string>
+    <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
 
 </resources>

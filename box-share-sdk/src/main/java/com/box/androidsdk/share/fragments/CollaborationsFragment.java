@@ -16,6 +16,7 @@ import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFolder;
+import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxVoid;
 import com.box.androidsdk.content.requests.BoxRequestsShare;
@@ -55,6 +56,10 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
         if (savedInstanceState == null) {
             fetchCollaborations();
+        }else if (getArguments() != null) {
+            Bundle args = getArguments();
+            mCollaborations = (BoxIteratorCollaborations)args.getSerializable(CollaborationUtils.EXTRA_COLLABORATIONS);
+            updateUi();
         }else {
             mCollaborations = (BoxIteratorCollaborations)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_COLLABORATIONS);
             updateUi();
@@ -263,8 +268,9 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             }
         };
 
-    public static CollaborationsFragment newInstance(BoxFolder folder) {
+    public static CollaborationsFragment newInstance(BoxFolder folder, BoxIteratorCollaborations collaborations) {
         Bundle args = BoxFragment.getBundle(folder);
+        args.putSerializable(CollaborationUtils.EXTRA_COLLABORATIONS, collaborations);
         CollaborationsFragment fragment = new CollaborationsFragment();
         fragment.setArguments(args);
         return fragment;
