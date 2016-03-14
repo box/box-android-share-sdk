@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,22 +23,17 @@ import java.util.ArrayList;
 
 public class InviteeAdapter extends BaseAdapter implements Filterable {
 
-    public interface InviteeAdapterListener {
-        void onFilterTermChanged(CharSequence constraint);
-    }
+    private class InviteeFilter extends Filter {
+        CharSequence mConstraint;
 
-    private Context mContext;
-    private final ArrayList<BoxInvitee> mInvitees = new ArrayList<BoxInvitee>();
-    private final ArrayList<BoxInvitee> mItems = new ArrayList<BoxInvitee>();
-    private InviteeAdapterListener mListener;
-
-    private Filter mInviteeFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
             if (constraint == null) {
                 return results;
             }
+
+            mConstraint = constraint;
 
             if (mListener != null) {
                 mListener.onFilterTermChanged(constraint);
@@ -86,7 +80,22 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
                 notifyDataSetInvalidated();
             }
         }
-    };
+
+        public void onInviteesChanged() {
+            FilterResults results = performFiltering(mConstraint);
+            publishResults(mConstraint, results);
+        }
+    }
+
+    public interface InviteeAdapterListener {
+        void onFilterTermChanged(CharSequence constraint);
+    }
+
+    private Context mContext;
+    private final ArrayList<BoxInvitee> mInvitees = new ArrayList<BoxInvitee>();
+    private final ArrayList<BoxInvitee> mItems = new ArrayList<BoxInvitee>();
+    private InviteeAdapterListener mListener;
+    private InviteeFilter mInviteeFilter = new InviteeFilter();
 
     public InviteeAdapter(Context context) {
         super();
@@ -144,6 +153,8 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
         for (BoxInvitee invitee: invitees) {
             mInvitees.add(invitee);
         }
+
+        mInviteeFilter.onInviteesChanged();
     }
 
 
