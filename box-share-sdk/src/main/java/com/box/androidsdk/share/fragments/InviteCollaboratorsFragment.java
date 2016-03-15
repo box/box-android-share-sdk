@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +21,7 @@ import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
-import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxUser;
-import com.box.androidsdk.content.requests.BoxRequestBatch;
 import com.box.androidsdk.content.requests.BoxRequestsShare;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
@@ -271,14 +267,14 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             final int remainingWidth = mInitialsListView.getWidth();
             final ArrayList<BoxCollaboration> collaborations = mCollaborations.getEntries();
             //Add the first item to calculate the width
-            final View initialsView = AddInitialsToList(collaborations.get(0).getAccessibleBy());
+            final View initialsView = addInitialsToList(collaborations.get(0).getAccessibleBy());
             initialsView.post(new Runnable() {
                 @Override
                 public void run() {
                     int viewWidth = initialsView.getWidth();
                     int viewsCount = remainingWidth/viewWidth;
                     for (int i = 1; i < viewsCount && i < collaborations.size(); i++) {
-                        View viewAdded = AddInitialsToList(collaborations.get(i).getAccessibleBy());
+                        View viewAdded = addInitialsToList(collaborations.get(i).getAccessibleBy());
                         if (i == viewsCount - 1) {
                             // This is the last one, display count if needed
                             int remaining = totalCollaborators - viewsCount;
@@ -293,7 +289,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
     }
 
-    private View AddInitialsToList(BoxCollaborator collaborator) {
+    private View addInitialsToList(BoxCollaborator collaborator) {
         LinearLayout initialsView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.view_initials, null);
         TextView initialsTextView = (TextView) initialsView.findViewById(R.id.collaborator_initials);
 

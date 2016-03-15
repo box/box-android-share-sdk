@@ -23,6 +23,7 @@ import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.activities.BoxActivity;
 import com.box.androidsdk.share.activities.BoxCollaborationsActivity;
+import com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity;
 import com.box.androidsdk.share.activities.BoxSharedLinkActivity;
 
 import java.net.HttpURLConnection;
@@ -138,7 +139,7 @@ public class MainActivity extends ActionBarActivity {
      */
     public void onInvitePeopleButtonClick(final View view){
         if (mSampleFolder != null)
-            startActivityForResult(BoxCollaborationsActivity.getLaunchIntent(this, mSampleFolder, mSession), REQUEST_CODE_INVITE_PEOPLE);
+            startActivityForResult(BoxInviteCollaboratorsActivity.getLaunchIntent(this, mSampleFolder, mSession), REQUEST_CODE_INVITE_PEOPLE);
     }
 
     private void deleteSampleFolder(){
