@@ -15,6 +15,8 @@ import com.box.androidsdk.content.BoxApiFile;
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxFolder;
+import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
@@ -31,7 +33,6 @@ import java.util.ArrayList;
 public class BoxCollaborationsActivity extends BoxActivity {
 
     protected static final String TAG = BoxCollaborationsActivity.class.getName();
-    protected static final int INVITE_COLLABS_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,47 +46,20 @@ public class BoxCollaborationsActivity extends BoxActivity {
             return;
         }
 
+        BoxIteratorCollaborations collaborations = null;
+        if (getIntent() != null) {
+            collaborations = (BoxIteratorCollaborations)getIntent().getSerializableExtra(CollaborationUtils.EXTRA_COLLABORATIONS);
+        }
+
         mFragment = (CollaborationsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-            mFragment = CollaborationsFragment.newInstance((BoxFolder) mShareItem);
+            mFragment = CollaborationsFragment.newInstance((BoxFolder) mShareItem, collaborations);
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
         mFragment.SetController(mController);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_collaborate, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.box_sharesdk_action_add) {
-            Intent inviteCollabsIntent = BoxInviteCollaboratorsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession);
-            startActivityForResult(inviteCollabsIntent, INVITE_COLLABS_REQUEST_CODE);
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case INVITE_COLLABS_REQUEST_CODE:
-                if (resultCode == RESULT_OK) {
-                    // New collaborators have been invited so we should refresh
-                    ((CollaborationsFragment)mFragment).fetchCollaborations();
-                }
-                break;
-        }
     }
 
     /**
@@ -106,6 +80,20 @@ public class BoxCollaborationsActivity extends BoxActivity {
 
         collabIntent.putExtra(CollaborationUtils.EXTRA_ITEM, folder);
         collabIntent.putExtra(CollaborationUtils.EXTRA_USER_ID, session.getUser().getId());
+        return collabIntent;
+    }
+
+    /**
+     * Gets a fully formed intent that can be used to start the activity with
+     *
+     * @param context context to launch the intent with
+     * @param folder folder to retrieve collaborations for
+     * @param session the session to view the folders collaborations with
+     * @return the intent to launch the activity
+     */
+    public static Intent getLaunchIntent(Context context, BoxFolder folder, BoxSession session, BoxIteratorCollaborations collaborations) {
+        Intent collabIntent = getLaunchIntent(context, folder, session);
+        collabIntent.putExtra(CollaborationUtils.EXTRA_COLLABORATIONS, collaborations);
         return collabIntent;
     }
 }
