@@ -72,7 +72,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
 
     @Override
     public void onShowCollaborators(BoxIteratorCollaborations collaborations) {
-        Intent collabsIntent = BoxCollaborationsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession);
+        Intent collabsIntent = BoxCollaborationsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession, collaborations);
         startActivity(collabsIntent);
     }
 
