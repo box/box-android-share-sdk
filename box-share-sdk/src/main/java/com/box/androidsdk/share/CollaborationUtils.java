@@ -104,8 +104,7 @@ public class CollaborationUtils {
     }
 
     public static void setInitialsThumb(Context context, TextView initialsView, int number) {
-        Drawable drawable = initialsView.getResources().getDrawable(R.drawable.thumb_background);
-        drawable.setColorFilter(context.getResources().getColor(R.color.box_sharesdk_initials_count_color), PorterDuff.Mode.MULTIPLY);
+        Drawable drawable = initialsView.getResources().getDrawable(R.drawable.initials_count_thumb_background);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
             initialsView.setBackground(drawable);
         } else {
@@ -113,6 +112,6 @@ public class CollaborationUtils {
         }
         initialsView.setText(String.format(context.getResources().getString(R.string.box_sharedsdk_collaborators_initials_count), number));
         initialsView.setTextAppearance(context, R.style.TextAppearance_AppCompat_Subhead);
-        initialsView.setTextColor(context.getResources().getColor(R.color.box_sharesdk_background));
+        initialsView.setTextColor(context.getResources().getColor(R.color.box_sharesdk_initials_count_color));
     }
 }
