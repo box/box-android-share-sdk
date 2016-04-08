@@ -1,10 +1,7 @@
-package com.box.androidsdk.share.internal;
+package com.box.androidsdk.share.internal.models;
 
 import com.box.androidsdk.content.models.BoxJsonObject;
 import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
-
-import java.util.Map;
 
 /**
  * This represents an invitee that can be invited to be a collaborator. This is currently still in development and is treated

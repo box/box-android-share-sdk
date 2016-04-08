@@ -24,8 +24,8 @@
     <string name="box_sharesdk_disable_share_link" description="button to disable a shared link">DISABLE SHARE LINK</string>
     <string name="box_sharesdk_disable_title" description="shown as title of warning dialog before disabling a shared link">Disable Share Link?</string>
     <string name="box_sharesdk_disable_message" description="shown as message of warning dialog before disabling a shared link">Disabling the link permanently deletes the current share link. Reenabling the link will generate a completely new and unique share link. Do you wish to disable the share link?</string>
-    <string name="box_sharesdk_link_access" description="separates ui between the shared link box and options to change access">Link Access</string>
-    <string name="box_sharesdk_access" description="header for different access types">Access</string>
+    <string name="box_sharesdk_link_access" description="separates ui between the shared link box and options to change access">Access</string>
+    <string name="box_sharesdk_access" description="header for different access types">Link Access</string>
     <string name="box_sharesdk_access_public" description="description for public access">People with the link</string>
     <string name="box_sharesdk_access_company" description="description for company access">People in your company</string>
     <string name="box_sharesdk_access_collaborator" description="description for collaborator access">Only people the folder is shared with</string>
@@ -84,5 +84,7 @@
     <string name="box_sharesdk_no_collaborators" description="Message shown when no collaborators have been invited for the current folder">No collaborators for this folder.</string>
     <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s has already been invited to this folder</string>
     <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s people have already been invited to this folder</string>
+    <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
+    <string name="box_sharedsdk_collaborators_title">Collaborators</string>
 
 </resources>

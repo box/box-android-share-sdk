@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true">
+            <Button
+                android:id="@+id/shared_link_access_btn"
+                style="@style/BoxLabelText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/box_sharesdk_collaboration_cell_height"
+                />
+            <Switch
+                style="@style/BoxSwitch"
+                android:text="@string/box_sharesdk_downloads_allowed"
+                android:id="@+id/shared_link_allow_download_btn"
+                />
+            <View style="@style/BoxDivider"
+                android:layout_marginTop="@dimen/box_sharesdk_vertical_margin"
+                android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin"/>
+
+            <!-- Password -->
+            <TextView
+                android:layout_gravity="left|start|center_vertical"
+                android:gravity="left|start|center_vertical"
+                style="@style/BoxHeaderText"
+                android:id="@+id/box_sharesdk_password_header"
+                android:text="@string/box_sharesdk_password"/>
+            <Switch
+                style="@style/BoxSwitch"
+                android:text="@string/box_sharesdk_require_password"
+                android:id="@+id/share_link_require_password_btn"
+                />
+            <Button
+                android:id="@+id/shared_link_password_btn"
+                style="@style/BoxLabelText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/box_sharesdk_collaboration_cell_height"
+                />
+            <View style="@style/BoxDivider"
+                android:layout_marginTop="@dimen/box_sharesdk_vertical_margin"
+                android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin"/>
+
+            <!-- Link Expiration -->
+            <TextView
+                style="@style/BoxHeaderText"
+                android:layout_gravity="left|start|center_vertical"
+                android:gravity="left|start|center_vertical"
+                android:text="@string/box_sharesdk_link_expiration"/>
+            <Switch
+                style="@style/BoxSwitch"
+                android:text="@string/box_sharesdk_link_expire_link"
+                android:id="@+id/shared_link_expire_link_btn"
+                />
+            <Button
+                android:id="@+id/shared_link_expires_on_btn"
+                style="@style/BoxLabelText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/box_sharesdk_collaboration_cell_height"
+                />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -1,10 +1,10 @@
 package com.box.androidsdk.share.fragments;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -33,25 +33,30 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
     protected BoxSession mSession;
     protected RadioGroup mRadioGroup;
 
-    protected BoxCollaboration.Role[] mRoles;
+    protected ArrayList<BoxCollaboration.Role> mRoles;
     protected BoxCollaboration.Role mSelectedRole;
     protected boolean mAllowRemove;
     protected boolean mIsRemoveCollaborationSelected;
     protected Serializable mExtra;
     protected ArrayList<RadioButton> mRolesOptions = new ArrayList<RadioButton>();
 
+    protected OnRoleSelectedListener mOnRoleSelectedListener;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        setRetainInstance(true);
+
         String userId = getArguments().getString(ARGS_USER_ID);
         String title = getArguments().getString(ARGS_TITLE);
-        mRoles = (BoxCollaboration.Role[]) getArguments().getSerializable(ARGS_ROLES);
+        mRoles = (ArrayList<BoxCollaboration.Role>) getArguments().getSerializable(ARGS_ROLES);
         mSelectedRole = (BoxCollaboration.Role) getArguments().getSerializable(ARGS_SELECTED_ROLE);
         mAllowRemove = getArguments().getBoolean(ARGS_ALLOW_REMOVE);
         mExtra = getArguments().getSerializable(ARGS_SERIALIZABLE_EXTRA);
         mSession = new BoxSession(getActivity(), userId);
 
         // Create AlertDialog builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.ShareDialogTheme);
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_collaboration_roles_dialog, null);
         builder.setView(view)
             .setNegativeButton(R.string.box_sharesdk_cancel, this)
@@ -69,7 +74,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
         return builder.create();
     }
 
-    private void addRolesToView(BoxCollaboration.Role[] roles) {
+    private void addRolesToView(ArrayList<BoxCollaboration.Role> roles) {
         LinearLayout rolesLayout = new LinearLayout(getActivity());
         rolesLayout.setOrientation(LinearLayout.VERTICAL);
         mRadioGroup.addView(rolesLayout);
@@ -107,7 +112,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
         }
     }
 
-    public static CollaborationRolesDialog newInstance(BoxCollaboration.Role[] roles, BoxCollaboration.Role selectedRole, String title, boolean allowRemove, Serializable serializableExtra) {
+    public static CollaborationRolesDialog newInstance(ArrayList<BoxCollaboration.Role> roles, BoxCollaboration.Role selectedRole, String title, boolean allowRemove, Serializable serializableExtra) {
         CollaborationRolesDialog dialog = new CollaborationRolesDialog();
 
         Bundle b = new Bundle();
@@ -138,14 +143,29 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {
             case DialogInterface.BUTTON_POSITIVE:
-                OnRoleSelectedListener listener = (OnRoleSelectedListener) getActivity();
-                listener.onRoleSelected(this);
+                mOnRoleSelectedListener.onRoleSelected(this);
                 break;
             case DialogInterface.BUTTON_NEGATIVE:
             default:
                 // Do nothing
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        Dialog dialog = getDialog();
+
+        // Work around bug: http://code.google.com/p/android/issues/detail?id=17423
+        if ((dialog != null) && getRetainInstance())
+            dialog.setDismissMessage(null);
+
+        super.onDestroyView();
+    }
+
+    public void setOnRoleSelectedListener(OnRoleSelectedListener listener) {
+        mOnRoleSelectedListener = listener;
     }
 
     public BoxCollaboration.Role getSelectedRole() {
