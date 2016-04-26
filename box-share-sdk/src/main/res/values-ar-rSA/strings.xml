@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="null"?>
+<resources>
+    <string name="box_sharesdk_name">مشاركة</string>
+    <string name="box_sharesdk_shared_with">تمت المشاركة مع</string>
+    <string name="box_sharesdk_invite_collaborators">دعوة أشخاص</string>
+    <string name="box_sharesdk_session_is_not_authenticated">لم تتم المصادقة على الجلسة</string>
+    <string name="box_sharesdk_no_item_selected">لم يتم تحديد أي عنصر</string>
+    <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">نسخ الرابط</string>
+    <string description="button to send link to another application" name="box_sharesdk_send_link">إرسال الرابط</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">إمكانية الوصول من قِبل الأشخاص الذين يملكون الرابط</string>
+    <string description="description for company access" name="box_sharesdk_accessible_company">إمكانية الوصول من قِبل الأشخاص في الشركة</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">إمكانية الوصول من قِبل أشخاص تمت مشاركة المجلد معهم</string>
+    <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">محمي بكلمة مرور</string>
+    <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">ما من كلمة مرور</string>
+
+    <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">تم تمكين رابط المشاركة</string>
+    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">تم تعطيل رابط المشاركة</string>
+    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">تم السماح بالتنزيلات</string>
+    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">تم تعطيل التنزيلات</string>
+    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">ما من تاريخ لانتهاء الصلاحية</string>
+    <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">تنتهي صلاحية الرابط في %1$s</string>
+    <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">تحرير الوصول إلى الرابط</string>
+    <string description="button to cancel an action" name="box_sharesdk_cancel">إلغاء</string>
+    <string description="button to cancel an action" name="box_sharesdk_ok">موافق</string>
+    <string description="button to disable a shared link" name="box_sharesdk_disable_share_link">تعطيل رابط المشاركة</string>
+    <string description="shown as title of warning dialog before disabling a shared link" name="box_sharesdk_disable_title">هل تريد تعطيل رابط المشاركة؟</string>
+    <string description="shown as message of warning dialog before disabling a shared link" name="box_sharesdk_disable_message">يؤدي تعطيل الرابط إلى حذف رابط المشاركة الحالي بشكل دائم. وستؤدي إعادة تمكين الرابط إلى إنشاء رابط مشاركة فريد وجديد تمامًا. هل ترغب في تعطيل رابط المشاركة؟</string>
+    <string description="separates ui between the shared link box and options to change access" name="box_sharesdk_link_access">الوصول إلى الرابط</string>
+    <string description="header for different access types" name="box_sharesdk_access">الوصول</string>
+    <string description="description for public access" name="box_sharesdk_access_public">الأشخاص الذين يملكون الرابط</string>
+    <string description="description for company access" name="box_sharesdk_access_company">الأشخاص في الشركة</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">الأشخاص الذين تمت مشاركة المجلد معهم فقط</string>
+    <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">السماح بالتنزيلات</string>
+    <string description="header for password section" name="box_sharesdk_password">كلمة المرور</string>
+    <string description="hint for password dialog" name="box_sharesdk_set_password">تعيين كلمة المرور</string>
+    <string description="toggle of using password or not" name="box_sharesdk_require_password">طلب كلمة مرور</string>
+    <string description="header for link expiration section" name="box_sharesdk_link_expiration">انتهاء صلاحية الرابط</string>
+    <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">تنتهي صلاحية الرابط في</string>
+    <string description="header for date link expires" name="box_sharesdk_expire_on">تنتهي مدة الصلاحية في</string>
+    <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">حدثت مشكلة أثناء الوصول إلى هذا الرابط المُشارك.</string>
+    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">حدثت مشكلة أثناء تعديل/إنشاء هذا الرابط المُشارك.</string>
+    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">حدثت مشكلة أثناء تعديل/إنشاء هذا الرابط المُشارك.</string>
+    <string name="box_sharesdk_title_link_access">الوصول إلى الرابط</string>
+    <string name="box_sharesdk_title_share_link">مشاركة الرابط</string>
+    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">يؤدي تمكين رابط إلى إنشاء رابط قابل للمشاركة يمكن للآخرين استخدامه للوصول إلى هذا المحتوى وعرضه.</string>
+    <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">تم نسخ الرابط إلى الحافظة.</string>
+    <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">I have shared \'%1$s\' with you on Box.</string>
+    <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">إرسال مع:</string>
+    <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">حدث خطأ في الشبكة. يرجى المحاولة مرة أخرى.</string>
+
+    <!-- menu items -->
+    <string description="menu item to refresh current item" name="box_sharesdk_refresh">تحديث</string>
+    <string description="menu item to add a collaboration" name="box_sharesdk_action_add">إضافة</string>
+
+    <!-- role names -->
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">محرر</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer">مُشاهد</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer">معايِن</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_uploader">محمِّل ملفات</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">معاين محمِّل ملفات</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">مُشاهد محمِّل ملفات</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">مالك شريك</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">مالك</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">إزالة الشخص</string>
+    <string description="The status to indicate that a person was invited, but they have not accepted the collaboration request" name="box_sharesdk_invited_status">مدعو</string>
+    <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">مرفوض</string>
+
+    <!-- role descriptions -->
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_editor">قم بتحميل الملفات وتنزيلها ومعاينتها ومشاركتها وتحريرها.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer">قم بتنزيل الملفات ومعاينتها ومشاركتها.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer">عاين الملفات فقط.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">حمّل الملفات فقط.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">قم بمعاينة الملفات وتحميلها.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">قم بتحميل الملفات وتنزيلها ومعاينتها ومشاركتها.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">نفس الأذونات التي يملكها المالك</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_owner">مالك</string>
+
+    <!-- invite collaborators -->
+    <string description="Menu item for submitting the invite collaborators request" name="box_sharesdk_action_send">إرسال</string>
+    <string description="The label for the field where users will enter the collaborators they would like to invite" name="box_sharesdk_to">إلى</string>
+    <string description="Error message for when an incorrect object type is used to launch the collaborations page" name="box_sharesdk_selected_item_not_expected_type">لم يكن نوع العنصر المحدد من النوع المتوقع</string>
+    <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">تمت دعوة المتعاونين</string>
+    <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">يتعذر عليك عرض التعاونات لهذا العنصر.</string>
+    <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">شخص آخر</string>
+    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">لا يتوفر متعاونين لهذا المجلد.</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">تمت دعوة %s مسبقًا إلى هذا المجلد</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">تمت دعوة %s من الأشخاص مسبقًا إلى هذا المجلد</string>
+
+</resources>

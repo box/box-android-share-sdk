@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="null"?>
+<resources>
+    <string name="box_sharesdk_name">Paylaşma</string>
+    <string name="box_sharesdk_shared_with">Şununla Paylaş:</string>
+    <string name="box_sharesdk_invite_collaborators">Kişileri Davet Et</string>
+    <string name="box_sharesdk_session_is_not_authenticated">Oturum doğrulanmadı</string>
+    <string name="box_sharesdk_no_item_selected">Seçili öğe yok</string>
+    <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">BAĞLANTIYI KOPYALA</string>
+    <string description="button to send link to another application" name="box_sharesdk_send_link">BAĞLANTIYI GÖNDER</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">Bağlantıya sahip kişiler tarafından erişilebilir</string>
+    <string description="description for company access" name="box_sharesdk_accessible_company">Kurumunuzdaki kişiler tarafından erişilebilir</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Klasörün paylaşıldığı kişiler tarafından erişilebilir</string>
+    <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Parola korumalı</string>
+    <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Parola yok</string>
+
+    <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Paylaşım bağlantısı etkinleştirildi</string>
+    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Paylaşım bağlantısı devre dışı bırakıldı</string>
+    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">İndirmelere izin verildi</string>
+    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">İndirmeler devre dışı bırakıldı</string>
+    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">Sona erme tarihi yok</string>
+    <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">Bağlantı, %1$s tarihinde sona eriyor</string>
+    <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">BAĞLANTI ERİŞİMİNİ DÜZENLE</string>
+    <string description="button to cancel an action" name="box_sharesdk_cancel">İPTAL ET</string>
+    <string description="button to cancel an action" name="box_sharesdk_ok">Tamam</string>
+    <string description="button to disable a shared link" name="box_sharesdk_disable_share_link">PAYLAŞIM BAĞLANTISINI DEVRE DIŞI BIRAK</string>
+    <string description="shown as title of warning dialog before disabling a shared link" name="box_sharesdk_disable_title">Paylaşım Bağlantısı Devre Dışı Bırakılsın Mı?</string>
+    <string description="shown as message of warning dialog before disabling a shared link" name="box_sharesdk_disable_message">Bağlantıyı kalıcı olarak devre dışı bırakmak, mevcut paylaşım bağlantısı siler. Bağlantıyı yeniden etkinleştirmek tamamen yeni ve eşsiz bir paylaşım bağlantısı oluşturacaktır. Paylaşım bağlantısını devre dışı bırakmak istiyor musunuz?</string>
+    <string description="separates ui between the shared link box and options to change access" name="box_sharesdk_link_access">Bağlantı Erişimi</string>
+    <string description="header for different access types" name="box_sharesdk_access">Erişim</string>
+    <string description="description for public access" name="box_sharesdk_access_public">Bağlantıya sahip kişiler</string>
+    <string description="description for company access" name="box_sharesdk_access_company">Kurumunuzdaki kişiler</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Sadece klasörün paylaşıldığı kişiler</string>
+    <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">İndirmelere İzin Ver</string>
+    <string description="header for password section" name="box_sharesdk_password">Parola</string>
+    <string description="hint for password dialog" name="box_sharesdk_set_password">Parolayı ayarla</string>
+    <string description="toggle of using password or not" name="box_sharesdk_require_password">Paralo İste</string>
+    <string description="header for link expiration section" name="box_sharesdk_link_expiration">Bağlantı Sona Erme Tarihi</string>
+    <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">Bağlantıyı Sona Erdir</string>
+    <string description="header for date link expires" name="box_sharesdk_expire_on">Şu Tarihte Sona Erdir</string>
+    <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">Paylaşılmış bu bağlantıya erişirken bir sorun meydana geldi.</string>
+    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">Paylaşılmış bu bağlantıyı değiştirirken/oluştururken bir sorun meydana geldi.</string>
+    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">Paylaşılmış bu bağlantıyı değiştirirken/oluştururken bir sorun meydana geldi.</string>
+    <string name="box_sharesdk_title_link_access">Bağlantı Erişimi</string>
+    <string name="box_sharesdk_title_share_link">Paylaşım Bağlantısı</string>
+    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">Bir bağlantıyı etkinleştirmek, içeriğe ulaşmak ve bu içeriği görüntülemek için diğer kişilerin kullanabileceği paylaşılabilir bir link oluşturur.</string>
+    <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">Bağlantı panoya kopyalandı.</string>
+    <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">I have shared \'%1$s\' with you on Box.</string>
+    <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">Şununla gönder:</string>
+    <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Ağ hatası. Lütfen tekrar deneyin.</string>
+
+    <!-- menu items -->
+    <string description="menu item to refresh current item" name="box_sharesdk_refresh">Yenile</string>
+    <string description="menu item to add a collaboration" name="box_sharesdk_action_add">Ekle</string>
+
+    <!-- role names -->
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">Düzenleyici</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer">Görüntüleyeci</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer">Ön Görüntüleyici</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_uploader">Yükleyici</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">Ön Görüntüleyici Yükleyici</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">Görüntüleyici Yükleyici</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">Ortak</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">Sahip</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">Kişiyi Sil</string>
+    <string description="The status to indicate that a person was invited, but they have not accepted the collaboration request" name="box_sharesdk_invited_status">Davet Edilen</string>
+    <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">Reddedilen</string>
+
+    <!-- role descriptions -->
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_editor">Dosyaları yükler, indirir, ön görüntüler, paylaşır ve düzenler.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer">Dosyaları indirir, ön görüntüler ve paylaşır.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer">Dosyaları yalnızca ön görüntüler.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">Dosyaları yalnızca yükler.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">Dosyaları yalnızca ön görüntüler ve yükler.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">Dosyaları yükler, indirir, ön görüntüler ve paylaşır.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">Sahiple aynı izinler</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_owner">Sahip</string>
+
+    <!-- invite collaborators -->
+    <string description="Menu item for submitting the invite collaborators request" name="box_sharesdk_action_send">Gönder</string>
+    <string description="The label for the field where users will enter the collaborators they would like to invite" name="box_sharesdk_to">Alıcı</string>
+    <string description="Error message for when an incorrect object type is used to launch the collaborations page" name="box_sharesdk_selected_item_not_expected_type">Seçili öğe beklenen türde değil</string>
+    <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">İşbirlikçiler davet edildi</string>
+    <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">Bu öğe için işbirliklerini görüntüleyemezsiniz.</string>
+    <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Diğer Kişi</string>
+    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">Bu klasör için işbirlikçi mevcut değil.</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s, bu klasöre zaten davet edilmiş</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s, bu klasöre zaten davet edilmiş</string>
+
+</resources>
