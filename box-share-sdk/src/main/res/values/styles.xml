@@ -78,6 +78,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingLeft">@dimen/box_sharesdk_zero_margin</item>
+        <item name="android:background">@color/box_sharesdk_background</item>
+        <item name="android:gravity">left</item>
     </style>
 
     <style name="BoxHintText"  parent="@android:style/Widget.TextView">
