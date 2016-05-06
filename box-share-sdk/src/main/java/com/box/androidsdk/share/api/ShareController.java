@@ -12,6 +12,7 @@ import com.box.androidsdk.content.models.BoxVoid;
 import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
+import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
 public interface ShareController {
@@ -28,4 +29,5 @@ public interface ShareController {
     <E extends BoxObject> BoxFutureTask<E> executeRequest(final Class<E> clazz, final BoxRequest request);
     void showToast(Context context, CharSequence text);
     void showToast(Context context, int resId);
+    BoxFutureTask<BoxFeatures> getSupportedFeatures();
 }
