@@ -49,6 +49,9 @@ public class SharedLinkAccessFragment extends BoxFragment
 
     private View mPasswordHeader;
 
+    private View mPasswordSection;
+    private View mLinkExpirationSection;
+
     private boolean mPasswordProtectedLinksSupported = false;
 
     @Override
@@ -59,9 +62,13 @@ public class SharedLinkAccessFragment extends BoxFragment
             public void onCompleted(BoxResponse<BoxFeatures> response) {
                 if (response.isSuccess()) {
                     mPasswordProtectedLinksSupported = response.getResult().hasPasswordProtectForSharedLinks();
-                    if (mPasswordProtectedLinksSupported && getView() != null && checkIfHasRequiredFields(mShareItem)) {
-                        setupUi();
-                    }
+
+                } else {
+                    mPasswordProtectedLinksSupported = true;
+                    //Defaulting to true - if they aren't indeed supported, this will fail later when attempting to set password.
+                }
+                if (mPasswordProtectedLinksSupported && getView() != null && checkIfHasRequiredFields(mShareItem)) {
+                    updateUi();
                 }
             }
         });
@@ -87,6 +94,8 @@ public class SharedLinkAccessFragment extends BoxFragment
             }
         });
         mExpiresButton = (Button)view.findViewById(R.id.shared_link_expires_on_btn);
+        mPasswordSection = view.findViewById(R.id.password_section);
+        mLinkExpirationSection = view.findViewById(R.id.link_expiration_section);
         mExpiresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,9 +260,9 @@ public class SharedLinkAccessFragment extends BoxFragment
             }
 
             if ((access != null && access == BoxSharedLink.Access.COLLABORATORS) || !mPasswordProtectedLinksSupported){
-                hideView(getView().findViewById(R.id.password_section));
+                hideView(mPasswordSection);
             } else {
-                showView(getView().findViewById(R.id.password_section));
+                showView(mPasswordSection);
                 mRequirePasswordBtn.setChecked(link.getIsPasswordEnabled());
                 if (link.getIsPasswordEnabled()) {
                     mPasswordButton.setText(createTitledSpannable(getResources().getString(R.string.box_sharesdk_password), "*****"));
@@ -263,7 +272,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                 }
             }
             if (mPasswordProtectedLinksSupported) {
-                showView(getView().findViewById(R.id.link_expiration_section));
+                showView(mLinkExpirationSection);
                 mExpireLinkBtn.setChecked(link.getUnsharedDate() != null);
                 if (link.getUnsharedDate() != null) {
                     mExpiresButton.setText(createTitledSpannable(getResources().getString(R.string.box_sharesdk_expire_on), SimpleDateFormat.getDateInstance().format(link.getUnsharedDate())));
@@ -272,7 +281,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                     hideView(mExpiresButton);
                 }
             } else {
-                hideView(getView().findViewById(R.id.link_expiration_section));
+                hideView(mLinkExpirationSection);
             }
 
         } else {

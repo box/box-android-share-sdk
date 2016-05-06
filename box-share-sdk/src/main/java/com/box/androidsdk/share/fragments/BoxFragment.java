@@ -1,6 +1,5 @@
 package com.box.androidsdk.share.fragments;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,18 +9,10 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.TextAppearanceSpan;
 import android.view.View;
-import android.widget.Toast;
 
-import com.box.androidsdk.content.BoxApiCollaboration;
-import com.box.androidsdk.content.BoxApiFolder;
-import com.box.androidsdk.content.auth.BoxAuthentication;
 import com.box.androidsdk.content.models.BoxItem;
-import com.box.androidsdk.content.models.BoxSession;
-import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.activities.BoxActivity;
-import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
 
 import java.util.concurrent.locks.Lock;

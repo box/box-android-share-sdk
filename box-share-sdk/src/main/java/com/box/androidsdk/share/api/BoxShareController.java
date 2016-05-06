@@ -175,7 +175,7 @@ public class BoxShareController implements ShareController {
     public BoxFutureTask<BoxFeatures> getSupportedFeatures() {
         BoxFutureTask<BoxFeatures> task = mFeaturesApi.getSupportedFeatures().toTask();
         getApiExecutor().submit(task);
-        return null;
+        return task;
     }
 
     private static ThreadPoolExecutor mApiExecutor;
