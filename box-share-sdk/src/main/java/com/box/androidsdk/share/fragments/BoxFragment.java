@@ -63,11 +63,11 @@ public abstract class BoxFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    public void AddResult(Intent data) {
+    public void addResult(Intent data) {
         data.putExtra(CollaborationUtils.EXTRA_ITEM, mShareItem);
     }
 
-    public void SetController(ShareController controller) {
+    public void setController(ShareController controller) {
         mController = controller;
     }
 
