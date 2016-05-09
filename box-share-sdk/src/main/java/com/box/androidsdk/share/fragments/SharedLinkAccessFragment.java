@@ -2,21 +2,15 @@ package com.box.androidsdk.share.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
@@ -31,7 +25,7 @@ import com.box.androidsdk.content.requests.BoxRequestsFile;
 import com.box.androidsdk.content.requests.BoxRequestsFolder;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.activities.BoxActivity;
+import com.box.androidsdk.share.internal.models.BoxFeatures;
 
 import java.net.HttpURLConnection;
 import java.text.ParseException;
@@ -55,7 +49,31 @@ public class SharedLinkAccessFragment extends BoxFragment
 
     private View mPasswordHeader;
 
-    
+    private View mPasswordSection;
+    private View mLinkExpirationSection;
+
+    private boolean mPasswordProtectedLinksSupported = false;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mController.getSupportedFeatures().addOnCompletedListener(new BoxFutureTask.OnCompletedListener<BoxFeatures>() {
+            @Override
+            public void onCompleted(BoxResponse<BoxFeatures> response) {
+                if (response.isSuccess()) {
+                    mPasswordProtectedLinksSupported = response.getResult().hasPasswordProtectForSharedLinks();
+
+                } else {
+                    mPasswordProtectedLinksSupported = true;
+                    //Defaulting to true - if they aren't indeed supported, this will fail later when attempting to set password.
+                }
+                if (mPasswordProtectedLinksSupported && getView() != null && checkIfHasRequiredFields(mShareItem)) {
+                    updateUi();
+                }
+            }
+        });
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,6 +94,8 @@ public class SharedLinkAccessFragment extends BoxFragment
             }
         });
         mExpiresButton = (Button)view.findViewById(R.id.shared_link_expires_on_btn);
+        mPasswordSection = view.findViewById(R.id.password_section);
+        mLinkExpirationSection = view.findViewById(R.id.link_expiration_section);
         mExpiresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -239,13 +259,10 @@ public class SharedLinkAccessFragment extends BoxFragment
                 mAllowDownloadsBtn.setChecked(link.getPermissions() != null && link.getPermissions().getCanDownload());
             }
 
-            if (access != null && access == BoxSharedLink.Access.COLLABORATORS){
-                hideView(mPasswordHeader);
-                hideView(mRequirePasswordBtn);
-                hideView(mPasswordButton);
+            if ((access != null && access == BoxSharedLink.Access.COLLABORATORS) || !mPasswordProtectedLinksSupported){
+                hideView(mPasswordSection);
             } else {
-                showView(mPasswordHeader);
-                showView(mRequirePasswordBtn);
+                showView(mPasswordSection);
                 mRequirePasswordBtn.setChecked(link.getIsPasswordEnabled());
                 if (link.getIsPasswordEnabled()) {
                     mPasswordButton.setText(createTitledSpannable(getResources().getString(R.string.box_sharesdk_password), "*****"));
@@ -254,14 +271,19 @@ public class SharedLinkAccessFragment extends BoxFragment
                     hideView(mPasswordButton);
                 }
             }
-
-            mExpireLinkBtn.setChecked(link.getUnsharedDate() != null);
-            if (link.getUnsharedDate() != null) {
-                mExpiresButton.setText(createTitledSpannable(getResources().getString(R.string.box_sharesdk_expire_on), SimpleDateFormat.getDateInstance().format(link.getUnsharedDate())));
-                showView(mExpiresButton);
+            if (mPasswordProtectedLinksSupported) {
+                showView(mLinkExpirationSection);
+                mExpireLinkBtn.setChecked(link.getUnsharedDate() != null);
+                if (link.getUnsharedDate() != null) {
+                    mExpiresButton.setText(createTitledSpannable(getResources().getString(R.string.box_sharesdk_expire_on), SimpleDateFormat.getDateInstance().format(link.getUnsharedDate())));
+                    showView(mExpiresButton);
+                } else {
+                    hideView(mExpiresButton);
+                }
             } else {
-                hideView(mExpiresButton);
+                hideView(mLinkExpirationSection);
             }
+
         } else {
             mController.showToast(getActivity(),getText(R.string.box_sharesdk_problem_accessing_this_shared_link));
             getActivity().finish();

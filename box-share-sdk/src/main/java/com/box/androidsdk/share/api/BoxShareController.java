@@ -21,7 +21,9 @@ import com.box.androidsdk.content.requests.BoxRequestBatch;
 import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.SdkUtils;
+import com.box.androidsdk.share.internal.BoxApiFeatures;
 import com.box.androidsdk.share.internal.BoxApiInvitee;
+import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
 import java.util.concurrent.LinkedBlockingQueue;
@@ -37,6 +39,7 @@ public class BoxShareController implements ShareController {
     private BoxApiBookmark mBookmarkApi;
     private BoxApiCollaboration mCollabApi;
     private BoxApiInvitee mInviteeApi;
+    private BoxApiFeatures mFeaturesApi;
 
     public BoxShareController(BoxApiFile fileApi, BoxApiFolder folderApi, BoxApiBookmark bookmarkApi, BoxApiCollaboration collaborationApi, BoxApiInvitee inviteeApi) {
         mFileApi = fileApi;
@@ -166,6 +169,13 @@ public class BoxShareController implements ShareController {
     @Override
     public void showToast(Context context, int resId) {
         showToast(context, context.getResources().getText(resId));
+    }
+
+    @Override
+    public BoxFutureTask<BoxFeatures> getSupportedFeatures() {
+        BoxFutureTask<BoxFeatures> task = mFeaturesApi.getSupportedFeatures().toTask();
+        getApiExecutor().submit(task);
+        return task;
     }
 
     private static ThreadPoolExecutor mApiExecutor;
