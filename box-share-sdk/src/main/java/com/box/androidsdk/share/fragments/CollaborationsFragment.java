@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFolder;
-import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxVoid;
 import com.box.androidsdk.content.requests.BoxRequestsShare;
@@ -74,9 +72,9 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
     @Override
-    public void AddResult(Intent data) {
+    public void addResult(Intent data) {
         data.putExtra(CollaborationUtils.EXTRA_COLLABORATIONS, mCollaborations);
-        super.AddResult(data);
+        super.addResult(data);
     }
 
     @Override

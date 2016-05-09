@@ -1,26 +1,18 @@
 package com.box.androidsdk.share.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.box.androidsdk.content.BoxApiBookmark;
-import com.box.androidsdk.content.BoxApiCollaboration;
-import com.box.androidsdk.content.BoxApiFile;
-import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.api.BoxShareController;
-import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.InviteCollaboratorsFragment;
 
 /**
@@ -45,7 +37,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
             ft.add(R.id.fragmentContainer, mFragment);
             ft.commit();
         }
-        mFragment.SetController(mController);
+        mFragment.setController(mController);
         ((InviteCollaboratorsFragment)mFragment).setInviteCollaboratorsListener(this);
         mSendEnabled = ((InviteCollaboratorsFragment)mFragment).areCollaboratorsPresent();
     }
