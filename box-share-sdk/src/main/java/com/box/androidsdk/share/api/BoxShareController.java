@@ -129,6 +129,13 @@ public class BoxShareController implements ShareController {
     }
 
     @Override
+    public BoxFutureTask<BoxVoid> updateOwner(BoxCollaboration collaboration) {
+        BoxFutureTask<BoxVoid> task = mCollabApi.getUpdateOwnerRequest(collaboration.getId()).toTask();
+        getApiExecutor().submit(task);
+        return task;
+    }
+
+    @Override
     public BoxFutureTask<BoxVoid> deleteCollaboration(BoxCollaboration collaboration) {
         BoxFutureTask<BoxVoid> task = mCollabApi.getDeleteRequest(collaboration.getId()).toTask();
         getApiExecutor().submit(task);

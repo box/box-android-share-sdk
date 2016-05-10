@@ -23,6 +23,7 @@ public interface ShareController {
     BoxFutureTask<BoxIteratorCollaborations> fetchCollaborations(BoxFolder boxFolder);
     BoxFutureTask<BoxFolder> fetchRoles(BoxFolder boxFolder);
     BoxFutureTask<BoxCollaboration> updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role selectedRole);
+    BoxFutureTask<BoxVoid> updateOwner(BoxCollaboration collaboration);
     BoxFutureTask<BoxVoid> deleteCollaboration(BoxCollaboration collaboration);
     BoxFutureTask<BoxResponseBatch> addCollaborations(BoxFolder boxFolder, BoxCollaboration.Role selectedRole, String[] emails);
     BoxFutureTask<BoxIteratorInvitees> getInvitees(BoxFolder boxFolder, String filter);
