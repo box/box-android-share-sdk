@@ -40,15 +40,16 @@ public class BoxShareController implements ShareController {
     private BoxApiCollaboration mCollabApi;
     private BoxApiInvitee mInviteeApi;
     private BoxApiFeatures mFeaturesApi;
+    private String mUserId;
 
-    public BoxShareController(BoxApiFile fileApi, BoxApiFolder folderApi, BoxApiBookmark bookmarkApi,
-                              BoxApiCollaboration collaborationApi, BoxApiInvitee inviteeApi, BoxApiFeatures apiFeatures) {
+    public BoxShareController(BoxApiFile fileApi, BoxApiFolder folderApi, BoxApiBookmark bookmarkApi, BoxApiCollaboration collaborationApi, BoxApiInvitee inviteeApi, BoxApiFeatures apiFeatures, String userId) {
         mFileApi = fileApi;
         mFolderApi = folderApi;
         mBookmarkApi = bookmarkApi;
         mCollabApi = collaborationApi;
         mInviteeApi = inviteeApi;
         mFeaturesApi = apiFeatures;
+        mUserId = userId;
     }
 
     @Override
@@ -178,6 +179,11 @@ public class BoxShareController implements ShareController {
         BoxFutureTask<BoxFeatures> task = mFeaturesApi.getSupportedFeatures().toTask();
         getApiExecutor().submit(task);
         return task;
+    }
+
+    @Override
+    public String getCurrentUserId() {
+        return null;
     }
 
     private static ThreadPoolExecutor mApiExecutor;

@@ -23,19 +23,19 @@ import java.util.ArrayList;
 
 public class CollaborationRolesDialog extends DialogFragment implements Button.OnClickListener, DialogInterface.OnClickListener {
 
-    protected static final String ARGS_USER_ID = "argsUserId";
     protected static final String ARGS_ROLES = "argsRoles";
     protected static final String ARGS_SELECTED_ROLE = "argsSelectedRole";
     protected static final String ARGS_TITLE = "argsTitle";
     protected static final String ARGS_ALLOW_REMOVE = "argsAllowRemove";
+    protected static final String ARGS_ALLOW_OWNER_ROLE = "argsAllowOwnerRole";
     protected static final String ARGS_SERIALIZABLE_EXTRA = "argsTargetId";
 
-    protected BoxSession mSession;
     protected RadioGroup mRadioGroup;
 
     protected ArrayList<BoxCollaboration.Role> mRoles;
     protected BoxCollaboration.Role mSelectedRole;
     protected boolean mAllowRemove;
+    protected boolean mAllowOwnerRole;
     protected boolean mIsRemoveCollaborationSelected;
     protected Serializable mExtra;
     protected ArrayList<RadioButton> mRolesOptions = new ArrayList<RadioButton>();
@@ -47,13 +47,12 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
 
         setRetainInstance(true);
 
-        String userId = getArguments().getString(ARGS_USER_ID);
         String title = getArguments().getString(ARGS_TITLE);
         mRoles = (ArrayList<BoxCollaboration.Role>) getArguments().getSerializable(ARGS_ROLES);
         mSelectedRole = (BoxCollaboration.Role) getArguments().getSerializable(ARGS_SELECTED_ROLE);
         mAllowRemove = getArguments().getBoolean(ARGS_ALLOW_REMOVE);
+        mAllowOwnerRole = getArguments().getBoolean(ARGS_ALLOW_OWNER_ROLE);
         mExtra = getArguments().getSerializable(ARGS_SERIALIZABLE_EXTRA);
-        mSession = new BoxSession(getActivity(), userId);
 
         // Create AlertDialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.ShareDialogTheme);
@@ -78,7 +77,17 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
         LinearLayout rolesLayout = new LinearLayout(getActivity());
         rolesLayout.setOrientation(LinearLayout.VERTICAL);
         mRadioGroup.addView(rolesLayout);
-        for (BoxCollaboration.Role role : roles) {
+        for (BoxCollaboration.Role role : BoxCollaboration.Role.values()) {
+
+            if (role == BoxCollaboration.Role.OWNER) {
+                if (!mAllowOwnerRole) {
+                    continue;
+                }
+            } else {
+                if (!roles.contains(role)) {
+                    continue;
+                }
+            }
 
             View radioView = getActivity().getLayoutInflater().inflate(R.layout.radio_item_roles, null);
             TextView rolesName = (TextView) radioView.findViewById(R.id.roles_name);
@@ -112,7 +121,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
         }
     }
 
-    public static CollaborationRolesDialog newInstance(ArrayList<BoxCollaboration.Role> roles, BoxCollaboration.Role selectedRole, String title, boolean allowRemove, Serializable serializableExtra) {
+    public static CollaborationRolesDialog newInstance(ArrayList<BoxCollaboration.Role> roles, BoxCollaboration.Role selectedRole, String title, boolean allowRemove, boolean allowOwnerRole, Serializable serializableExtra) {
         CollaborationRolesDialog dialog = new CollaborationRolesDialog();
 
         Bundle b = new Bundle();
@@ -120,6 +129,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
         b.putSerializable(ARGS_SELECTED_ROLE, selectedRole);
         b.putString(ARGS_TITLE, title);
         b.putBoolean(ARGS_ALLOW_REMOVE, allowRemove);
+        b.putBoolean(ARGS_ALLOW_OWNER_ROLE, allowOwnerRole);
         b.putSerializable(ARGS_SERIALIZABLE_EXTRA, serializableExtra);
         dialog.setArguments(b);
 

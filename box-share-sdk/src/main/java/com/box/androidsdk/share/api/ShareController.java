@@ -30,4 +30,5 @@ public interface ShareController {
     void showToast(Context context, CharSequence text);
     void showToast(Context context, int resId);
     BoxFutureTask<BoxFeatures> getSupportedFeatures();
+    String getCurrentUserId();
 }
