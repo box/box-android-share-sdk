@@ -47,6 +47,10 @@
     <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">Send with:</string>
     <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">Network error. Please try again.</string>
 
+    <string name="box_sharesdk_change_owner_alert_title" description="Title for the alert dialog to confirm owner update">Owner Update</string>
+    <string name="box_sharesdk_change_owner_alert_message" description="Message for the alert dialog to confirm owner update">Making this user the folder owner means that you will lose folder ownership and become an editor. Do you want to continue?</string>
+
+
     <!-- menu items -->
     <string name="box_sharesdk_refresh" description="menu item to refresh current item">Refresh</string>
     <string name="box_sharesdk_action_add" description="menu item to add a collaboration">Add</string>

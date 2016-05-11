@@ -15,6 +15,7 @@ import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxObject;
+import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxVoid;
 import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestBatch;
@@ -30,25 +31,23 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by varungupta on 3/4/2016.
- */
 public class BoxShareController implements ShareController {
     private BoxApiFile mFileApi;
     private BoxApiFolder mFolderApi;
     private BoxApiBookmark mBookmarkApi;
     private BoxApiCollaboration mCollabApi;
     private BoxApiInvitee mInviteeApi;
+    private BoxSession mSession;
     private BoxApiFeatures mFeaturesApi;
 
-    public BoxShareController(BoxApiFile fileApi, BoxApiFolder folderApi, BoxApiBookmark bookmarkApi,
-                              BoxApiCollaboration collaborationApi, BoxApiInvitee inviteeApi, BoxApiFeatures apiFeatures) {
-        mFileApi = fileApi;
-        mFolderApi = folderApi;
-        mBookmarkApi = bookmarkApi;
-        mCollabApi = collaborationApi;
-        mInviteeApi = inviteeApi;
-        mFeaturesApi = apiFeatures;
+    public BoxShareController(BoxSession session) {
+        mSession = session;
+        mFileApi = new BoxApiFile(session);
+        mFolderApi = new BoxApiFolder(session);
+        mBookmarkApi = new BoxApiBookmark(session);
+        mCollabApi = new BoxApiCollaboration(session);
+        mInviteeApi = new BoxApiInvitee(session);
+        mFeaturesApi = new BoxApiFeatures(session);
     }
 
     @Override
@@ -128,6 +127,13 @@ public class BoxShareController implements ShareController {
     }
 
     @Override
+    public BoxFutureTask<BoxVoid> updateOwner(BoxCollaboration collaboration) {
+        BoxFutureTask<BoxVoid> task = mCollabApi.getUpdateOwnerRequest(collaboration.getId()).toTask();
+        getApiExecutor().submit(task);
+        return task;
+    }
+
+    @Override
     public BoxFutureTask<BoxVoid> deleteCollaboration(BoxCollaboration collaboration) {
         BoxFutureTask<BoxVoid> task = mCollabApi.getDeleteRequest(collaboration.getId()).toTask();
         getApiExecutor().submit(task);
@@ -178,6 +184,11 @@ public class BoxShareController implements ShareController {
         BoxFutureTask<BoxFeatures> task = mFeaturesApi.getSupportedFeatures().toTask();
         getApiExecutor().submit(task);
         return task;
+    }
+
+    @Override
+    public String getCurrentUserId() {
+        return mSession.getUserId();
     }
 
     private static ThreadPoolExecutor mApiExecutor;

@@ -1,6 +1,8 @@
 package com.box.androidsdk.share.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -91,7 +93,8 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             BoxCollaborator collaborator = holder.collaboration.getAccessibleBy();
             BoxCollaboration.Role role = holder.collaboration.getRole();
             String name = collaborator == null ? getString(R.string.box_sharesdk_another_person) : collaborator.getName();
-            CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(rolesArr, role, name, true, holder.collaboration);
+            boolean allowOwner = getFolder().getOwnedBy().getId().equals(mController.getCurrentUserId()) && rolesArr.contains(BoxCollaboration.Role.CO_OWNER);
+            CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(rolesArr, role, name, true, allowOwner, holder.collaboration);
             rolesDialog.setOnRoleSelectedListener(this);
             rolesDialog.show(getFragmentManager(), TAG);
         }
@@ -99,7 +102,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
     @Override
     public void onRoleSelected(CollaborationRolesDialog rolesDialog) {
-        BoxCollaboration collaboration = (BoxCollaboration) rolesDialog.getSerializableExtra();
+        final BoxCollaboration collaboration = (BoxCollaboration) rolesDialog.getSerializableExtra();
         if (collaboration == null)
             return;
 
@@ -111,8 +114,29 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             if (selectedRole == null || selectedRole == collaboration.getRole())
                 return;
 
-            showSpinner();
-            mController.updateCollaboration(collaboration, selectedRole).addOnCompletedListener(mUpdateCollaborationListener);
+            if (selectedRole == BoxCollaboration.Role.OWNER) {
+                // Show confirmation dialog
+                AlertDialog dialog = new AlertDialog.Builder(getActivity()).setTitle(R.string.box_sharesdk_change_owner_alert_title)
+                        .setMessage(R.string.box_sharesdk_change_owner_alert_message)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog, final int which) {
+                                showSpinner();
+                                mController.updateOwner(collaboration).addOnCompletedListener(mUpdateOwnerListener);
+                            }
+                        }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(final DialogInterface dialog, final int which) {
+                                // do nothing
+                            }
+                        }).setIcon(android.R.drawable.ic_dialog_alert).create();
+                dialog.show();
+            }
+            else {
+                showSpinner();
+                mController.updateCollaboration(collaboration, selectedRole).addOnCompletedListener(mUpdateCollaborationListener);
+            }
         }
     }
 
@@ -265,6 +289,30 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 });
             }
         };
+
+    private BoxFutureTask.OnCompletedListener<BoxVoid> mUpdateOwnerListener =
+            new BoxFutureTask.OnCompletedListener<BoxVoid>() {
+                @Override
+                public void onCompleted(final BoxResponse<BoxVoid> response) {
+                    dismissSpinner();
+                    final Activity activity = getActivity();
+                    if (activity == null) {
+                        return;
+                    }
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (response.isSuccess() && getFolder() != null) {
+                                getActivity().finish();
+                            } else {
+                                BoxLogUtils.e(CollaborationsFragment.class.getName(), "Update Owner request failed",
+                                        response.getException());
+                                mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
+                            }
+                        }
+                    });
+                }
+            };
 
     public static CollaborationsFragment newInstance(BoxFolder folder, BoxIteratorCollaborations collaborations) {
         Bundle args = BoxFragment.getBundle(folder);

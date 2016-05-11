@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxApiBookmark;
 import com.box.androidsdk.content.BoxApiCollaboration;
@@ -52,12 +53,12 @@ public abstract class BoxActivity extends ActionBarActivity {
         }
 
         if (SdkUtils.isBlank(userId)) {
-            mController.showToast(this, R.string.box_sharesdk_session_is_not_authenticated);
+            Toast.makeText(this, R.string.box_sharesdk_session_is_not_authenticated, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
         if (mShareItem == null){
-            mController.showToast(this, R.string.box_sharesdk_no_item_selected);
+            Toast.makeText(this, R.string.box_sharesdk_no_item_selected, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -85,12 +86,7 @@ public abstract class BoxActivity extends ActionBarActivity {
             }
         });
         mSession.authenticate();
-        mController = new BoxShareController(new BoxApiFile(mSession),
-                new BoxApiFolder(mSession),
-                new BoxApiBookmark(mSession),
-                new BoxApiCollaboration(mSession),
-                new BoxApiInvitee(mSession),
-                new BoxApiFeatures(mSession));
+        mController = new BoxShareController(mSession);
     }
 
 
