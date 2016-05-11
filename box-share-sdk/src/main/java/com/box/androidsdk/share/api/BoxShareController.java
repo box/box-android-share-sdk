@@ -41,12 +41,14 @@ public class BoxShareController implements ShareController {
     private BoxApiInvitee mInviteeApi;
     private BoxApiFeatures mFeaturesApi;
 
-    public BoxShareController(BoxApiFile fileApi, BoxApiFolder folderApi, BoxApiBookmark bookmarkApi, BoxApiCollaboration collaborationApi, BoxApiInvitee inviteeApi) {
+    public BoxShareController(BoxApiFile fileApi, BoxApiFolder folderApi, BoxApiBookmark bookmarkApi,
+                              BoxApiCollaboration collaborationApi, BoxApiInvitee inviteeApi, BoxApiFeatures apiFeatures) {
         mFileApi = fileApi;
         mFolderApi = folderApi;
         mBookmarkApi = bookmarkApi;
         mCollabApi = collaborationApi;
         mInviteeApi = inviteeApi;
+        mFeaturesApi = apiFeatures;
     }
 
     @Override

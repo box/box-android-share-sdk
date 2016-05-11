@@ -21,6 +21,7 @@ import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.BoxFragment;
+import com.box.androidsdk.share.internal.BoxApiFeatures;
 import com.box.androidsdk.share.internal.BoxApiInvitee;
 
 /**
@@ -88,7 +89,8 @@ public abstract class BoxActivity extends ActionBarActivity {
                 new BoxApiFolder(mSession),
                 new BoxApiBookmark(mSession),
                 new BoxApiCollaboration(mSession),
-                new BoxApiInvitee(mSession));
+                new BoxApiInvitee(mSession),
+                new BoxApiFeatures(mSession));
     }
 
 
