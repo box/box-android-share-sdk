@@ -86,13 +86,7 @@ public abstract class BoxActivity extends ActionBarActivity {
             }
         });
         mSession.authenticate();
-        mController = new BoxShareController(new BoxApiFile(mSession),
-                new BoxApiFolder(mSession),
-                new BoxApiBookmark(mSession),
-                new BoxApiCollaboration(mSession),
-                new BoxApiInvitee(mSession),
-                new BoxApiFeatures(mSession),
-                userId);
+        mController = new BoxShareController(mSession);
     }
 
 

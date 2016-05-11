@@ -15,6 +15,7 @@ import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxObject;
+import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxVoid;
 import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestBatch;
@@ -30,26 +31,23 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by varungupta on 3/4/2016.
- */
 public class BoxShareController implements ShareController {
     private BoxApiFile mFileApi;
     private BoxApiFolder mFolderApi;
     private BoxApiBookmark mBookmarkApi;
     private BoxApiCollaboration mCollabApi;
     private BoxApiInvitee mInviteeApi;
+    private BoxSession mSession;
     private BoxApiFeatures mFeaturesApi;
-    private String mUserId;
 
-    public BoxShareController(BoxApiFile fileApi, BoxApiFolder folderApi, BoxApiBookmark bookmarkApi, BoxApiCollaboration collaborationApi, BoxApiInvitee inviteeApi, BoxApiFeatures apiFeatures, String userId) {
-        mFileApi = fileApi;
-        mFolderApi = folderApi;
-        mBookmarkApi = bookmarkApi;
-        mCollabApi = collaborationApi;
-        mInviteeApi = inviteeApi;
-        mFeaturesApi = apiFeatures;
-        mUserId = userId;
+    public BoxShareController(BoxSession session) {
+        mSession = session;
+        mFileApi = new BoxApiFile(session);
+        mFolderApi = new BoxApiFolder(session);
+        mBookmarkApi = new BoxApiBookmark(session);
+        mCollabApi = new BoxApiCollaboration(session);
+        mInviteeApi = new BoxApiInvitee(session);
+        mFeaturesApi = new BoxApiFeatures(session);
     }
 
     @Override
@@ -190,7 +188,7 @@ public class BoxShareController implements ShareController {
 
     @Override
     public String getCurrentUserId() {
-        return null;
+        return mSession.getUserId();
     }
 
     private static ThreadPoolExecutor mApiExecutor;
