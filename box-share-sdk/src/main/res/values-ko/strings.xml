@@ -1,88 +1,91 @@
+<?xml version="1.0" encoding="null"?>
 <resources>
     <string name="box_sharesdk_name">공유</string>
-    <string name="box_sharesdk_shared_with">다음 대상과 공유</string>
+    <string name="box_sharesdk_shared_with">공유 대상</string>
     <string name="box_sharesdk_invite_collaborators">사용자 초대</string>
-    <string name="box_sharesdk_session_is_not_authenticated">세션이 인증되지 않음</string>
+    <string name="box_sharesdk_session_is_not_authenticated">세션이 인증되지 않았습니다.</string>
     <string name="box_sharesdk_no_item_selected">선택한 항목 없음</string>
-    <string name="box_sharesdk_copy_link" description="button to copy link to clipboard">링크 복사</string>
-    <string name="box_sharesdk_send_link" description="button to send link to another application">링크 보내기</string>
-    <string name="box_sharesdk_accessible_public" description="description for public access">링크를 알고 있는 사용자가 액세스 가능</string>
-    <string name="box_sharesdk_accessible_company" description="description for company access">회사 내 사용자가 액세스 가능</string>
-    <string name="box_sharesdk_accessible_collaborator" description="description for collaborator access">폴더를 공유한 사용자가 액세스 가능</string>
-    <string name="box_sharesdk_password_protected" description="description for if a shared link is password proceted">암호로 보호됨</string>
-    <string name="box_sharesdk_password_unprotected" description="description for if a shared link is not password proceted">암호 없음</string>
+    <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">링크 복사</string>
+    <string description="button to send link to another application" name="box_sharesdk_send_link">링크 보내기</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">링크를 알려 줄 대상이 액세스할 수 있습니다.</string>
+    <string description="description for company access" name="box_sharesdk_accessible_company">회사 내 사용자가 액세스 가능</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">폴더의 사용자가 액세스할 수 있습니다.</string>
+    <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">암호로 보호됨</string>
+    <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">암호 없음</string>
 
-    <string name="box_sharesdk_share_link_enabled" description="shown if share link is enabled">공유 링크 활성화됨</string>
-    <string name="box_sharesdk_share_link_disabled" description="shown if share link is disabled">공유 링크 비활성화됨</string>
-    <string name="box_sharesdk_downloads_allowed" description="shown if user has permission to download link">다운로드 허용됨</string>
-    <string name="box_sharesdk_downloads_disabled" description="shown if user has permission to download link">다운로드 비활성화됨</string>
-    <string name="box_sharesdk_link_expires_not_set" description="shown if no expiration time is set">만료일 없음</string>
-    <string name="box_sharesdk_link_expires_on_x_date" description="start of the string telling when link expires">링크가 %1$s에 만료됨</string>
-    <string name="box_sharesdk_edit_link_access" description="button to change access properties of link">링크 액세스 편집</string>
-    <string name="box_sharesdk_cancel" description="button to cancel an action">취소</string>
-    <string name="box_sharesdk_ok" description="button to cancel an action">확인</string>
-    <string name="box_sharesdk_disable_share_link" description="button to disable a shared link">공유 링크 비활성화</string>
-    <string name="box_sharesdk_disable_title" description="shown as title of warning dialog before disabling a shared link">공유 링크를 비활성화하시겠습니까?</string>
-    <string name="box_sharesdk_disable_message" description="shown as message of warning dialog before disabling a shared link">링크를 비활성화하면 현재 공유 링크가 영구적으로 삭제됩니다. 링크를 다시 활성화하면 완전히 새로운 고유 공유 링크가 생성됩니다. 공유 링크를 비활성화하시겠습니까?</string>
-    <string name="box_sharesdk_link_access" description="separates ui between the shared link box and options to change access">링크 액세스</string>
-    <string name="box_sharesdk_access" description="header for different access types">액세스</string>
-    <string name="box_sharesdk_access_public" description="description for public access">링크를 알고 있는 사용자</string>
-    <string name="box_sharesdk_access_company" description="description for company access">회사 내 사용자</string>
-    <string name="box_sharesdk_access_collaborator" description="description for collaborator access">폴더를 공유한 사용자 전용</string>
-    <string name="box_sharesdk_allow_downloads" description="toggle of whether to allow downloading">다운로드 허용</string>
-    <string name="box_sharesdk_password" description="header for password section">암호</string>
-    <string name="box_sharesdk_set_password" description="hint for password dialog">암호 설정</string>
-    <string name="box_sharesdk_require_password" description="toggle of using password or not">암호 필요</string>
-    <string name="box_sharesdk_link_expiration" description="header for link expiration section">링크 만료</string>
-    <string name="box_sharesdk_link_expire_link" description="toggle of whether to expire links">링크 만료</string>
-    <string name="box_sharesdk_expire_on" description="header for date link expires">만료 날짜</string>
-    <string name="box_sharesdk_problem_accessing_this_shared_link" description="Description shown when there is a problem with a shared link">이 공유 링크에 액세스하는 데 문제가 있습니다.</string>
-    <string name="box_sharesdk_unable_to_modify" description="Toast shown if there is a problem modifying the shared link">이 공유 링크를 수정/생성하는 데 문제가 있습니다.</string>
-    <string name="box_sharesdk_unable_to_modify_toast" description="Toast shown if there is a problem modifying the shared link">이 공유 링크를 수정/생성하는 데 문제가 있습니다.</string>
+    <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">공유 링크 활성화됨</string>
+    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">공유 링크 비활성화됨</string>
+    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">다운로드 허용됨</string>
+    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">다운로드 비활성화됨</string>
+    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">만료일 없음</string>
+    <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">링크가 %1$s에 만료됨</string>
+    <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">링크 액세스 편집</string>
+    <string description="button to cancel an action" name="box_sharesdk_cancel">취소</string>
+    <string description="button to cancel an action" name="box_sharesdk_ok">확인</string>
+    <string description="button to disable a shared link" name="box_sharesdk_disable_share_link">공유 링크 비활성화</string>
+    <string description="shown as title of warning dialog before disabling a shared link" name="box_sharesdk_disable_title">공유 링크를 비활성화하시겠습니까?</string>
+    <string description="shown as message of warning dialog before disabling a shared link" name="box_sharesdk_disable_message">링크를 비활성화하면 현재 공유 링크가 영구적으로 삭제됩니다. 링크를 다시 활성화하면 완전히 새로운 고유 공유 링크가 생성됩니다. 공유 링크를 비활성화하시겠습니까?</string>
+    <string description="separates ui between the shared link box and options to change access" name="box_sharesdk_link_access">액세스</string>
+    <string description="header for different access types" name="box_sharesdk_access">링크 액세스</string>
+    <string description="description for public access" name="box_sharesdk_access_public">링크를 알려 줄 대상</string>
+    <string description="description for company access" name="box_sharesdk_access_company">회사 내 사용자</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">폴더를 공유한 사용자 전용</string>
+    <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">다운로드 허용</string>
+    <string description="header for password section" name="box_sharesdk_password">암호</string>
+    <string description="hint for password dialog" name="box_sharesdk_set_password">암호 설정</string>
+    <string description="toggle of using password or not" name="box_sharesdk_require_password">암호 필요</string>
+    <string description="header for link expiration section" name="box_sharesdk_link_expiration">링크 만료</string>
+    <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">링크 만료</string>
+    <string description="header for date link expires" name="box_sharesdk_expire_on">만료 날짜</string>
+    <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">이 공유 링크에 액세스하는 데 문제가 있습니다.</string>
+    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">이 공유 링크를 수정/생성하는 데 문제가 있습니다.</string>
+    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">이 공유 링크를 수정/생성하는 데 문제가 있습니다.</string>
     <string name="box_sharesdk_title_link_access">링크 액세스</string>
     <string name="box_sharesdk_title_share_link">공유 링크</string>
-    <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">링크를 활성화하면 다른 사용자가 이 콘텐츠에 액세스하여 콘텐츠를 볼 수 있는 공유 가능한 링크가 생성됩니다.</string>
-    <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">클립보드로 링크를 복사했습니다.</string>
-    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">Box에서 \'%1$s\' 항목을 공유합니다.</string>
-    <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">함께 보내기:</string>
-    <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">네트워크 오류입니다. 다시 시도하십시오.</string>
+    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">링크를 활성화하면 다른 사용자가 이 콘텐츠에 액세스하여 콘텐츠를 볼 수 있는 공유 가능한 링크가 생성됩니다.</string>
+    <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">클립보드에 링크를 복사했습니다.</string>
+    <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">Box를 통해 ‘%1$s’이(가) 공유되었습니다</string>
+    <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">함께 보내기:</string>
+    <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">네트워크 오류입니다. 다시 시도하십시오.</string>
 
     <!-- menu items -->
-    <string name="box_sharesdk_refresh" description="menu item to refresh current item">새로 고침</string>
-    <string name="box_sharesdk_action_add" description="menu item to add a collaboration">추가</string>
+    <string description="menu item to refresh current item" name="box_sharesdk_refresh">새로 고침</string>
+    <string description="menu item to add a collaboration" name="box_sharesdk_action_add">추가</string>
 
     <!-- role names -->
-    <string name="box_sharesdk_role_name_editor" description="Name of role, which is the level of permission the person will be granted">편집자</string>
-    <string name="box_sharesdk_role_name_viewer" description="Name of role, which is the level of permission the person will be granted">뷰어</string>
-    <string name="box_sharesdk_role_name_previewer" description="Name of role, which is the level of permission the person will be granted">프리뷰어</string>
-    <string name="box_sharesdk_role_name_uploader" description="Name of role, which is the level of permission the person will be granted">업로더</string>
-    <string name="box_sharesdk_role_name_previewer_uploader" description="Name of role, which is the level of permission the person will be granted">프리뷰어 업로더</string>
-    <string name="box_sharesdk_role_name_viewer_uploader" description="Name of role, which is the level of permission the person will be granted">뷰어 업로더</string>
-    <string name="box_sharesdk_role_name_co_owner" description="Name of role, which is the level of permission the person will be granted">공동 소유자</string>
-    <string name="box_sharesdk_role_name_owner" description="Name of role, which is the level of permission the person will be granted">소유자</string>
-    <string name="box_sharesdk_role_remove_person" description="Name of role, which is the level of permission the person will be granted">사용자 제거</string>
-    <string name="box_sharesdk_invited_status" description="The status to indicate that a person was invited, but they have not accepted the collaboration request">초대됨</string>
-    <string name="box_sharesdk_rejected_status" description="The status to indicate that a person has rejected a collaboration request">거부됨</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">편집자</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer">뷰어</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer">프리뷰어</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_uploader">업로더</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">프리뷰어 업로더</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">뷰어 업로더</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">공동 소유자</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">소유자</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">사용자 제거</string>
+    <string description="The status to indicate that a person was invited, but they have not accepted the collaboration request" name="box_sharesdk_invited_status">초대됨</string>
+    <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">거부됨</string>
 
     <!-- role descriptions -->
-    <string name="box_sharesdk_role_description_editor" description="Description of the role, which is the level of permission the person will be granted">파일 업로드, 다운로드, 미리 보기, 공유 및 편집이 가능합니다.</string>
-    <string name="box_sharesdk_role_description_viewer" description="Description of the role, which is the level of permission the person will be granted">파일 다운로드, 미리 보기 및 공유가 가능합니다.</string>
-    <string name="box_sharesdk_role_description_previewer" description="Description of the role, which is the level of permission the person will be granted">파일 미리 보기만 가능합니다.</string>
-    <string name="box_sharesdk_role_description_uploader" description="Description of the role, which is the level of permission the person will be granted">파일 업로드만 가능합니다.</string>
-    <string name="box_sharesdk_role_description_previewer_uploader" description="Description of the role, which is the level of permission the person will be granted">파일 미리 보기 및 업로드가 가능합니다.</string>
-    <string name="box_sharesdk_role_description_viewer_uploader" description="Description of the role, which is the level of permission the person will be granted">파일 업로드, 다운로드, 미리 보기 및 공유가 가능합니다.</string>
-    <string name="box_sharesdk_role_description_co_owner" description="Description of the role, which is the level of permission the person will be granted">소유자와 동일한 권한 수준</string>
-    <string name="box_sharesdk_role_description_owner" description="Description of the role, which is the level of permission the person will be granted">소유자</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_editor">파일 업로드, 다운로드, 미리 보기, 공유 및 편집이 가능합니다.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer">파일 다운로드, 미리 보기 및 공유가 가능합니다.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer">파일 미리 보기만 가능합니다.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">파일 업로드만 가능합니다.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">파일 미리 보기 및 업로드가 가능합니다.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">파일 업로드, 다운로드, 미리 보기 및 공유가 가능합니다.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">소유자와 동일한 권한 수준</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_owner">소유자</string>
 
     <!-- invite collaborators -->
-    <string name="box_sharesdk_action_send" description="Menu item for submitting the invite collaborators request">보내기</string>
-    <string name="box_sharesdk_to" description="The label for the field where users will enter the collaborators they would like to invite">대상</string>
-    <string name="box_sharesdk_selected_item_not_expected_type" description="Error message for when an incorrect object type is used to launch the collaborations page">선택한 항목이 예상된 유형이 아닙니다.</string>
-    <string name="box_sharesdk_collaborators_invited" description="Success message for inviting collaborators">공동 작업자를 초대했습니다.</string>
-    <string name="box_sharesdk_cannot_view_collaborations" description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available">이 항목의 공동 작업자를 볼 수 없습니다.</string>
-    <string name="box_sharesdk_another_person" description="Default name shown when a user without a Box account has been invited">다른 사용자</string>
-    <string name="box_sharesdk_no_collaborators" description="Message shown when no collaborators have been invited for the current folder">이 폴더에 공동 작업자가 없습니다.</string>
-    <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s님은 이미 이 폴더에 초대되었습니다.</string>
-    <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s명의 사용자가 이미 이 폴더에 초대되었습니다.</string>
+    <string description="Menu item for submitting the invite collaborators request" name="box_sharesdk_action_send">보내기</string>
+    <string description="The label for the field where users will enter the collaborators they would like to invite" name="box_sharesdk_to">대상</string>
+    <string description="Error message for when an incorrect object type is used to launch the collaborations page" name="box_sharesdk_selected_item_not_expected_type">선택한 항목이 예상된 유형이 아닙니다.</string>
+    <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">공동 작업자를 초대했습니다.</string>
+    <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">이 항목에 대한 공동 작업을 볼 수 없습니다.</string>
+    <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">다른 사용자</string>
+    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">이 폴더에 공동 작업자가 없습니다.</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s님은 이미 이 폴더에 초대되었습니다.</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s명의 사용자가 이미 이 폴더에 초대되었습니다.</string>
+    <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
+    <string name="box_sharedsdk_collaborators_title">공동 작업자</string>
 
 </resources>
