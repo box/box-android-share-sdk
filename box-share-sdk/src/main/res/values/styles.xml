@@ -38,9 +38,10 @@
         <item name="android:textColor">@color/box_sharesdk_background</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
+
+    <!--Since we changed gray color to white, gray buttons don't look good on phones older than v21
+    Using default blue buttons for the same-->
     <style name="RaisedGrayButton"  parent="@style/RaisedButton">
-        <item name="android:background">@drawable/box_ripple_raised_gray_btn</item>
-        <item name="android:textColor">@color/box_sharesdk_primary_text</item>
     </style>
 
     <style name="BoxHeaderText"  parent="@android:style/Widget.TextView">
