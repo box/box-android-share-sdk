@@ -93,7 +93,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             BoxCollaborator collaborator = holder.collaboration.getAccessibleBy();
             BoxCollaboration.Role role = holder.collaboration.getRole();
             String name = collaborator == null ? getString(R.string.box_sharesdk_another_person) : collaborator.getName();
-            boolean allowOwner = getFolder().getOwnedBy().getId().equals(mController.getCurrentUserId()) && rolesArr.contains(BoxCollaboration.Role.CO_OWNER);
+            boolean allowOwner = getFolder().getOwnedBy().getId().equals(mController.getCurrentUserId());
             CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(rolesArr, role, name, true, allowOwner, holder.collaboration);
             rolesDialog.setOnRoleSelectedListener(this);
             rolesDialog.show(getFragmentManager(), TAG);
