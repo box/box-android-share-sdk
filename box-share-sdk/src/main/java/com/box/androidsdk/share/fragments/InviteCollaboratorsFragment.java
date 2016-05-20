@@ -388,14 +388,19 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         String msg;
         if (didRequestFail) {
             if (alreadyAddedCount == 1) {
-                msg = String.format(Locale.ENGLISH, getString(R.string.box_sharesdk_has_already_been_invited), name);
+                msg = String.format(getString(R.string.box_sharesdk_has_already_been_invited), name);
             } else if (alreadyAddedCount > 1) {
-                msg = String.format(Locale.ENGLISH, getString(R.string.box_sharesdk_num_has_already_been_invited), alreadyAddedCount);
+                msg = String.format(getString(R.string.box_sharesdk_num_has_already_been_invited), alreadyAddedCount);
             } else {
                 msg = getString(R.string.box_sharesdk_network_error);
             }
         } else {
-            msg = getString(R.string.box_sharesdk_collaborators_invited);
+            if (responses.getResponses().size() == 1) {
+                String login = ((BoxUser)((BoxCollaboration)responses.getResponses().get(0).getResult()).getAccessibleBy()).getLogin();
+                msg = String.format(getString(R.string.box_sharesdk_collaborator_invited), login);
+            } else {
+                msg = getString(R.string.box_sharesdk_collaborators_invited);
+            }
         }
         mController.showToast(getActivity(), msg);
         if (responses.getResponses().size() == alreadyAddedCount) {
