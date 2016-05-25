@@ -82,6 +82,7 @@
     <string name="box_sharesdk_action_send" description="Menu item for submitting the invite collaborators request">Send</string>
     <string name="box_sharesdk_to" description="The label for the field where users will enter the collaborators they would like to invite">To</string>
     <string name="box_sharesdk_selected_item_not_expected_type" description="Error message for when an incorrect object type is used to launch the collaborations page">The selected item was not of the expected type</string>
+    <string name="box_sharesdk_collaborator_invited" description="Success message for inviting a collaborator">%s has been invited</string>
     <string name="box_sharesdk_collaborators_invited" description="Success message for inviting collaborators">Collaborators have been invited</string>
     <string name="box_sharesdk_cannot_view_collaborations" description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available">You cannot view the collaborations for this item.</string>
     <string name="box_sharesdk_another_person" description="Default name shown when a user without a Box account has been invited">Another Person</string>
