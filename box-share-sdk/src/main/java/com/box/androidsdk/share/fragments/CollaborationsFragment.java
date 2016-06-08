@@ -37,6 +37,8 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     protected CollaboratorsAdapter mCollaboratorsAdapter;
     protected BoxIteratorCollaborations mCollaborations;
 
+    private boolean mOwnerUpdated = false;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +78,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     @Override
     public void addResult(Intent data) {
         data.putExtra(CollaborationUtils.EXTRA_COLLABORATIONS, mCollaborations);
+        data.putExtra(CollaborationUtils.EXTRA_OWNER_UPDATED, mOwnerUpdated);
         super.addResult(data);
     }
 
@@ -303,6 +306,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                         @Override
                         public void run() {
                             if (response.isSuccess() && getFolder() != null) {
+                                mOwnerUpdated = true;
                                 getActivity().finish();
                             } else {
                                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "Update Owner request failed",
