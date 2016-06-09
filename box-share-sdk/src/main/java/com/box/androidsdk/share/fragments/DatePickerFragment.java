@@ -1,11 +1,9 @@
 package com.box.androidsdk.share.fragments;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
 import com.box.androidsdk.share.R;
@@ -34,15 +32,21 @@ public class DatePickerFragment extends PositiveNegativeDialogFragment
 
         mButtonClicked = false;
 
+        final Calendar minDateCalendar = Calendar.getInstance();
+        minDateCalendar.add(Calendar.DATE, 1);
         // Use the current date as the default date in the picker
         final Calendar c = Calendar.getInstance();
+
         if (getArguments() != null){
             Date date = (Date)getArguments().getSerializable(EXTRA_START_DATE);
             if (date != null) {
                 c.setTime(date);
             }
         }
-
+        // we cannot have a minimum date that is earlier than the set date.
+        if (c.getTimeInMillis() < minDateCalendar.getTimeInMillis()){
+            c.setTime(minDateCalendar.getTime());
+        }
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
@@ -53,6 +57,7 @@ public class DatePickerFragment extends PositiveNegativeDialogFragment
             day = savedInstanceState.getInt(EXTRA_KEY_DAY);
         }
         mDialog = new DatePickerDialog(getActivity(), R.style.ShareDialogTheme, this, year, month, day);
+        mDialog.getDatePicker().setMinDate(minDateCalendar.getTimeInMillis());
         // Create a new instance of DatePickerDialog and return it
         return mDialog;
     }
