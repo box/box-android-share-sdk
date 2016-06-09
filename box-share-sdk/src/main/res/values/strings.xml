@@ -92,4 +92,6 @@
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Collaborators</string>
 
+    <string name="box_sharesdk_insufficient_permissions" description="Error shown if user does not have sufficient permissions for an action">You do not have sufficient permissions for this action.</string>
+
 </resources>

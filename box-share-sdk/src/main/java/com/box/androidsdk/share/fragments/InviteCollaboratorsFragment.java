@@ -248,8 +248,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                         @Override
                         public void run() {
                             if (response.isSuccess() && getFolder() != null) {
-                                mCollaborations = response.getResult();
-                                updateUi();
+                                updateUi(response.getResult());
                             } else {
                                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch Collaborators request failed",
                                         response.getException());
@@ -260,34 +259,46 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                 }
             };
 
-    private void updateUi() {
+    public void updateUi(BoxIteratorCollaborations boxIteratorCollaborations) {
+        mCollaborations = boxIteratorCollaborations;
         if (mCollaborations != null && mCollaborations.size() != 0) {
 
             mInitialsListHeader.setVisibility(View.VISIBLE);
             final int totalCollaborators = mCollaborations.fullSize().intValue();
             final int remainingWidth = mInitialsListView.getWidth();
             final ArrayList<BoxCollaboration> collaborations = mCollaborations.getEntries();
-            //Add the first item to calculate the width
-            final View initialsView = addInitialsToList(collaborations.get(0).getAccessibleBy());
-            initialsView.post(new Runnable() {
+
+            clearInitialsView();
+            mInitialsListView.post(new Runnable() {
                 @Override
                 public void run() {
-                    int viewWidth = initialsView.getWidth();
-                    int viewsCount = remainingWidth/viewWidth;
-                    for (int i = 1; i < viewsCount && i < collaborations.size(); i++) {
-                        View viewAdded = addInitialsToList(collaborations.get(i).getAccessibleBy());
-                        if (i == viewsCount - 1) {
-                            // This is the last one, display count if needed
-                            int remaining = totalCollaborators - viewsCount;
-                            if (remaining > 0) {
-                                TextView initialsTextView = (TextView) viewAdded.findViewById(R.id.collaborator_initials);
-                                CollaborationUtils.setInitialsThumb(getActivity(), initialsTextView, remaining + 1);
+                    //Add the first item to calculate the width
+                    final View initialsView = addInitialsToList(collaborations.get(0).getAccessibleBy());
+                    initialsView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            int viewWidth = initialsView.getWidth();
+                            int viewsCount = remainingWidth/viewWidth;
+                            for (int i = 1; i < viewsCount && i < collaborations.size(); i++) {
+                                View viewAdded = addInitialsToList(collaborations.get(i).getAccessibleBy());
+                                if (i == viewsCount - 1) {
+                                    // This is the last one, display count if needed
+                                    int remaining = totalCollaborators - viewsCount;
+                                    if (remaining > 0) {
+                                        TextView initialsTextView = (TextView) viewAdded.findViewById(R.id.collaborator_initials);
+                                        CollaborationUtils.setInitialsThumb(getActivity(), initialsTextView, remaining + 1);
+                                    }
+                                }
                             }
                         }
-                    }
+                    });
                 }
             });
         }
+    }
+
+    private void clearInitialsView() {
+        mInitialsListView.removeAllViewsInLayout();
     }
 
     private View addInitialsToList(BoxCollaborator collaborator) {
@@ -336,6 +347,17 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                             } else {
                                 BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",
                                         response.getException());
+
+                                if (response.getException() instanceof BoxException) {
+                                    BoxException boxException = (BoxException) response.getException();
+                                    int responseCode = boxException.getResponseCode();
+
+                                    if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                                        mController.showToast(getActivity(), R.string.box_sharesdk_insufficient_permissions);
+                                        return;
+                                    }
+                                }
+
                                 mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
                             }
                         }

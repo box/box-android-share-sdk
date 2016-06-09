@@ -279,13 +279,22 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
                                 }
                             } else {
                                 if (response.getException() instanceof BoxException) {
-                                    if (((BoxException) response.getException()).getResponseCode() == HttpURLConnection.HTTP_NOT_MODIFIED) {
+                                    BoxException boxException = (BoxException) response.getException();
+                                    int responseCode = boxException.getResponseCode();
+                                    if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
                                         if (!hasSetupUi) {
                                             // if we have never shown ui before do it now.
                                             updateUi();
                                         }
                                         return;
                                     }
+
+                                    if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                                        mController.showToast(getActivity(), R.string.box_sharesdk_insufficient_permissions);
+                                        setupUi();
+                                        return;
+                                    }
+
                                 }
                                 // reset ui to previous object.
                                 if (response.getRequest() instanceof BoxRequestItem && mShareItem.getId().equals(((BoxRequestItem) response.getRequest()).getId())) {
