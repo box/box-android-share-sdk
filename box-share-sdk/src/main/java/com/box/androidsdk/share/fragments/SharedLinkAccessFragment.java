@@ -400,7 +400,15 @@ public class SharedLinkAccessFragment extends BoxFragment
                                 }
                             } else {
                                 if (response.getException() instanceof BoxException) {
-                                    if (((BoxException) response.getException()).getResponseCode() == HttpURLConnection.HTTP_NOT_MODIFIED) {
+                                    BoxException boxException = (BoxException) response.getException();
+                                    int responseCode = boxException.getResponseCode();
+                                    if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
+                                        return;
+                                    }
+
+                                    if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                                        mController.showToast(getActivity(), R.string.box_sharesdk_insufficient_permissions);
+                                        setupUi();
                                         return;
                                     }
                                 }

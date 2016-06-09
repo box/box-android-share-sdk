@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborator;
@@ -27,6 +28,7 @@ import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.CollaboratorsAdapter;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 public class CollaborationsFragment extends BoxFragment implements AdapterView.OnItemClickListener, CollaborationRolesDialog.OnRoleSelectedListener {
@@ -208,6 +210,17 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                         } else {
                             BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch Collaborators request failed",
                                     response.getException());
+
+                            if (response.getException() instanceof BoxException) {
+                                BoxException boxException = (BoxException) response.getException();
+                                int responseCode = boxException.getResponseCode();
+
+                                if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                                    mController.showToast(getActivity(), R.string.box_sharesdk_insufficient_permissions);
+                                    return;
+                                }
+                            }
+
                             mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
                         }
                     }

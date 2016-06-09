@@ -347,6 +347,17 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                             } else {
                                 BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",
                                         response.getException());
+
+                                if (response.getException() instanceof BoxException) {
+                                    BoxException boxException = (BoxException) response.getException();
+                                    int responseCode = boxException.getResponseCode();
+
+                                    if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                                        mController.showToast(getActivity(), R.string.box_sharesdk_insufficient_permissions);
+                                        return;
+                                    }
+                                }
+
                                 mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
                             }
                         }
