@@ -53,7 +53,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
         mCollaboratorsListView = (ListView) view.findViewById(R.id.collaboratorsList);
         mCollaboratorsListView.setDivider(null);
-        mCollaboratorsAdapter = new CollaboratorsAdapter(getActivity());
+        mCollaboratorsAdapter = new CollaboratorsAdapter(getActivity(), getFolder(), mController);
         mCollaboratorsListView.setAdapter(mCollaboratorsAdapter);
         mCollaboratorsListView.setOnItemClickListener(this);
         mNoCollaboratorsText = (TextView) view.findViewById(R.id.no_collaborators_text);
@@ -93,7 +93,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CollaboratorsAdapter.ViewHolder holder = (CollaboratorsAdapter.ViewHolder) view.getTag();
-        if (holder != null && holder.collaboration != null && holder.collaboration.getItem() != null) {
+        if (holder != null && holder.collaboration != null) {
             ArrayList<BoxCollaboration.Role> rolesArr = getRoles();
             BoxCollaborator collaborator = holder.collaboration.getAccessibleBy();
             BoxCollaboration.Role role = holder.collaboration.getRole();

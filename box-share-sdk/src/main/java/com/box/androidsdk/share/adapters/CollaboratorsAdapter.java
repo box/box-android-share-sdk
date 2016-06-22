@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborator;
+import com.box.androidsdk.content.models.BoxFolder;
+import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.api.ShareController;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,10 +28,14 @@ public class CollaboratorsAdapter extends BaseAdapter {
 
     private ArrayList<BoxCollaboration> mItems = new ArrayList<BoxCollaboration>();
     private Context mContext;
+    private BoxFolder mFolder;
+    private ShareController mController;
 
-    public CollaboratorsAdapter(Context context) {
+    public CollaboratorsAdapter(Context context, BoxFolder folder, ShareController controller) {
         super();
         mContext = context;
+        mFolder = folder;
+        mController = controller;
     }
 
     @Override
@@ -44,6 +51,22 @@ public class CollaboratorsAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return 0;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        // User is allowed to change permissions if he has invite collaborator permissions
+        if (mFolder.getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
+            return true;
+        }
+
+        // In absense of permission, user can change permission only for self
+        BoxCollaboration collaboration = mItems.get(position);
+        if (collaboration != null && collaboration.getAccessibleBy().getId().equals(mController.getCurrentUserId())) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -76,6 +99,12 @@ public class CollaboratorsAdapter extends BaseAdapter {
             holder.nameView.setText(name);
             holder.collaboration = collaboration;
             holder.roleView.setText(description);
+        }
+
+        if (isEnabled(position)){
+            convertView.setAlpha(1f);
+        } else {
+            convertView.setAlpha(.25f);
         }
 
         return convertView;
