@@ -1,9 +1,6 @@
 package com.box.androidsdk.share.adapters;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +12,12 @@ import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
+import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.ShareController;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 
 public class CollaboratorsAdapter extends BaseAdapter {
 
@@ -88,10 +83,10 @@ public class CollaboratorsAdapter extends BaseAdapter {
             String name;
             if (collaborator == null) {
                 name = mContext.getString(R.string.box_sharesdk_another_person);
-                CollaborationUtils.setInitialsThumb(mContext, holder.initialsView, "");
+                SdkUtils.setInitialsThumb(mContext, holder.initialsView, "");
             } else {
                 name = collaborator.getName();
-                CollaborationUtils.setInitialsThumb(mContext, holder.initialsView, name);
+                SdkUtils.setInitialsThumb(mContext, holder.initialsView, name);
             }
             String description = collaboration.getStatus() == BoxCollaboration.Status.ACCEPTED ?
                     CollaborationUtils.getRoleName(mContext, collaboration.getRole()) :
