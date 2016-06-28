@@ -13,7 +13,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.box.androidsdk.share.CollaborationUtils;
+import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
@@ -139,7 +139,7 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
         BoxInvitee invitee = mItems.get(position);
         holder.getNameView().setText(invitee.getName());
         holder.getEmailView().setText(invitee.getEmail());
-        CollaborationUtils.setInitialsThumb(mContext, holder.getInitialsView(), invitee.getName());
+        SdkUtils.setInitialsThumb(mContext, holder.getInitialsView(), invitee.getName());
         return convertView;
     }
 

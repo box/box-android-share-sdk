@@ -38,7 +38,7 @@ import com.tokenautocomplete.TokenCompleteTextView;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 
 public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener, TokenCompleteTextView.TokenListener<BoxInvitee>, InviteeAdapter.InviteeAdapterListener {
 
@@ -306,10 +306,10 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         TextView initialsTextView = (TextView) initialsView.findViewById(R.id.collaborator_initials);
 
         if (collaborator == null) {
-            CollaborationUtils.setInitialsThumb(getActivity(), initialsTextView, "");
+            SdkUtils.setInitialsThumb(getActivity(), initialsTextView, "");
         } else {
             String name = collaborator.getName();
-            CollaborationUtils.setInitialsThumb(getActivity(), initialsTextView, name);
+            SdkUtils.setInitialsThumb(getActivity(), initialsTextView, name);
         }
 
         mInitialsListView.addView(initialsView);

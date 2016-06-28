@@ -6,11 +6,10 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.box.androidsdk.share.CollaborationUtils;
+import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.eclipsesource.json.JsonObject;
@@ -41,7 +40,7 @@ public class ChipCollaborationView extends TokenCompleteTextView<BoxInvitee> {
         tvName.setText(person.getName());
 
         TextView tvInitials = (TextView) view.findViewById(R.id.collaborator_initials);
-        CollaborationUtils.setInitialsThumb(getContext(), tvInitials, person.getName());
+        SdkUtils.setInitialsThumb(getContext(), tvInitials, person.getName());
 
         return view;
     }

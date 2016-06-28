@@ -4,6 +4,7 @@
     android:layout_height="@dimen/box_sharesdk_collaboration_cell_height">
     <TextView
         android:id="@+id/collaborator_initials"
+        style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="@dimen/box_sharesdk_collaboration_thumb_size"
         android:layout_height="@dimen/box_sharesdk_collaboration_thumb_size"
         android:textAllCaps="true"
