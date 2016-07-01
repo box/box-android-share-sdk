@@ -57,7 +57,8 @@ public class CollaboratorsAdapter extends BaseAdapter {
 
         // In absense of permission, user can change permission only for self
         BoxCollaboration collaboration = mItems.get(position);
-        if (collaboration != null && collaboration.getAccessibleBy().getId().equals(mController.getCurrentUserId())) {
+        if (collaboration != null && collaboration.getAccessibleBy() != null &&
+                collaboration.getAccessibleBy().getId().equals(mController.getCurrentUserId())) {
             return true;
         }
 
