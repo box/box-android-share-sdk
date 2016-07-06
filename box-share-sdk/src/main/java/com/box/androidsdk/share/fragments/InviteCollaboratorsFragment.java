@@ -418,8 +418,14 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             }
         } else {
             if (responses.getResponses().size() == 1) {
-                String login = ((BoxUser)((BoxCollaboration)responses.getResponses().get(0).getResult()).getAccessibleBy()).getLogin();
-                msg = String.format(getString(R.string.box_sharesdk_collaborator_invited), login);
+                BoxCollaboration collaboration = (BoxCollaboration) responses.getResponses().get(0).getResult();
+                if (collaboration.getAccessibleBy() == null) {
+                    msg = getString(R.string.box_sharesdk_collaborators_invited);
+                } else {
+                    String login = ((BoxUser)(collaboration).getAccessibleBy()).getLogin();
+                    msg = String.format(getString(R.string.box_sharesdk_collaborator_invited), login);
+                }
+
             } else {
                 msg = getString(R.string.box_sharesdk_collaborators_invited);
             }
