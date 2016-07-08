@@ -28,7 +28,7 @@
     <string name="box_sharesdk_access" description="header for different access types">Link Access</string>
     <string name="box_sharesdk_access_public" description="description for public access">People with the link</string>
     <string name="box_sharesdk_access_company" description="description for company access">People in your company</string>
-    <string name="box_sharesdk_access_collaborator" description="description for collaborator access">Only people the folder is shared with</string>
+    <string name="box_sharesdk_access_collaborator" description="description for collaborator access">People in this folder</string>
     <string name="box_sharesdk_allow_downloads" description="toggle of whether to allow downloading">Allow Downloads</string>
     <string name="box_sharesdk_password" description="header for password section">Password</string>
     <string name="box_sharesdk_set_password" description="hint for password dialog">Set password</string>
