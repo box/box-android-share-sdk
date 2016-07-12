@@ -11,6 +11,7 @@ import android.text.style.TextAppearanceSpan;
 import android.view.View;
 
 import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.ShareController;
@@ -82,7 +83,11 @@ public abstract class BoxFragment extends Fragment {
                 try {
                     mDialogHandler.cancelLastRunnable();
                     if (mDialog != null){
-                        mDialog.dismiss();
+                        try {
+                            mDialog.dismiss();
+                        } catch (IllegalStateException e){
+                            BoxLogUtils.e("com.box.androidsdk.share.fragments.dismissSpinner " , e);
+                        }
                         mDialog = null;
                     }
                 }
