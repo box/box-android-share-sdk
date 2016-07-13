@@ -219,9 +219,21 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                                     mController.showToast(getActivity(), R.string.box_sharesdk_insufficient_permissions);
                                     return;
                                 }
+                                switch (boxException.getErrorType()) {
+                                    case NETWORK_ERROR:
+                                        mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
+                                        return;
+                                    default:
+                                        mController.showToast(activity, getString(R.string.box_sharesdk_cannot_get_collaborators));
+                                        BoxLogUtils.nonFatalE("CollaborationsError", getString(R.string.box_sharesdk_cannot_get_collaborators)
+                                                + boxException.getErrorType() + " " + responseCode, boxException);
+                                        return;
+                                }
                             }
+                            BoxLogUtils.nonFatalE("CollaborationsError", getString(R.string.box_sharesdk_cannot_get_collaborators)
+                                     + response.getException(), response.getException());
 
-                            mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
+
                         }
                     }
                 });
@@ -299,7 +311,24 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                         } else {
                             BoxLogUtils.e(CollaborationsFragment.class.getName(), "Update Collaborator request failed",
                                     response.getException());
-                            mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
+                            if (response.getException() instanceof BoxException) {
+                                BoxException boxException = (BoxException) response.getException();
+                                int responseCode = boxException.getResponseCode();
+
+                                if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                                    mController.showToast(getActivity(), R.string.box_sharesdk_insufficient_permissions);
+                                    return;
+                                }
+                                switch (boxException.getErrorType()) {
+                                    case NETWORK_ERROR:
+                                        mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
+                                        return;
+                                    default:
+                                        mController.showToast(activity, getString(R.string.box_sharesdk_cannot_get_collaborators));
+                                        BoxLogUtils.nonFatalE("UpdateCollabError", getString(R.string.box_sharesdk_cannot_get_collaborators)
+                                                + boxException.getErrorType() + " " + responseCode, response.getException());
+                                }
+                            }
                         }
                     }
                 });
@@ -324,8 +353,26 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                             } else {
                                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "Update Owner request failed",
                                         response.getException());
-                                mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
-                            }
+                                if (response.getException() instanceof BoxException) {
+                                    switch (((BoxException) response.getException()).getErrorType()) {
+                                        case NEW_OWNER_NOT_COLLABORATOR:
+                                            mController.showToast(activity, R.string.box_sharedsdk_new_owner_not_collaborator);
+                                            return;
+                                        case NETWORK_ERROR:
+                                            mController.showToast(activity, getString(R.string.box_sharesdk_network_error));
+                                            return;
+                                        default:
+                                            mController.showToast(activity, R.string.box_sharedsdk_unable_to_update_owner );
+                                            BoxLogUtils.nonFatalE("UpdateOwner", getString(R.string.box_sharesdk_cannot_get_collaborators)
+                                                    + ((BoxException)response.getException()).getErrorType() + " " +
+                                                    ((BoxException) response.getException()).getResponseCode(), response.getException());
+                                            return;
+                                    }
+
+                                }
+
+                            } BoxLogUtils.nonFatalE("UpdateOwner", getString(R.string.box_sharesdk_cannot_get_collaborators) +
+                                    ((BoxException) response.getException()).getResponseCode(), response.getException());
                         }
                     });
                 }

@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
- <RadioGroup
-     xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-    android:padding="10dp"
-    >
-     
-     <RadioButton
-         android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin"
-         android:id="@+id/public_access_radio"
-         android:text="@string/box_sharesdk_access_public"
-         android:layout_width="match_parent"
-         android:layout_height="@dimen/box_sharesdk_collaboration_cell_height" />
-     <RadioButton
-         android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin"
-         android:id="@+id/company_access_radio"
-         android:text="@string/box_sharesdk_access_company"
-         android:layout_width="match_parent"
-         android:layout_height="@dimen/box_sharesdk_collaboration_cell_height" />
-     <RadioButton
-         android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin"
-         android:id="@+id/collaborator_access_radio"
-         android:text="@string/box_sharesdk_access_collaborator"
-         android:layout_width="match_parent"
-         android:layout_height="@dimen/box_sharesdk_collaboration_cell_height" />
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/box_sharesdk_dialog_margin"
+    android:paddingTop="@dimen/box_sharesdk_dialog_margin"
+    android:paddingLeft="@dimen/box_sharesdk_dialog_margin"
+    android:paddingRight="@dimen/box_sharesdk_dialog_margin">
+
+    <RadioButton
+        android:id="@+id/public_access_radio"
+        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+        android:text="@string/box_sharesdk_access_public" />
+
+    <RadioButton
+        android:id="@+id/company_access_radio"
+        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+        android:text="@string/box_sharesdk_access_company" />
+
+    <RadioButton
+        android:id="@+id/collaborator_access_radio"
+        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+        android:text="@string/box_sharesdk_access_collaborator" />
 
 
- </RadioGroup>
+</RadioGroup>
