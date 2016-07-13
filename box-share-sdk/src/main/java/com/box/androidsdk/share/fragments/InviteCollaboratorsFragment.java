@@ -355,10 +355,13 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                                     if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
                                         mController.showToast(getActivity(), R.string.box_sharesdk_insufficient_permissions);
                                         return;
+                                    } else if (boxException.getErrorType() == BoxException.ErrorType.NETWORK_ERROR) {
+                                        mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error) + responseCode);
                                     }
+
                                 }
 
-                                mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
+
                             }
                         }
                     });
@@ -414,7 +417,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             } else if (alreadyAddedCount > 1) {
                 msg = String.format(getString(R.string.box_sharesdk_num_has_already_been_invited), alreadyAddedCount);
             } else {
-                msg = getString(R.string.box_sharesdk_network_error);
+                msg = getString(R.string.box_sharesdk_unable_to_invite);
             }
         } else {
             if (responses.getResponses().size() == 1) {

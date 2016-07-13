@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
@@ -39,7 +40,8 @@ public class SharedLinkAccessFragment extends BoxFragment
     private static final String DATE_FRAGMENT_TAG = "datePicker";
     private static final String PASSWORD_FRAGMENT_TAG = "passwordFrag";
     private static final String ACCESS_RADIAL_FRAGMENT_TAG = "accessFrag";
-    private Button mAccessButton;
+    private View mAccessLayout;
+    private TextView mAccessText;
     private Button mPasswordButton;
     private Button mExpiresButton;
 
@@ -79,8 +81,15 @@ public class SharedLinkAccessFragment extends BoxFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shared_link_access, container, false);
 
-        mAccessButton = (Button)view.findViewById(R.id.shared_link_access_btn);
-        mAccessButton.setOnClickListener(new View.OnClickListener() {
+        mAccessLayout = view.findViewById(R.id.shared_link_access_layout);
+        mAccessLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAccessChooserDialog();
+            }
+        });
+        mAccessText = (TextView) view.findViewById(R.id.shared_link_access_text);
+        mAccessText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showAccessChooserDialog();
@@ -251,11 +260,12 @@ public class SharedLinkAccessFragment extends BoxFragment
                     case COMPANY:
                         accessDescription = getResources().getString(R.string.box_sharesdk_access_company);
                 }
-                mAccessButton.setText(createTitledSpannable(getResources().getString(R.string.box_sharesdk_link_access), accessDescription));
+                mAccessText.setText(accessDescription);
             }
-            if (mShareItem instanceof BoxBookmark){
+            if (mShareItem instanceof BoxBookmark || (access != null && access == BoxSharedLink.Access.COLLABORATORS)) {
                 hideView(mAllowDownloadsBtn);
-            } else{
+            } else {
+                showView(mAllowDownloadsBtn);
                 mAllowDownloadsBtn.setChecked(link.getPermissions() != null && link.getPermissions().getCanDownload());
             }
 

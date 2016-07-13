@@ -10,4 +10,5 @@
     <dimen name="box_sharesdk_horizontal_rule_height">1dp</dimen>
     <dimen name="box_sharesdk_horizontal_list_item_margin">4dp</dimen>
     <dimen name="box_sharesdk_zero_margin">0dp</dimen>
+    <dimen name="box_sharesdk_dialog_margin">24dp</dimen>
 </resources>

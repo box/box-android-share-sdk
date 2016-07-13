@@ -54,7 +54,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
         MenuItem sendMenuItem = menu.findItem(R.id.box_sharesdk_action_send);
         if (mSendEnabled) {
             sendMenuItem.setEnabled(true);
-            sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_grey_24dp);
+            sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_accent_24dp);
         } else {
             sendMenuItem.setEnabled(false);
             sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_light_24dp);
