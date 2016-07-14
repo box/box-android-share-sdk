@@ -1,5 +1,6 @@
 package com.box.androidsdk.share.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -115,28 +116,32 @@ public abstract class BoxFragment extends Fragment {
         mDialogHandler.queue(new Runnable() {
             @Override
             public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mSpinnerLock.tryLock()) {
-                            try {
-                                if (mDialog != null) {
-                                    return;
-                                }
+                Activity activity = getActivity();
+                if (activity != null && !activity.isFinishing()) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mSpinnerLock.tryLock()) {
+                                try {
+                                    if (mDialog != null) {
+                                        return;
+                                    }
 
-                                mDialog = SpinnerDialogFragment.createFragment(stringTitleRes,stringRes);
-                                mDialog.show(getFragmentManager(), TAG);
-                            } catch (Exception e) {
-                                // WindowManager$BadTokenException will be caught and the app would not display
-                                // the 'Force Close' message
-                                mDialog = null;
-                                return;
-                            } finally {
-                                mSpinnerLock.unlock();
+                                    mDialog = SpinnerDialogFragment.createFragment(stringTitleRes,stringRes);
+                                    mDialog.show(getFragmentManager(), TAG);
+                                } catch (Exception e) {
+                                    // WindowManager$BadTokenException will be caught and the app would not display
+                                    // the 'Force Close' message
+                                    mDialog = null;
+                                    return;
+                                } finally {
+                                    mSpinnerLock.unlock();
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
+
             }
         }, DEFAULT_SPINNER_DELAY);
 
