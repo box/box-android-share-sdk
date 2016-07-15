@@ -368,11 +368,11 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                                                     ((BoxException) response.getException()).getResponseCode(), response.getException());
                                             return;
                                     }
-
                                 }
+                                BoxLogUtils.nonFatalE("UpdateOwner", getString(R.string.box_sharesdk_cannot_get_collaborators)
+                                        , response.getException());
 
-                            } BoxLogUtils.nonFatalE("UpdateOwner", getString(R.string.box_sharesdk_cannot_get_collaborators) +
-                                    ((BoxException) response.getException()).getResponseCode(), response.getException());
+                            }
                         }
                     });
                 }
