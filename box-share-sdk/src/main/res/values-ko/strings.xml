@@ -48,8 +48,8 @@
     <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">함께 보내기:</string>
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">네트워크 오류입니다. 다시 시도하십시오.</string>
 
-    <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">Owner Update</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Making this user the folder owner means that you will lose folder ownership and become an editor. Do you want to continue?</string>
+    <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">소유자 업데이트</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">이 사용자를 폴더 소유자로 지정하면 귀하는 폴더 소유권을 잃고 편집자가 됩니다. 계속하시겠습니까?</string>
 
 
     <!-- menu items -->
@@ -83,6 +83,7 @@
     <string description="Menu item for submitting the invite collaborators request" name="box_sharesdk_action_send">보내기</string>
     <string description="The label for the field where users will enter the collaborators they would like to invite" name="box_sharesdk_to">대상</string>
     <string description="Error message for when an incorrect object type is used to launch the collaborations page" name="box_sharesdk_selected_item_not_expected_type">선택한 항목이 예상된 유형이 아닙니다.</string>
+    <string description="Success message for inviting a collaborator" name="box_sharesdk_collaborator_invited">%s 님이 초대되었습니다.</string>
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">공동 작업자를 초대했습니다.</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">이 항목에 대한 공동 작업을 볼 수 없습니다.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">다른 사용자</string>
@@ -91,5 +92,11 @@
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s명의 사용자가 이미 이 폴더에 초대되었습니다.</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">공동 작업자</string>
+
+    <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">이 작업을 수행할 충분한 권한이 없습니다.</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Unable to fetch collaborators. Please contact support if the issue persists.</string>
+    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
 
 </resources>
