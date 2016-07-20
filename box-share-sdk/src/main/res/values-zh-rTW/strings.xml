@@ -48,8 +48,8 @@
     <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">傳送方式：</string>
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">發生網路錯誤。請再試一次。</string>
 
-    <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">Owner Update</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Making this user the folder owner means that you will lose folder ownership and become an editor. Do you want to continue?</string>
+    <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">擁有者更新</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">將此使用者設為資料夾的擁有者即表示，您會失去資料夾的所有權，並變成編輯者。是否要繼續？</string>
 
 
     <!-- menu items -->
@@ -61,8 +61,8 @@
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer">檢視者</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer">預覽者</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_uploader">上傳者</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">預覽上傳者</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">檢視上傳者</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">具預覽權限的上傳者</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">具檢視權限的上傳者</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">共同擁有者</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">擁有者</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">移除人員</string>
@@ -83,13 +83,20 @@
     <string description="Menu item for submitting the invite collaborators request" name="box_sharesdk_action_send">傳送</string>
     <string description="The label for the field where users will enter the collaborators they would like to invite" name="box_sharesdk_to">給</string>
     <string description="Error message for when an incorrect object type is used to launch the collaborations page" name="box_sharesdk_selected_item_not_expected_type">選取的項目不是預期的類型</string>
+    <string description="Success message for inviting a collaborator" name="box_sharesdk_collaborator_invited">已邀請 %s</string>
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">已邀請合作者</string>
-    <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">您無法檢視此項目的協同作業。</string>
+    <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">您無法檢視此項目的共同作業。</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">其他人</string>
     <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">此資料夾沒有合作者。</string>
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">已邀請 %s 加入此資料夾</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">已邀請 %s 個人加入此資料夾</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">共同作業者</string>
+
+    <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">您沒有足夠的權限可以執行此動作。</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Unable to fetch collaborators. Please contact support if the issue persists.</string>
+    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
 
 </resources>
