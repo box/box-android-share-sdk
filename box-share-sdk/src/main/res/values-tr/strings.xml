@@ -29,7 +29,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Bağlantı Erişimi</string>
     <string description="description for public access" name="box_sharesdk_access_public">Bağlantıya sahip kişiler</string>
     <string description="description for company access" name="box_sharesdk_access_company">Kurumunuzdaki kişiler</string>
-    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Sadece klasörün paylaşıldığı kişiler</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Bu klasördeki kişiler</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">İndirmelere İzin Ver</string>
     <string description="header for password section" name="box_sharesdk_password">Parola</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">Parolayı ayarla</string>
@@ -94,9 +94,9 @@
     <string name="box_sharedsdk_collaborators_title">İşbirlikçiler</string>
 
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Bu işlemi gerçekleştirmek için gerekli izinlere sahip değilsiniz.</string>
-    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
-    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
-    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Unable to fetch collaborators. Please contact support if the issue persists.</string>
-    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Kullanıcı henüz bu klasörün işbirlikçisi değil ve sahip olarak ayarlanamaz.</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Sahip güncellenemiyor. Lütfen destek ile iletişime geçin.</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">İşbirlikçiler getirilemiyor. Sorun devam ederse lütfen destekle iletişime geçin.</string>
+    <string name="box_sharesdk_unable_to_invite">İşbirlikçiler davet edilemiyor. Sorun devam ederse lütfen destekle iletişime geçin.</string>
 
 </resources>

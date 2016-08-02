@@ -29,7 +29,7 @@
     <string description="header for different access types" name="box_sharesdk_access">链接访问</string>
     <string description="description for public access" name="box_sharesdk_access_public">拥有链接的协作者</string>
     <string description="description for company access" name="box_sharesdk_access_company">公司内部的协作者</string>
-    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">共享了该文件夹的协作者</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">此文件夹中的人员</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">允许下载</string>
     <string description="header for password section" name="box_sharesdk_password">密码</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">设置密码</string>
@@ -42,7 +42,7 @@
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">修改/创建此共享链接时出现问题。</string>
     <string name="box_sharesdk_title_link_access">链接访问</string>
     <string name="box_sharesdk_title_share_link">共享链接</string>
-    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">启用链接会生成一个可共享的链接，其他人员使用此链接可访问和查看这些内容。</string>
+    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">启用链接会生成一个可共享的链接，\n其他人员使用此链接可访问和查看这些内容。</string>
     <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">链接已复制到剪贴板。</string>
     <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">我在 Box 上与您共享了 \'%1$s\'。</string>
     <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">发送方式：</string>
@@ -94,9 +94,9 @@
     <string name="box_sharedsdk_collaborators_title">协作者</string>
 
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">您没有执行此操作的足够权限。</string>
-    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
-    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
-    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Unable to fetch collaborators. Please contact support if the issue persists.</string>
-    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">用户尚未成为此文件夹中的协作者，无法设置为所有者。</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">无法更新所有者。请联系支持部门。</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">无法获取协作者。如果问题仍然存在，请联系支持部门。</string>
+    <string name="box_sharesdk_unable_to_invite">无法邀请协作者。如果问题仍然存在，请联系支持部门。</string>
 
 </resources>

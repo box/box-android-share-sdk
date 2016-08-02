@@ -10,15 +10,15 @@
     <string description="description for public access" name="box_sharesdk_accessible_public">リンクを知っている全員がアクセス可能</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">会社のユーザーがアクセス可能</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">このフォルダを共有しているユーザーがアクセス可能</string>
-    <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">パスワードで保護されています</string>
+    <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">パスワードによる保護</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">パスワードが設定されていません</string>
 
-    <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">共有リンクを有効化しました</string>
+    <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">共有リンクを有効化</string>
     <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">共有リンクを無効化しました</string>
-    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">ダウンロードは許可されています</string>
+    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">ダウンロード可能</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">ダウンロードは無効化されています</string>
     <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">有効期限なし</string>
-    <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">リンクの有効期限は%1$sです</string>
+    <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">リンクの有効期限: %1$s</string>
     <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">リンクアクセスを編集</string>
     <string description="button to cancel an action" name="box_sharesdk_cancel">キャンセル</string>
     <string description="button to cancel an action" name="box_sharesdk_ok">OK</string>
@@ -29,11 +29,11 @@
     <string description="header for different access types" name="box_sharesdk_access">リンクアクセス</string>
     <string description="description for public access" name="box_sharesdk_access_public">リンクを知っている全員</string>
     <string description="description for company access" name="box_sharesdk_access_company">会社のユーザー</string>
-    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">フォルダを共有しているユーザーのみ</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">このフォルダのユーザー</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">ダウンロードを許可</string>
     <string description="header for password section" name="box_sharesdk_password">パスワード</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">パスワードを設定</string>
-    <string description="toggle of using password or not" name="box_sharesdk_require_password">パスワードが必要です</string>
+    <string description="toggle of using password or not" name="box_sharesdk_require_password">パスワードが必要</string>
     <string description="header for link expiration section" name="box_sharesdk_link_expiration">リンクの有効期限</string>
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">リンクの有効期限を終了</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">有効期限</string>
@@ -94,9 +94,9 @@
     <string name="box_sharedsdk_collaborators_title">コラボレータ</string>
 
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">この操作を実行する権限がありません。</string>
-    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
-    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
-    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Unable to fetch collaborators. Please contact support if the issue persists.</string>
-    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">ユーザーはまだこのフォルダのコラボレータではないため、所有者として設定できません。</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">所有者を更新できません。サポートにお問い合わせください。</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">コラボレータを取得できません。状況が変わらない場合は、サポートにお問い合わせください。</string>
+    <string name="box_sharesdk_unable_to_invite">コラボレータを招待できません。状況が変わらない場合は、サポートにお問い合わせください。</string>
 
 </resources>

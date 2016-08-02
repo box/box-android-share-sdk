@@ -29,7 +29,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Accès au lien</string>
     <string description="description for public access" name="box_sharesdk_access_public">Utilisateurs disposant du lien</string>
     <string description="description for company access" name="box_sharesdk_access_company">Utilisateurs dans votre entreprise</string>
-    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Uniquement les utilisateurs qui partagent ce dossier</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Utilisateurs dans ce dossier</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Autoriser les téléchargements</string>
     <string description="header for password section" name="box_sharesdk_password">Mot de passe</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">Définir le mot de passe</string>
@@ -43,7 +43,7 @@
     <string name="box_sharesdk_title_link_access">Accès au lien</string>
     <string name="box_sharesdk_title_share_link">Partager le lien</string>
     <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">En activant un lien, vous générerez un lien qui pourra être partagé et utilisé par les autres utilisateurs pour accéder à ce contenu ou le visualiser.</string>
-    <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">Lien copié dans le Presse-papiers.</string>
+    <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">Lien copié dans le presse-papiers.</string>
     <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">J\'ai partagé \"%1$s\" avec vous sur Box.</string>
     <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">Envoyer avec :</string>
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Erreur réseau. Veuillez réessayer.</string>
@@ -94,9 +94,9 @@
     <string name="box_sharedsdk_collaborators_title">Collaborateurs</string>
 
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Vous n\'avez pas les autorisations suffisantes pour effectuer cette action.</string>
-    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
-    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
-    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Unable to fetch collaborators. Please contact support if the issue persists.</string>
-    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Cet utilisateur ne collabore pas encore sur ce dossier et ne peut pas être désigné comme propriétaire.</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Impossible de mettre à jour le propriétaire. Veuillez contacter l\'assistance.</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Impossible de récupérer les collaborateurs. Veuillez contacter l\'assistance si le problème persiste.</string>
+    <string name="box_sharesdk_unable_to_invite">Impossible d\'inviter les collaborateurs. Veuillez contacter l\'assistance si le problème persiste.</string>
 
 </resources>

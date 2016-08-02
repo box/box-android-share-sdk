@@ -29,14 +29,14 @@
     <string description="header for different access types" name="box_sharesdk_access">Koblingstilgang</string>
     <string description="description for public access" name="box_sharesdk_access_public">Personer med koblingen</string>
     <string description="description for company access" name="box_sharesdk_access_company">Personer i firmaet</string>
-    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Bare personer mappen er delt med</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Personer i denne mappen</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Tillat nedlastinger</string>
     <string description="header for password section" name="box_sharesdk_password">Passord</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">Angi passord</string>
     <string description="toggle of using password or not" name="box_sharesdk_require_password">Krev passord</string>
     <string description="header for link expiration section" name="box_sharesdk_link_expiration">Utløpsdato for kobling</string>
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">La kobling utløpe</string>
-    <string description="header for date link expires" name="box_sharesdk_expire_on">Utløp</string>
+    <string description="header for date link expires" name="box_sharesdk_expire_on">Utløper</string>
     <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">Får ikke tilgang til denne delte koblingen.</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">Kan ikke endre/opprette denne delte koblingen.</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">Kan ikke endre/opprette denne delte koblingen.</string>
@@ -94,9 +94,9 @@
     <string name="box_sharedsdk_collaborators_title">Samarbeidspartnere</string>
 
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Du har ikke tilstrekkelige tillatelser til å utføre denne handlingen.</string>
-    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
-    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
-    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Unable to fetch collaborators. Please contact support if the issue persists.</string>
-    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Brukeren samarbeider ikke om denne mappen ennå og kan ikke angis som en eier.</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Kan ikke oppdatere eier. Ta kontakt med brukerstøtten.</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Får ikke tak i samarbeidspartnere. Ta kontakt med brukerstøtten hvis problemet fortsetter.</string>
+    <string name="box_sharesdk_unable_to_invite">Kan ikke invitere samarbeidspartnere. Ta kontakt med brukerstøtten hvis problemet fortsetter.</string>
 
 </resources>
