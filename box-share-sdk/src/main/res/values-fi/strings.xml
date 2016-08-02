@@ -29,7 +29,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Linkin käyttöoikeus</string>
     <string description="description for public access" name="box_sharesdk_access_public">Käyttäjät, joilla on linkki</string>
     <string description="description for company access" name="box_sharesdk_access_company">Tämän yrityksen käyttäjät</string>
-    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Vain henkilöt, joille kansio on jaettu</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Tämän kansion käyttäjät</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Salli lataukset</string>
     <string description="header for password section" name="box_sharesdk_password">Salasana</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">Määritä salasana</string>
@@ -94,9 +94,9 @@
     <string name="box_sharedsdk_collaborators_title">Yhteistyökumppanit</string>
 
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Sinulla ei ole riittäviä käyttöoikeuksia tämän toiminnon suorittamiseen.</string>
-    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
-    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
-    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Unable to fetch collaborators. Please contact support if the issue persists.</string>
-    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Käyttäjä ei vielä ole tämän kansion yhteistyökumppani, eikä häntä voida määrittää omistajaksi.</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Omistajaa ei voitu päivittää. Ota yhteys tukipalveluun.</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Yhteistyökumppaneita ei voitu hakea. Jos ongelma jatkuu, ota yhteys tukipalveluun.</string>
+    <string name="box_sharesdk_unable_to_invite">Yhteistyökumppanien kutsuminen ei onnistunut. Jos ongelma jatkuu, ota yhteys tukipalveluun.</string>
 
 </resources>

@@ -29,13 +29,13 @@
     <string description="header for different access types" name="box_sharesdk_access">連結存取權限</string>
     <string description="description for public access" name="box_sharesdk_access_public">有連結的人</string>
     <string description="description for company access" name="box_sharesdk_access_company">您公司的人</string>
-    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">僅限共用此資料夾的人</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">共用資料夾的人員</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">允許下載</string>
     <string description="header for password section" name="box_sharesdk_password">密碼</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">設定密碼</string>
     <string description="toggle of using password or not" name="box_sharesdk_require_password">需要密碼</string>
     <string description="header for link expiration section" name="box_sharesdk_link_expiration">連結期限</string>
-    <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">到期連結</string>
+    <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">使連結到期</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">到期時間</string>
     <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">存取此共用連結時發生問題。</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">修改/建立此共用的連結時發生問題。</string>
@@ -94,9 +94,9 @@
     <string name="box_sharedsdk_collaborators_title">共同作業者</string>
 
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">您沒有足夠的權限可以執行此動作。</string>
-    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
-    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
-    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Unable to fetch collaborators. Please contact support if the issue persists.</string>
-    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">使用者還不是此資料夾的共同作業者，因此無法設定為擁有者。</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">無法更新擁有者。請連絡支援部門。</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">無法擷取共同作業者。若問題持續發生，請連絡支援部門。</string>
+    <string name="box_sharesdk_unable_to_invite">無法邀請共同作業者。若問題持續發生，請連絡支援部門。</string>
 
 </resources>

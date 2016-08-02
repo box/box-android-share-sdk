@@ -29,7 +29,7 @@
     <string description="header for different access types" name="box_sharesdk_access">الوصول إلى الرابط</string>
     <string description="description for public access" name="box_sharesdk_access_public">الأشخاص الذين يملكون الرابط</string>
     <string description="description for company access" name="box_sharesdk_access_company">الأشخاص في الشركة</string>
-    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">الأشخاص الذين تمت مشاركة المجلد معهم فقط</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">الأشخاص في هذا المجلد</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">السماح بالتنزيلات</string>
     <string description="header for password section" name="box_sharesdk_password">كلمة المرور</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">تعيين كلمة المرور</string>
@@ -94,9 +94,9 @@
     <string name="box_sharedsdk_collaborators_title">المتعاونون</string>
 
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">لا تملك مستوى الوصول الكافي لتنفيذ هذا الإجراء.</string>
-    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
-    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
-    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Unable to fetch collaborators. Please contact support if the issue persists.</string>
-    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">المستخدم ليس متعاونًا في هذا المجلد بعد، ولا يمكن تعيينه كمالك.</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">يتعذر تحديث المالك. يرجى الاتصال بقسم الدعم.</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">يتعذر إحضار المتعاونين. يرجى الاتصال بقسم الدعم إذا استمرت المشكلة.</string>
+    <string name="box_sharesdk_unable_to_invite">تتعذر دعوة المتعاونين. يرجى الاتصال بقسم الدعم إذا استمرت المشكلة.</string>
 
 </resources>

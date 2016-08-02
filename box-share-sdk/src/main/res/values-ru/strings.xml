@@ -5,8 +5,8 @@
     <string name="box_sharesdk_invite_collaborators">Пригласить пользователей</string>
     <string name="box_sharesdk_session_is_not_authenticated">Сеанс не прошел проверку подлинности</string>
     <string name="box_sharesdk_no_item_selected">Нет выбранных элементов</string>
-    <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">КОПИРОВАТЬ ССЫЛКУ</string>
-    <string description="button to send link to another application" name="box_sharesdk_send_link">ОТПРАВИТЬ ССЫЛКУ</string>
+    <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">КОПИРОВАТЬ</string>
+    <string description="button to send link to another application" name="box_sharesdk_send_link">ОТПРАВИТЬ</string>
     <string description="description for public access" name="box_sharesdk_accessible_public">Доступно пользователям со ссылкой</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Доступно сотрудникам вашей компании</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Доступно пользователям с общим доступом к папке</string>
@@ -19,7 +19,7 @@
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">Скачивания запрещены</string>
     <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">Без срока действия</string>
     <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">Ссылка действует до %1$s</string>
-    <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">ИЗМЕНЕНИЕ ДОСТУПА ПО ССЫЛКЕ</string>
+    <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">ИЗМЕНИТЬ ДОСТУП ПО ССЫЛКЕ</string>
     <string description="button to cancel an action" name="box_sharesdk_cancel">ОТМЕНА</string>
     <string description="button to cancel an action" name="box_sharesdk_ok">ОК</string>
     <string description="button to disable a shared link" name="box_sharesdk_disable_share_link">ОТКЛЮЧИТЬ ОБЩУЮ ССЫЛКУ</string>
@@ -29,7 +29,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Доступ по ссылке</string>
     <string description="description for public access" name="box_sharesdk_access_public">Пользователи со ссылкой</string>
     <string description="description for company access" name="box_sharesdk_access_company">Сотрудники вашей компании</string>
-    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Только пользователи с общим доступом к папке</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Пользователи в этой папке</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Разрешить скачивания</string>
     <string description="header for password section" name="box_sharesdk_password">Пароль</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">Установить пароль</string>
@@ -94,9 +94,9 @@
     <string name="box_sharedsdk_collaborators_title">Соавторы</string>
 
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">У вас недостаточно прав для выполнения этого действия.</string>
-    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
-    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
-    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Unable to fetch collaborators. Please contact support if the issue persists.</string>
-    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Пользователь еще не является соавтором папки и не может быть назначен владельцем.</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Невозможно обновить данные владельца. Обратитесь в службу поддержки.</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Невозможно выбрать соавторов. Если проблема не устранена, обратитесь в службу поддержки.</string>
+    <string name="box_sharesdk_unable_to_invite">Невозможно пригласить соавторов. Если проблема не устранена, обратитесь в службу поддержки.</string>
 
 </resources>

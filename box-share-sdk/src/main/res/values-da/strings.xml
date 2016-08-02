@@ -24,12 +24,12 @@
     <string description="button to cancel an action" name="box_sharesdk_ok">OK</string>
     <string description="button to disable a shared link" name="box_sharesdk_disable_share_link">DEAKTIVER DELING AF LINK</string>
     <string description="shown as title of warning dialog before disabling a shared link" name="box_sharesdk_disable_title">Skal deling af link deaktiveres?</string>
-    <string description="shown as message of warning dialog before disabling a shared link" name="box_sharesdk_disable_message">Permanent deaktivering af linket fjerner den nuværende deling af linket. Ved genaktivering af linket skabes en hel ny og unik deling af link. Vil du deaktivere deling af link?</string>
+    <string description="shown as message of warning dialog before disabling a shared link" name="box_sharesdk_disable_message">Permanent deaktivering af linket fjerner den nuværende deling af linket. Ved genaktivering af linket skabes en helt ny og unik deling af link. Vil du deaktivere deling af link?</string>
     <string description="separates ui between the shared link box and options to change access" name="box_sharesdk_link_access">Adgang</string>
     <string description="header for different access types" name="box_sharesdk_access">Adgang til link</string>
     <string description="description for public access" name="box_sharesdk_access_public">Personer med linket</string>
     <string description="description for company access" name="box_sharesdk_access_company">Personer i din virksomhed</string>
-    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Kun personer, som mappen er delt med</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Personer i denne mappe</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Tillad downloads</string>
     <string description="header for password section" name="box_sharesdk_password">Adgangskode</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">Indstil adgangskode</string>
@@ -42,7 +42,7 @@
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">Der opstod et problem med at ændre/oprette dette delte link.</string>
     <string name="box_sharesdk_title_link_access">Adgang til link</string>
     <string name="box_sharesdk_title_share_link">Del link</string>
-    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">Aktivering af link genererer et link, der kan deles, som andre kan få adgang til og se dette indhold.</string>
+    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">Aktivering af link genererer et link, der kan deles, og som andre kan bruge til at få adgang til og se dette indhold.</string>
     <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">Link kopieret til udklipsholder.</string>
     <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">Jeg har delt \'%1$s\' med dig på Box.</string>
     <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">Send med:</string>
@@ -94,9 +94,9 @@
     <string name="box_sharedsdk_collaborators_title">Samarbejdspartnere</string>
 
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Du har ikke tilladelserne til denne handling.</string>
-    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
-    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
-    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Unable to fetch collaborators. Please contact support if the issue persists.</string>
-    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Brugeren er endnu ikke samarbejdspartner på denne mappe og kan ikke angives som ejer.</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Ejeren kunne ikke opdateres. Kontakt support.</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Samarbejdspartnerne kunne ikke hentes. Kontakt support, hvis problemet ikke forsvinder.</string>
+    <string name="box_sharesdk_unable_to_invite">Samarbejdspartnerne kunne ikke inviteres. Kontakt support, hvis problemet ikke forsvinder.</string>
 
 </resources>
