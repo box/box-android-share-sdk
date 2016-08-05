@@ -22,11 +22,14 @@ import com.box.androidsdk.content.requests.BoxRequestBatch;
 import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.SdkUtils;
+import com.box.androidsdk.content.views.BoxAvatarView;
+import com.box.androidsdk.content.views.DefaultAvatarController;
 import com.box.androidsdk.share.internal.BoxApiFeatures;
 import com.box.androidsdk.share.internal.BoxApiInvitee;
 import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
+import java.io.Serializable;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +42,7 @@ public class BoxShareController implements ShareController {
     private BoxApiInvitee mInviteeApi;
     private BoxSession mSession;
     private BoxApiFeatures mFeaturesApi;
+    private DefaultAvatarController mAvatarController;
 
     public BoxShareController(BoxSession session) {
         mSession = session;
@@ -48,6 +52,7 @@ public class BoxShareController implements ShareController {
         mCollabApi = new BoxApiCollaboration(session);
         mInviteeApi = new BoxApiInvitee(session);
         mFeaturesApi = new BoxApiFeatures(session);
+        mAvatarController = new DefaultAvatarController(session);
     }
 
     @Override
@@ -189,6 +194,11 @@ public class BoxShareController implements ShareController {
     @Override
     public String getCurrentUserId() {
         return mSession.getUserId();
+    }
+
+    @Override
+    public <E extends BoxAvatarView.AvatarController & Serializable> E getAvatarController() {
+        return (E)mAvatarController;
     }
 
     private static ThreadPoolExecutor mApiExecutor;
