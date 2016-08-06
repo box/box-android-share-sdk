@@ -20,14 +20,18 @@ public class ChipCollaborationView extends TokenCompleteTextView<BoxInvitee> {
 
     public ChipCollaborationView(Context context) {
         super(context);
+        setLongClickable(true);
     }
 
     public ChipCollaborationView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setLongClickable(true);
     }
 
     public ChipCollaborationView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        setLongClickable(true);
+
     }
 
     @Override
@@ -41,7 +45,6 @@ public class ChipCollaborationView extends TokenCompleteTextView<BoxInvitee> {
 
         TextView tvInitials = (TextView) view.findViewById(R.id.collaborator_initials);
         SdkUtils.setInitialsThumb(getContext(), tvInitials, person.getName());
-
         return view;
     }
 
