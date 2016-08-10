@@ -27,12 +27,14 @@ import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.content.utils.SdkUtils;
+import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.InviteeAdapter;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 import com.box.androidsdk.share.ui.ChipCollaborationView;
+import com.eclipsesource.json.JsonObject;
 import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.net.HttpURLConnection;
@@ -62,6 +64,15 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     private LinearLayout mInitialsListView;
     private LinearLayout mInitialsListViewSection;
     protected BoxIteratorCollaborations mCollaborations;
+    private BoxCollaborator mUnknownCollaborator;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add(BoxCollaborator.FIELD_NAME, "");
+        mUnknownCollaborator = new BoxUser(jsonObject);
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override
@@ -279,14 +290,18 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                         public void run() {
                             int viewWidth = initialsView.getWidth();
                             int viewsCount = remainingWidth/viewWidth;
+
                             for (int i = 1; i < viewsCount && i < collaborations.size(); i++) {
                                 View viewAdded = addInitialsToList(collaborations.get(i).getAccessibleBy());
                                 if (i == viewsCount - 1) {
                                     // This is the last one, display count if needed
                                     int remaining = totalCollaborators - viewsCount;
                                     if (remaining > 0) {
-                                        TextView initialsTextView = (TextView) viewAdded.findViewById(R.id.collaborator_initials);
-                                        CollaborationUtils.setInitialsThumb(getActivity(), initialsTextView, remaining + 1);
+                                        BoxAvatarView initials = (BoxAvatarView) viewAdded.findViewById(R.id.collaborator_initials);
+                                        JsonObject jsonObject = new JsonObject();
+                                        jsonObject.set(BoxCollaborator.FIELD_NAME, Integer.toString(remaining + 1));
+                                        BoxUser numberUser = new BoxUser(jsonObject);
+                                        initials.loadUser(numberUser, mController.getAvatarController());
                                     }
                                 }
                             }
@@ -302,18 +317,16 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     }
 
     private View addInitialsToList(BoxCollaborator collaborator) {
-        LinearLayout initialsView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.view_initials, null);
-        TextView initialsTextView = (TextView) initialsView.findViewById(R.id.collaborator_initials);
+        View layoutContainer =  LayoutInflater.from(getActivity()).inflate(R.layout.view_initials, null);
+        BoxAvatarView initialsView = (BoxAvatarView) layoutContainer.findViewById(R.id.collaborator_initials);
 
         if (collaborator == null) {
-            SdkUtils.setInitialsThumb(getActivity(), initialsTextView, "");
+            initialsView.loadUser(mUnknownCollaborator, mController.getAvatarController());
         } else {
-            String name = collaborator.getName();
-            SdkUtils.setInitialsThumb(getActivity(), initialsTextView, name);
+            initialsView.loadUser(collaborator, mController.getAvatarController());
         }
-
-        mInitialsListView.addView(initialsView);
-        return initialsView;
+        mInitialsListView.addView(layoutContainer);
+        return layoutContainer;
     }
 
     /**
