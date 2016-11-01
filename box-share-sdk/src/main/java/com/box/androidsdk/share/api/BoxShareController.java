@@ -27,6 +27,7 @@ import com.box.androidsdk.share.internal.BoxApiInvitee;
 import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
+import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +41,10 @@ public class BoxShareController implements ShareController {
     private BoxSession mSession;
     private BoxApiFeatures mFeaturesApi;
 
+    private String[] mFolderShareFields;
+    private String[] mFileShareFields;
+    private String[] mBookmarkShareFields;
+
     public BoxShareController(BoxSession session) {
         mSession = session;
         mFileApi = new BoxApiFile(session);
@@ -48,6 +53,17 @@ public class BoxShareController implements ShareController {
         mCollabApi = new BoxApiCollaboration(session);
         mInviteeApi = new BoxApiInvitee(session);
         mFeaturesApi = new BoxApiFeatures(session);
+
+        mFolderShareFields = initializeShareFieldsArray(BoxFolder.ALL_FIELDS);
+        mFileShareFields = initializeShareFieldsArray(BoxFile.ALL_FIELDS);
+        mBookmarkShareFields = initializeShareFieldsArray(BoxBookmark.ALL_FIELDS);
+
+    }
+
+    private String[] initializeShareFieldsArray(String[] originalFields) {
+        String[] shareFieldsArray = Arrays.copyOf(originalFields, originalFields.length + 1);
+        shareFieldsArray[originalFields.length] = BoxItem.FIELD_ALLOWED_SHARED_LINK_ACCESS_LEVELS;
+        return shareFieldsArray;
     }
 
     @Override
@@ -74,11 +90,11 @@ public class BoxShareController implements ShareController {
     @Override
     public BoxRequestUpdateSharedItem getCreatedSharedLinkRequest(BoxItem boxItem){
         if (boxItem instanceof BoxFile) {
-            return mFileApi.getCreateSharedLinkRequest(boxItem.getId()).setFields(BoxFile.ALL_FIELDS);
+            return mFileApi.getCreateSharedLinkRequest(boxItem.getId()).setFields(mFileShareFields);
         } else if (boxItem instanceof BoxFolder) {
-            return mFolderApi.getCreateSharedLinkRequest(boxItem.getId()).setFields(BoxFolder.ALL_FIELDS);
+            return mFolderApi.getCreateSharedLinkRequest(boxItem.getId()).setFields(mFolderShareFields);
         } else if (boxItem instanceof BoxBookmark) {
-            return mBookmarkApi.getCreateSharedLinkRequest(boxItem.getId()).setFields(BoxBookmark.ALL_FIELDS);
+            return mBookmarkApi.getCreateSharedLinkRequest(boxItem.getId()).setFields(mBookmarkShareFields);
         }
         // should never hit this scenario.
         return null;
@@ -94,11 +110,11 @@ public class BoxShareController implements ShareController {
     public BoxFutureTask<BoxItem> disableShareLink(BoxItem boxItem) {
         BoxRequest request = null;
         if (boxItem instanceof BoxFile) {
-            request = mFileApi.getDisableSharedLinkRequest(boxItem.getId()).setFields(BoxFile.ALL_FIELDS);
+            request = mFileApi.getDisableSharedLinkRequest(boxItem.getId()).setFields(mFileShareFields);
         } else if (boxItem instanceof BoxFolder) {
-            request = mFolderApi.getDisableSharedLinkRequest(boxItem.getId()).setFields(BoxFolder.ALL_FIELDS);
+            request = mFolderApi.getDisableSharedLinkRequest(boxItem.getId()).setFields(mFolderShareFields);
         } else if (boxItem instanceof BoxBookmark) {
-            request = mBookmarkApi.getDisableSharedLinkRequest(boxItem.getId()).setFields(BoxBookmark.ALL_FIELDS);
+            request = mBookmarkApi.getDisableSharedLinkRequest(boxItem.getId()).setFields(mBookmarkShareFields);
         }
 
         return executeRequest(BoxItem.class, request);
