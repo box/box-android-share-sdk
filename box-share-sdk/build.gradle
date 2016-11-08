@@ -42,7 +42,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     // If using local dependency instead of maven, use the path pointing to the content sdk to replace
     // the maven dependency. e.g.:compile project(':box-android-content-sdk:box-content-sdk')
-    compile project(':box-content-sdk')
+    compile 'com.box:box-android-sdk:4.0.+'
     compile "com.splitwise:tokenautocomplete:2.0.5@aar"
 }
 
