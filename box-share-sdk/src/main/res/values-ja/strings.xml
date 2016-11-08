@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="null"?>
 <resources>
     <string name="box_sharesdk_name">共有</string>
     <string name="box_sharesdk_shared_with">共有先</string>
@@ -88,7 +87,7 @@
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">この項目のコラボレーションは表示できません。</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">別のユーザー</string>
     <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">このフォルダにコラボレータは設定されていません。</string>
-    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%sさんはすでにこのフォルダに招待済みです</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%sはすでにこのフォルダに招待済みです</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">このフォルダには、すでに%s人のユーザーを招待済みです</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">コラボレータ</string>
