@@ -1,9 +1,6 @@
 package com.box.androidsdk.share.adapters;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,26 +9,28 @@ import android.widget.TextView;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborator;
+import com.box.androidsdk.content.models.BoxFolder;
+import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
+import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.api.ShareController;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 
 public class CollaboratorsAdapter extends BaseAdapter {
 
-    private static final int[] THUMB_COLORS = new int[] { 0xff9e9e9e, 0xff63d6e4, 0xffff5f5f, 0xff7ed54a, 0xffaf21f4,
-            0xffff9e57, 0xffe54343, 0xff5dc8a7, 0xfff271a4, 0xff2e71b6, 0xffe26f3c, 0xff768fba, 0xff56c156, 0xffefcf2e,
-            0xff4dc6fc, 0xff501785, 0xffee6832, 0xffffb11d, 0xffde7ff1 };
-
     private ArrayList<BoxCollaboration> mItems = new ArrayList<BoxCollaboration>();
-    private HashMap<String, Integer> mPositionMap = new HashMap<String, Integer>();
     private Context mContext;
+    private BoxFolder mFolder;
+    private ShareController mController;
 
-    public CollaboratorsAdapter(Context context) {
+    public CollaboratorsAdapter(Context context, BoxFolder folder, ShareController controller) {
         super();
         mContext = context;
+        mFolder = folder;
+        mController = controller;
     }
 
     @Override
@@ -47,6 +46,23 @@ public class CollaboratorsAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return 0;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        // User is allowed to change permissions if he has invite collaborator permissions
+        if (mFolder.getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
+            return true;
+        }
+
+        // In absense of permission, user can change permission only for self
+        BoxCollaboration collaboration = mItems.get(position);
+        if (collaboration != null && collaboration.getAccessibleBy() != null &&
+                collaboration.getAccessibleBy().getId().equals(mController.getCurrentUserId())) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -68,10 +84,10 @@ public class CollaboratorsAdapter extends BaseAdapter {
             String name;
             if (collaborator == null) {
                 name = mContext.getString(R.string.box_sharesdk_another_person);
-                setInitialsThumb(holder.initialsView, "");
+                SdkUtils.setInitialsThumb(mContext, holder.initialsView, "");
             } else {
                 name = collaborator.getName();
-                setInitialsThumb(holder.initialsView, name);
+                SdkUtils.setInitialsThumb(mContext, holder.initialsView, name);
             }
             String description = collaboration.getStatus() == BoxCollaboration.Status.ACCEPTED ?
                     CollaborationUtils.getRoleName(mContext, collaboration.getRole()) :
@@ -81,22 +97,25 @@ public class CollaboratorsAdapter extends BaseAdapter {
             holder.roleView.setText(description);
         }
 
+        if (isEnabled(position)){
+            convertView.setAlpha(1f);
+        } else {
+            convertView.setAlpha(.25f);
+        }
+
         return convertView;
     }
 
-    public synchronized void setItems(Collection<BoxCollaboration> items) {
+    public synchronized void setItems(BoxIteratorCollaborations items) {
         mItems.clear();
-        mPositionMap.clear();
-        BoxCollaboration[] itemsArr = items.toArray(new BoxCollaboration[items.size()]);
-        for (int i = 0; i < itemsArr.length; ++i) {
-            mItems.add(itemsArr[i]);
-            mPositionMap.put(itemsArr[i].getId(), i);
+        for (int i = 0; i < items.size(); i++) {
+            mItems.add(items.get(i));
         }
         notifyDataSetChanged();
     }
 
     public synchronized void update(BoxCollaboration item) {
-        Integer position = mPositionMap.get(item.getId());
+        Integer position = getPosition(item.getId());
         if (position != null) {
             mItems.set(position.intValue(), item);
         }
@@ -104,11 +123,22 @@ public class CollaboratorsAdapter extends BaseAdapter {
     }
 
     public synchronized void delete(String collabId) {
-        Integer position = mPositionMap.get(collabId);
+        Integer position = getPosition(collabId);
         if (position != null) {
             mItems.remove(position.intValue());
         }
         notifyDataSetChanged();
+    }
+
+    public Integer getPosition(String id) {
+        Integer position = null;
+        for (int i = 0; i < mItems.size(); i++) {
+            if (mItems.get(i).getId().equals(id)) {
+                position = i;
+                break;
+            }
+        }
+        return position;
     }
 
     public static class ViewHolder {
@@ -116,29 +146,5 @@ public class CollaboratorsAdapter extends BaseAdapter {
         public TextView roleView;
         public TextView initialsView;
         public BoxCollaboration collaboration;
-    }
-
-    public void setInitialsThumb(TextView initialsView, String fullName) {
-        char initial1 = '\u0000';
-        char initial2 = '\u0000';
-        if (fullName != null) {
-            String[] nameParts = fullName.split(" ");
-            if (nameParts[0].length() > 0) {
-                initial1 = nameParts[0].charAt(0);
-            }
-            if (nameParts.length > 1) {
-                initial2 = nameParts[nameParts.length - 1].charAt(0);
-            }
-        }
-        Drawable drawable = initialsView.getResources().getDrawable(R.drawable.thumb_background);
-        drawable.setColorFilter(THUMB_COLORS[(initial1 + initial2) % THUMB_COLORS.length], PorterDuff.Mode.MULTIPLY);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-            initialsView.setBackground(drawable);
-        } else {
-            initialsView.setBackgroundDrawable(drawable);
-        }
-        initialsView.setText(initial1 + "" + initial2);
-        initialsView.setTextAppearance(mContext, R.style.TextAppearance_AppCompat_Subhead);
-        initialsView.setTextColor(mContext.getResources().getColor(R.color.box_sharesdk_background));
     }
 }

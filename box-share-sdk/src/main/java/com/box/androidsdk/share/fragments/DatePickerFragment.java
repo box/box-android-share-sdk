@@ -1,22 +1,23 @@
 package com.box.androidsdk.share.fragments;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.DatePicker;
+
+import com.box.androidsdk.share.R;
 
 import java.util.Calendar;
 import java.util.Date;
 
 
-public class DatePickerFragment extends DialogFragment
-        implements DatePickerDialog.OnDateSetListener, Dialog.OnDismissListener {
+public class DatePickerFragment extends PositiveNegativeDialogFragment
+        implements DatePickerDialog.OnDateSetListener, DialogInterface.OnDismissListener {
 
     DatePickerDialog mDialog;
+    private DatePickerDialog.OnDateSetListener mOnDateSetListener;
+    private DialogInterface.OnDismissListener onDismissListener;
 
     private static final String EXTRA_START_DATE = "extraStartDate";
     private final String EXTRA_KEY_YEAR = "extraYear";
@@ -26,15 +27,26 @@ public class DatePickerFragment extends DialogFragment
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        setRetainInstance(true);
+
+        mButtonClicked = false;
+
+        final Calendar minDateCalendar = Calendar.getInstance();
+        minDateCalendar.add(Calendar.DATE, 1);
         // Use the current date as the default date in the picker
         final Calendar c = Calendar.getInstance();
+
         if (getArguments() != null){
             Date date = (Date)getArguments().getSerializable(EXTRA_START_DATE);
             if (date != null) {
                 c.setTime(date);
             }
         }
-
+        // we cannot have a minimum date that is earlier than the set date.
+        if (c.getTimeInMillis() < minDateCalendar.getTimeInMillis()){
+            c.setTime(minDateCalendar.getTime());
+        }
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
@@ -44,9 +56,14 @@ public class DatePickerFragment extends DialogFragment
             month = savedInstanceState.getInt(EXTRA_KEY_MONTH);
             day = savedInstanceState.getInt(EXTRA_KEY_DAY);
         }
-        mDialog = new DatePickerDialog(getActivity(), this, year, month, day);
+        mDialog = new DatePickerDialog(getActivity(), R.style.ShareDialogTheme, this, year, month, day);
+        mDialog.getDatePicker().setMinDate(minDateCalendar.getTimeInMillis());
         // Create a new instance of DatePickerDialog and return it
         return mDialog;
+    }
+
+    public void setOnDateSetListener(DatePickerDialog.OnDateSetListener listener) {
+        mOnDateSetListener = listener;
     }
 
     @Override
@@ -64,27 +81,32 @@ public class DatePickerFragment extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        Activity activity = getActivity();
-        if (activity instanceof DatePickerDialog.OnDateSetListener){
-            ((DatePickerDialog.OnDateSetListener) activity).onDateSet(view, year, month, day);
+        mButtonClicked = true;
+        if (mOnDateSetListener != null){
+            mOnDateSetListener.onDateSet(view, year, month, day);
         }
     }
+
 
     @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        Activity activity = getActivity();
-        if (activity instanceof DialogInterface.OnDismissListener){
-            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
-        }
+    public void onDestroyView()
+    {
+        Dialog dialog = getDialog();
+
+        // Work around bug: http://code.google.com/p/android/issues/detail?id=17423
+        if ((dialog != null) && getRetainInstance())
+            dialog.setDismissMessage(null);
+
+        super.onDestroyView();
     }
 
-
-    public static final DatePickerFragment createFragment(final Date date){
+    public static final DatePickerFragment createFragment(final Date date, DatePickerDialog.OnDateSetListener dateSetListener, OnPositiveOrNegativeButtonClickedListener listener){
         DatePickerFragment fragment = new DatePickerFragment();
         Bundle b = new Bundle();
         b.putSerializable(EXTRA_START_DATE, date);
         fragment.setArguments(b);
+        fragment.setOnDateSetListener(dateSetListener);
+        fragment.setOnPositiveOrNegativeButtonClickedListener(listener);
         return fragment;
     }
 }

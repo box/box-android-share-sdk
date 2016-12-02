@@ -2,28 +2,35 @@ package com.box.androidsdk.sample;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxConfig;
-import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.models.BoxEntity;
 import com.box.androidsdk.content.models.BoxError;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
-import com.box.androidsdk.content.models.BoxListCollaborations;
-import com.box.androidsdk.content.models.BoxListItems;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
+import com.box.androidsdk.content.models.BoxIteratorItems;
+import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxSharedLink;
-import com.box.androidsdk.share.activities.BoxCollaborationsActivity;
+import com.box.androidsdk.share.activities.BoxActivity;
+import com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity;
 import com.box.androidsdk.share.activities.BoxSharedLinkActivity;
 
-import org.apache.http.HttpStatus;
-
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
+
+import static com.box.androidsdk.sample.R.id.launchCollabs;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -39,11 +46,18 @@ public class MainActivity extends ActionBarActivity {
 
     private ProgressDialog mDialog;
 
+    Button mShareBtn;
+    Button mCollabsBtn;
+    Button mCreateSampleFolderBtn;
+    TextView mChooseActionTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setTitle(R.string.box_sharesdk_sample_name);
+
         BoxConfig.IS_LOG_ENABLED = true;
         BoxConfig.CLIENT_ID = "your_client_id";
         BoxConfig.CLIENT_SECRET = "your_client_secret";
@@ -62,6 +76,18 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void initialize(){
+        Typeface font = Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
+        mShareBtn = (Button)  findViewById(R.id.launchShare);
+        mCollabsBtn = (Button)  findViewById(launchCollabs);
+        mCreateSampleFolderBtn = (Button)  findViewById(R.id.createSampleFolder);
+        mChooseActionTv = (TextView) findViewById(R.id.chooseAction);
+
+        mShareBtn.setTypeface(font);
+        mCollabsBtn.setTypeface(font);
+        mCreateSampleFolderBtn.setTypeface(font);
+        mChooseActionTv.setTypeface(font, Typeface.ITALIC);
+        mChooseActionTv.setText(getString(R.string.box_sharesdk_sample_choose_action) + " \"" + SHARE_SAMPLE_FOLDER_NAME + "\"");
+
         mSession = new BoxSession(this);
         mSession.authenticate();
         mFolderApi = new BoxApiFolder(mSession);
@@ -76,7 +102,7 @@ public class MainActivity extends ActionBarActivity {
                     setSampleFolder(mFolderApi.getCreateRequest("0", SHARE_SAMPLE_FOLDER_NAME).send());
                 } catch (BoxException e){
                     BoxError error = e.getAsBoxError();
-                    if (error != null && error.getStatus() == HttpStatus.SC_CONFLICT){
+                    if (error != null && error.getStatus() == HttpURLConnection.HTTP_CONFLICT){
                         ArrayList<BoxEntity> conflicts = error.getContextInfo().getConflicts();
                         if (conflicts != null && conflicts.size() == 1 && conflicts.get(0) instanceof BoxFolder){
                             setSampleFolder( (BoxFolder)conflicts.get(0));
@@ -96,15 +122,15 @@ public class MainActivity extends ActionBarActivity {
             public void run() {
                 mSampleFolder = folder;
                 if (mSampleFolder == null){
-                    findViewById(R.id.launchShare).setVisibility(View.GONE);
-                    findViewById(R.id.launchCollabs).setVisibility(View.GONE);
-                    findViewById(R.id.removeSampleFolder).setVisibility(View.GONE);
-                    findViewById(R.id.createSampleFolder).setVisibility(View.VISIBLE);
+                    mShareBtn.setVisibility(View.GONE);
+                    mCollabsBtn.setVisibility(View.GONE);
+                    mChooseActionTv.setVisibility(View.GONE);
+                    mCreateSampleFolderBtn.setVisibility(View.VISIBLE);
                 } else {
-                    findViewById(R.id.launchShare).setVisibility(View.VISIBLE);
-                    findViewById(R.id.launchCollabs).setVisibility(View.VISIBLE);
-                    findViewById(R.id.removeSampleFolder).setVisibility(View.VISIBLE);
-                    findViewById(R.id.createSampleFolder).setVisibility(View.GONE);
+                    mShareBtn.setVisibility(View.VISIBLE);
+                    mCollabsBtn.setVisibility(View.VISIBLE);
+                    mChooseActionTv.setVisibility(View.VISIBLE);
+                    mCreateSampleFolderBtn.setVisibility(View.GONE);
                 }
             }
         });
@@ -135,7 +161,7 @@ public class MainActivity extends ActionBarActivity {
      */
     public void onInvitePeopleButtonClick(final View view){
         if (mSampleFolder != null)
-            startActivityForResult(BoxCollaborationsActivity.getLaunchIntent(this, mSampleFolder, mSession), REQUEST_CODE_INVITE_PEOPLE);
+            startActivityForResult(BoxInviteCollaboratorsActivity.getLaunchIntent(this, mSampleFolder, mSession), REQUEST_CODE_INVITE_PEOPLE);
     }
 
     private void deleteSampleFolder(){
@@ -146,7 +172,7 @@ public class MainActivity extends ActionBarActivity {
                     if (mSampleFolder != null){
                         mFolderApi.getDeleteRequest(mSampleFolder.getId()).send();
                     } else {
-                        BoxListItems items = mFolderApi.getItemsRequest("0").send();
+                        BoxIteratorItems items = mFolderApi.getItemsRequest("0").send();
                         for (BoxItem item : items){
                             if (item.getName().equals(SHARE_SAMPLE_FOLDER_NAME)){
                                 mSampleFolder = (BoxFolder)item;
@@ -175,7 +201,7 @@ public class MainActivity extends ActionBarActivity {
         if (requestCode == REQUEST_CODE_SHARE_LINK){
             if (data != null){
                 // update current data to the latest one returned from the shared link creation.
-                mSampleFolder = (BoxFolder) BoxSharedLinkActivity.createResultInterpreter(data).getBoxItem();
+                mSampleFolder = (BoxFolder) new BoxActivity.ResultInterpreter(data).getBoxItem();
                 // if your user created or modified a shared link during this flow you can use it for your own purposes.
                 BoxSharedLink link = mSampleFolder.getSharedLink();
                 if (link != null) {
@@ -186,14 +212,31 @@ public class MainActivity extends ActionBarActivity {
         else if (requestCode == REQUEST_CODE_INVITE_PEOPLE){
             if (data != null){
                 // update current data to the latest one returned from the shared link creation.
-                mSampleFolder = (BoxFolder) BoxCollaborationsActivity.createResultInterpreter(data).getBoxItem();
+                mSampleFolder = (BoxFolder) new BoxActivity.ResultInterpreter(data).getBoxItem();
                 // if your user created or removed collaborations during this flow you can use this list for your own purposes.
-                BoxListCollaborations collaborations = BoxCollaborationsActivity.createResultInterpreter(data).getCollaborations();
+                BoxIteratorCollaborations collaborations = new BoxActivity.ResultInterpreter(data).getCollaborations();
                 if (collaborations != null) {
                     Toast.makeText(this, "Number of collaborators: " + collaborations.size(), Toast.LENGTH_LONG).show();
                 }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.removeSampleFolder) {
+            deleteSampleFolder();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
