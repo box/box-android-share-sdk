@@ -2,13 +2,13 @@ package com.box.androidsdk.sample;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +30,6 @@ import com.box.androidsdk.share.activities.BoxSharedLinkActivity;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
-import static com.box.androidsdk.sample.R.id.launchCollabs;
-
 public class MainActivity extends ActionBarActivity {
 
     private static int REQUEST_CODE_SHARE_LINK = 100;
@@ -50,6 +48,8 @@ public class MainActivity extends ActionBarActivity {
     Button mCollabsBtn;
     Button mCreateSampleFolderBtn;
     TextView mChooseActionTv;
+    LinearLayout mCreateSampleFolderContainer;
+    LinearLayout mShareActionsContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,17 +76,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void initialize(){
-        Typeface font = Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
+        mCreateSampleFolderContainer = (LinearLayout) findViewById(R.id.createSampleFolderContainer);
+        mShareActionsContainer = (LinearLayout) findViewById(R.id.shareActionsContainer);
         mShareBtn = (Button)  findViewById(R.id.launchShare);
-        mCollabsBtn = (Button)  findViewById(launchCollabs);
+        mCollabsBtn = (Button)  findViewById(R.id.launchCollabs);
         mCreateSampleFolderBtn = (Button)  findViewById(R.id.createSampleFolder);
         mChooseActionTv = (TextView) findViewById(R.id.chooseAction);
 
-        mShareBtn.setTypeface(font);
-        mCollabsBtn.setTypeface(font);
-        mCreateSampleFolderBtn.setTypeface(font);
-        mChooseActionTv.setTypeface(font, Typeface.ITALIC);
-        mChooseActionTv.setText(getString(R.string.box_sharesdk_sample_choose_action) + " \"" + SHARE_SAMPLE_FOLDER_NAME + "\"");
+        mChooseActionTv.setText(getString(R.string.box_sharesdk_sample_choose_action, SHARE_SAMPLE_FOLDER_NAME));
 
         mSession = new BoxSession(this);
         mSession.authenticate();
@@ -122,15 +119,11 @@ public class MainActivity extends ActionBarActivity {
             public void run() {
                 mSampleFolder = folder;
                 if (mSampleFolder == null){
-                    mShareBtn.setVisibility(View.GONE);
-                    mCollabsBtn.setVisibility(View.GONE);
-                    mChooseActionTv.setVisibility(View.GONE);
-                    mCreateSampleFolderBtn.setVisibility(View.VISIBLE);
+                    mCreateSampleFolderContainer.setVisibility(View.VISIBLE);
+                    mShareActionsContainer.setVisibility(View.GONE);
                 } else {
-                    mShareBtn.setVisibility(View.VISIBLE);
-                    mCollabsBtn.setVisibility(View.VISIBLE);
-                    mChooseActionTv.setVisibility(View.VISIBLE);
-                    mCreateSampleFolderBtn.setVisibility(View.GONE);
+                    mCreateSampleFolderContainer.setVisibility(View.GONE);
+                    mShareActionsContainer.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -139,11 +132,6 @@ public class MainActivity extends ActionBarActivity {
 
     public void onCreateSampleClick(final View view){
         createOrFindTestFolder();
-    }
-
-
-    public void onRemoveSampleClick(final View view){
-        deleteSampleFolder();
     }
 
     /**
