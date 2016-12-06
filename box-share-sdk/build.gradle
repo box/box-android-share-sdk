@@ -8,8 +8,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 10001
-        versionName "1.0.1-SNAPSHOT"
-        version "1.0.1-SNAPSHOT"
+        versionName "2.0.2-SNAPSHOT"
+        version "2.0.2-SNAPSHOT"
         group "com.box"
     }
     buildTypes {
