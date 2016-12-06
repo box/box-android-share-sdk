@@ -7,30 +7,58 @@
     android:animateLayoutChanges="true"
     android:paddingBottom="@dimen/box_sharesdk_horizontal_margin" tools:context=".MainActivity">
 
-    <Button
-        style="@style/ButtonAppTheme"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:visibility="gone"
-        android:text="@string/box_sharesdk_title_share_link"
-        android:onClick="onShareLinkButtonClick"
-        android:id="@+id/launchShare" />
-    <Button
-        android:text="@string/box_sharesdk_invite_collaborators"
-        android:visibility="gone"
-        android:onClick="onInvitePeopleButtonClick"
-        style="@style/ButtonAppTheme"
-        android:id="@+id/launchCollabs" />
-    <Button
-        android:text="@string/create_sample_folder"
-        android:visibility="gone"
-        android:onClick="onCreateSampleClick"
-        style="@style/ButtonAppTheme"
-        android:id="@+id/createSampleFolder" />
+        android:id="@+id/createSampleFolderContainer">
 
-    <Button
-        android:text="@string/remove_sample_folder"
+        <Button
+            style="@style/RaisedButton"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:text="@string/create_sample_folder"
+            android:onClick="onCreateSampleClick"
+            android:id="@+id/createSampleFolder" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:visibility="gone"
-        android:onClick="onRemoveSampleClick"
-        style="@style/ButtonAppTheme"
-        android:id="@+id/removeSampleFolder" />
+        android:orientation="vertical"
+        android:id="@+id/shareActionsContainer">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:text="@string/box_sharesdk_sample_name"
+            android:textColor="@color/box_sharesdk_primary_dark"
+            android:id="@+id/chooseAction" />
+
+        <Button
+            style="@style/RaisedButton"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:text="@string/box_sharesdk_title_share_link"
+            android:onClick="onShareLinkButtonClick"
+            android:id="@+id/launchShare" />
+
+        <Button
+            style="@style/RaisedButton"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:text="@string/box_sharesdk_invite_collaborators"
+            android:onClick="onInvitePeopleButtonClick"
+            android:id="@+id/launchCollabs" />
+
+    </LinearLayout>
 
 </LinearLayout>

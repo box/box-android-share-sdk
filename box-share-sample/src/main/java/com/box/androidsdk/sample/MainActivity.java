@@ -2,16 +2,18 @@ package com.box.androidsdk.sample;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxConfig;
-import com.box.androidsdk.content.models.BoxIteratorCollaborations;
-import com.box.androidsdk.content.models.BoxIteratorItems;
-import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.models.BoxEntity;
 import com.box.androidsdk.content.models.BoxError;
@@ -19,10 +21,9 @@ import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxIteratorItems;
+import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxSharedLink;
-import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.activities.BoxActivity;
-import com.box.androidsdk.share.activities.BoxCollaborationsActivity;
 import com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity;
 import com.box.androidsdk.share.activities.BoxSharedLinkActivity;
 
@@ -43,11 +44,20 @@ public class MainActivity extends ActionBarActivity {
 
     private ProgressDialog mDialog;
 
+    Button mShareBtn;
+    Button mCollabsBtn;
+    Button mCreateSampleFolderBtn;
+    TextView mChooseActionTv;
+    LinearLayout mCreateSampleFolderContainer;
+    LinearLayout mShareActionsContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setTitle(R.string.box_sharesdk_sample_name);
+
         BoxConfig.IS_LOG_ENABLED = true;
         BoxConfig.CLIENT_ID = "your_client_id";
         BoxConfig.CLIENT_SECRET = "your_client_secret";
@@ -66,6 +76,15 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void initialize(){
+        mCreateSampleFolderContainer = (LinearLayout) findViewById(R.id.createSampleFolderContainer);
+        mShareActionsContainer = (LinearLayout) findViewById(R.id.shareActionsContainer);
+        mShareBtn = (Button)  findViewById(R.id.launchShare);
+        mCollabsBtn = (Button)  findViewById(R.id.launchCollabs);
+        mCreateSampleFolderBtn = (Button)  findViewById(R.id.createSampleFolder);
+        mChooseActionTv = (TextView) findViewById(R.id.chooseAction);
+
+        mChooseActionTv.setText(getString(R.string.box_sharesdk_sample_choose_action, SHARE_SAMPLE_FOLDER_NAME));
+
         mSession = new BoxSession(this);
         mSession.authenticate();
         mFolderApi = new BoxApiFolder(mSession);
@@ -100,15 +119,11 @@ public class MainActivity extends ActionBarActivity {
             public void run() {
                 mSampleFolder = folder;
                 if (mSampleFolder == null){
-                    findViewById(R.id.launchShare).setVisibility(View.GONE);
-                    findViewById(R.id.launchCollabs).setVisibility(View.GONE);
-                    findViewById(R.id.removeSampleFolder).setVisibility(View.GONE);
-                    findViewById(R.id.createSampleFolder).setVisibility(View.VISIBLE);
+                    mCreateSampleFolderContainer.setVisibility(View.VISIBLE);
+                    mShareActionsContainer.setVisibility(View.GONE);
                 } else {
-                    findViewById(R.id.launchShare).setVisibility(View.VISIBLE);
-                    findViewById(R.id.launchCollabs).setVisibility(View.VISIBLE);
-                    findViewById(R.id.removeSampleFolder).setVisibility(View.VISIBLE);
-                    findViewById(R.id.createSampleFolder).setVisibility(View.GONE);
+                    mCreateSampleFolderContainer.setVisibility(View.GONE);
+                    mShareActionsContainer.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -117,11 +132,6 @@ public class MainActivity extends ActionBarActivity {
 
     public void onCreateSampleClick(final View view){
         createOrFindTestFolder();
-    }
-
-
-    public void onRemoveSampleClick(final View view){
-        deleteSampleFolder();
     }
 
     /**
@@ -199,5 +209,22 @@ public class MainActivity extends ActionBarActivity {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.removeSampleFolder) {
+            deleteSampleFolder();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

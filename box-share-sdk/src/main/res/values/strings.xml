@@ -1,5 +1,7 @@
 <resources>
     <string name="box_sharesdk_name">Share</string>
+    <string name="box_sharesdk_sample_name" description="Title of share SDK sample app">Share SDK Sample</string>
+    <string name="box_sharesdk_sample_choose_action" description="description of available actions for a folder">Choose action for \"%s\"</string>
     <string name="box_sharesdk_shared_with">Shared With</string>
     <string name="box_sharesdk_invite_collaborators">Invite People</string>
     <string name="box_sharesdk_session_is_not_authenticated">Session is not authenticated</string>

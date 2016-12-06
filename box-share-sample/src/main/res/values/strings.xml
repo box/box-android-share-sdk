@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">BoxShareSampleApp</string>
-    <string name="create_sample_folder">Create SDK Sample Folder</string>
-    <string name="remove_sample_folder">Remove SDK Sample Folder</string>
+    <string name="create_sample_folder" description="Text for btn that creates sample folder on box">Create SDK Sample Folder</string>
+    <string name="remove_sample_folder" description="Text for menu option to remove sample folder">Remove Sample Folder</string>
 
 </resources>
