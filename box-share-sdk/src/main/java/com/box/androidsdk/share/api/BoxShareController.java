@@ -66,6 +66,13 @@ public class BoxShareController implements ShareController {
         return shareFieldsArray;
     }
 
+    /**
+     * Gets information about given box item
+     *
+     * @param boxItem Box item object passed by the caller (eg. file, folder and bookmark)
+     * @return an instance of BoxFutureTask that asynchronously executes a request to obtain
+     *         info about a box item
+     */
     @Override
     public BoxFutureTask<BoxItem> fetchItemInfo(BoxItem boxItem) {
         BoxRequest request = null;
@@ -83,9 +90,10 @@ public class BoxShareController implements ShareController {
     }
 
     /**
-     * Gets the request to create a shared link with
+     * Gets shared link update request for given box item
      *
-     * @return the shared link update request
+     * @param boxItem Box item object passed by the caller (eg. file, folder and bookmark)
+     * @return The shared link update request
      */
     @Override
     public BoxRequestUpdateSharedItem getCreatedSharedLinkRequest(BoxItem boxItem){
@@ -100,12 +108,26 @@ public class BoxShareController implements ShareController {
         return null;
     }
 
+    /**
+     * Gets the default shared link for an item
+     *
+     * @param boxItem Box item object passed by the caller (eg. file, folder and bookmark)
+     * @return instance of BoxFutureTask that asynchronously executes a request to create
+     *         default shared link
+     */
     @Override
     public BoxFutureTask<BoxItem> createDefaultSharedLink(BoxItem boxItem) {
         BoxRequest request = getCreatedSharedLinkRequest(boxItem);
         return executeRequest(BoxItem.class, request);
     }
 
+    /**
+     * Disables share link for a box item
+     *
+     * @param boxItem Box item object passed by the caller (eg. file, folder and bookmark)
+     * @return instance of BoxFutureTask that asynchronously executes a request to disable
+     *         the shared link
+     */
     @Override
     public BoxFutureTask<BoxItem> disableShareLink(BoxItem boxItem) {
         BoxRequest request = null;
@@ -120,6 +142,13 @@ public class BoxShareController implements ShareController {
         return executeRequest(BoxItem.class, request);
     }
 
+    /**
+     * Gets the collaborations on a box folder
+     *
+     * @param boxFolder Box folder for which collaborations need to be fetched
+     * @return instance of BoxFutureTask that asynchronously executes a request to fetch
+     *         collaborations on box folder
+     */
     @Override
     public BoxFutureTask<BoxIteratorCollaborations> fetchCollaborations(BoxFolder boxFolder) {
         BoxFutureTask<BoxIteratorCollaborations> task = mFolderApi
@@ -128,6 +157,13 @@ public class BoxShareController implements ShareController {
         return task;
     }
 
+    /**
+     * Gets a list of roles allowed for folder collaboration invitees
+     *
+     * @param boxFolder Box folder for which roles need to be fetched
+     * @return instance of BoxFutureTask that asynchronously executes a request to fetch roles
+     *         of invitees for folder collaboration
+     */
     @Override
     public BoxFutureTask<BoxFolder> fetchRoles(BoxFolder boxFolder) {
         BoxFutureTask<BoxFolder> task = mFolderApi.getInfoRequest(boxFolder.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES).toTask();
@@ -135,6 +171,14 @@ public class BoxShareController implements ShareController {
         return task;
     }
 
+    /**
+     * Updates collaboration with the new selected role
+     *
+     * @param collaboration The collaboration that needs to be updated
+     * @param selectedRole New role selected for collaboration
+     * @return instance of BoxFutureTask that asynchronously executes a request to update
+     *         collaborations with new role
+     */
     @Override
     public BoxFutureTask<BoxCollaboration> updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role selectedRole) {
         BoxFutureTask<BoxCollaboration> task = mCollabApi.getUpdateRequest(collaboration.getId()).setNewRole(selectedRole).toTask();
@@ -142,6 +186,13 @@ public class BoxShareController implements ShareController {
         return task;
     }
 
+    /**
+     * Changes role to owner given a collaboration object
+     *
+     * @param collaboration The collaboration that needs to be updated
+     * @return instance of BoxFutureTask that asynchronously executes a request to update
+     *         the collaboration role to owner
+     */
     @Override
     public BoxFutureTask<BoxVoid> updateOwner(BoxCollaboration collaboration) {
         BoxFutureTask<BoxVoid> task = mCollabApi.getUpdateOwnerRequest(collaboration.getId()).toTask();
@@ -149,6 +200,13 @@ public class BoxShareController implements ShareController {
         return task;
     }
 
+    /**
+     * Deletes the given collaboration
+     *
+     * @param collaboration Collaboration that needs to be deleted
+     * @return instance of BoxFutureTask that asynchronously executes a request to delete the
+     *         collaboration
+     */
     @Override
     public BoxFutureTask<BoxVoid> deleteCollaboration(BoxCollaboration collaboration) {
         BoxFutureTask<BoxVoid> task = mCollabApi.getDeleteRequest(collaboration.getId()).toTask();
@@ -156,6 +214,15 @@ public class BoxShareController implements ShareController {
         return task;
     }
 
+    /**
+     * Adds a list of users as collaborators to a folder by using their emails
+     *
+     * @param boxFolder Box Folder to be collaborated upon
+     * @param selectedRole Role for folder collaboration
+     * @param emails Emails of collaborators
+     * @return instance of BoxFutureTask that asynchronously executes a batch request to add
+     *         collaborators on a given folder
+     */
     @Override
     public BoxFutureTask<BoxResponseBatch> addCollaborations(BoxFolder boxFolder, BoxCollaboration.Role selectedRole, String[] emails) {
         BoxRequestBatch batchRequest = new BoxRequestBatch();
@@ -171,6 +238,14 @@ public class BoxShareController implements ShareController {
         return task;
     }
 
+    /**
+     * Gets invitees for a given box folder
+     *
+     * @param boxFolder Given Box folder
+     * @param filter Filter to fine tune the list of invitee, caller is looking for
+     * @return instance of BoxFutureTask that asynchronously executes a request to get list of
+     *         invitees for a given box folder
+     */
     @Override
     public BoxFutureTask<BoxIteratorInvitees> getInvitees(BoxFolder boxFolder, String filter) {
         BoxFutureTask<BoxIteratorInvitees> task = mInviteeApi.getInviteesRequest(boxFolder.getId()).setFilterTerm(filter).toTask();
@@ -178,6 +253,13 @@ public class BoxShareController implements ShareController {
         return task;
     }
 
+    /**
+     * Executes a request on given Box model object
+     *
+     * @param clazz Name of Box model class
+     * @param request BoxRequest object
+     * @return instance of BoxFutureTask that asynchronously executes a request to complete the task
+     */
     @Override
     public <E extends BoxObject> BoxFutureTask<E> executeRequest(Class<E> clazz, BoxRequest request) {
         BoxFutureTask<E> task = new BoxFutureTask<E>(clazz, request);
@@ -195,6 +277,11 @@ public class BoxShareController implements ShareController {
         showToast(context, context.getResources().getText(resId));
     }
 
+    /**
+     * Get a list of supported features for the user
+     *
+     * @return instance of BoxFutureTask that asynchronously executes a request to fetch the supported features
+     */
     @Override
     public BoxFutureTask<BoxFeatures> getSupportedFeatures() {
         BoxFutureTask<BoxFeatures> task = mFeaturesApi.getSupportedFeatures().toTask();
