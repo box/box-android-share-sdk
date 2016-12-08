@@ -6,6 +6,14 @@
         <item name="android:buttonStyle">@style/ButtonAppTheme</item>
     </style>
 
+    <style name="ShareDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/box_sharesdk_background</item>
+        <item name="colorPrimaryDark">@color/box_sharesdk_primary_dark</item>
+        <item name="colorAccent">@color/box_sharesdk_accent</item>
+        <item name="android:minWidth">@dimen/box_sharesdk_dialog_minWidth</item>
+        <item name="android:buttonStyle">@style/ButtonAppTheme</item>
+    </style>
+
     <style name="ButtonAppTheme" parent="android:Widget.Material.Button.Borderless">
         <item name="android:background">@drawable/box_ripple_btn</item>
         <item name="android:ellipsize">end</item>

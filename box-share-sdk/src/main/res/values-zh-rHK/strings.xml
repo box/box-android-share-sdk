@@ -1,88 +1,101 @@
 <resources>
-    <string name="box_sharesdk_name">共享</string>
-    <string name="box_sharesdk_shared_with">已与以下人员共享</string>
-    <string name="box_sharesdk_invite_collaborators">邀请协作者</string>
-    <string name="box_sharesdk_session_is_not_authenticated">会话未验证</string>
-    <string name="box_sharesdk_no_item_selected">未选择项目</string>
-    <string name="box_sharesdk_copy_link" description="button to copy link to clipboard">复制链接</string>
-    <string name="box_sharesdk_send_link" description="button to send link to another application">发送链接</string>
-    <string name="box_sharesdk_accessible_public" description="description for public access">拥有此链接的协作者可访问</string>
-    <string name="box_sharesdk_accessible_company" description="description for company access">公司内部的协作者可访问</string>
-    <string name="box_sharesdk_accessible_collaborator" description="description for collaborator access">已共享本文件夹的协作者可访问</string>
-    <string name="box_sharesdk_password_protected" description="description for if a shared link is password proceted">密码受保护</string>
-    <string name="box_sharesdk_password_unprotected" description="description for if a shared link is not password proceted">无密码</string>
+    <string name="box_sharesdk_name">共用</string>
+    <string name="box_sharesdk_shared_with">共用對象</string>
+    <string name="box_sharesdk_invite_collaborators">邀請合作者</string>
+    <string name="box_sharesdk_session_is_not_authenticated">工作階段未驗證</string>
+    <string name="box_sharesdk_no_item_selected">未選擇項目</string>
+    <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">複製連結</string>
+    <string description="button to send link to another application" name="box_sharesdk_send_link">傳送連結</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">有連結的人可存取</string>
+    <string description="description for company access" name="box_sharesdk_accessible_company">公司中的人可存取</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">共用資料夾的人可存取</string>
+    <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">受密碼保護</string>
+    <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">無密碼</string>
 
-    <string name="box_sharesdk_share_link_enabled" description="shown if share link is enabled">已启用共享链接</string>
-    <string name="box_sharesdk_share_link_disabled" description="shown if share link is disabled">已禁用共享链接</string>
-    <string name="box_sharesdk_downloads_allowed" description="shown if user has permission to download link">允许下载</string>
-    <string name="box_sharesdk_downloads_disabled" description="shown if user has permission to download link">禁用下载</string>
-    <string name="box_sharesdk_link_expires_not_set" description="shown if no expiration time is set">无到期日</string>
-    <string name="box_sharesdk_link_expires_on_x_date" description="start of the string telling when link expires">链接将于 %1$s 到期</string>
-    <string name="box_sharesdk_edit_link_access" description="button to change access properties of link">编辑链接访问</string>
-    <string name="box_sharesdk_cancel" description="button to cancel an action">取消</string>
-    <string name="box_sharesdk_ok" description="button to cancel an action">确认</string>
-    <string name="box_sharesdk_disable_share_link" description="button to disable a shared link">禁用共享链接</string>
-    <string name="box_sharesdk_disable_title" description="shown as title of warning dialog before disabling a shared link">是否禁用共享链接？</string>
-    <string name="box_sharesdk_disable_message" description="shown as message of warning dialog before disabling a shared link">禁用此链接将永久删除当前的共享链接。重新启用此链接将生成一个全新的唯一共享链接。您是否想要禁用此共享链接？</string>
-    <string name="box_sharesdk_link_access" description="separates ui between the shared link box and options to change access">链接访问</string>
-    <string name="box_sharesdk_access" description="header for different access types">访问</string>
-    <string name="box_sharesdk_access_public" description="description for public access">拥有链接的协作者</string>
-    <string name="box_sharesdk_access_company" description="description for company access">公司内部的协作者</string>
-    <string name="box_sharesdk_access_collaborator" description="description for collaborator access">共享了该文件夹的协作者</string>
-    <string name="box_sharesdk_allow_downloads" description="toggle of whether to allow downloading">允许下载</string>
-    <string name="box_sharesdk_password" description="header for password section">密码</string>
-    <string name="box_sharesdk_set_password" description="hint for password dialog">设置密码</string>
-    <string name="box_sharesdk_require_password" description="toggle of using password or not">需要密码</string>
-    <string name="box_sharesdk_link_expiration" description="header for link expiration section">链接到期</string>
-    <string name="box_sharesdk_link_expire_link" description="toggle of whether to expire links">链接到期</string>
-    <string name="box_sharesdk_expire_on" description="header for date link expires">于下列日期到期</string>
-    <string name="box_sharesdk_problem_accessing_this_shared_link" description="Description shown when there is a problem with a shared link">访问此共享链接时出现问题。</string>
-    <string name="box_sharesdk_unable_to_modify" description="Toast shown if there is a problem modifying the shared link">修改/创建此链接时出现问题。</string>
-    <string name="box_sharesdk_unable_to_modify_toast" description="Toast shown if there is a problem modifying the shared link">修改/创建此链接时出现问题。.</string>
-    <string name="box_sharesdk_title_link_access">链接访问</string>
-    <string name="box_sharesdk_title_share_link">共享链接</string>
-    <string name="box_sharesdk_no_shared_link_instructions" description="description shown when there is no shared link enabled">启用链接会生成一个可共享的链接，其他人员使用此链接可访问和查看这些内容。</string>
-    <string name="box_sharesdk_link_copied_to_clipboard" description="toast after copying a link using copy link button">将链接复制到剪贴板。</string>
-    <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">我在 Box 上与您共享了  \'%1$s\' 。</string>
-    <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">通过以下方式发送：</string>
-    <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">网络出错。请重试。</string>
+    <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">共用連結已啟用</string>
+    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">共用連結已停用</string>
+    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">允許下載</string>
+    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">停用下載</string>
+    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">無到期日</string>
+    <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">連結會在 %1$s 到期</string>
+    <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">編輯連結存取權限</string>
+    <string description="button to cancel an action" name="box_sharesdk_cancel">取消</string>
+    <string description="button to cancel an action" name="box_sharesdk_ok">確定</string>
+    <string description="button to disable a shared link" name="box_sharesdk_disable_share_link">停用共用連結</string>
+    <string description="shown as title of warning dialog before disabling a shared link" name="box_sharesdk_disable_title">停用共用連結？</string>
+    <string description="shown as message of warning dialog before disabling a shared link" name="box_sharesdk_disable_message">永久停用連結將會刪除目前的共用連結。再次啟用連結時將會產生一個全新且獨一的共用連結。是否要停用共用連結？</string>
+    <string description="separates ui between the shared link box and options to change access" name="box_sharesdk_link_access">存取權限</string>
+    <string description="header for different access types" name="box_sharesdk_access">連結存取權限</string>
+    <string description="description for public access" name="box_sharesdk_access_public">有連結的人</string>
+    <string description="description for company access" name="box_sharesdk_access_company">您公司的人</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">共用資料夾的人員</string>
+    <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">允許下載</string>
+    <string description="header for password section" name="box_sharesdk_password">密碼</string>
+    <string description="hint for password dialog" name="box_sharesdk_set_password">設定密碼</string>
+    <string description="toggle of using password or not" name="box_sharesdk_require_password">需要密碼</string>
+    <string description="header for link expiration section" name="box_sharesdk_link_expiration">連結期限</string>
+    <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">使連結到期</string>
+    <string description="header for date link expires" name="box_sharesdk_expire_on">到期時間</string>
+    <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">存取此共用連結時發生問題。</string>
+    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">修改/建立此共用的連結時發生問題。</string>
+    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">修改/建立此共用的連結時發生問題。</string>
+    <string name="box_sharesdk_title_link_access">連結存取權限</string>
+    <string name="box_sharesdk_title_share_link">共用連結</string>
+    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">啟用連結會產生一個可共用的連結，其他人可以使用此連結來存取與檢視此內容。</string>
+    <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">連結已複製至剪貼簿。</string>
+    <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">我已在 Box 上與您共用「%1$s」。</string>
+    <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">傳送方式：</string>
+    <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">發生網路錯誤。請再試一次。</string>
+
+    <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">擁有者更新</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">將此使用者設為資料夾的擁有者即表示，您會失去資料夾的所有權，並變成編輯者。是否要繼續？</string>
+
 
     <!-- menu items -->
-    <string name="box_sharesdk_refresh" description="menu item to refresh current item">刷新</string>
-    <string name="box_sharesdk_action_add" description="menu item to add a collaboration">添加</string>
+    <string description="menu item to refresh current item" name="box_sharesdk_refresh">重新整理</string>
+    <string description="menu item to add a collaboration" name="box_sharesdk_action_add">新增</string>
 
     <!-- role names -->
-    <string name="box_sharesdk_role_name_editor" description="Name of role, which is the level of permission the person will be granted">编辑者</string>
-    <string name="box_sharesdk_role_name_viewer" description="Name of role, which is the level of permission the person will be granted">查看者</string>
-    <string name="box_sharesdk_role_name_previewer" description="Name of role, which is the level of permission the person will be granted">预览者</string>
-    <string name="box_sharesdk_role_name_uploader" description="Name of role, which is the level of permission the person will be granted">上传者</string>
-    <string name="box_sharesdk_role_name_previewer_uploader" description="Name of role, which is the level of permission the person will be granted">预览者与上传者</string>
-    <string name="box_sharesdk_role_name_viewer_uploader" description="Name of role, which is the level of permission the person will be granted">查看者与上传者</string>
-    <string name="box_sharesdk_role_name_co_owner" description="Name of role, which is the level of permission the person will be granted">共有者</string>
-    <string name="box_sharesdk_role_name_owner" description="Name of role, which is the level of permission the person will be granted">所有者</string>
-    <string name="box_sharesdk_role_remove_person" description="Name of role, which is the level of permission the person will be granted">移除协作者</string>
-    <string name="box_sharesdk_invited_status" description="The status to indicate that a person was invited, but they have not accepted the collaboration request">已邀请</string>
-    <string name="box_sharesdk_rejected_status" description="The status to indicate that a person has rejected a collaboration request">已拒绝</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">編輯者</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer">檢視者</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer">預覽者</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_uploader">上傳者</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">具預覽權限的上傳者</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">具檢視權限的上傳者</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">共同擁有者</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">擁有者</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">移除人員</string>
+    <string description="The status to indicate that a person was invited, but they have not accepted the collaboration request" name="box_sharesdk_invited_status">已邀請</string>
+    <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">已拒絕</string>
 
     <!-- role descriptions -->
-    <string name="box_sharesdk_role_description_editor" description="Description of the role, which is the level of permission the person will be granted">上传、下载、预览、共享和编辑文件。</string>
-    <string name="box_sharesdk_role_description_viewer" description="Description of the role, which is the level of permission the person will be granted">下载、预览和共享文件。</string>
-    <string name="box_sharesdk_role_description_previewer" description="Description of the role, which is the level of permission the person will be granted">仅预览文件。</string>
-    <string name="box_sharesdk_role_description_uploader" description="Description of the role, which is the level of permission the person will be granted">仅上传文件。</string>
-    <string name="box_sharesdk_role_description_previewer_uploader" description="Description of the role, which is the level of permission the person will be granted">预览和上传文件。</string>
-    <string name="box_sharesdk_role_description_viewer_uploader" description="Description of the role, which is the level of permission the person will be granted">上传、下载、预览和共享文件。</string>
-    <string name="box_sharesdk_role_description_co_owner" description="Description of the role, which is the level of permission the person will be granted">与所有者享有同等权限</string>
-    <string name="box_sharesdk_role_description_owner" description="Description of the role, which is the level of permission the person will be granted">所有者</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_editor">上傳、下載、預覽、共用和編輯檔案。</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer">下載、預覽和共用檔案。</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer">僅能預覽檔案。</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">僅能上傳檔案。</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">預覽及上傳檔案。</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">上傳、下載、預覽和共用檔案。</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">與擁有者的權限相同</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_owner">擁有者</string>
 
     <!-- invite collaborators -->
-    <string name="box_sharesdk_action_send" description="Menu item for submitting the invite collaborators request">发送</string>
-    <string name="box_sharesdk_to" description="The label for the field where users will enter the collaborators they would like to invite">至</string>
-    <string name="box_sharesdk_selected_item_not_expected_type" description="Error message for when an incorrect object type is used to launch the collaborations page">选定的项目不是预期的类型</string>
-    <string name="box_sharesdk_collaborators_invited" description="Success message for inviting collaborators">已邀请协作者</string>
-    <string name="box_sharesdk_cannot_view_collaborations" description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available">您不能查看此项目的协作。</string>
-    <string name="box_sharesdk_another_person" description="Default name shown when a user without a Box account has been invited">另一位协作者</string>
-    <string name="box_sharesdk_no_collaborators" description="Message shown when no collaborators have been invited for the current folder">此文件夹没有协作者。</string>
-    <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">已邀请 %s 至此文件夹</string>
-    <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">已邀请 %s 协作者至此文件夹</string>
+    <string description="Menu item for submitting the invite collaborators request" name="box_sharesdk_action_send">傳送</string>
+    <string description="The label for the field where users will enter the collaborators they would like to invite" name="box_sharesdk_to">給</string>
+    <string description="Error message for when an incorrect object type is used to launch the collaborations page" name="box_sharesdk_selected_item_not_expected_type">選取的項目不是預期的類型</string>
+    <string description="Success message for inviting a collaborator" name="box_sharesdk_collaborator_invited">已邀請 %s</string>
+    <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">已邀請合作者</string>
+    <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">您無法檢視此項目的共同作業。</string>
+    <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">其他人</string>
+    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">此資料夾沒有合作者。</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">已邀請 %s 加入此資料夾</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">已邀請 %s 個人加入此資料夾</string>
+    <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
+    <string name="box_sharedsdk_collaborators_title">共同作業者</string>
+
+    <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">您沒有足夠的權限可以執行此動作。</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">使用者還不是此資料夾的共同作業者，因此無法設定為擁有者。</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">無法更新擁有者。請連絡支援部門。</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">無法擷取共同作業者。若問題持續發生，請連絡支援部門。</string>
+    <string name="box_sharesdk_unable_to_invite">無法邀請共同作業者。若問題持續發生，請連絡支援部門。</string>
 
 </resources>

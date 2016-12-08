@@ -1,5 +1,6 @@
 package com.box.androidsdk.share.adapters;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,26 +13,30 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.internal.BoxInvitee;
+import com.box.androidsdk.share.internal.models.BoxInvitee;
+import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
+import com.eclipsesource.json.JsonObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 
 public class InviteeAdapter extends BaseAdapter implements Filterable {
 
-    private Context mContext;
-    private final ArrayList<BoxInvitee> mInvitees = new ArrayList<BoxInvitee>();
-    private final ArrayList<BoxInvitee> mItems = new ArrayList<BoxInvitee>();
+    private class InviteeFilter extends Filter {
+        CharSequence mConstraint;
 
-    private Filter mInviteeFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
             if (constraint == null) {
                 return results;
+            }
+
+            mConstraint = constraint;
+
+            if (mListener != null) {
+                mListener.onFilterTermChanged(constraint);
             }
 
             ArrayList<BoxInvitee> filteredList = new ArrayList<BoxInvitee>();
@@ -53,10 +58,10 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
                     String name = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                     String email = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
                     if (name.contains(constraint) || email.contains(constraint)) {
-                        HashMap<String, Object> inviteeMap = new HashMap<String, Object>();
-                        inviteeMap.put(BoxInvitee.FIELD_NAME, name);
-                        inviteeMap.put(BoxInvitee.FIELD_EMAIL, email);
-                        filteredList.add(new BoxInvitee(inviteeMap));
+                        JsonObject object = new JsonObject();
+                        object.add(BoxInvitee.FIELD_NAME, name);
+                        object.add(BoxInvitee.FIELD_EMAIL, email);
+                        filteredList.add(new BoxInvitee(object));
                     }
                 }
             }
@@ -75,11 +80,30 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
                 notifyDataSetInvalidated();
             }
         }
-    };
+
+        public void onInviteesChanged() {
+            FilterResults results = performFiltering(mConstraint);
+            publishResults(mConstraint, results);
+        }
+    }
+
+    public interface InviteeAdapterListener {
+        void onFilterTermChanged(CharSequence constraint);
+    }
+
+    private Context mContext;
+    private final ArrayList<BoxInvitee> mInvitees = new ArrayList<BoxInvitee>();
+    private final ArrayList<BoxInvitee> mItems = new ArrayList<BoxInvitee>();
+    private InviteeAdapterListener mListener;
+    private InviteeFilter mInviteeFilter = new InviteeFilter();
 
     public InviteeAdapter(Context context) {
         super();
         mContext = context;
+    }
+
+    public void setInviteeAdapterListener(InviteeAdapterListener listener) {
+        mListener = listener;
     }
 
     @Override
@@ -99,19 +123,24 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = LayoutInflater.from(mContext).inflate(R.layout.list_item_collaboration_invitee, null);
-        BoxInvitee invitee = mItems.get(position);
 
-        ViewHolder holder = (ViewHolder) rowView.getTag();
-        if (holder == null) {
-            TextView nameView = (TextView)rowView.findViewById(R.id.collaboration_invitee_name);
-            TextView emailView = (TextView)rowView.findViewById(R.id.collaboration_invitee_email);
-            holder = new ViewHolder(nameView, emailView);
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_collaboration_invitee, null);
+            TextView nameView = (TextView)convertView.findViewById(R.id.collaboration_invitee_name);
+            TextView emailView = (TextView)convertView.findViewById(R.id.collaboration_invitee_email);
+            TextView initialsView = (TextView) convertView.findViewById(R.id.collaborator_initials);
+            holder = new ViewHolder(nameView, emailView, initialsView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
+        BoxInvitee invitee = mItems.get(position);
         holder.getNameView().setText(invitee.getName());
         holder.getEmailView().setText(invitee.getEmail());
-        return rowView;
+        SdkUtils.setInitialsThumb(mContext, holder.getInitialsView(), invitee.getName());
+        return convertView;
     }
 
     @Override
@@ -119,19 +148,25 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
         return mInviteeFilter;
     }
 
-    public void setInvitees(Collection<BoxInvitee> invitees) {
+    public void setInvitees(BoxIteratorInvitees invitees) {
         mInvitees.clear();
-        mInvitees.addAll(invitees);
+        for (BoxInvitee invitee: invitees) {
+            mInvitees.add(invitee);
+        }
+
+        mInviteeFilter.onInviteesChanged();
     }
 
 
     public static class ViewHolder {
         private TextView mNameView;
         private TextView mEmailView;
+        private TextView mInitials;
 
-        public ViewHolder(TextView name, TextView email) {
+        public ViewHolder(TextView name, TextView email, TextView initials) {
             mNameView = name;
             mEmailView = email;
+            mInitials = initials;
         }
 
         public TextView getNameView() {
@@ -141,12 +176,12 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
         public TextView getEmailView() {
             return mEmailView;
         }
+
+        public TextView getInitialsView() { return mInitials; }
     }
 
 
     private boolean isReadContactsPermissionAvailable() {
-        String readContactsPerm = "android.permission.READ_CONTACTS";
-        int res = mContext.checkCallingOrSelfPermission(readContactsPerm);
-        return res == PackageManager.PERMISSION_GRANTED;
+        return mContext.checkCallingOrSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
     }
 }

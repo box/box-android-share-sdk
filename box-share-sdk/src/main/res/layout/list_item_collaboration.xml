@@ -4,6 +4,7 @@
     android:layout_height="@dimen/box_sharesdk_collaboration_cell_height">
     <TextView
         android:id="@+id/collaborator_initials"
+        style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="@dimen/box_sharesdk_collaboration_thumb_size"
         android:layout_height="@dimen/box_sharesdk_collaboration_thumb_size"
         android:textAllCaps="true"
@@ -29,7 +30,7 @@
         <TextView
             android:id="@+id/collaborator_role"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/box_sharesdk_hint"
+            android:textColor="@color/box_sharesdk_accent"
             android:singleLine="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,5 +1,7 @@
 <resources>
     <string name="box_sharesdk_name">Share</string>
+    <string name="box_sharesdk_sample_name" description="Title of share SDK sample app">Share SDK Sample</string>
+    <string name="box_sharesdk_sample_choose_action" description="description of available actions for a folder">Choose action for \"%s\"</string>
     <string name="box_sharesdk_shared_with">Shared With</string>
     <string name="box_sharesdk_invite_collaborators">Invite People</string>
     <string name="box_sharesdk_session_is_not_authenticated">Session is not authenticated</string>
@@ -24,11 +26,11 @@
     <string name="box_sharesdk_disable_share_link" description="button to disable a shared link">DISABLE SHARE LINK</string>
     <string name="box_sharesdk_disable_title" description="shown as title of warning dialog before disabling a shared link">Disable Share Link?</string>
     <string name="box_sharesdk_disable_message" description="shown as message of warning dialog before disabling a shared link">Disabling the link permanently deletes the current share link. Reenabling the link will generate a completely new and unique share link. Do you wish to disable the share link?</string>
-    <string name="box_sharesdk_link_access" description="separates ui between the shared link box and options to change access">Link Access</string>
-    <string name="box_sharesdk_access" description="header for different access types">Access</string>
+    <string name="box_sharesdk_link_access" description="separates ui between the shared link box and options to change access">Access</string>
+    <string name="box_sharesdk_access" description="header for different access types">Link Access</string>
     <string name="box_sharesdk_access_public" description="description for public access">People with the link</string>
     <string name="box_sharesdk_access_company" description="description for company access">People in your company</string>
-    <string name="box_sharesdk_access_collaborator" description="description for collaborator access">Only people the folder is shared with</string>
+    <string name="box_sharesdk_access_collaborator" description="description for collaborator access">People in this folder</string>
     <string name="box_sharesdk_allow_downloads" description="toggle of whether to allow downloading">Allow Downloads</string>
     <string name="box_sharesdk_password" description="header for password section">Password</string>
     <string name="box_sharesdk_set_password" description="hint for password dialog">Set password</string>
@@ -46,6 +48,10 @@
     <string name="box_sharesdk_I_have_shared_x_with_you" description="message displayed in user's email when item is shared">I have shared \'%1$s\' with you on Box.</string>
     <string name="box_sharesdk_send_with" description="Title for intent chooser when choosing way to send shared content.">Send with:</string>
     <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">Network error. Please try again.</string>
+
+    <string name="box_sharesdk_change_owner_alert_title" description="Title for the alert dialog to confirm owner update">Owner Update</string>
+    <string name="box_sharesdk_change_owner_alert_message" description="Message for the alert dialog to confirm owner update">Making this user the folder owner means that you will lose folder ownership and become an editor. Do you want to continue?</string>
+
 
     <!-- menu items -->
     <string name="box_sharesdk_refresh" description="menu item to refresh current item">Refresh</string>
@@ -78,11 +84,20 @@
     <string name="box_sharesdk_action_send" description="Menu item for submitting the invite collaborators request">Send</string>
     <string name="box_sharesdk_to" description="The label for the field where users will enter the collaborators they would like to invite">To</string>
     <string name="box_sharesdk_selected_item_not_expected_type" description="Error message for when an incorrect object type is used to launch the collaborations page">The selected item was not of the expected type</string>
+    <string name="box_sharesdk_collaborator_invited" description="Success message for inviting a collaborator">%s has been invited</string>
     <string name="box_sharesdk_collaborators_invited" description="Success message for inviting collaborators">Collaborators have been invited</string>
     <string name="box_sharesdk_cannot_view_collaborations" description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available">You cannot view the collaborations for this item.</string>
     <string name="box_sharesdk_another_person" description="Default name shown when a user without a Box account has been invited">Another Person</string>
     <string name="box_sharesdk_no_collaborators" description="Message shown when no collaborators have been invited for the current folder">No collaborators for this folder.</string>
     <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s has already been invited to this folder</string>
     <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s people have already been invited to this folder</string>
+    <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
+    <string name="box_sharedsdk_collaborators_title">Collaborators</string>
+
+    <string name="box_sharesdk_insufficient_permissions" description="Error shown if user does not have sufficient permissions for an action">You do not have sufficient permissions for this action.</string>
+    <string name="box_sharedsdk_new_owner_not_collaborator" desription= "Error shown if user tries to change a pending invite to an owner of the folder">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
+    <string name="box_sharedsdk_unable_to_update_owner" description= "Error shown if changing ownership fails for unknown reason">Unable to update owner. Please contact support.</string>
+    <string name="box_sharesdk_cannot_get_collaborators" description= "Error shown when api fetching collaborators fails due to unknown reasons ">Unable to fetch collaborators. Please contact support if the issue persists.</string>
+    <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
 
 </resources>

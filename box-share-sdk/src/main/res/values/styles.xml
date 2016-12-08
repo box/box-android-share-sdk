@@ -6,6 +6,14 @@
         <item name="android:buttonStyle">@style/ButtonAppTheme</item>
     </style>
 
+    <style name="ShareDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/box_sharesdk_background</item>
+        <item name="colorPrimaryDark">@color/box_sharesdk_primary_dark</item>
+        <item name="colorAccent">@color/box_sharesdk_accent</item>
+        <item name="android:minWidth">@dimen/box_sharesdk_dialog_minWidth</item>
+        <item name="android:buttonStyle">@style/ButtonAppTheme</item>
+    </style>
+
     <style name="ButtonAppTheme" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/box_ripple_btn</item>
         <item name="android:ellipsize">end</item>
@@ -31,9 +39,10 @@
         <item name="android:textColor">@color/box_sharesdk_background</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
+
+    <!--Since we changed gray color to white, gray buttons don't look good on phones older than v21
+    Using default blue buttons for the same-->
     <style name="RaisedGrayButton"  parent="@style/RaisedButton">
-        <item name="android:background">@drawable/box_ripple_raised_gray_btn</item>
-        <item name="android:textColor">@color/box_sharesdk_primary_text</item>
     </style>
 
     <style name="BoxHeaderText"  parent="@android:style/Widget.TextView">
@@ -60,13 +69,18 @@
         <item name="android:padding">@dimen/box_sharesdk_vertical_margin</item>
     </style>
 
-    <style name="BoxLabelText" parent="@android:style/Widget.TextView">
+    <style name="BoxLabelText" parent="@style/BoxLabelTextNoPadding">
+        <item name="android:paddingLeft">@dimen/box_sharesdk_vertical_margin</item>
+    </style>
+
+    <style name="BoxLabelTextNoPadding" parent="@android:style/Widget.TextView">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
         <item name="android:textColor">@color/box_sharesdk_primary_text</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingLeft">@dimen/box_sharesdk_vertical_margin</item>
+        <item name="android:paddingLeft">@dimen/box_sharesdk_zero_margin</item>
+        <item name="android:gravity">left</item>
     </style>
 
     <style name="BoxHintText"  parent="@android:style/Widget.TextView">
@@ -99,4 +113,5 @@
         <item name="android:background">@color/box_sharesdk_divider</item>
     </style>
 
+    <dimen name="box_sharesdk_dialog_minWidth">72dp</dimen>
 </resources>

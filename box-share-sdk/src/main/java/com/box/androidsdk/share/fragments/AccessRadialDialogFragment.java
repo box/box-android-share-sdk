@@ -61,22 +61,22 @@ public class AccessRadialDialogFragment extends PositiveNegativeDialogFragment{
             }
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.ShareDialogTheme);
         builder.setView(accessRadioGroup);
 
         builder.setPositiveButton(getResources().getString(R.string.box_sharesdk_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (getActivity() instanceof PositiveNegativeDialogFragment.OnPositiveOrNegativeButtonClickedListener) {
-                    ((PositiveNegativeDialogFragment.OnPositiveOrNegativeButtonClickedListener) getActivity()).onPositiveButtonClicked(AccessRadialDialogFragment.this);
+                if (mButtonClickedListener != null) {
+                    mButtonClickedListener.onPositiveButtonClicked(AccessRadialDialogFragment.this);
                 }
             }
         });
         builder.setNegativeButton(getResources().getString(R.string.box_sharesdk_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (getActivity() instanceof PositiveNegativeDialogFragment.OnPositiveOrNegativeButtonClickedListener) {
-                    ((PositiveNegativeDialogFragment.OnPositiveOrNegativeButtonClickedListener) getActivity()).onNegativeButtonClicked(AccessRadialDialogFragment.this);
+                if (mButtonClickedListener != null) {
+                    mButtonClickedListener.onNegativeButtonClicked(AccessRadialDialogFragment.this);
                 }
             }
         });
@@ -129,11 +129,12 @@ public class AccessRadialDialogFragment extends PositiveNegativeDialogFragment{
         super.onSaveInstanceState(outState);
     }
 
-    public static final AccessRadialDialogFragment createFragment(final BoxItem item){
+    public static final AccessRadialDialogFragment createFragment(final BoxItem item, OnPositiveOrNegativeButtonClickedListener listener){
         AccessRadialDialogFragment fragment = new AccessRadialDialogFragment();
         Bundle b = new Bundle();
         b.putSerializable(EXTRA_BOX_ITEM, item);
         fragment.setArguments(b);
+        fragment.setOnPositiveOrNegativeButtonClickedListener(listener);
         return fragment;
     }
 
