@@ -181,7 +181,7 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
     }
 
 
-    private boolean isReadContactsPermissionAvailable() {
+    protected boolean isReadContactsPermissionAvailable() {
         return mContext.checkCallingOrSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
     }
 }

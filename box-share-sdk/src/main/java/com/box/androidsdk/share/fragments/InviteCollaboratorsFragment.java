@@ -2,6 +2,7 @@ package com.box.androidsdk.share.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -51,6 +52,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     private static final Integer MY_PERMISSIONS_REQUEST_READ_CONTACTS = 32;
     protected static final String TAG = InviteCollaboratorsFragment.class.getName();
     public static final String EXTRA_ACCESS_TOKEN = "InviteCollaboratorsFragment.ExtraAccessToken";
+    public static final String EXTRA_USE_CONTACTS_PROVIDER = "InviteCollaboratorsFragment.ExtraUseContactsProvider";
     private Button mRoleButton;
     private ChipCollaborationView mAutoComplete;
     private InviteeAdapter mAdapter;
@@ -73,7 +75,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         mRoleButton.setOnClickListener(this);
         mAutoComplete = (ChipCollaborationView) view.findViewById(R.id.invite_collaborator_autocomplete);
         mAutoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        mAdapter = new InviteeAdapter(getActivity());
+        mAdapter = createInviteeAdapter(getActivity());
         mAdapter.setInviteeAdapterListener(this);
         mAutoComplete.setAdapter(mAdapter);
         mAutoComplete.setTokenListener(this);
@@ -100,9 +102,19 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
 
         fetchInvitees();
         fetchCollaborations();
-
-        requestPermissionsIfNecessary();
+        if (getArguments().getBoolean(EXTRA_USE_CONTACTS_PROVIDER)){
+            requestPermissionsIfNecessary();
+        }
         return view;
+    }
+
+    protected InviteeAdapter createInviteeAdapter(final Context context){
+        return new InviteeAdapter(context) {
+            @Override
+            protected boolean isReadContactsPermissionAvailable() {
+                return getArguments().getBoolean(EXTRA_USE_CONTACTS_PROVIDER, true) && super.isReadContactsPermissionAvailable();
+            }
+        };
     }
 
     public boolean areCollaboratorsPresent() {
@@ -415,7 +427,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             if (alreadyAddedCount == 1) {
                 msg = String.format(getString(R.string.box_sharesdk_has_already_been_invited), name);
             } else if (alreadyAddedCount > 1) {
-                msg = String.format(getString(R.string.box_sharesdk_num_has_already_been_invited), alreadyAddedCount);
+                msg = String.format(getString(R.string.box_sharesdk_num_has_already_been_invited), Integer.toString(alreadyAddedCount));
             } else {
                 msg = getString(R.string.box_sharesdk_unable_to_invite);
             }
@@ -456,8 +468,13 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     }
 
     public static InviteCollaboratorsFragment newInstance(BoxFolder folder) {
+        return newInstance(folder, true);
+    }
+
+    public static InviteCollaboratorsFragment newInstance(BoxFolder folder, boolean useContactsProvider) {
         Bundle args = BoxFragment.getBundle(folder);
         InviteCollaboratorsFragment fragment = new InviteCollaboratorsFragment();
+        args.putBoolean(EXTRA_USE_CONTACTS_PROVIDER, useContactsProvider);
         fragment.setArguments(args);
         return fragment;
     }
