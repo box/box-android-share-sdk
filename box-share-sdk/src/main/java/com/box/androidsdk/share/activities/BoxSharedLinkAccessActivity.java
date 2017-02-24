@@ -23,6 +23,10 @@ public class BoxSharedLinkAccessActivity extends BoxActivity {
         setContentView(R.layout.activity_shared_link_access);
         initToolbar();
 
+    }
+
+    @Override
+    protected void initializeUi() {
         mFragment = (SharedLinkAccessFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -32,8 +36,8 @@ public class BoxSharedLinkAccessActivity extends BoxActivity {
             ft.commit();
         }
         mFragment.setController(mController);
-    }
 
+    }
 
     /**
      * Gets a fully formed intent that can be used to start the activity with

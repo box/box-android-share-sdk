@@ -12,10 +12,13 @@ import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
+import com.box.androidsdk.content.models.BoxUser;
 import com.box.androidsdk.content.utils.SdkUtils;
+import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.ShareController;
+import com.eclipsesource.json.JsonObject;
 
 import java.util.ArrayList;
 
@@ -25,12 +28,17 @@ public class CollaboratorsAdapter extends BaseAdapter {
     private Context mContext;
     private BoxFolder mFolder;
     private ShareController mController;
+    private final BoxCollaborator mAnotherPersonCollaborator;
+
 
     public CollaboratorsAdapter(Context context, BoxFolder folder, ShareController controller) {
         super();
         mContext = context;
         mFolder = folder;
         mController = controller;
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add(BoxCollaborator.FIELD_NAME, mContext.getString(R.string.box_sharesdk_another_person));
+        mAnotherPersonCollaborator = new BoxUser(jsonObject);
     }
 
     @Override
@@ -65,6 +73,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
         return false;
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -73,7 +82,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.nameView = (TextView) convertView.findViewById(R.id.collaborator_role_title);
             holder.roleView = (TextView) convertView.findViewById(R.id.collaborator_role);
-            holder.initialsView = (TextView) convertView.findViewById(R.id.collaborator_initials);
+            holder.initialsView = (BoxAvatarView) convertView.findViewById(R.id.collaborator_initials);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -84,10 +93,10 @@ public class CollaboratorsAdapter extends BaseAdapter {
             String name;
             if (collaborator == null) {
                 name = mContext.getString(R.string.box_sharesdk_another_person);
-                SdkUtils.setInitialsThumb(mContext, holder.initialsView, "");
+                holder.initialsView.loadUser(mAnotherPersonCollaborator, mController.getAvatarController());
             } else {
                 name = collaborator.getName();
-                SdkUtils.setInitialsThumb(mContext, holder.initialsView, name);
+                holder.initialsView.loadUser(collaborator, mController.getAvatarController());
             }
             String description = collaboration.getStatus() == BoxCollaboration.Status.ACCEPTED ?
                     CollaborationUtils.getRoleName(mContext, collaboration.getRole()) :
@@ -144,7 +153,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
     public static class ViewHolder {
         public TextView nameView;
         public TextView roleView;
-        public TextView initialsView;
+        public BoxAvatarView initialsView;
         public BoxCollaboration collaboration;
     }
 }

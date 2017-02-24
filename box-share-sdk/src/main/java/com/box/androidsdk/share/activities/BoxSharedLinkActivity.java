@@ -24,7 +24,10 @@ public class BoxSharedLinkActivity extends BoxActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shared_link);
         initToolbar();
+    }
 
+    @Override
+    protected void initializeUi() {
         mFragment = (SharedLinkFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

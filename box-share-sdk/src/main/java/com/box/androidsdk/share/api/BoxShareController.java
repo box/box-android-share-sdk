@@ -22,12 +22,15 @@ import com.box.androidsdk.content.requests.BoxRequestBatch;
 import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.SdkUtils;
+import com.box.androidsdk.content.views.BoxAvatarView;
+import com.box.androidsdk.content.views.DefaultAvatarController;
 import com.box.androidsdk.share.internal.BoxApiFeatures;
 import com.box.androidsdk.share.internal.BoxApiInvitee;
 import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
 import java.util.Arrays;
+import java.io.Serializable;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +43,7 @@ public class BoxShareController implements ShareController {
     private BoxApiInvitee mInviteeApi;
     private BoxSession mSession;
     private BoxApiFeatures mFeaturesApi;
+    private DefaultAvatarController mAvatarController;
 
     private String[] mFolderShareFields;
     private String[] mFileShareFields;
@@ -57,7 +61,7 @@ public class BoxShareController implements ShareController {
         mFolderShareFields = initializeShareFieldsArray(BoxFolder.ALL_FIELDS);
         mFileShareFields = initializeShareFieldsArray(BoxFile.ALL_FIELDS);
         mBookmarkShareFields = initializeShareFieldsArray(BoxBookmark.ALL_FIELDS);
-
+        mAvatarController = new DefaultAvatarController(session);
     }
 
     private String[] initializeShareFieldsArray(String[] originalFields) {
@@ -77,11 +81,11 @@ public class BoxShareController implements ShareController {
     public BoxFutureTask<BoxItem> fetchItemInfo(BoxItem boxItem) {
         BoxRequest request = null;
         if (boxItem instanceof BoxFile) {
-            request = mFileApi.getInfoRequest(boxItem.getId());
+            request = mFileApi.getInfoRequest(boxItem.getId()).setFields(mFileShareFields);
         } else if (boxItem instanceof BoxFolder) {
-            request = mFolderApi.getInfoRequest(boxItem.getId());
+            request = mFolderApi.getInfoRequest(boxItem.getId()).setFields(mFolderShareFields);
         } else if (boxItem instanceof BoxBookmark) {
-            request = mBookmarkApi.getInfoRequest(boxItem.getId());
+            request = mBookmarkApi.getInfoRequest(boxItem.getId()).setFields(mBookmarkShareFields);
         }
 
         BoxFutureTask<BoxItem> task = new BoxFutureTask<BoxItem>(BoxItem.class, request);
@@ -292,6 +296,11 @@ public class BoxShareController implements ShareController {
     @Override
     public String getCurrentUserId() {
         return mSession.getUserId();
+    }
+
+    @Override
+    public <E extends BoxAvatarView.AvatarController & Serializable> E getAvatarController() {
+        return (E)mAvatarController;
     }
 
     private static ThreadPoolExecutor mApiExecutor;

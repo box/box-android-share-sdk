@@ -32,6 +32,10 @@ public class BoxCollaborationsActivity extends BoxActivity {
             return;
         }
 
+    }
+
+    @Override
+    protected void initializeUi() {
         BoxIteratorCollaborations collaborations = null;
         if (getIntent() != null) {
             collaborations = (BoxIteratorCollaborations)getIntent().getSerializableExtra(CollaborationUtils.EXTRA_COLLABORATIONS);
@@ -46,6 +50,7 @@ public class BoxCollaborationsActivity extends BoxActivity {
             ft.commit();
         }
         mFragment.setController(mController);
+
     }
 
     /**
