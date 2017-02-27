@@ -36,6 +36,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
         mContext = context;
         mFolder = folder;
         mController = controller;
+        // This item is used for displaying users that do not have a box account have been invited as a collaborator
         JsonObject jsonObject = new JsonObject();
         jsonObject.add(BoxCollaborator.FIELD_NAME, mContext.getString(R.string.box_sharesdk_another_person));
         mAnotherPersonCollaborator = new BoxUser(jsonObject);
