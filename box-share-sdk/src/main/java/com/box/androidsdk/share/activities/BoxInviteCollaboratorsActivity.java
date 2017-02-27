@@ -29,6 +29,10 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
         setContentView(R.layout.activity_invite_collaborators);
         initToolbar();
 
+    }
+
+    @Override
+    protected void initializeUi() {
         mFragment = (InviteCollaboratorsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

@@ -11,8 +11,14 @@ public class BoxIteratorInvitees extends BoxIterator<BoxInvitee> {
 
     private static final long serialVersionUID = 1900245905334373228L;
 
+    private transient BoxJsonObjectCreator<BoxInvitee> representationCreator;
+
     @Override
     protected BoxJsonObjectCreator<BoxInvitee> getObjectCreator() {
-        return BoxEntity.getBoxJsonObjectCreator(BoxInvitee.class);
+        if (representationCreator != null){
+            return representationCreator;
+        }
+        representationCreator = BoxEntity.getBoxJsonObjectCreator(BoxInvitee.class);
+        return representationCreator;
     }
 }

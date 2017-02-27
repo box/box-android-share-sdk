@@ -1,6 +1,7 @@
 package com.box.androidsdk.share.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -12,10 +13,12 @@ import com.box.androidsdk.content.BoxApiBookmark;
 import com.box.androidsdk.content.BoxApiCollaboration;
 import com.box.androidsdk.content.BoxApiFile;
 import com.box.androidsdk.content.BoxApiFolder;
+import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.auth.BoxAuthentication;
 import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
@@ -37,6 +40,7 @@ public abstract class BoxActivity extends ActionBarActivity {
     protected BoxItem mShareItem;
     protected BoxFragment mFragment;
     protected ShareController mController;
+    protected ProgressDialog mProgress;
 
 
     @Override
@@ -87,7 +91,43 @@ public abstract class BoxActivity extends ActionBarActivity {
         });
         mSession.authenticate();
         mController = new BoxShareController(mSession);
+        if (!isSharedItemSufficient()){
+            mProgress = ProgressDialog.show(this, getText(R.string.boxsdk_Please_wait), getText(R.string.boxsdk_Please_wait), true, false);
+            mController.fetchItemInfo(mShareItem).addOnCompletedListener(new BoxFutureTask.OnCompletedListener<BoxItem>() {
+                @Override
+                public void onCompleted(BoxResponse<BoxItem> response) {
+                    if (response.isSuccess()){
+                        mShareItem = response.getResult();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mProgress != null && mProgress.isShowing()) {
+                                    mProgress.dismiss();
+                                }
+                                initializeUi();
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            initializeUi();
+        }
     }
+
+    @Override
+    protected void onDestroy() {
+        if (mProgress != null && mProgress.isShowing()){
+            mProgress.dismiss();
+        }
+        super.onDestroy();
+    }
+
+    protected boolean isSharedItemSufficient(){
+        return !SdkUtils.isBlank(mShareItem.getName()) && mShareItem.getPermissions() != null;
+    }
+
+    protected abstract void initializeUi();
 
 
     @Override
