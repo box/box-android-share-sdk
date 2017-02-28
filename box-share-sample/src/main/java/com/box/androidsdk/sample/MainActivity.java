@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxConfig;
 import com.box.androidsdk.content.BoxException;
+import com.box.androidsdk.content.auth.BoxAuthentication;
 import com.box.androidsdk.content.models.BoxEntity;
 import com.box.androidsdk.content.models.BoxError;
 import com.box.androidsdk.content.models.BoxFolder;
@@ -86,9 +87,34 @@ public class MainActivity extends ActionBarActivity {
         mChooseActionTv.setText(getString(R.string.box_sharesdk_sample_choose_action, SHARE_SAMPLE_FOLDER_NAME));
 
         mSession = new BoxSession(this);
-        mSession.authenticate();
+        mSession.setSessionAuthListener(new BoxAuthentication.AuthListener() {
+            @Override
+            public void onRefreshed(BoxAuthentication.BoxAuthenticationInfo info) {
+
+            }
+
+            @Override
+            public void onAuthCreated(BoxAuthentication.BoxAuthenticationInfo info) {
+               runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+                       createOrFindTestFolder();
+                   }
+               });
+            }
+
+            @Override
+            public void onAuthFailure(BoxAuthentication.BoxAuthenticationInfo info, Exception ex) {
+
+            }
+
+            @Override
+            public void onLoggedOut(BoxAuthentication.BoxAuthenticationInfo info, Exception ex) {
+
+            }
+        });
+        mSession.authenticate(this);
         mFolderApi = new BoxApiFolder(mSession);
-        createOrFindTestFolder();
     }
 
     private void createOrFindTestFolder(){
