@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/collaborator_initials_list_section"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="32dp"
+    android:layout_marginBottom="48dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/invite_collaborator_initials_list_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@color/box_sharesdk_collaborators_color"
+        android:text="@string/box_sharedsdk_collaborators_title"
+        android:visibility="gone"
+        android:layout_marginBottom="10dp"/>
+    <ProgressBar
+        android:id="@+id/box_sharesdk_activity_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/box_sharesdk_progressbar_size"
+        android:maxHeight="@dimen/box_sharesdk_progressbar_size"
+        android:minWidth="@dimen/box_sharesdk_progressbar_size"
+        android:maxWidth="@dimen/box_sharesdk_progressbar_size"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:progressDrawable="@drawable/progress_animation"
+        android:rotation="270"/>
+    <LinearLayout
+        android:id="@+id/invite_collaborator_initials_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+</LinearLayout>

@@ -13,6 +13,7 @@
     <string name="box_sharesdk_accessible_collaborator" description="description for collaborator access">Accessible to people the folder is shared with</string>
     <string name="box_sharesdk_password_protected" description="description for if a shared link is password proceted">Password protected</string>
     <string name="box_sharesdk_password_unprotected" description="description for if a shared link is not password proceted">No password</string>
+    <string name="boxsdk_fetching_collaborators" description="message to show on spinner when we are fetching collaborators">Fetching collaborators</string>
 
     <string name="box_sharesdk_share_link_enabled" description="shown if share link is enabled">Share link enabled</string>
     <string name="box_sharesdk_share_link_disabled" description="shown if share link is disabled">Share link disabled</string>

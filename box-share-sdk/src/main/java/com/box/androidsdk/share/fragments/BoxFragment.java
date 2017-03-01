@@ -103,7 +103,7 @@ public abstract class BoxFragment extends Fragment {
      * Shows the spinner with the default wait messaging
      */
     protected void showSpinner(){
-        showSpinner(R.string.boxsdk_Please_wait, R.string.boxsdk_Please_wait);
+        showSpinner(R.string.boxsdk_fetching_collaborators, R.string.boxsdk_Please_wait);
     }
 
     /**
