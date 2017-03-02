@@ -74,11 +74,8 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         mAutoComplete.setAdapter(mAdapter);
         mAutoComplete.setTokenListener(this);
 
-        mCollabInitialsView = (CollaboratorsInitialsView) view.findViewById(R.id.collaboratorsInitials);
-        mCollabInitialsView.setShareItem(mShareItem);
-        mCollabInitialsView.setController(mController);
-        mCollabInitialsView.setInviteCollaboratorsListener(mInviteCollaboratorsListener);
-        mCollabInitialsView.fetchCollaborations();
+        mCollabInitialsView = (CollaboratorsInitialsView) view.findViewById(R.id.collaboratorsInitialsView);
+        mCollabInitialsView.setArguments((BoxFolder) mShareItem, mController, mInviteCollaboratorsListener);
 
         // Get serialized roles or fetch them if they are not available
         if (getFolder() != null && getFolder().getAllowedInviteeRoles() != null) {

@@ -39,6 +39,6 @@
         <com.box.androidsdk.share.views.CollaboratorsInitialsView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/collaboratorsInitials"/>
+            android:id="@+id/collaboratorsInitialsView"/>
     </LinearLayout>
 </ScrollView>
