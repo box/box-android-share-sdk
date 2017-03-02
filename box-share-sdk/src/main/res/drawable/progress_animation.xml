@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+        <shape
+            android:innerRadiusRatio="3.0"
+            android:shape="ring"
+            android:thickness="3dp"
+            android:useLevel="false" >
+            <solid
+                android:useLevel="false"
+                android:color="@color/box_sharesdk_accent_transparent" />
+        </shape>
+    </item>
+    <item>
+        <shape
+            android:innerRadiusRatio="3.0"
+            android:shape="ring"
+            android:thickness="3dp"
+            android:useLevel="true" >
+            <solid
+                android:useLevel="true"
+                android:color="@color/box_sharesdk_accent" />
+        </shape>
+    </item>
+
+</layer-list>

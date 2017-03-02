@@ -16,4 +16,5 @@
     <color name="box_sharesdk_chip_text_color">#e0000000</color>
     <color name="box_sharesdk_initials_count_color">#e0d4d4d4</color>
     <color name="box_sharesdk_collaborators_color">#bdc3c7</color>
+    <color name="box_sharesdk_accent_transparent">#3f1992D4</color>
 </resources>
