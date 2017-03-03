@@ -22,6 +22,7 @@ import com.box.androidsdk.share.fragments.InviteCollaboratorsFragment;
 public class BoxInviteCollaboratorsActivity extends BoxActivity implements InviteCollaboratorsFragment.InviteCollaboratorsListener {
 
     private boolean mSendEnabled;
+    private static int REQUEST_SHOW_COLLABORATORS = 32;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,10 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
             mFragment = InviteCollaboratorsFragment.newInstance((BoxFolder) mShareItem);
-            ft.add(R.id.fragmentContainer, mFragment);
+            ft.add(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
             ft.commit();
         }
         mFragment.setController(mController);
-        ((InviteCollaboratorsFragment)mFragment).setInviteCollaboratorsListener(this);
         mSendEnabled = ((InviteCollaboratorsFragment)mFragment).areCollaboratorsPresent();
     }
 
@@ -67,9 +67,18 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == REQUEST_SHOW_COLLABORATORS) && (resultCode == RESULT_OK)) {
+            InviteCollaboratorsFragment fragment = (InviteCollaboratorsFragment) getSupportFragmentManager().findFragmentByTag(InviteCollaboratorsFragment.TAG);
+            fragment.refreshUi();
+        }
+    }
+
+    @Override
     public void onShowCollaborators(BoxIteratorCollaborations collaborations) {
         Intent collabsIntent = BoxCollaborationsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession, collaborations);
-        startActivity(collabsIntent);
+        startActivityForResult(collabsIntent, REQUEST_SHOW_COLLABORATORS);
     }
 
     @Override

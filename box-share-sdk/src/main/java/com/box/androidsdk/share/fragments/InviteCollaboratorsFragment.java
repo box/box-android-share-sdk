@@ -48,7 +48,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     }
 
     private static final Integer MY_PERMISSIONS_REQUEST_READ_CONTACTS = 32;
-    protected static final String TAG = InviteCollaboratorsFragment.class.getName();
+    public static final String TAG = InviteCollaboratorsFragment.class.getName();
     public static final String EXTRA_USE_CONTACTS_PROVIDER = "InviteCollaboratorsFragment.ExtraUseContactsProvider";
     private Button mRoleButton;
     private ChipCollaborationView mAutoComplete;
@@ -75,7 +75,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         mAutoComplete.setTokenListener(this);
 
         mCollabInitialsView = (CollaboratorsInitialsView) view.findViewById(R.id.collaboratorsInitialsView);
-        mCollabInitialsView.setArguments((BoxFolder) mShareItem, mController, mInviteCollaboratorsListener);
+        mCollabInitialsView.setArguments((BoxFolder) mShareItem, mController);
 
         // Get serialized roles or fetch them if they are not available
         if (getFolder() != null && getFolder().getAllowedInviteeRoles() != null) {
@@ -92,6 +92,17 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
 
         return view;
+    }
+
+    /**
+     * Refresh the CollabInitialsView
+     * This will invalidate the previous cached response that contains collaborators and instead
+     * force the view to make a new request to refresh itself with new information (in case there are updates)
+     */
+    public void refreshUi() {
+        if (mCollabInitialsView != null) {
+            mCollabInitialsView.refreshView();
+        }
     }
 
     protected InviteeAdapter createInviteeAdapter(final Context context){
@@ -111,8 +122,12 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         return false;
     }
 
-    public void setInviteCollaboratorsListener(InviteCollaboratorsListener listener) {
-        mInviteCollaboratorsListener = listener;
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        // Attach the listener to view once createView is complete
+        mInviteCollaboratorsListener = ((InviteCollaboratorsListener) getActivity());
+        mCollabInitialsView.setInviteCollaboratorsListener(mInviteCollaboratorsListener);
     }
 
     private void requestPermissionsIfNecessary() {
