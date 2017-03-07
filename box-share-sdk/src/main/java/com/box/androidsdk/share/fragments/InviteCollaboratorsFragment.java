@@ -38,9 +38,17 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment to let users invite collaborators on a folder.
+ *
+ * There are two listeners used here:
+ * 1. InviteCollaboratorsListener is used to set up a listener by the parent Activity or Fragment on this Fragment.
+ * 2. ShowCollaboratorsListener is used to set up a listener by this fragment on the child custom view called CollaboratorsInitialsView.
+ */
 
-public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener, TokenCompleteTextView.TokenListener<BoxInvitee>, InviteeAdapter.InviteeAdapterListener {
+public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener, TokenCompleteTextView.TokenListener<BoxInvitee>, InviteeAdapter.InviteeAdapterListener, CollaboratorsInitialsView.ShowCollaboratorsListener {
 
+    // Should be implemented by the parent Fragment or Activity
     public interface InviteCollaboratorsListener {
         void onShowCollaborators(BoxIteratorCollaborations collaborations);
         void onCollaboratorsPresent();
@@ -123,11 +131,19 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     }
 
     @Override
+    public void onShowCollaborators(BoxIteratorCollaborations collaborations) {
+        mInviteCollaboratorsListener.onShowCollaborators(collaborations);
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // Attach the listener to view once createView is complete
-        mInviteCollaboratorsListener = ((InviteCollaboratorsListener) getActivity());
-        mCollabInitialsView.setInviteCollaboratorsListener(mInviteCollaboratorsListener);
+        mCollabInitialsView.setShowCollaboratorsListener(this);
+    }
+
+    public void setInviteCollaboratorsListener(InviteCollaboratorsListener listener) {
+        mInviteCollaboratorsListener = listener;
     }
 
     private void requestPermissionsIfNecessary() {
@@ -177,6 +193,12 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             rolesDialog.setOnRoleSelectedListener(this);
             rolesDialog.show(getFragmentManager(), TAG);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshUi();
     }
 
     @Override
@@ -360,6 +382,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
         getActivity().finish();
     }
+
     /**
      * Sets the selected role in the UI
      *
