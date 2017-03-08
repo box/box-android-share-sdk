@@ -38,9 +38,17 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment to let users invite collaborators on a folder.
+ *
+ * There are two listeners used here:
+ * 1. InviteCollaboratorsListener is used to set up a listener by the parent Activity or Fragment on this Fragment.
+ * 2. ShowCollaboratorsListener is used to set up a listener by this fragment on the child custom view called CollaboratorsInitialsView.
+ */
 
-public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener, TokenCompleteTextView.TokenListener<BoxInvitee>, InviteeAdapter.InviteeAdapterListener {
+public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener, TokenCompleteTextView.TokenListener<BoxInvitee>, InviteeAdapter.InviteeAdapterListener, CollaboratorsInitialsView.ShowCollaboratorsListener {
 
+    // Should be implemented by the parent Fragment or Activity
     public interface InviteCollaboratorsListener {
         void onShowCollaborators(BoxIteratorCollaborations collaborations);
         void onCollaboratorsPresent();
@@ -48,7 +56,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     }
 
     private static final Integer MY_PERMISSIONS_REQUEST_READ_CONTACTS = 32;
-    protected static final String TAG = InviteCollaboratorsFragment.class.getName();
+    public static final String TAG = InviteCollaboratorsFragment.class.getName();
     public static final String EXTRA_USE_CONTACTS_PROVIDER = "InviteCollaboratorsFragment.ExtraUseContactsProvider";
     private Button mRoleButton;
     private ChipCollaborationView mAutoComplete;
@@ -75,7 +83,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         mAutoComplete.setTokenListener(this);
 
         mCollabInitialsView = (CollaboratorsInitialsView) view.findViewById(R.id.collaboratorsInitialsView);
-        mCollabInitialsView.setArguments((BoxFolder) mShareItem, mController, mInviteCollaboratorsListener);
+        mCollabInitialsView.setArguments((BoxFolder) mShareItem, mController);
 
         // Get serialized roles or fetch them if they are not available
         if (getFolder() != null && getFolder().getAllowedInviteeRoles() != null) {
@@ -94,6 +102,17 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         return view;
     }
 
+    /**
+     * Refresh the CollabInitialsView
+     * This will invalidate the previous cached response that contains collaborators and instead
+     * force the view to make a new request to refresh itself with new information (in case there are updates)
+     */
+    public void refreshUi() {
+        if (mCollabInitialsView != null) {
+            mCollabInitialsView.refreshView();
+        }
+    }
+
     protected InviteeAdapter createInviteeAdapter(final Context context){
         return new InviteeAdapter(context) {
             @Override
@@ -109,6 +128,18 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
 
         return false;
+    }
+
+    @Override
+    public void onShowCollaborators(BoxIteratorCollaborations collaborations) {
+        mInviteCollaboratorsListener.onShowCollaborators(collaborations);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        // Attach the listener to view once createView is complete
+        mCollabInitialsView.setShowCollaboratorsListener(this);
     }
 
     public void setInviteCollaboratorsListener(InviteCollaboratorsListener listener) {
@@ -345,6 +376,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
         getActivity().finish();
     }
+
     /**
      * Sets the selected role in the UI
      *
