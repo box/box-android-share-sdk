@@ -27,7 +27,6 @@ import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.CollaborationsFragment;
-import com.box.androidsdk.share.fragments.InviteCollaboratorsFragment;
 import com.eclipsesource.json.JsonObject;
 
 import java.util.ArrayList;
@@ -56,7 +55,6 @@ public class CollaboratorsInitialsView extends LinearLayout {
     private TextView mInitialsListHeader;
     private ProgressBar mProgressBar;
     private BoxResponse mBoxResponse;
-    private InviteCollaboratorsFragment.InviteCollaboratorsListener inviteCollaboratorsListener;
 
     public CollaboratorsInitialsView(Context context) {
         this(context, null);

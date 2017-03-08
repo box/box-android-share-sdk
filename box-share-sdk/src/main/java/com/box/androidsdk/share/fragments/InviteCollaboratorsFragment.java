@@ -196,12 +196,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        refreshUi();
-    }
-
-    @Override
     public void onRoleSelected(CollaborationRolesDialog rolesDialog) {
         setSelectedRole(rolesDialog.getSelectedRole());
     }
