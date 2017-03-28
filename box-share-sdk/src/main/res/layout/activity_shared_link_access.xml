@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/box_sharesdk_background"
     android:orientation="vertical"
-    android:filterTouchesWhenObscured="true">
+    android:filterTouchesWhenObscured="false">
     <include layout="@layout/view_action_bar" />
     <FrameLayout
         android:id="@+id/fragmentContainer"
