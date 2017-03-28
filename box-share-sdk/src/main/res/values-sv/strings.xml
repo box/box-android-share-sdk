@@ -34,7 +34,7 @@
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Tillåt hämtningar</string>
     <string description="header for password section" name="box_sharesdk_password">Lösenord</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">Ställ in lösenord</string>
-    <string description="toggle of using password or not" name="box_sharesdk_require_password">Kräver lösenord</string>
+    <string description="toggle of using password or not" name="box_sharesdk_require_password">Kräva lösenord</string>
     <string description="header for link expiration section" name="box_sharesdk_link_expiration">Länkförfallodatum</string>
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">Förfallolänk</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">Förfaller den</string>
