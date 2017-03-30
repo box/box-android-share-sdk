@@ -10,10 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="#404040"
         android:text="@string/box_sharedsdk_collaborators_title"
-        android:textSize="16sp"
-        android:textColor="@color/box_sharesdk_primary_text"
-        android:textStyle="bold"
         android:layout_marginBottom="8dp"/>
     <ProgressBar
         android:id="@+id/box_sharesdk_activity_progress_bar"
@@ -32,9 +30,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/no_collaborators_text"
-        android:textColor="@color/box_sharesdk_grey_text"
-        android:text="This folder is not collaborated with anyone"
-        android:textSize="16sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#757575"
+        android:text="@string/box_sharesdk_no_collaborators"
         android:layout_gravity="center"
         android:visibility="gone"/>
     <LinearLayout
