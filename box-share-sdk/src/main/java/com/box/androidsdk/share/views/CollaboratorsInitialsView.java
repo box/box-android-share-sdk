@@ -30,6 +30,7 @@ import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.CollaborationsFragment;
 import com.eclipsesource.json.JsonObject;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 /**
@@ -151,7 +152,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
                             mProgressBar.setVisibility(GONE);
                             if (response.isSuccess() && getFolder() != null) {
                                 updateView(response.getResult());
-                            } else if (((BoxException)response.getException()).getResponseCode() == 404 ) {
+                            } else if (((BoxException)response.getException()).getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND) {
                                 // The user is not a collaborator anymore
                                 mController.showToast(activity, getString(R.string.box_sharesdk_insufficient_permissions));
                                 activity.finish();
@@ -168,15 +169,13 @@ public class CollaboratorsInitialsView extends LinearLayout {
     private void updateViewVisibilityForNoCollaborators() {
         TextView noCollaborators = (TextView) findViewById(R.id.no_collaborators_text);
         noCollaborators.setVisibility(VISIBLE);
-        LinearLayout layout = (LinearLayout) findViewById(R.id.invite_collaborator_initials_list);
-        layout.setVisibility(GONE);
+        mInitialsListView.setVisibility(GONE);
     }
 
     private void updateViewVisibilityIfCollaboratorsFound() {
         TextView noCollaborators = (TextView) findViewById(R.id.no_collaborators_text);
         noCollaborators.setVisibility(GONE);
-        LinearLayout layout = (LinearLayout) findViewById(R.id.invite_collaborator_initials_list);
-        layout.setVisibility(VISIBLE);
+        mInitialsListView.setVisibility(VISIBLE);
     }
 
     private void updateView(BoxIteratorCollaborations boxIteratorCollaborations) {
