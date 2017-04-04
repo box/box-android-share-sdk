@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborator;
@@ -29,6 +30,7 @@ import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.CollaborationsFragment;
 import com.eclipsesource.json.JsonObject;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 /**
@@ -107,6 +109,10 @@ public class CollaboratorsInitialsView extends LinearLayout {
      * Executes the request to retrieve collaborations for the folder
      */
     public void fetchCollaborations() {
+        if (mController == null) {
+            return;
+        }
+
         if (getFolder() == null || SdkUtils.isBlank(getFolder().getId())) {
             mController.showToast(getContext(), getString(R.string.box_sharesdk_cannot_view_collaborations));
             return;
@@ -146,6 +152,10 @@ public class CollaboratorsInitialsView extends LinearLayout {
                             mProgressBar.setVisibility(GONE);
                             if (response.isSuccess() && getFolder() != null) {
                                 updateView(response.getResult());
+                            } else if (((BoxException)response.getException()).getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND) {
+                                // The user is not a collaborator anymore
+                                mController.showToast(activity, getString(R.string.box_sharesdk_insufficient_permissions));
+                                activity.finish();
                             } else {
                                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch Collaborators request failed",
                                         response.getException());
@@ -156,56 +166,62 @@ public class CollaboratorsInitialsView extends LinearLayout {
                 }
             };
 
+    private void updateViewVisibilityForNoCollaborators() {
+        TextView noCollaborators = (TextView) findViewById(R.id.no_collaborators_text);
+        noCollaborators.setVisibility(VISIBLE);
+        mInitialsListView.setVisibility(GONE);
+    }
+
+    private void updateViewVisibilityIfCollaboratorsFound() {
+        TextView noCollaborators = (TextView) findViewById(R.id.no_collaborators_text);
+        noCollaborators.setVisibility(GONE);
+        mInitialsListView.setVisibility(VISIBLE);
+    }
 
     private void updateView(BoxIteratorCollaborations boxIteratorCollaborations) {
         mCollaborations = boxIteratorCollaborations;
-        if (mCollaborations == null) {
+        if (mCollaborations == null || mCollaborations.size() == 0) {
             // There are no collaborators for mShareitem
-            this.setVisibility(GONE);
+            updateViewVisibilityForNoCollaborators();
             return;
         }
 
-        if (mCollaborations.size() == 0) {
-            // Empty collaborations object
-            this.setVisibility(GONE);
-        } else {
-            this.setVisibility(View.VISIBLE);
-            mInitialsListHeader.setVisibility(View.VISIBLE);
-            final int totalCollaborators = mCollaborations.fullSize().intValue();
-            final int remainingWidth = mInitialsListView.getWidth();
-            final ArrayList<BoxCollaboration> collaborations = mCollaborations.getEntries();
+        updateViewVisibilityIfCollaboratorsFound();
+        mInitialsListHeader.setVisibility(View.VISIBLE);
+        final int totalCollaborators = mCollaborations.fullSize().intValue();
+        final int remainingWidth = mInitialsListView.getWidth();
+        final ArrayList<BoxCollaboration> collaborations = mCollaborations.getEntries();
 
-            clearInitialsView();
-            mInitialsListView.post(new Runnable() {
-                @Override
-                public void run() {
-                    //Add the first item to calculate the width
-                    final View initialsView = addInitialsToList(collaborations.get(0).getAccessibleBy());
-                    initialsView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            int viewWidth = initialsView.getWidth();
-                            int viewsCount = remainingWidth/viewWidth;
+        clearInitialsView();
+        mInitialsListView.post(new Runnable() {
+            @Override
+            public void run() {
+                //Add the first item to calculate the width
+                final View initialsView = addInitialsToList(collaborations.get(0).getAccessibleBy());
+                initialsView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int viewWidth = initialsView.getWidth();
+                        int viewsCount = remainingWidth/viewWidth;
 
-                            for (int i = 1; i < viewsCount && i < collaborations.size(); i++) {
-                                View viewAdded = addInitialsToList(collaborations.get(i).getAccessibleBy());
-                                if (i == viewsCount - 1) {
-                                    // This is the last one, display count if needed
-                                    int remaining = totalCollaborators - viewsCount;
-                                    if (remaining > 0) {
-                                        BoxAvatarView initials = (BoxAvatarView) viewAdded.findViewById(R.id.collaborator_initials);
-                                        JsonObject jsonObject = new JsonObject();
-                                        jsonObject.set(BoxCollaborator.FIELD_NAME, Integer.toString(remaining + 1));
-                                        BoxUser numberUser = new BoxUser(jsonObject);
-                                        initials.loadUser(numberUser, mController.getAvatarController());
-                                    }
+                        for (int i = 1; i < viewsCount && i < collaborations.size(); i++) {
+                            View viewAdded = addInitialsToList(collaborations.get(i).getAccessibleBy());
+                            if (i == viewsCount - 1) {
+                                // This is the last one, display count if needed
+                                int remaining = totalCollaborators - viewsCount;
+                                if (remaining > 0) {
+                                    BoxAvatarView initials = (BoxAvatarView) viewAdded.findViewById(R.id.collaborator_initials);
+                                    JsonObject jsonObject = new JsonObject();
+                                    jsonObject.set(BoxCollaborator.FIELD_NAME, Integer.toString(remaining + 1));
+                                    BoxUser numberUser = new BoxUser(jsonObject);
+                                    initials.loadUser(numberUser, mController.getAvatarController());
                                 }
                             }
                         }
-                    });
-                }
-            });
-        }
+                    }
+                });
+            }
+        });
     }
 
     private void clearInitialsView() {
