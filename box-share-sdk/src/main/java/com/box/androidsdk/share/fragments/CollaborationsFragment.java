@@ -112,7 +112,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             return;
 
         if (rolesDialog.getIsRemoveCollaborationSelected()) {
-            showSpinner();
+            showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
             mController.deleteCollaboration(collaboration).addOnCompletedListener(mDeleteCollaborationListener);
         } else {
             BoxCollaboration.Role selectedRole = rolesDialog.getSelectedRole();
@@ -126,7 +126,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface dialog, final int which) {
-                                showSpinner();
+                                showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
                                 mController.updateOwner(collaboration).addOnCompletedListener(mUpdateOwnerListener);
                             }
                         }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -139,7 +139,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 dialog.show();
             }
             else {
-                showSpinner();
+                showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
                 mController.updateCollaboration(collaboration, selectedRole).addOnCompletedListener(mUpdateCollaborationListener);
             }
         }
@@ -158,7 +158,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             return;
         }
 
-        showSpinner();
+        showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
         mController.fetchCollaborations(getFolder()).addOnCompletedListener(mCollaborationsListener);
     }
 
@@ -170,7 +170,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             return;
         }
 
-        showSpinner();
+        showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
         mController.fetchRoles(getFolder()).addOnCompletedListener(mRolesListener);
     }
 

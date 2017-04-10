@@ -208,7 +208,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             return;
         }
 
-        showSpinner();
+        showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
         mController.fetchRoles(getFolder()).addOnCompletedListener(mRolesListener);
     }
 
@@ -261,7 +261,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             emailParts[i] = invitees.get(i).getEmail();
         }
 
-        showSpinner();
+        showSpinner(R.string.box_sharesdk_adding_collaborators, R.string.boxsdk_Please_wait);
         mController.addCollaborations(getFolder(), mSelectedRole, emailParts).addOnCompletedListener(mAddCollaborationsListener);
     }
 

@@ -134,7 +134,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                 if (isChecked) {
                     showPasswordChooserDialog();
                 } else {
-                    showSpinner();
+                    showSpinner(R.string.box_sharesdk_updating_link_access, R.string.boxsdk_Please_wait);
                     mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setPassword(null)).addOnCompletedListener(mBoxItemListener);
                 }
             }
@@ -151,7 +151,7 @@ public class SharedLinkAccessFragment extends BoxFragment
                     showDatePicker(new Date());
                 } else {
                     try {
-                        showSpinner();
+                        showSpinner(R.string.box_sharesdk_updating_link_access, R.string.boxsdk_Please_wait);
                         mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setRemoveUnsharedAtDate()).addOnCompletedListener(mBoxItemListener);
                     } catch (ParseException e) {
                         dismissSpinner();
@@ -307,11 +307,11 @@ public class SharedLinkAccessFragment extends BoxFragment
      */
     private void changeDownloadPermission(boolean canDownload){
         if (mShareItem instanceof BoxFile) {
-            showSpinner();
+            showSpinner(R.string.box_sharesdk_updating_link_access, R.string.boxsdk_Please_wait);
             mController.executeRequest(BoxItem.class, ((BoxRequestsFile.UpdatedSharedFile) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload)).addOnCompletedListener(mBoxItemListener);
         }
         else if (mShareItem instanceof BoxFolder) {
-            showSpinner();
+            showSpinner(R.string.box_sharesdk_updating_link_access, R.string.boxsdk_Please_wait);
             mController.executeRequest(BoxItem.class, ((BoxRequestsFolder.UpdateSharedFolder) mController.getCreatedSharedLinkRequest(mShareItem)).setCanDownload(canDownload)).addOnCompletedListener(mBoxItemListener);
         }
         else if (mShareItem instanceof BoxBookmark) {
@@ -331,7 +331,7 @@ public class SharedLinkAccessFragment extends BoxFragment
             return;
         }
 
-        showSpinner();
+        showSpinner(R.string.box_sharesdk_updating_link_access, R.string.boxsdk_Please_wait);
         mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setAccess(access)).addOnCompletedListener(mBoxItemListener);
     }
 
@@ -355,7 +355,7 @@ public class SharedLinkAccessFragment extends BoxFragment
         // Do something with the date chosen by the user
         GregorianCalendar calendar = new GregorianCalendar(year, month, day);
         try {
-            showSpinner();
+            showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
             mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setUnsharedAt(calendar.getTime())).addOnCompletedListener(mBoxItemListener);
         } catch (Exception e){
             dismissSpinner();
