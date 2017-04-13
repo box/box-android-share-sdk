@@ -239,7 +239,7 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
      * Executes the create shared link request for the appropriate item type of getMainItem
      */
     private void createDefaultShareItem(){
-        showSpinner();
+        showSpinner(R.string.box_sharesdk_enabling_share_link, R.string.boxsdk_Please_wait);
         mController.createDefaultSharedLink(mShareItem).addOnCompletedListener(mBoxItemListener);
     }
 
@@ -247,7 +247,7 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
      * Executes the disable share link request for the appropriate item type of getMainItem
      */
     private void disableShareItem(){
-        showSpinner();
+        showSpinner(R.string.box_sharesdk_disabling_share_link, R.string.boxsdk_Please_wait);
         mController.disableShareLink(mShareItem).addOnCompletedListener(mBoxItemListener);
     }
 
