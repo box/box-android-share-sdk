@@ -355,7 +355,7 @@ public class SharedLinkAccessFragment extends BoxFragment
         // Do something with the date chosen by the user
         GregorianCalendar calendar = new GregorianCalendar(year, month, day);
         try {
-            showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
+            showSpinner(R.string.box_sharesdk_updating_link_access, R.string.boxsdk_Please_wait);
             mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(mShareItem).setUnsharedAt(calendar.getTime())).addOnCompletedListener(mBoxItemListener);
         } catch (Exception e){
             dismissSpinner();
