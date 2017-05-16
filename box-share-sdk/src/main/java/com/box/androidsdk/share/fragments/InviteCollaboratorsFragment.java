@@ -18,6 +18,7 @@ import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxFolder;
+import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxUser;
 import com.box.androidsdk.content.requests.BoxRequestsShare;
@@ -87,9 +88,14 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
 
         // Get serialized roles or fetch them if they are not available
         if (getFolder() != null && getFolder().getAllowedInviteeRoles() != null) {
-            mRoles = getFolder().getAllowedInviteeRoles();
-            BoxCollaboration.Role selectedRole = mRoles.get(0);
-            setSelectedRole(selectedRole);
+            if(getFolder().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
+                mRoles = getFolder().getAllowedInviteeRoles();
+                BoxCollaboration.Role selectedRole = mRoles.get(0);
+                setSelectedRole(selectedRole);
+            } else {
+                showNoPermissionToast();
+                getActivity().finish();
+            }
         } else {
             fetchRoles();
         }
@@ -225,15 +231,20 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                         @Override
                         public void run() {
                             if (response.isSuccess() && getFolder() != null) {
-                                BoxFolder folder = response.getResult();
-                                mRoles = folder.getAllowedInviteeRoles();
-                                if (mSelectedRole != null) {
-                                    setSelectedRole(mSelectedRole);
+                                if(getFolder().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
+                                    BoxFolder folder = response.getResult();
+                                    mRoles = folder.getAllowedInviteeRoles();
+                                    if (mSelectedRole != null) {
+                                        setSelectedRole(mSelectedRole);
+                                    } else {
+                                        BoxCollaboration.Role selectedRole = mRoles != null && mRoles.size() > 0 ? mRoles.get(0) : null;
+                                        setSelectedRole(selectedRole);
+                                    }
+                                    mShareItem = folder;
                                 } else {
-                                    BoxCollaboration.Role selectedRole = mRoles != null && mRoles.size() > 0 ? mRoles.get(0) : null;
-                                    setSelectedRole(selectedRole);
+                                    showNoPermissionToast();
+                                    getActivity().finish();
                                 }
-                                mShareItem = folder;
                             } else {
                                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch roles request failed",
                                         response.getException());
@@ -375,6 +386,10 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             getActivity().setResult(Activity.RESULT_OK);
         }
         getActivity().finish();
+    }
+
+    private void showNoPermissionToast() {
+        mController.showToast(getActivity(), R.string.box_sharesdk_insufficient_permissions);
     }
 
     /**
