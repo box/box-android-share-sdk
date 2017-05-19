@@ -154,7 +154,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
                                 updateView(response.getResult());
                             } else if (((BoxException)response.getException()).getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND) {
                                 // The user is not a collaborator anymore
-                                mController.showToast(activity, getString(R.string.box_sharesdk_insufficient_permissions));
+                                mController.showToast(activity, getString(R.string.box_sharesdk_item_unavailable));
                                 activity.finish();
                             } else {
                                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch Collaborators request failed",
