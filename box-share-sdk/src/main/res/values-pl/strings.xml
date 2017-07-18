@@ -45,7 +45,7 @@
     <string name="box_sharesdk_title_share_link">Łącze udostępnione</string>
     <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">Włączenie łącza powoduje wygenerowanie udostępnianego łącza, którego inne osoby mogą używać do uzyskania dostępu i wyświetlania tej zawartości.</string>
     <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">Łącze skopiowane do schowka.</string>
-    <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">Udostępniłem(-am) Ci element „%1$s” w usłudze Box.</string>
+    <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">Udostępniam Ci element „%1$s” w usłudze Box.</string>
     <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">Wyślij za pomocą:</string>
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Błąd sieci. Spróbuj ponownie.</string>
 

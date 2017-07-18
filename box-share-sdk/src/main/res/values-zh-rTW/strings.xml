@@ -3,14 +3,14 @@
     <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">共用 SDK 範例</string>
     <string description="description of available actions for a folder" name="box_sharesdk_sample_choose_action">選擇「%s」的動作</string>
     <string name="box_sharesdk_shared_with">共用對象</string>
-    <string name="box_sharesdk_invite_collaborators">邀請合作者</string>
+    <string name="box_sharesdk_invite_collaborators">邀請人員</string>
     <string name="box_sharesdk_session_is_not_authenticated">工作階段未驗證</string>
     <string name="box_sharesdk_no_item_selected">未選擇項目</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">複製連結</string>
     <string description="button to send link to another application" name="box_sharesdk_send_link">傳送連結</string>
-    <string description="description for public access" name="box_sharesdk_accessible_public">有連結的人可存取</string>
-    <string description="description for company access" name="box_sharesdk_accessible_company">公司中的人可存取</string>
-    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">共用資料夾的人可存取</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">擁有連結的人員可存取</string>
+    <string description="description for company access" name="box_sharesdk_accessible_company">公司人員可存取</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">共用資料夾的人員可存取</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">受密碼保護</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">無密碼</string>
 
@@ -28,8 +28,8 @@
     <string description="shown as message of warning dialog before disabling a shared link" name="box_sharesdk_disable_message">永久停用連結將會刪除目前的共用連結。再次啟用連結時將會產生一個全新且獨一的共用連結。是否要停用共用連結？</string>
     <string description="separates ui between the shared link box and options to change access" name="box_sharesdk_link_access">存取權限</string>
     <string description="header for different access types" name="box_sharesdk_access">連結存取權限</string>
-    <string description="description for public access" name="box_sharesdk_access_public">有連結的人</string>
-    <string description="description for company access" name="box_sharesdk_access_company">您公司的人</string>
+    <string description="description for public access" name="box_sharesdk_access_public">擁有連結的人員</string>
+    <string description="description for company access" name="box_sharesdk_access_company">公司人員</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">共用資料夾的人員</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">允許下載</string>
     <string description="header for password section" name="box_sharesdk_password">密碼</string>
@@ -85,10 +85,10 @@
     <string description="The label for the field where users will enter the collaborators they would like to invite" name="box_sharesdk_to">給</string>
     <string description="Error message for when an incorrect object type is used to launch the collaborations page" name="box_sharesdk_selected_item_not_expected_type">選取的項目不是預期的類型</string>
     <string description="Success message for inviting a collaborator" name="box_sharesdk_collaborator_invited">已邀請 %s</string>
-    <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">已邀請合作者</string>
+    <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">已邀請共同作業者</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">您無法檢視此項目的共同作業。</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">其他人</string>
-    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">此資料夾沒有合作者。</string>
+    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">此資料夾沒有共同作業者。</string>
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">已邀請 %s 加入此資料夾</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">已邀請 %s 個人加入此資料夾</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>

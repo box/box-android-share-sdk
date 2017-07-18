@@ -1,7 +1,7 @@
 <resources>
     <string name="box_sharesdk_name">共有</string>
     <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">共有SDKサンプル</string>
-    <string description="description of available actions for a folder" name="box_sharesdk_sample_choose_action">\"%s\"の操作を選択してください</string>
+    <string description="description of available actions for a folder" name="box_sharesdk_sample_choose_action">「%s」に適用する操作を選択してください</string>
     <string name="box_sharesdk_shared_with">共有先</string>
     <string name="box_sharesdk_invite_collaborators">ユーザーを招待</string>
     <string name="box_sharesdk_session_is_not_authenticated">セッションが認証されていません</string>
@@ -15,10 +15,10 @@
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">パスワードが設定されていません</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">共有リンクを有効化</string>
-    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">共有リンクを無効化しました</string>
+    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">共有リンクは無効化されています</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">ダウンロード可能</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">ダウンロードは無効化されています</string>
-    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">有効期限なし</string>
+    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">有効期限が設定されていません</string>
     <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">リンクの有効期限: %1$s</string>
     <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">リンクアクセスを編集</string>
     <string description="button to cancel an action" name="box_sharesdk_cancel">キャンセル</string>
@@ -38,9 +38,9 @@
     <string description="header for link expiration section" name="box_sharesdk_link_expiration">リンクの有効期限</string>
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">リンクの有効期限を終了</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">有効期限</string>
-    <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">この共有リンクへのアクセス中に問題がありました。</string>
-    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">この共有リンクの編集/作成中に問題がありました。</string>
-    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">この共有リンクの編集/作成中に問題がありました。</string>
+    <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">この共有リンクへのアクセス中に問題が発生しました。</string>
+    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">この共有リンクの編集/作成中に問題が発生しました。</string>
+    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">この共有リンクの編集/作成中に問題が発生しました。</string>
     <string name="box_sharesdk_title_link_access">リンクアクセス</string>
     <string name="box_sharesdk_title_share_link">リンクを共有</string>
     <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">リンクを有効化すると、 他のユーザーがこのコンテンツにアクセスして閲覧できる共有リンクが生成されます。</string>
@@ -50,7 +50,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">ネットワークエラーが発生しました。もう一度やり直してください。</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">所有者の更新</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">このユーザーをフォルダの所有者にすると、フォルダの所有権を失って編集者になります。操作を続けますか？</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">このユーザーをフォルダの所有者にすると、あなたに付与されていたフォルダの所有権が失効し、あなたは編集者になります。操作を続けますか？</string>
 
 
     <!-- menu items -->
@@ -68,7 +68,7 @@
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">所有者</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">ユーザーを削除</string>
     <string description="The status to indicate that a person was invited, but they have not accepted the collaboration request" name="box_sharesdk_invited_status">招待済み</string>
-    <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">拒否</string>
+    <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">拒否済み</string>
 
     <!-- role descriptions -->
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_editor">ファイルのアップロード、ダウンロード、プレビュー、共有、編集ができます。</string>
@@ -84,20 +84,20 @@
     <string description="Menu item for submitting the invite collaborators request" name="box_sharesdk_action_send">送信</string>
     <string description="The label for the field where users will enter the collaborators they would like to invite" name="box_sharesdk_to">宛先</string>
     <string description="Error message for when an incorrect object type is used to launch the collaborations page" name="box_sharesdk_selected_item_not_expected_type">選択した項目が予期しない種類でした</string>
-    <string description="Success message for inviting a collaborator" name="box_sharesdk_collaborator_invited">%s 人招待しました。</string>
+    <string description="Success message for inviting a collaborator" name="box_sharesdk_collaborator_invited">%s を招待しました。</string>
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">コラボレータを招待しました</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">この項目のコラボレーションは表示できません。</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">別のユーザー</string>
     <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">このフォルダにコラボレータは設定されていません。</string>
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%sはすでにこのフォルダに招待済みです</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">このフォルダには、すでに%s人のユーザーを招待済みです</string>
-    <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
+    <string name="box_sharedsdk_collaborators_initials_count">他%d人</string>
     <string name="box_sharedsdk_collaborators_title">コラボレータ</string>
 
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">この操作を実行する権限がありません。</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">ユーザーはまだこのフォルダのコラボレータではないため、所有者として設定できません。</string>
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">所有者を更新できません。サポートにお問い合わせください。</string>
-    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">コラボレータを取得できません。状況が変わらない場合は、サポートにお問い合わせください。</string>
-    <string name="box_sharesdk_unable_to_invite">コラボレータを招待できません。状況が変わらない場合は、サポートにお問い合わせください。</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">コラボレータを取得できません。問題が継続する場合は、サポートにお問い合わせください。</string>
+    <string name="box_sharesdk_unable_to_invite">コラボレータを招待できません。問題が継続する場合は、サポートにお問い合わせください。</string>
 
 </resources>

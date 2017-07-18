@@ -42,7 +42,7 @@
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">Проблема при изменении/создании общей ссылки.</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">Проблема при изменении/создании общей ссылки.</string>
     <string name="box_sharesdk_title_link_access">Доступ к ссылке</string>
-    <string name="box_sharesdk_title_share_link">Доступ</string>
+    <string name="box_sharesdk_title_share_link">Поделиться ссылкой</string>
     <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">После включения ссылки будет создана общая ссылка, которую другие пользователи могут использовать для доступа и просмотра этого контента.</string>
     <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">Ссылка скопирована в буфер обмена.</string>
     <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">Вам предоставлен доступ к элементу \"%1$s\" в Box.</string>

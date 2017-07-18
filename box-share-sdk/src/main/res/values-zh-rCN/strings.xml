@@ -11,7 +11,7 @@
     <string description="description for public access" name="box_sharesdk_accessible_public">拥有此链接的协作者可访问</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">公司内部的协作者可访问</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">已共享本文件夹的协作者可访问</string>
-    <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">密码受保护</string>
+    <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">受密码保护</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">无密码</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">已启用共享链接</string>
@@ -25,7 +25,7 @@
     <string description="button to cancel an action" name="box_sharesdk_ok">确定</string>
     <string description="button to disable a shared link" name="box_sharesdk_disable_share_link">禁用共享链接</string>
     <string description="shown as title of warning dialog before disabling a shared link" name="box_sharesdk_disable_title">是否禁用共享链接？</string>
-    <string description="shown as message of warning dialog before disabling a shared link" name="box_sharesdk_disable_message">禁用此链接将永久删除当前的共享链接。重新启用此链接将生成一个全新的唯一共享链接。您是否想要禁用此共享链接？</string>
+    <string description="shown as message of warning dialog before disabling a shared link" name="box_sharesdk_disable_message">禁用此链接将永久删除当前的共享\n链接。重新启用此链接将生成一个全新的唯一共享链接。是否想要禁用此共享链接？</string>
     <string description="separates ui between the shared link box and options to change access" name="box_sharesdk_link_access">访问</string>
     <string description="header for different access types" name="box_sharesdk_access">链接访问</string>
     <string description="description for public access" name="box_sharesdk_access_public">拥有链接的协作者</string>
@@ -62,8 +62,8 @@
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer">查看者</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer">预览者</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_uploader">上传者</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">预览者兼上传者</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">查看者兼上传者</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">上传者（预览者）</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">上传者（查看者）</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">共有者</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">所有者</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">移除协作者</string>
@@ -86,7 +86,7 @@
     <string description="Error message for when an incorrect object type is used to launch the collaborations page" name="box_sharesdk_selected_item_not_expected_type">选定的项目不是预期的类型</string>
     <string description="Success message for inviting a collaborator" name="box_sharesdk_collaborator_invited">%s 已被邀请</string>
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">已邀请协作者</string>
-    <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">您不能查看此项目的协作。</string>
+    <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">无法查看此项目的协作。</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">另一位协作者</string>
     <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">此文件夹没有协作者。</string>
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">已邀请 %s 至此文件夹</string>
@@ -94,10 +94,10 @@
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">协作者</string>
 
-    <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">您没有执行此操作的足够权限。</string>
+    <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">您没有足够的权限执行此操作。</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">用户尚未成为此文件夹中的协作者，无法设置为所有者。</string>
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">无法更新所有者。请联系支持部门。</string>
-    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">无法获取协作者。如果问题仍然存在，请联系支持部门。</string>
-    <string name="box_sharesdk_unable_to_invite">无法邀请协作者。如果问题仍然存在，请联系支持部门。</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">无法获取协作者。如果问题持续出现，请联系支持部门。</string>
+    <string name="box_sharesdk_unable_to_invite">无法邀请协作者。如果问题持续出现，请联系支持部门。</string>
 
 </resources>

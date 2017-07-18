@@ -50,7 +50,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Errore di rete. Riprova.</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">Aggiornamento proprietà</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Se assegni a questo utente la proprietà della cartella, perderai la proprietà della cartella e avrai solo l\'autorizzazione alla modifica. Continuare?</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Assegnando a questo utente il ruolo di proprietario, perderai la proprietà della cartella e avrai solo l\'autorizzazione alla modifica. Continuare?</string>
 
 
     <!-- menu items -->
@@ -62,8 +62,8 @@
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer">Visualizzazione</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer">Anteprima</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_uploader">Upload</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">Upload Anteprima</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">Upload Visualizzazione</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">Upload anteprima</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">Upload visualizzazione</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">Proprietà condivisa</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">Proprietà</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">Rimuovi persona</string>

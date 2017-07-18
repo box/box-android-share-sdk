@@ -15,7 +15,7 @@
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Inget lösenord</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Delad länk aktiverad</string>
-    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Delad länk inaktivera</string>
+    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Delad länk inaktiverad</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">Hämtningar tillåts</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">Hämtningar inaktiverade</string>
     <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">Inget förfallodatum</string>
