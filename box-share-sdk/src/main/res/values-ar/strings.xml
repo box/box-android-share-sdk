@@ -77,7 +77,7 @@
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">حمّل الملفات فقط.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">قم بمعاينة الملفات وتحميلها.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">قم بتحميل الملفات وتنزيلها ومعاينتها ومشاركتها.</string>
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">نفس الأذونات التي يملكها المالك</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">نفس مستوى الوصول الممنوح للمالك</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_owner">مالك</string>
 
     <!-- invite collaborators -->

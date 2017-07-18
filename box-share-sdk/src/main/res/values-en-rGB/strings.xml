@@ -43,7 +43,7 @@
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">There was a problem modifying/creating this shared link.</string>
     <string name="box_sharesdk_title_link_access">Link access</string>
     <string name="box_sharesdk_title_share_link">Share link</string>
-    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">Enabling a link generates a sharable link that others can use to access and view this content.</string>
+    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">Enabling a link generates a shareable link that others can use to access and view this content.</string>
     <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">Link copied to clipboard.</string>
     <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">I have shared \'%1$s\' with you on Box.</string>
     <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">Send with:</string>
