@@ -50,7 +50,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">發生網路錯誤。請再試一次。</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">擁有者更新</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">將此使用者設為資料夾的擁有者即表示，您會失去資料夾的所有權，並變成編輯者。是否要繼續？</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">將此使用者設為資料夾的擁有者\n即表示，您會失去資料夾的所有權，\n並變成編輯者。是否要繼續？</string>
 
 
     <!-- menu items -->
