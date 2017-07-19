@@ -7,7 +7,7 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 21000
+        versionCode 21001
         versionName "2.1.1"
         version "2.1.1"
         group "com.box"
