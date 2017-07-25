@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
+import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
@@ -74,11 +75,11 @@ public class CollaboratorsInitialsView extends LinearLayout {
     /**
      * This is mandatory to execute a request in order to obtain collaborators for a box folder
      *
-     * @param folder Box folder
+     * @param collaborationItem Box item
      * @param shareController Share controller used for making a request
      */
-    public void setArguments(BoxFolder folder, ShareController shareController) {
-        mShareItem = folder;
+    public void setArguments(BoxCollaborationItem collaborationItem, ShareController shareController) {
+        mShareItem = collaborationItem;
         mController = shareController;
     }
 
@@ -97,8 +98,8 @@ public class CollaboratorsInitialsView extends LinearLayout {
         mUnknownCollaborator = new BoxUser(jsonObject);
     }
 
-    protected BoxFolder getFolder() {
-        return (BoxFolder)mShareItem;
+    protected BoxCollaborationItem getCollaborationItem() {
+        return (BoxCollaborationItem)mShareItem;
     }
 
     public final String getString(@StringRes int resId) {
@@ -113,7 +114,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
             return;
         }
 
-        if (getFolder() == null || SdkUtils.isBlank(getFolder().getId())) {
+        if (getCollaborationItem() == null || SdkUtils.isBlank(getCollaborationItem().getId())) {
             mController.showToast(getContext(), getString(R.string.box_sharesdk_cannot_view_collaborations));
             return;
         }
@@ -123,7 +124,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
 
         if (mBoxResponse == null) {
             // Execute request to fetch collaborators
-            mController.fetchCollaborations(getFolder()).addOnCompletedListener(mCollaborationsListener);
+            mController.fetchCollaborations(getCollaborationItem()).addOnCompletedListener(mCollaborationsListener);
         } else {
             // Dismiss spinner
             mProgressBar.setVisibility(GONE);
@@ -150,7 +151,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
                         public void run() {
                             // Dismiss spinner
                             mProgressBar.setVisibility(GONE);
-                            if (response.isSuccess() && getFolder() != null) {
+                            if (response.isSuccess() && getCollaborationItem() != null) {
                                 updateView(response.getResult());
                             } else if (((BoxException)response.getException()).getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND) {
                                 // The user is not a collaborator anymore
@@ -188,7 +189,11 @@ public class CollaboratorsInitialsView extends LinearLayout {
 
         updateViewVisibilityIfCollaboratorsFound();
         mInitialsListHeader.setVisibility(View.VISIBLE);
-        final int totalCollaborators = mCollaborations.fullSize().intValue();
+        int bestKnownCollabsSize = mCollaborations.size();
+        if (mCollaborations.fullSize() != null) {
+            bestKnownCollabsSize = mCollaborations.fullSize().intValue();
+        }
+        final int totalCollaborators = bestKnownCollabsSize;
         final int remainingWidth = mInitialsListView.getWidth();
         final ArrayList<BoxCollaboration> collaborations = mCollaborations.getEntries();
 

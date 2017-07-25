@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
+import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
@@ -53,7 +54,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
         mCollaboratorsListView = (ListView) view.findViewById(R.id.collaboratorsList);
         mCollaboratorsListView.setDivider(null);
-        mCollaboratorsAdapter = new CollaboratorsAdapter(getActivity(), getFolder(), mController);
+        mCollaboratorsAdapter = new CollaboratorsAdapter(getActivity(), getItem(), mController);
         mCollaboratorsListView.setAdapter(mCollaboratorsAdapter);
         mCollaboratorsListView.setOnItemClickListener(this);
         mNoCollaboratorsText = (TextView) view.findViewById(R.id.no_collaborators_text);
@@ -70,7 +71,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         }
 
         // Get serialized roles or fetch them if they are not available
-        if (getFolder().getAllowedInviteeRoles() == null) {
+        if (getItem().getAllowedInviteeRoles() == null) {
             fetchRoles();
         }
 
@@ -98,7 +99,11 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             BoxCollaborator collaborator = holder.collaboration.getAccessibleBy();
             BoxCollaboration.Role role = holder.collaboration.getRole();
             String name = collaborator == null ? getString(R.string.box_sharesdk_another_person) : collaborator.getName();
-            boolean allowOwner = getFolder().getOwnedBy().getId().equals(mController.getCurrentUserId());
+            boolean allowOwner = getItem().getOwnedBy().getId().equals(mController.getCurrentUserId());
+            if (allowOwner){
+                // currently changing owner only seems to be supported for folders (does not show up as a allowed invitee role).
+                allowOwner = getItem() instanceof BoxFolder;
+            }
             CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(rolesArr, role, name, true, allowOwner, holder.collaboration);
             rolesDialog.setOnRoleSelectedListener(this);
             rolesDialog.show(getFragmentManager(), TAG);
@@ -145,33 +150,33 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         }
     }
 
-    public BoxFolder getFolder() {
-        return (BoxFolder) mShareItem;
+    public BoxCollaborationItem getItem() {
+        return (BoxCollaborationItem) mShareItem;
     }
 
     /**
      * Executes the request to retrieve collaborations for the folder
      */
     public void fetchCollaborations() {
-        if (getFolder() == null || SdkUtils.isBlank(getFolder().getId())) {
+        if (getItem() == null || SdkUtils.isBlank(getItem().getId())) {
             mController.showToast(getActivity(), getString(R.string.box_sharesdk_cannot_view_collaborations));
             return;
         }
 
         showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
-        mController.fetchCollaborations(getFolder()).addOnCompletedListener(mCollaborationsListener);
+        mController.fetchCollaborations(getItem()).addOnCompletedListener(mCollaborationsListener);
     }
 
     /**
      * Executes the request to retrieve the available roles for the folder
      */
     private void fetchRoles() {
-        if (getFolder() == null || SdkUtils.isBlank(getFolder().getId())) {
+        if (getItem() == null || SdkUtils.isBlank(getItem().getId())) {
             return;
         }
 
         showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
-        mController.fetchRoles(getFolder()).addOnCompletedListener(mRolesListener);
+        mController.fetchRoles(getItem()).addOnCompletedListener(mRolesListener);
     }
 
     private void updateUi(){
@@ -186,8 +191,8 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
     public ArrayList<BoxCollaboration.Role> getRoles() {
-        if (getFolder().getAllowedInviteeRoles() != null) {
-            return getFolder().getAllowedInviteeRoles();
+        if (getItem().getAllowedInviteeRoles() != null) {
+            return getItem().getAllowedInviteeRoles();
         }
         return null;
     }
@@ -204,7 +209,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (response.isSuccess() && getFolder() != null) {
+                        if (response.isSuccess() && getItem() != null) {
                             mCollaborations = response.getResult();
                             updateUi();
                         } else {
@@ -240,30 +245,39 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             }
         };
 
-    private BoxFutureTask.OnCompletedListener<BoxFolder> mRolesListener =
-        new BoxFutureTask.OnCompletedListener<BoxFolder>() {
-            @Override
-            public void onCompleted(final BoxResponse<BoxFolder> response) {
-                dismissSpinner();
-                final Activity activity = getActivity();
-                if (activity == null) {
-                    return;
-                }
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (response.isSuccess() && getFolder() != null) {
-                            BoxFolder folder = response.getResult();
-                            mShareItem = folder;
-                        } else {
-                            BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch roles request failed",
-                                    response.getException());
-                            mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
-                        }
-                    }
-                });
+
+    private BoxFutureTask.OnCompletedListener<BoxCollaborationItem> mRolesListener = new BoxFutureTask.OnCompletedListener<BoxCollaborationItem>() {
+        @Override
+        public void onCompleted(final BoxResponse<BoxCollaborationItem> response) {
+            dismissSpinner();
+            final Activity activity = getActivity();
+            if (activity == null) {
+                return;
             }
-        };
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (response.isSuccess() && getItem() != null) {
+                        BoxCollaborationItem responseResult = response.getResult();
+                        mShareItem = responseResult;
+                    } else {
+                        BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch roles request failed",
+                                response.getException());
+                        mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
+                    }
+                }
+            });
+
+        }
+    };
+
+
+//
+//    private BoxFutureTask.OnCompletedListener<BoxCollaborationItem> mRolesListener = new BoxFutureTask.OnCompletedListener<BoxCollaborationItem>(){
+//            @Override
+//            public void onCompleted(final BoxResponse<BoxCollaborationItem> response) {
+//            }
+//        };
 
     private BoxFutureTask.OnCompletedListener<BoxVoid> mDeleteCollaborationListener =
         new BoxFutureTask.OnCompletedListener<BoxVoid>() {
@@ -277,7 +291,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (response.isSuccess() && getFolder() != null) {
+                        if (response.isSuccess() && getItem() != null) {
                             BoxRequestsShare.DeleteCollaboration req = (BoxRequestsShare.DeleteCollaboration) response.getRequest();
                             mCollaboratorsAdapter.delete(req.getId());
                             if (mCollaboratorsAdapter.getCount() == 0) {
@@ -306,7 +320,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (response.isSuccess() && getFolder() != null) {
+                        if (response.isSuccess() && getItem() != null) {
                             mCollaboratorsAdapter.update(response.getResult());
                         } else {
                             BoxLogUtils.e(CollaborationsFragment.class.getName(), "Update Collaborator request failed",
@@ -347,7 +361,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (response.isSuccess() && getFolder() != null) {
+                            if (response.isSuccess() && getItem() != null) {
                                 mOwnerUpdated = true;
                                 getActivity().finish();
                             } else {
@@ -378,8 +392,8 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 }
             };
 
-    public static CollaborationsFragment newInstance(BoxFolder folder, BoxIteratorCollaborations collaborations) {
-        Bundle args = BoxFragment.getBundle(folder);
+    public static CollaborationsFragment newInstance(BoxCollaborationItem collaborationItem, BoxIteratorCollaborations collaborations) {
+        Bundle args = BoxFragment.getBundle(collaborationItem);
         args.putSerializable(CollaborationUtils.EXTRA_COLLABORATIONS, collaborations);
         CollaborationsFragment fragment = new CollaborationsFragment();
         fragment.setArguments(args);

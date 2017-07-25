@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
@@ -38,7 +39,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-            mFragment = InviteCollaboratorsFragment.newInstance((BoxFolder) mShareItem);
+            mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) mShareItem);
             ft.add(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
             ft.commit();
         }
@@ -69,7 +70,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
 
     @Override
     public void onShowCollaborators(BoxIteratorCollaborations collaborations) {
-        Intent collabsIntent = BoxCollaborationsActivity.getLaunchIntent(this, (BoxFolder) mShareItem, mSession, collaborations);
+        Intent collabsIntent = BoxCollaborationsActivity.getLaunchIntent(this, (BoxCollaborationItem)mShareItem, mSession, collaborations);
         startActivityForResult(collabsIntent, REQUEST_SHOW_COLLABORATORS);
     }
 
@@ -116,18 +117,18 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
      * Gets a fully formed intent that can be used to start the activity with
      *
      * @param context context to launch the intent in
-     * @param folder folder to add collaborators to
+     * @param collaborationItem item to add collaborators to
      * @param session the session to add collaborators with
      * @return the intent to launch the activity
      */
-    public static Intent getLaunchIntent(Context context, BoxFolder folder, BoxSession session) {
-        if (folder == null || SdkUtils.isBlank(folder.getId()))
-            throw new IllegalArgumentException("A valid folder must be provided for retrieving collaborations");
+    public static Intent getLaunchIntent(Context context, BoxCollaborationItem collaborationItem, BoxSession session) {
+        if (collaborationItem == null || SdkUtils.isBlank(collaborationItem.getId()) || SdkUtils.isBlank(collaborationItem.getType()))
+            throw new IllegalArgumentException("A valid collaboration item must be provided for retrieving collaborations");
         if (session == null || session.getUser() == null ||  SdkUtils.isBlank(session.getUser().getId()))
             throw new IllegalArgumentException("A valid user must be provided for retrieving collaborations");
 
         Intent inviteIntent = new Intent(context, BoxInviteCollaboratorsActivity.class);
-        inviteIntent.putExtra(CollaborationUtils.EXTRA_ITEM, folder);
+        inviteIntent.putExtra(CollaborationUtils.EXTRA_ITEM, collaborationItem);
         inviteIntent.putExtra(CollaborationUtils.EXTRA_USER_ID, session.getUser().getId());
         return inviteIntent;
     }

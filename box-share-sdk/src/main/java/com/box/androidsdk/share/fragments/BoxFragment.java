@@ -11,6 +11,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.TextAppearanceSpan;
 import android.view.View;
 
+import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.share.CollaborationUtils;
@@ -46,10 +47,10 @@ public abstract class BoxFragment extends Fragment {
         mSpinnerLock = new ReentrantLock();
 
         if (savedInstanceState != null && savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM) != null){
-            mShareItem = (BoxItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
+            mShareItem = (BoxCollaborationItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
         } else if (getArguments() != null) {
             Bundle args = getArguments();
-            mShareItem = (BoxItem)args.getSerializable(CollaborationUtils.EXTRA_ITEM);
+            mShareItem = (BoxCollaborationItem)args.getSerializable(CollaborationUtils.EXTRA_ITEM);
         }
 
         if (mShareItem == null){

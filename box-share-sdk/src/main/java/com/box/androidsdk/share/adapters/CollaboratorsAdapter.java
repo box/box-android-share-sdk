@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
+import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
@@ -26,15 +27,15 @@ public class CollaboratorsAdapter extends BaseAdapter {
 
     private ArrayList<BoxCollaboration> mItems = new ArrayList<BoxCollaboration>();
     private Context mContext;
-    private BoxFolder mFolder;
+    private BoxCollaborationItem mFolder;
     private ShareController mController;
     private final BoxCollaborator mAnotherPersonCollaborator;
 
 
-    public CollaboratorsAdapter(Context context, BoxFolder folder, ShareController controller) {
+    public CollaboratorsAdapter(Context context, BoxCollaborationItem collaborationItem, ShareController controller) {
         super();
         mContext = context;
-        mFolder = folder;
+        mFolder = collaborationItem;
         mController = controller;
         // This item is used for displaying users that do not have a box account have been invited as a collaborator
         JsonObject jsonObject = new JsonObject();
