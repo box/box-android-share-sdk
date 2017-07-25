@@ -9,6 +9,7 @@ import android.support.annotation.StringRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -198,23 +199,27 @@ public class CollaboratorsInitialsView extends LinearLayout {
             public void run() {
                 //Add the first item to calculate the width
                 final View initialsView = addInitialsToList(collaborations.get(0).getAccessibleBy());
-                initialsView.post(new Runnable() {
+                initialsView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    private boolean initialsAdded = false;
                     @Override
-                    public void run() {
-                        int viewWidth = initialsView.getWidth();
-                        int viewsCount = remainingWidth/viewWidth;
+                    public void onGlobalLayout() {
+                        if (initialsView.isShown() && !initialsAdded) {
+                            initialsAdded = true;
+                            int viewWidth = initialsView.getWidth();
+                            int viewsCount = remainingWidth / viewWidth;
 
-                        for (int i = 1; i < viewsCount && i < collaborations.size(); i++) {
-                            View viewAdded = addInitialsToList(collaborations.get(i).getAccessibleBy());
-                            if (i == viewsCount - 1) {
-                                // This is the last one, display count if needed
-                                int remaining = totalCollaborators - viewsCount;
-                                if (remaining > 0) {
-                                    BoxAvatarView initials = (BoxAvatarView) viewAdded.findViewById(R.id.collaborator_initials);
-                                    JsonObject jsonObject = new JsonObject();
-                                    jsonObject.set(BoxCollaborator.FIELD_NAME, Integer.toString(remaining + 1));
-                                    BoxUser numberUser = new BoxUser(jsonObject);
-                                    initials.loadUser(numberUser, mController.getAvatarController());
+                            for (int i = 1; i < viewsCount && i < collaborations.size(); i++) {
+                                View viewAdded = addInitialsToList(collaborations.get(i).getAccessibleBy());
+                                if (i == viewsCount - 1) {
+                                    // This is the last one, display count if needed
+                                    int remaining = totalCollaborators - viewsCount;
+                                    if (remaining > 0) {
+                                        BoxAvatarView initials = (BoxAvatarView) viewAdded.findViewById(R.id.collaborator_initials);
+                                        JsonObject jsonObject = new JsonObject();
+                                        jsonObject.set(BoxCollaborator.FIELD_NAME, Integer.toString(remaining + 1));
+                                        BoxUser numberUser = new BoxUser(jsonObject);
+                                        initials.loadUser(numberUser, mController.getAvatarController());
+                                    }
                                 }
                             }
                         }
