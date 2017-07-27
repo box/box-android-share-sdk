@@ -15,7 +15,7 @@ import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.fragments.CollaborationsFragment;
 
 /**
- * Activity used to show and modify the collaborations of a folder. The intent to launch this activity can be retrieved via the static getLaunchIntent method
+ * Activity used to show and modify the collaborations of an item. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
 public class BoxCollaborationsActivity extends BoxActivity {
 
@@ -59,12 +59,12 @@ public class BoxCollaborationsActivity extends BoxActivity {
      *
      * @param context context to launch the intent with
      * @param collaborationItem item to retrieve collaborations for
-     * @param session the session to view the folders collaborations with
+     * @param session the session to view the items collaborations with
      * @return the intent to launch the activity
      */
     public static Intent getLaunchIntent(Context context, BoxCollaborationItem collaborationItem, BoxSession session) {
         if (collaborationItem == null || SdkUtils.isBlank(collaborationItem.getId()) || SdkUtils.isBlank(collaborationItem.getType()))
-            throw new IllegalArgumentException("A valid folder must be provided for retrieving collaborations");
+            throw new IllegalArgumentException("A valid collaboration item must be provided for retrieving collaborations");
         if (session == null || session.getUser() == null || SdkUtils.isBlank(session.getUser().getId()))
             throw new IllegalArgumentException("A valid user must be provided for retrieving collaborations");
 
@@ -80,7 +80,7 @@ public class BoxCollaborationsActivity extends BoxActivity {
      *
      * @param context context to launch the intent with
      * @param boxCollaborationItem item to retrieve collaborations for
-     * @param session the session to view the folders collaborations with
+     * @param session the session to view the items collaborations with
      * @return the intent to launch the activity
      */
     public static Intent getLaunchIntent(Context context, BoxCollaborationItem boxCollaborationItem, BoxSession session, BoxIteratorCollaborations collaborations) {

@@ -155,7 +155,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
     /**
-     * Executes the request to retrieve collaborations for the folder
+     * Executes the request to retrieve collaborations for the item
      */
     public void fetchCollaborations() {
         if (getItem() == null || SdkUtils.isBlank(getItem().getId())) {
@@ -168,7 +168,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
     /**
-     * Executes the request to retrieve the available roles for the folder
+     * Executes the request to retrieve the available roles for the item
      */
     private void fetchRoles() {
         if (getItem() == null || SdkUtils.isBlank(getItem().getId())) {
@@ -270,14 +270,6 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
         }
     };
-
-
-//
-//    private BoxFutureTask.OnCompletedListener<BoxCollaborationItem> mRolesListener = new BoxFutureTask.OnCompletedListener<BoxCollaborationItem>(){
-//            @Override
-//            public void onCompleted(final BoxResponse<BoxCollaborationItem> response) {
-//            }
-//        };
 
     private BoxFutureTask.OnCompletedListener<BoxVoid> mDeleteCollaborationListener =
         new BoxFutureTask.OnCompletedListener<BoxVoid>() {
