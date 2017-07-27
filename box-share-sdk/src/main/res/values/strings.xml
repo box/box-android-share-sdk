@@ -1,7 +1,7 @@
 <resources>
     <string name="box_sharesdk_name">Share</string>
     <string name="box_sharesdk_sample_name" description="Title of share SDK sample app">Share SDK Sample</string>
-    <string name="box_sharesdk_sample_choose_action" description="description of available actions for a folder">Choose action for \"%s\"</string>
+    <string name="box_sharesdk_sample_choose_action" description="description of available actions for an item">Choose action for \"%s\"</string>
     <string name="box_sharesdk_shared_with">Shared With</string>
     <string name="box_sharesdk_invite_collaborators">Invite People</string>
     <string name="box_sharesdk_session_is_not_authenticated">Session is not authenticated</string>
@@ -10,7 +10,7 @@
     <string name="box_sharesdk_send_link" description="button to send link to another application">SEND LINK</string>
     <string name="box_sharesdk_accessible_public" description="description for public access">Accessible to people with the link</string>
     <string name="box_sharesdk_accessible_company" description="description for company access">Accessible to people in your company</string>
-    <string name="box_sharesdk_accessible_collaborator" description="description for collaborator access">Accessible to people the folder is shared with</string>
+    <string name="box_sharesdk_accessible_collaborator" description="description for collaborator access">Accessible to people the item is shared with</string>
     <string name="box_sharesdk_password_protected" description="description for if a shared link is password proceted">Password protected</string>
     <string name="box_sharesdk_password_unprotected" description="description for if a shared link is not password proceted">No password</string>
     <string name="box_sharesdk_fetching_collaborators" description="message to show on spinner when we are fetching collaborators">Fetching collaborators</string>
@@ -35,6 +35,7 @@
     <string name="box_sharesdk_access" description="header for different access types">Link Access</string>
     <string name="box_sharesdk_access_public" description="description for public access">People with the link</string>
     <string name="box_sharesdk_access_company" description="description for company access">People in your company</string>
+    <string name="box_sharesdk_access_collaborator_file" description="description for collaborator access for a file">People in this file and folder</string>
     <string name="box_sharesdk_access_collaborator" description="description for collaborator access">People in this folder</string>
     <string name="box_sharesdk_allow_downloads" description="toggle of whether to allow downloading">Allow Downloads</string>
     <string name="box_sharesdk_password" description="header for password section">Password</string>
@@ -55,7 +56,7 @@
     <string name="box_sharesdk_network_error" description="Title indicating that an error occurred while performing an action">Network error. Please try again.</string>
 
     <string name="box_sharesdk_change_owner_alert_title" description="Title for the alert dialog to confirm owner update">Owner Update</string>
-    <string name="box_sharesdk_change_owner_alert_message" description="Message for the alert dialog to confirm owner update">Making this user the folder owner means that you will lose folder ownership and become an editor. Do you want to continue?</string>
+    <string name="box_sharesdk_change_owner_alert_message" description="Message for the alert dialog to confirm owner update">Making this user the item owner means that you will lose ownership and become an editor. Do you want to continue?</string>
 
 
     <!-- menu items -->
@@ -93,9 +94,9 @@
     <string name="box_sharesdk_collaborators_invited" description="Success message for inviting collaborators">Collaborators have been invited</string>
     <string name="box_sharesdk_cannot_view_collaborations" description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available">You cannot view the collaborations for this item.</string>
     <string name="box_sharesdk_another_person" description="Default name shown when a user without a Box account has been invited">Another Person</string>
-    <string name="box_sharesdk_no_collaborators" description="Message shown when no collaborators have been invited for the current folder">No collaborators for this folder.</string>
-    <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s has already been invited to this folder</string>
-    <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s people have already been invited to this folder</string>
+    <string name="box_sharesdk_no_collaborators" description="Message shown when no collaborators have been invited for the current item">No collaborators for this item.</string>
+    <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s has already been invited to this item</string>
+    <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s people have already been invited to this item</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Collaborators</string>
 

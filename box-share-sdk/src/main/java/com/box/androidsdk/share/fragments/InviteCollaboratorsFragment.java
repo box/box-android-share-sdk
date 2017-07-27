@@ -17,6 +17,7 @@ import android.widget.MultiAutoCompleteTextView;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
+import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Fragment to let users invite collaborators on a folder.
+ * Fragment to let users invite collaborators on an item.
  *
  * There are two listeners used here:
  * 1. InviteCollaboratorsListener is used to set up a listener by the parent Activity or Fragment on this Fragment.
@@ -84,12 +85,12 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         mAutoComplete.setTokenListener(this);
 
         mCollabInitialsView = (CollaboratorsInitialsView) view.findViewById(R.id.collaboratorsInitialsView);
-        mCollabInitialsView.setArguments((BoxFolder) mShareItem, mController);
+        mCollabInitialsView.setArguments((BoxCollaborationItem)mShareItem, mController);
 
         // Get serialized roles or fetch them if they are not available
-        if (getFolder() != null && getFolder().getAllowedInviteeRoles() != null) {
-            if(getFolder().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
-                mRoles = getFolder().getAllowedInviteeRoles();
+        if (getCollaborationItem() != null && getCollaborationItem().getAllowedInviteeRoles() != null) {
+            if(getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
+                mRoles = getCollaborationItem().getAllowedInviteeRoles();
                 BoxCollaboration.Role selectedRole = mRoles.get(0);
                 setSelectedRole(selectedRole);
             } else {
@@ -207,21 +208,21 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     }
 
     /**
-     * Executes the request to retrieve the available roles for the folder
+     * Executes the request to retrieve the available roles for the item
      */
     private void fetchRoles() {
-        if (getFolder() == null || SdkUtils.isBlank(getFolder().getId())) {
+        if (getCollaborationItem() == null || SdkUtils.isBlank(getCollaborationItem().getId())) {
             return;
         }
 
         showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
-        mController.fetchRoles(getFolder()).addOnCompletedListener(mRolesListener);
+        mController.fetchRoles(getCollaborationItem()).addOnCompletedListener(mRolesListener);
     }
 
-    private BoxFutureTask.OnCompletedListener<BoxFolder> mRolesListener =
-            new BoxFutureTask.OnCompletedListener<BoxFolder>() {
+    private BoxFutureTask.OnCompletedListener<BoxCollaborationItem> mRolesListener =
+            new BoxFutureTask.OnCompletedListener<BoxCollaborationItem>() {
                 @Override
-                public void onCompleted(final BoxResponse<BoxFolder> response) {
+                public void onCompleted(final BoxResponse<BoxCollaborationItem> response) {
                     dismissSpinner();
                     final Activity activity = getActivity();
                     if (activity == null) {
@@ -230,17 +231,17 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (response.isSuccess() && getFolder() != null) {
-                                if(getFolder().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
-                                    BoxFolder folder = response.getResult();
-                                    mRoles = folder.getAllowedInviteeRoles();
+                            if (response.isSuccess() && getCollaborationItem() != null) {
+                                if(getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
+                                    BoxCollaborationItem collaborationItem = response.getResult();
+                                    mRoles = collaborationItem.getAllowedInviteeRoles();
                                     if (mSelectedRole != null) {
                                         setSelectedRole(mSelectedRole);
                                     } else {
                                         BoxCollaboration.Role selectedRole = mRoles != null && mRoles.size() > 0 ? mRoles.get(0) : null;
                                         setSelectedRole(selectedRole);
                                     }
-                                    mShareItem = folder;
+                                    mShareItem = collaborationItem;
                                 } else {
                                     showNoPermissionToast();
                                     getActivity().finish();
@@ -259,11 +260,14 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
      * Executes the request to retrieve the invitees that can be auto-completed
      */
     private void fetchInvitees() {
-        mController.getInvitees(getFolder(), mFilterTerm).addOnCompletedListener(mGetInviteesListener);
+        if (getCollaborationItem() instanceof BoxFolder) {
+            // Currently this request is only supported for folders.
+            mController.getInvitees(getCollaborationItem(), mFilterTerm).addOnCompletedListener(mGetInviteesListener);
+        }
     }
 
     /**
-     * Executes the request to add collaborations to the folder
+     * Executes the request to add collaborations to the item
      */
     public void addCollaborations() {
         List<BoxInvitee> invitees = mAutoComplete.getObjects();
@@ -273,7 +277,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
 
         showSpinner(R.string.box_sharesdk_adding_collaborators, R.string.boxsdk_Please_wait);
-        mController.addCollaborations(getFolder(), mSelectedRole, emailParts).addOnCompletedListener(mAddCollaborationsListener);
+        mController.addCollaborations(getCollaborationItem(), mSelectedRole, emailParts).addOnCompletedListener(mAddCollaborationsListener);
     }
 
     private BoxFutureTask.OnCompletedListener<BoxIteratorInvitees> mGetInviteesListener =
@@ -333,7 +337,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             };
 
     /**
-     * Handles the batch response of adding collaborations to the folder by showing error messages when needed
+     * Handles the batch response of adding collaborations to the item by showing error messages when needed
      * and finishing the activity afterwards
      *
      * @param responses the add collaborations batch response
@@ -402,16 +406,16 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         mRoleButton.setText(createTitledSpannable(getString(R.string.box_sharesdk_access), CollaborationUtils.getRoleName(getActivity(), role)));
     }
 
-    protected BoxFolder getFolder() {
-        return (BoxFolder)mShareItem;
+    protected BoxCollaborationItem getCollaborationItem() {
+        return (BoxCollaborationItem)mShareItem;
     }
 
-    public static InviteCollaboratorsFragment newInstance(BoxFolder folder) {
-        return newInstance(folder, true);
+    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem) {
+        return newInstance(collaborationItem, true);
     }
 
-    public static InviteCollaboratorsFragment newInstance(BoxFolder folder, boolean useContactsProvider) {
-        Bundle args = BoxFragment.getBundle(folder);
+    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem, boolean useContactsProvider) {
+        Bundle args = BoxFragment.getBundle(collaborationItem);
         InviteCollaboratorsFragment fragment = new InviteCollaboratorsFragment();
         args.putBoolean(EXTRA_USE_CONTACTS_PROVIDER, useContactsProvider);
         fragment.setArguments(args);

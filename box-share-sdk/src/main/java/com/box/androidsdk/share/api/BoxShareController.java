@@ -10,6 +10,7 @@ import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxBookmark;
 import com.box.androidsdk.content.models.BoxCollaboration;
+import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxFile;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
@@ -21,6 +22,7 @@ import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestBatch;
 import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
+import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.content.views.DefaultAvatarController;
@@ -147,31 +149,54 @@ public class BoxShareController implements ShareController {
     }
 
     /**
-     * Gets the collaborations on a box folder
+     * Gets the collaborations on a box item
      *
-     * @param boxFolder Box folder for which collaborations need to be fetched
+     * @param boxCollaborationItem Box item for which collaborations need to be fetched
      * @return instance of BoxFutureTask that asynchronously executes a request to fetch
      *         collaborations on box folder
      */
     @Override
-    public BoxFutureTask<BoxIteratorCollaborations> fetchCollaborations(BoxFolder boxFolder) {
-        BoxFutureTask<BoxIteratorCollaborations> task = mFolderApi
-                .getCollaborationsRequest(boxFolder.getId()).toTask();
+    public BoxFutureTask<BoxIteratorCollaborations> fetchCollaborations(BoxCollaborationItem boxCollaborationItem) {
+
+        BoxFutureTask<BoxIteratorCollaborations> task = null;
+        if (boxCollaborationItem instanceof BoxFolder) {
+            task = mFolderApi
+                    .getCollaborationsRequest(boxCollaborationItem.getId()).toTask();
+        } else if (boxCollaborationItem instanceof BoxFile){
+            task = mFileApi.getCollaborationsRequest(boxCollaborationItem.getId()).toTask();
+        }
+        if (task == null){
+            BoxLogUtils.nonFatalE("BoxShareConteroller","unhandled type " + boxCollaborationItem, new RuntimeException("bad argument"));
+            return null;
+        }
         getApiExecutor().submit(task);
         return task;
     }
 
     /**
-     * Gets a list of roles allowed for folder collaboration invitees
+     * Gets a list of roles allowed for item collaboration invitees
      *
-     * @param boxFolder Box folder for which roles need to be fetched
+     * @param boxCollaborationItem Box item for which roles need to be fetched
      * @return instance of BoxFutureTask that asynchronously executes a request to fetch roles
      *         of invitees for folder collaboration
      */
     @Override
-    public BoxFutureTask<BoxFolder> fetchRoles(BoxFolder boxFolder) {
-        BoxFutureTask<BoxFolder> task = mFolderApi.getInfoRequest(boxFolder.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES).toTask();
+    public BoxFutureTask<BoxCollaborationItem> fetchRoles(BoxCollaborationItem boxCollaborationItem) {
+        BoxRequest request = null;
+        if (boxCollaborationItem instanceof BoxFile) {
+            request = mFileApi.getInfoRequest(boxCollaborationItem.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES);
+
+        }
+        if (boxCollaborationItem instanceof BoxFolder){
+            request = mFolderApi.getInfoRequest(boxCollaborationItem.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES);
+        }
+        if (request == null){
+            BoxLogUtils.nonFatalE("BoxShareConteroller","unhandled type " + boxCollaborationItem, new RuntimeException("bad argument"));
+            return null;
+        }
+        BoxFutureTask<BoxCollaborationItem> task = new BoxFutureTask<BoxCollaborationItem>(BoxCollaborationItem.class, request);
         getApiExecutor().submit(task);
+
         return task;
     }
 
@@ -221,19 +246,19 @@ public class BoxShareController implements ShareController {
     /**
      * Adds a list of users as collaborators to a folder by using their emails
      *
-     * @param boxFolder Box Folder to be collaborated upon
+     * @param boxCollaborationItem Box Folder to be collaborated upon
      * @param selectedRole Role for folder collaboration
      * @param emails Emails of collaborators
      * @return instance of BoxFutureTask that asynchronously executes a batch request to add
      *         collaborators on a given folder
      */
     @Override
-    public BoxFutureTask<BoxResponseBatch> addCollaborations(BoxFolder boxFolder, BoxCollaboration.Role selectedRole, String[] emails) {
+    public BoxFutureTask<BoxResponseBatch> addCollaborations(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
         BoxRequestBatch batchRequest = new BoxRequestBatch();
         for (String email: emails) {
             String trimmedEmail = email.trim();
             if (!SdkUtils.isBlank(trimmedEmail)) {
-                batchRequest.addRequest(mCollabApi.getAddRequest(boxFolder.getId(), selectedRole, trimmedEmail));
+                batchRequest.addRequest(mCollabApi.getAddRequest(boxCollaborationItem, selectedRole, trimmedEmail));
             }
         }
 
@@ -245,14 +270,14 @@ public class BoxShareController implements ShareController {
     /**
      * Gets invitees for a given box folder
      *
-     * @param boxFolder Given Box folder
+     * @param boxCollaborationItem Given Box item
      * @param filter Filter to fine tune the list of invitee, caller is looking for
      * @return instance of BoxFutureTask that asynchronously executes a request to get list of
      *         invitees for a given box folder
      */
     @Override
-    public BoxFutureTask<BoxIteratorInvitees> getInvitees(BoxFolder boxFolder, String filter) {
-        BoxFutureTask<BoxIteratorInvitees> task = mInviteeApi.getInviteesRequest(boxFolder.getId()).setFilterTerm(filter).toTask();
+    public BoxFutureTask<BoxIteratorInvitees> getInvitees(BoxCollaborationItem boxCollaborationItem, String filter) {
+        BoxFutureTask<BoxIteratorInvitees> task = mInviteeApi.getInviteesRequest(boxCollaborationItem.getId()).setFilterTerm(filter).toTask();
         getApiExecutor().submit(task);
         return task;
     }

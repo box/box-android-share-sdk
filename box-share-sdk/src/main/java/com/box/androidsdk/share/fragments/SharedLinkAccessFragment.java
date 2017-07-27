@@ -255,7 +255,11 @@ public class SharedLinkAccessFragment extends BoxFragment
                         accessDescription = getResources().getString(R.string.box_sharesdk_access_public);
                         break;
                     case COLLABORATORS:
-                        accessDescription = getResources().getString(R.string.box_sharesdk_access_collaborator);
+                        if (mShareItem instanceof BoxFile){
+                            accessDescription = getResources().getString(R.string.box_sharesdk_access_collaborator_file);
+                        } else {
+                            accessDescription = getResources().getString(R.string.box_sharesdk_access_collaborator);
+                        }
                         break;
                     case COMPANY:
                         accessDescription = getResources().getString(R.string.box_sharesdk_access_company);
