@@ -16,8 +16,10 @@ import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxConfig;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.auth.BoxAuthentication;
+import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxEntity;
 import com.box.androidsdk.content.models.BoxError;
+import com.box.androidsdk.content.models.BoxFile;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
@@ -41,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
     BoxApiFolder mFolderApi;
     private static final String SHARE_SAMPLE_FOLDER_NAME = "Box Share SDK Sample Folder";
 
-    private BoxFolder mSampleFolder;
+    private BoxCollaborationItem mSampleItem;
 
     private ProgressDialog mDialog;
 
@@ -64,7 +66,7 @@ public class MainActivity extends ActionBarActivity {
         BoxConfig.CLIENT_SECRET = "your_client_secret";
 
         if (savedInstanceState != null) {
-            mSampleFolder = (BoxFolder) savedInstanceState.getSerializable(EXTRA_SAMPLE_FOLDER);
+            mSampleItem = (BoxFolder) savedInstanceState.getSerializable(EXTRA_SAMPLE_FOLDER);
         }
 
         initialize();
@@ -72,7 +74,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(EXTRA_SAMPLE_FOLDER, mSampleFolder);
+        outState.putSerializable(EXTRA_SAMPLE_FOLDER, mSampleItem);
         super.onSaveInstanceState(outState);
     }
 
@@ -143,8 +145,8 @@ public class MainActivity extends ActionBarActivity {
         runOnUiThread( new Runnable(){
             @Override
             public void run() {
-                mSampleFolder = folder;
-                if (mSampleFolder == null){
+                mSampleItem = folder;
+                if (mSampleItem == null){
                     mCreateSampleFolderContainer.setVisibility(View.VISIBLE);
                     mShareActionsContainer.setVisibility(View.GONE);
                 } else {
@@ -165,8 +167,8 @@ public class MainActivity extends ActionBarActivity {
      * @param view
      */
     public void onShareLinkButtonClick(final View view){
-        if (mSampleFolder != null)
-            startActivityForResult(BoxSharedLinkActivity.getLaunchIntent(this, mSampleFolder, mSession), REQUEST_CODE_SHARE_LINK);
+        if (mSampleItem != null)
+            startActivityForResult(BoxSharedLinkActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_SHARE_LINK);
     }
 
     /**
@@ -174,8 +176,10 @@ public class MainActivity extends ActionBarActivity {
      * @param view
      */
     public void onInvitePeopleButtonClick(final View view){
-        if (mSampleFolder != null)
-            startActivityForResult(BoxInviteCollaboratorsActivity.getLaunchIntent(this, mSampleFolder, mSession), REQUEST_CODE_INVITE_PEOPLE);
+        if (mSampleItem != null) {
+           startActivityForResult(BoxInviteCollaboratorsActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_INVITE_PEOPLE);
+
+        }
     }
 
     private void deleteSampleFolder(){
@@ -183,18 +187,18 @@ public class MainActivity extends ActionBarActivity {
         new Thread(){
             public void run(){
                 try {
-                    if (mSampleFolder != null){
-                        mFolderApi.getDeleteRequest(mSampleFolder.getId()).send();
+                    if (mSampleItem != null){
+                        mFolderApi.getDeleteRequest(mSampleItem.getId()).send();
                     } else {
                         BoxIteratorItems items = mFolderApi.getItemsRequest("0").send();
                         for (BoxItem item : items){
                             if (item.getName().equals(SHARE_SAMPLE_FOLDER_NAME)){
-                                mSampleFolder = (BoxFolder)item;
+                                mSampleItem = (BoxCollaborationItem) item;
                                 break;
                             }
                         }
-                        if (mSampleFolder != null){
-                            mFolderApi.getDeleteRequest(mSampleFolder.getId()).send();
+                        if (mSampleItem != null){
+                            mFolderApi.getDeleteRequest(mSampleItem.getId()).send();
                         }
                     }
                     setSampleFolder(null);
@@ -215,9 +219,9 @@ public class MainActivity extends ActionBarActivity {
         if (requestCode == REQUEST_CODE_SHARE_LINK){
             if (data != null){
                 // update current data to the latest one returned from the shared link creation.
-                mSampleFolder = (BoxFolder) new BoxActivity.ResultInterpreter(data).getBoxItem();
+                mSampleItem = (BoxCollaborationItem) new BoxActivity.ResultInterpreter(data).getBoxItem();
                 // if your user created or modified a shared link during this flow you can use it for your own purposes.
-                BoxSharedLink link = mSampleFolder.getSharedLink();
+                BoxSharedLink link = mSampleItem.getSharedLink();
                 if (link != null) {
                     Toast.makeText(this, link.getURL(), Toast.LENGTH_LONG).show();
                 }
@@ -226,7 +230,8 @@ public class MainActivity extends ActionBarActivity {
         else if (requestCode == REQUEST_CODE_INVITE_PEOPLE){
             if (data != null){
                 // update current data to the latest one returned from the shared link creation.
-                mSampleFolder = (BoxFolder) new BoxActivity.ResultInterpreter(data).getBoxItem();
+//                mSampleFolder = (BoxFolder) new BoxActivity.ResultInterpreter(data).getBoxItem();
+                BoxCollaborationItem item = (BoxCollaborationItem) new BoxActivity.ResultInterpreter(data).getBoxItem();
                 // if your user created or removed collaborations during this flow you can use this list for your own purposes.
                 BoxIteratorCollaborations collaborations = new BoxActivity.ResultInterpreter(data).getCollaborations();
                 if (collaborations != null) {
