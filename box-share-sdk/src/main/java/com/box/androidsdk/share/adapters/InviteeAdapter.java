@@ -54,14 +54,16 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
                 String filter = ContactsContract.CommonDataKinds.Email.DATA + " LIKE '%" + constraint + "%' OR " +
                         ContactsContract.Contacts.DISPLAY_NAME + " LIKE '%" + constraint + "%'";
                 Cursor contactsCursor = mContext.getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, filter, null, null);
-                while (contactsCursor.moveToNext()) {
-                    String name = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                    String email = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-                    if (name.contains(constraint) || email.contains(constraint)) {
-                        JsonObject object = new JsonObject();
-                        object.add(BoxInvitee.FIELD_NAME, name);
-                        object.add(BoxInvitee.FIELD_EMAIL, email);
-                        filteredList.add(new BoxInvitee(object));
+                if (contactsCursor != null) {
+                    while (contactsCursor.moveToNext()) {
+                        String name = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                        String email = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                        if (name.contains(constraint) || email.contains(constraint)) {
+                            JsonObject object = new JsonObject();
+                            object.add(BoxInvitee.FIELD_NAME, name);
+                            object.add(BoxInvitee.FIELD_EMAIL, email);
+                            filteredList.add(new BoxInvitee(object));
+                        }
                     }
                 }
             }
