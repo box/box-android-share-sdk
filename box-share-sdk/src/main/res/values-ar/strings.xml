@@ -1,5 +1,7 @@
 <resources>
     <string name="box_sharesdk_name">مشاركة</string>
+    <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">مشاركة نموذج حزمة أدوات تطوير البرمجيات</string>
+    <string description="description of available actions for an item" name="box_sharesdk_sample_choose_action">اختيار إجراء لـ \"%s\"</string>
     <string name="box_sharesdk_shared_with">تمت المشاركة مع</string>
     <string name="box_sharesdk_invite_collaborators">دعوة أشخاص</string>
     <string name="box_sharesdk_session_is_not_authenticated">لم تتم المصادقة على الجلسة</string>
@@ -11,6 +13,11 @@
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">إمكانية الوصول من قِبل أشخاص تمت مشاركة المجلد معهم</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">محمي بكلمة مرور</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">ما من كلمة مرور</string>
+    <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">إحضار المتعاونين</string>
+    <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">إضافة متعاونين</string>
+    <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">تمكين رابط المُشاركة</string>
+    <string description="message to show on spinner when we are disabling share link" name="box_sharesdk_disabling_share_link">تعطيل رابط المُشاركة</string>
+    <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">تحديث رابط الوصول</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">تم تمكين رابط المشاركة</string>
     <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">تم تعطيل رابط المشاركة</string>
@@ -28,6 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">الوصول إلى الرابط</string>
     <string description="description for public access" name="box_sharesdk_access_public">الأشخاص الذين يملكون الرابط</string>
     <string description="description for company access" name="box_sharesdk_access_company">الأشخاص في الشركة</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">الأشخاص في هذا المجلد</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">السماح بالتنزيلات</string>
     <string description="header for password section" name="box_sharesdk_password">كلمة المرور</string>
@@ -75,7 +83,7 @@
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">حمّل الملفات فقط.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">قم بمعاينة الملفات وتحميلها.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">قم بتحميل الملفات وتنزيلها ومعاينتها ومشاركتها.</string>
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">نفس الأذونات التي يملكها المالك</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">نفس مستوى الوصول الممنوح للمالك</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_owner">مالك</string>
 
     <!-- invite collaborators -->
@@ -86,12 +94,13 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">تمت دعوة المتعاونين</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">يتعذر عليك عرض التعاونات لهذا العنصر.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">شخص آخر</string>
-    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">لا يتوفر متعاونين لهذا المجلد.</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">لا يتوفر متعاونين لهذا المجلد.</string>
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">تمت دعوة %s مسبقًا إلى هذا المجلد</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">تمت دعوة %s من الأشخاص مسبقًا إلى هذا المجلد</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">المتعاونون</string>
 
+    <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">إن العنصر الذي تحاول الوصول إليه قد تم حذفه أو غير متوفّر لك</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">لا تملك مستوى الوصول الكافي لتنفيذ هذا الإجراء.</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">المستخدم ليس متعاونًا في هذا المجلد بعد، ولا يمكن تعيينه كمالك.</string>
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">يتعذر تحديث المالك. يرجى الاتصال بقسم الدعم.</string>

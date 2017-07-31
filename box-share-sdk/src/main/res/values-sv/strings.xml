@@ -1,5 +1,7 @@
 <resources>
     <string name="box_sharesdk_name">Dela</string>
+    <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">Dela SDK-exempel</string>
+    <string description="description of available actions for an item" name="box_sharesdk_sample_choose_action">Välj åtgärd för \"%s\"</string>
     <string name="box_sharesdk_shared_with">Delad med</string>
     <string name="box_sharesdk_invite_collaborators">Bjud in personer</string>
     <string name="box_sharesdk_session_is_not_authenticated">Sessionen är inte autentiserad</string>
@@ -11,9 +13,14 @@
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Tillgänglig för personer som mappen är delad med</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Lösenordsskyddad</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Inget lösenord</string>
+    <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Hämtar medarbetare</string>
+    <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Lägger till medarbetare</string>
+    <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Aktiverar delningslänk</string>
+    <string description="message to show on spinner when we are disabling share link" name="box_sharesdk_disabling_share_link">Avaktiverar delningslänk</string>
+    <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Uppdaterar åtkomst till länk</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Delad länk aktiverad</string>
-    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Delad länk inaktivera</string>
+    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Delad länk inaktiverad</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">Hämtningar tillåts</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">Hämtningar inaktiverade</string>
     <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">Inget förfallodatum</string>
@@ -28,11 +35,12 @@
     <string description="header for different access types" name="box_sharesdk_access">Länkåtkomst</string>
     <string description="description for public access" name="box_sharesdk_access_public">Personer med länken</string>
     <string description="description for company access" name="box_sharesdk_access_company">Personer i ditt företag</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Personer i den här mappen</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Tillåt hämtningar</string>
     <string description="header for password section" name="box_sharesdk_password">Lösenord</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">Ställ in lösenord</string>
-    <string description="toggle of using password or not" name="box_sharesdk_require_password">Kräver lösenord</string>
+    <string description="toggle of using password or not" name="box_sharesdk_require_password">Kräva lösenord</string>
     <string description="header for link expiration section" name="box_sharesdk_link_expiration">Länkförfallodatum</string>
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">Förfallolänk</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">Förfaller den</string>
@@ -86,12 +94,13 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Medarbetare har blivit inbjudna</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">Du kan inte visa samarbeten för det här objektet.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Annan person</string>
-    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">Inga medarbetare för den här mappen.</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Inga medarbetare för den här mappen.</string>
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s är redan inbjuden till den här mappen</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s personer har redan blivit inbjudna till den här mappen</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Medarbetare</string>
 
+    <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">Objektet som du försöker få åtkomst till har antingen raderats eller är inte tillgängligt för dig</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Du har inte tillräcklig behörighet för den här åtgärden.</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Användaren är ännu inte medarbetare i den här mappen, och kan därför inte anges som ägare.</string>
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Det går inte att uppdatera ägare. Kontakta support.</string>

@@ -1,5 +1,7 @@
 <resources>
     <string name="box_sharesdk_name">Share</string>
+    <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">Share SDK Sample</string>
+    <string description="description of available actions for an item" name="box_sharesdk_sample_choose_action">Choose action for \"%s\"</string>
     <string name="box_sharesdk_shared_with">Shared with</string>
     <string name="box_sharesdk_invite_collaborators">Invite people</string>
     <string name="box_sharesdk_session_is_not_authenticated">Session is not authenticated</string>
@@ -11,6 +13,11 @@
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Accessible to people the folder is shared with</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Password protected</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">No password</string>
+    <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Fetching collaborators</string>
+    <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Adding collaborators</string>
+    <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Enabling share link</string>
+    <string description="message to show on spinner when we are disabling share link" name="box_sharesdk_disabling_share_link">Disabling share link</string>
+    <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Updating link access</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Share link enabled</string>
     <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Share link disabled</string>
@@ -28,6 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Link access</string>
     <string description="description for public access" name="box_sharesdk_access_public">People with the link</string>
     <string description="description for company access" name="box_sharesdk_access_company">People in your company</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">People in this folder</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Allow downloads</string>
     <string description="header for password section" name="box_sharesdk_password">Password</string>
@@ -41,7 +49,7 @@
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">There was a problem modifying/creating this shared link.</string>
     <string name="box_sharesdk_title_link_access">Link access</string>
     <string name="box_sharesdk_title_share_link">Share link</string>
-    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">Enabling a link generates a sharable link that others can use to access and view this content.</string>
+    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">Enabling a link generates a shareable link that others can use to access and view this content.</string>
     <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">Link copied to clipboard.</string>
     <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">I have shared \'%1$s\' with you on Box.</string>
     <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">Send with:</string>
@@ -86,12 +94,13 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Collaborators have been invited</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">You cannot view the collaborations for this item.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Another person</string>
-    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">No collaborators for this folder.</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">No collaborators for this folder.</string>
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s has already been invited to this folder</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s people have already been invited to this folder</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Collaborators</string>
 
+    <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">The item you are trying to access has either been deleted or is unavailable to you</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">You do not have sufficient permissions for this action.</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">User is not yet a collaborator on this folder, and cannot be set as an owner.</string>
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Unable to update owner. Please contact support.</string>
