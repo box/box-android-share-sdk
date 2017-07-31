@@ -1,5 +1,7 @@
 <resources>
     <string name="box_sharesdk_name">Del</string>
+    <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">Del SDK-eksempel</string>
+    <string description="description of available actions for an item" name="box_sharesdk_sample_choose_action">Vælg handling for \"%s\"</string>
     <string name="box_sharesdk_shared_with">Delt med</string>
     <string name="box_sharesdk_invite_collaborators">Inviter personer</string>
     <string name="box_sharesdk_session_is_not_authenticated">Session er ikke godkendt</string>
@@ -11,6 +13,11 @@
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Tilgængelig for personer, som mappen er delt med</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Adgangskodebeskyttet</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Ingen adgangskode</string>
+    <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Hent samarbejdspartnere</string>
+    <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Tilføjelse af samarbejdspartnere</string>
+    <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Aktivering af delingslink</string>
+    <string description="message to show on spinner when we are disabling share link" name="box_sharesdk_disabling_share_link">Deaktivering af delingslink</string>
+    <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Opdaterer linkadgang</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Deling af link aktiveret</string>
     <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Deling af link deaktiveret</string>
@@ -28,6 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Adgang til link</string>
     <string description="description for public access" name="box_sharesdk_access_public">Personer med linket</string>
     <string description="description for company access" name="box_sharesdk_access_company">Personer i din virksomhed</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Personer i denne mappe</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Tillad downloads</string>
     <string description="header for password section" name="box_sharesdk_password">Adgangskode</string>
@@ -58,9 +66,9 @@
     <!-- role names -->
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">Redaktør</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer">Læser</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer">Forhåndslæser</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer">Fremviser</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_uploader">Uploader</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">Forhåndslæser og uploader</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">Fremviser og uploader</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">Læser og uploader</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">Medejer</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">Ejer</string>
@@ -69,13 +77,13 @@
     <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">Afvist</string>
 
     <!-- role descriptions -->
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_editor">Upload, download, forhåndsvis, del og rediger filer.</string>
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer">Download, forhåndsvis og del filer.</string>
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer">Forhåndsvis kun filer.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_editor">Upload, download, vis eksempel på, del og rediger filer.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer">Download, vis eksempel på og del filer.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer">Vis kun eksempel på filer.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">Upload kun filer.</string>
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">Forhåndsvis og upload filer.</string>
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">Upload, download, forhåndsvis og del filer.</string>
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">Samme tilladelser som ejeren</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">Vis eksempel på og upload filer.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">Upload, download, vis eksempel på og del filer.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">Samme adgangsniveau som ejeren</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_owner">Ejer</string>
 
     <!-- invite collaborators -->
@@ -86,13 +94,14 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Samarbejdspartnere er blevet inviteret</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">Du kan ikke se samarbejde for dette element</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">En anden person</string>
-    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">Ingen samarbejdspartnere for denne mappe.</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Ingen samarbejdspartnere for denne mappe.</string>
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s er allerede blevet inviteret til denne mappe</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s personer er allerede blevet inviteret til denne mappe</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Samarbejdspartnere</string>
 
-    <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Du har ikke tilladelserne til denne handling.</string>
+    <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">Det element, du forsøger at åbne, blev slettet, eller du har ikke adgang til det</string>
+    <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Du har ikke det rette adgangsniveau til denne handling.</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Brugeren er endnu ikke samarbejdspartner på denne mappe og kan ikke angives som ejer.</string>
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Ejeren kunne ikke opdateres. Kontakt support.</string>
     <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Samarbejdspartnerne kunne ikke hentes. Kontakt support, hvis problemet ikke forsvinder.</string>

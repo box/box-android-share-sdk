@@ -1,5 +1,7 @@
 <resources>
     <string name="box_sharesdk_name">Partager</string>
+    <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">Partager l\'échantillon SDK</string>
+    <string description="description of available actions for an item" name="box_sharesdk_sample_choose_action">Choisir l\'action pour \"%s\"</string>
     <string name="box_sharesdk_shared_with">Partagé avec</string>
     <string name="box_sharesdk_invite_collaborators">Inviter des utilisateurs</string>
     <string name="box_sharesdk_session_is_not_authenticated">Pas d\'authentification pour la session</string>
@@ -8,9 +10,14 @@
     <string description="button to send link to another application" name="box_sharesdk_send_link">ENVOYER LE LIEN</string>
     <string description="description for public access" name="box_sharesdk_accessible_public">Accessible aux utilisateurs disposant du lien</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Accessible aux utilisateurs dans votre entreprise</string>
-    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Accessible aux utilisateurs avec qui vous partagez ce dossier</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Accessible aux utilisateurs avec qui ce dossier est partagé</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Protégé par mot de passe</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Aucun mot de passe</string>
+    <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Recherche de collaborateurs</string>
+    <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Ajout de collaborateurs</string>
+    <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Activation du lien partagé</string>
+    <string description="message to show on spinner when we are disabling share link" name="box_sharesdk_disabling_share_link">Désactivation du lien partagé</string>
+    <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Mise à jour de l\'accès au lien</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Lien partagé activé</string>
     <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Lien partagé désactivé</string>
@@ -28,6 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Accès au lien</string>
     <string description="description for public access" name="box_sharesdk_access_public">Utilisateurs disposant du lien</string>
     <string description="description for company access" name="box_sharesdk_access_company">Utilisateurs dans votre entreprise</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Utilisateurs dans ce dossier</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Autoriser les téléchargements</string>
     <string description="header for password section" name="box_sharesdk_password">Mot de passe</string>
@@ -86,12 +94,13 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Des collaborateurs ont été invités</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">Vous ne pouvez pas afficher les collaborations pour cet élément.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Autre utilisateur</string>
-    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">Aucun collaborateur dans ce dossier.</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Aucun collaborateur dans ce dossier.</string>
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s a déjà été invité dans ce dossier</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s utilisateurs ont déjà été invités dans ce dossier</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Collaborateurs</string>
 
+    <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">L\'élément auquel vous essayez d\'accéder a été supprimé ou vous n\'êtes pas autorisé à y accéder</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Vous n\'avez pas les autorisations suffisantes pour effectuer cette action.</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Cet utilisateur ne collabore pas encore sur ce dossier et ne peut pas être désigné comme propriétaire.</string>
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Impossible de mettre à jour le propriétaire. Veuillez contacter l\'assistance.</string>

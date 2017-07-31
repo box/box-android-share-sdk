@@ -1,5 +1,7 @@
 <resources>
     <string name="box_sharesdk_name">Общий доступ</string>
+    <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">Предоставление доступа к шаблону SDK</string>
+    <string description="description of available actions for an item" name="box_sharesdk_sample_choose_action">Выбор действий для \"%s\"</string>
     <string name="box_sharesdk_shared_with">Общий доступ</string>
     <string name="box_sharesdk_invite_collaborators">Пригласить пользователей</string>
     <string name="box_sharesdk_session_is_not_authenticated">Сеанс не прошел проверку подлинности</string>
@@ -11,6 +13,11 @@
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Доступно пользователям с общим доступом к папке</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Защищено паролем</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Нет пароля</string>
+    <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Получение списка соавторов</string>
+    <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Добавление соавторов</string>
+    <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Включение общей ссылки</string>
+    <string description="message to show on spinner when we are disabling share link" name="box_sharesdk_disabling_share_link">Отключение общей ссылки</string>
+    <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Обновление доступа по ссылке</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Общая ссылка включена</string>
     <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Общая ссылка отключена</string>
@@ -28,6 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Доступ по ссылке</string>
     <string description="description for public access" name="box_sharesdk_access_public">Пользователи со ссылкой</string>
     <string description="description for company access" name="box_sharesdk_access_company">Сотрудники вашей компании</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Пользователи в этой папке</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Разрешить скачивания</string>
     <string description="header for password section" name="box_sharesdk_password">Пароль</string>
@@ -40,7 +48,7 @@
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">Проблема при изменении/создании общей ссылки.</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">Проблема при изменении/создании общей ссылки.</string>
     <string name="box_sharesdk_title_link_access">Доступ к ссылке</string>
-    <string name="box_sharesdk_title_share_link">Доступ</string>
+    <string name="box_sharesdk_title_share_link">Поделиться ссылкой</string>
     <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">После включения ссылки будет создана общая ссылка, которую другие пользователи могут использовать для доступа и просмотра этого контента.</string>
     <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">Ссылка скопирована в буфер обмена.</string>
     <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">Вам предоставлен доступ к элементу \"%1$s\" в Box.</string>
@@ -86,12 +94,13 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Соавторы приглашены</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">Невозможно просмотреть совместные работы для этого элемента.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Другой пользователь</string>
-    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">Нет соавторов для папки.</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Нет соавторов для папки.</string>
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">Пользователь %s уже приглашен в папку</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">Уже приглашено пользователей в папку: %s</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Соавторы</string>
 
+    <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">Элемент, к которому вы хотите перейти, удален или недоступен вам.</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">У вас недостаточно прав для выполнения этого действия.</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Пользователь еще не является соавтором папки и не может быть назначен владельцем.</string>
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Невозможно обновить данные владельца. Обратитесь в службу поддержки.</string>

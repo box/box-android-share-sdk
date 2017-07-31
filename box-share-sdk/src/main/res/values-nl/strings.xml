@@ -1,5 +1,7 @@
 <resources>
     <string name="box_sharesdk_name">Delen</string>
+    <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">Share SDK-voorbeeld</string>
+    <string description="description of available actions for an item" name="box_sharesdk_sample_choose_action">Kies actie voor \"%s\"</string>
     <string name="box_sharesdk_shared_with">Gedeeld met</string>
     <string name="box_sharesdk_invite_collaborators">Personen uitnodigen</string>
     <string name="box_sharesdk_session_is_not_authenticated">Sessie is niet geverifieerd</string>
@@ -11,6 +13,11 @@
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Toegankelijk voor personen met wie de map is gedeeld</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Met wachtwoord beveiligd</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Geen wachtwoord</string>
+    <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Medebewerkers ophalen</string>
+    <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Medebewerkers toevoegen</string>
+    <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Gedeelde link inschakelen</string>
+    <string description="message to show on spinner when we are disabling share link" name="box_sharesdk_disabling_share_link">Gedeelde link uitschakelen</string>
+    <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Gedeelde links bijwerken</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Gedeelde link ingeschakeld</string>
     <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Gedeelde link uitgeschakeld</string>
@@ -28,6 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Toegang tot link</string>
     <string description="description for public access" name="box_sharesdk_access_public">Personen met de link</string>
     <string description="description for company access" name="box_sharesdk_access_company">Personen in uw bedrijf</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Personen in deze map</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Downloads toestaan</string>
     <string description="header for password section" name="box_sharesdk_password">Wachtwoord</string>
@@ -86,12 +94,13 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Medebewerkers zijn uitgenodigd</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">U kunt de samenwerkingen voor dit item niet bekijken.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Een andere persoon</string>
-    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">Er zijn geen medebewerkers voor deze map.</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Er zijn geen medebewerkers voor deze map.</string>
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s is al uitgenodigd voor deze map</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s personen zijn al uitgenodigd voor deze map</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Medebewerkers</string>
 
+    <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">Het item dat u probeert te openen, is verwijderd of is niet beschikbaar voor u</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">U hebt onvoldoende machtigingen voor deze actie.</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Gebruiker is nog geen medebewerker in deze map en kan niet worden ingesteld als eigenaar.</string>
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Kan eigenaar niet bijwerken. Neem contact op met de ondersteuning.</string>
