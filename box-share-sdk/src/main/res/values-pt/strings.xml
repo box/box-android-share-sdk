@@ -10,7 +10,7 @@
     <string description="button to send link to another application" name="box_sharesdk_send_link">ENVIAR LINK</string>
     <string description="description for public access" name="box_sharesdk_accessible_public">Acessível a pessoas com o link</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Acessível a pessoas na sua empresa</string>
-    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Acessível a pessoas com as quais a pasta é compartilhada</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Acessível para pessoas com as quais o item é compartilhado</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Protegido por senha</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Nenhuma senha</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Buscando colaboradores</string>
@@ -35,7 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Acesso por link</string>
     <string description="description for public access" name="box_sharesdk_access_public">Pessoas com o link</string>
     <string description="description for company access" name="box_sharesdk_access_company">Pessoas na sua empresa</string>
-    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">Pessoas neste arquivo e pasta</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Pessoas nesta pasta</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Permitir downloads</string>
     <string description="header for password section" name="box_sharesdk_password">Senha</string>
@@ -56,7 +56,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Erro de rede. Tente novamente.</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">Atualização de proprietário</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Tornar este usuário o proprietário da pasta significa que você perderá a propriedade da pasta e se tornará um editor. Deseja continuar?</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Tornar este usuário o proprietário do item significa que você perderá a propriedade e se tornará um editor. Deseja continuar?</string>
 
 
     <!-- menu items -->
@@ -94,9 +94,9 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Os colaboradores foram convidados</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">Você não pode visualizar as colaborações para este item.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Outra pessoa</string>
-    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Nenhum colaborador para esta pasta.</string>
-    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s já foi convidado(a) para esta pasta</string>
-    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s pessoas já foram convidadas para esta pasta</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Nenhum colaborador para este item.</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s já foi convidado(a) para este item</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s pessoas já foram convidadas para este item</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Colaboradores</string>
 

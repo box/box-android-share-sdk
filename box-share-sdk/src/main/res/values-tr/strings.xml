@@ -10,7 +10,7 @@
     <string description="button to send link to another application" name="box_sharesdk_send_link">BAĞLANTIYI GÖNDER</string>
     <string description="description for public access" name="box_sharesdk_accessible_public">Bağlantıya sahip kişiler tarafından erişilebilir</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Şirketinizdeki kişiler tarafından erişilebilir</string>
-    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Klasörün paylaşıldığı kişiler tarafından erişilebilir</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Öğenin paylaşıldığı kişiler tarafından erişilebilir</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Parola korumalı</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Parola yok</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">İşbirlikçiler getiriliyor</string>
@@ -35,7 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Bağlantı Erişimi</string>
     <string description="description for public access" name="box_sharesdk_access_public">Bağlantıya sahip kişiler</string>
     <string description="description for company access" name="box_sharesdk_access_company">Şirketinizdeki kişiler</string>
-    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">Bu dosya veya klasördeki kişiler</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Bu klasördeki kişiler</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">İndirmelere İzin Ver</string>
     <string description="header for password section" name="box_sharesdk_password">Parola</string>
@@ -56,7 +56,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Ağ hatası. Lütfen tekrar deneyin.</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">Sahip Güncellemesi</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Bu kullanıcıyı klasör sahibi yapmak, klasörün sahipliğini kaybederek düzenleyici durumuna geçeceğiniz anlamına gelir. Devam etmek istiyor musunuz?</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Bu kullanıcıyı öğe sahibi yapmak, öğenin sahipliğini kaybederek bir düzenleyici olacağınız anlamına gelir. Devam etmek istiyor musunuz?</string>
 
 
     <!-- menu items -->
@@ -94,9 +94,9 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">İşbirlikçiler davet edildi</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">Bu öğe için işbirliklerini görüntüleyemezsiniz.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Diğer Kişi</string>
-    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Bu klasör için işbirlikçi mevcut değil.</string>
-    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s bu klasöre zaten davet edilmiş</string>
-    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s kişi bu klasöre zaten davet edilmiş</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Bu öğe için işbirlikçi yok.</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s bu öğeye zaten davet edilmiş</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s kişi bu öğeye zaten davet edilmiş</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">İşbirlikçiler</string>
 

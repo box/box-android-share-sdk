@@ -10,7 +10,7 @@
     <string description="button to send link to another application" name="box_sharesdk_send_link">SEND LINK</string>
     <string description="description for public access" name="box_sharesdk_accessible_public">Accessible to people with the link</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Accessible to people in your company</string>
-    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Accessible to people the folder is shared with</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Accessible to people the item is shared with</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Password protected</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">No password</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Fetching collaborators</string>
@@ -56,7 +56,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Network error. Please try again.</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">Owner Update</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Making this user the folder owner means that you will lose folder ownership and become an editor. Do you want to continue?</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Making this user the item owner means that you will lose ownership and become an editor. Do you want to continue?</string>
 
 
     <!-- menu items -->
@@ -94,9 +94,9 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Collaborators have been invited</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">You cannot view the collaborations for this item.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Another person</string>
-    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">No collaborators for this folder.</string>
-    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s has already been invited to this folder</string>
-    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s people have already been invited to this folder</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">No collaborators for this item.</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s has already been invited to this item</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s people have already been invited to this item</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Collaborators</string>
 

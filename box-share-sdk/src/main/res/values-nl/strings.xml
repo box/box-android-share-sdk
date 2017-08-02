@@ -10,7 +10,7 @@
     <string description="button to send link to another application" name="box_sharesdk_send_link">LINK VERZENDEN</string>
     <string description="description for public access" name="box_sharesdk_accessible_public">Toegankelijk voor personen met de link</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Toegankelijk voor personen in uw bedrijf</string>
-    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Toegankelijk voor personen met wie de map is gedeeld</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Toegankelijk voor personen met wie het item is gedeeld</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Met wachtwoord beveiligd</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Geen wachtwoord</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Medebewerkers ophalen</string>
@@ -35,7 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Toegang tot link</string>
     <string description="description for public access" name="box_sharesdk_access_public">Personen met de link</string>
     <string description="description for company access" name="box_sharesdk_access_company">Personen in uw bedrijf</string>
-    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">Personen in dit bestand en deze map</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Personen in deze map</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Downloads toestaan</string>
     <string description="header for password section" name="box_sharesdk_password">Wachtwoord</string>
@@ -56,7 +56,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Netwerkfout. Probeer het opnieuw.</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">Eigenaar wijzigen</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Als u deze gebruiker eigenaar van de map maakt, bent u geen eigenaar van de map meer en wordt u editor. Wilt u doorgaan?</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Als u deze gebruiker eigenaar van het item maakt, bent u geen eigenaar van het item meer en wordt u editor. Wilt u doorgaan?</string>
 
 
     <!-- menu items -->
@@ -94,9 +94,9 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Medebewerkers zijn uitgenodigd</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">U kunt de samenwerkingen voor dit item niet bekijken.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Een andere persoon</string>
-    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Er zijn geen medebewerkers voor deze map.</string>
-    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s is al uitgenodigd voor deze map</string>
-    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s personen zijn al uitgenodigd voor deze map</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Er zijn geen medebewerkers voor dit item.</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s is al uitgenodigd voor dit item</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s personen zijn al uitgenodigd voor dit item</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Medebewerkers</string>
 

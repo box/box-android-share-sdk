@@ -10,7 +10,7 @@
     <string description="button to send link to another application" name="box_sharesdk_send_link">링크 보내기</string>
     <string description="description for public access" name="box_sharesdk_accessible_public">링크를 알려 줄 대상이 액세스할 수 있습니다.</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">회사 내 사용자가 액세스할 수 있습니다.</string>
-    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">폴더의 공유 대상 사용자가 액세스할 수 있습니다.</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">항목을 공유하는 사용자가 액세스할 수 있습니다.</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">암호로 보호되었습니다.</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">암호 없음</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">공동 작업자를 가져오는 중</string>
@@ -35,7 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">링크 액세스</string>
     <string description="description for public access" name="box_sharesdk_access_public">링크를 알려 줄 대상</string>
     <string description="description for company access" name="box_sharesdk_access_company">회사 내 사용자</string>
-    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">파일 및 폴더 내 사용자</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">폴더 내 사용자</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">다운로드 허용</string>
     <string description="header for password section" name="box_sharesdk_password">암호</string>
@@ -56,7 +56,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">네트워크 오류입니다. 다시 시도하십시오.</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">소유자 업데이트</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">이 사용자를 폴더 소유자로 지정하면 귀하는 폴더 소유권을 잃고 편집자가 됩니다. 계속하시겠습니까?</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">이 사용자를 항목 소유자로 지정하면 귀하는 소유권을 잃고 편집자가 됩니다. 계속하시겠습니까?</string>
 
 
     <!-- menu items -->
@@ -94,9 +94,9 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">공동 작업자를 초대했습니다.</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">이 항목에 대한 공동 작업을 볼 수 없습니다.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">다른 사용자</string>
-    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">이 폴더에 공동 작업자가 없습니다.</string>
-    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s 님은 이미 이 폴더에 초대되었습니다.</string>
-    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s명의 사용자가 이미 이 폴더에 초대되었습니다.</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">이 항목에 대한 공동 작업자가 없습니다.</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s은(는) 이미 이 항목에 초대되었습니다.</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s명의 사용자가 이미 이 항목에 초대되었습니다.</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">공동 작업자</string>
 
