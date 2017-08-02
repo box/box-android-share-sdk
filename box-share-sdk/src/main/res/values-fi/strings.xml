@@ -10,7 +10,7 @@
     <string description="button to send link to another application" name="box_sharesdk_send_link">LÄHETÄ LINKKI</string>
     <string description="description for public access" name="box_sharesdk_accessible_public">Sellaisten käyttäjien käytettävissä, joilla on linkki</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Tämän yrityksen käyttäjien käytettävissä</string>
-    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Sellaisten käyttäjien käytettävissä, joille kansio on jaettu</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Käyttäjät, joille kohde on jaettu</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Suojattu salasanalla</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Ei salasanaa</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Haetaan yhteistyökumppaneita</string>
@@ -35,7 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Linkin käyttöoikeus</string>
     <string description="description for public access" name="box_sharesdk_access_public">Käyttäjät, joilla on linkki</string>
     <string description="description for company access" name="box_sharesdk_access_company">Tämän yrityksen käyttäjät</string>
-    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">Tämän tiedoston ja kansion käyttäjät</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Tämän kansion käyttäjät</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Salli lataukset</string>
     <string description="header for password section" name="box_sharesdk_password">Salasana</string>
@@ -56,7 +56,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Verkkovirhe. Yritä uudelleen.</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">Omistajan päivitys</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Kun teet käyttäjästä kansion omistajan, menetät kansion omistajuuden ja sinusta tulee muokkaaja. Haluatko jatkaa?</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Kun teet käyttäjästä kohteen omistajan, menetät kohteen omistajuuden ja sinusta tulee muokkaaja. Haluatko jatkaa?</string>
 
 
     <!-- menu items -->
@@ -94,9 +94,9 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Yhteistyökumppaneita on kutsuttu</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">Et voi tarkastella tämän kohteen yhteiskäyttöä.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Toinen henkilö</string>
-    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Kansiolla ei ole yhteistyökumppaneita.</string>
-    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s on jo kutsuttu tähän kansioon</string>
-    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s henkilöä on jo kutsuttu tähän kansioon</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Kohteessa ei ole yhteistyökumppaneita.</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s on jo kutsuttu tähän kohteeseen</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s käyttäjää on jo kutsuttu tähän kohteeseen</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Yhteistyökumppanit</string>
 

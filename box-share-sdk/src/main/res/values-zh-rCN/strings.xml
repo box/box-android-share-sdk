@@ -10,7 +10,7 @@
     <string description="button to send link to another application" name="box_sharesdk_send_link">发送链接</string>
     <string description="description for public access" name="box_sharesdk_accessible_public">拥有此链接的协作者可访问</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">公司内部的协作者可访问</string>
-    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">已共享本文件夹的协作者可访问</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">已共享本项目的协作者可访问</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">受密码保护</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">无密码</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">正在获取协作者</string>
@@ -35,7 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">链接访问</string>
     <string description="description for public access" name="box_sharesdk_access_public">拥有链接的协作者</string>
     <string description="description for company access" name="box_sharesdk_access_company">公司内部的协作者</string>
-    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">文件和文件夹协作者</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">此文件夹中的人员</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">允许下载</string>
     <string description="header for password section" name="box_sharesdk_password">密码</string>
@@ -56,7 +56,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">网络出错。请重试。</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">所有者更新</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">使此用户成为文件夹所有者意味着您将失去文件夹所有权并成为编辑者。是否要继续？</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">让此用户成为项目所有者，意味着您将会失去所有权，成为一名编辑者。是否继续？</string>
 
 
     <!-- menu items -->
@@ -94,9 +94,9 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">已邀请协作者</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">无法查看此项目的协作。</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">另一位协作者</string>
-    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">此文件夹没有协作者。</string>
-    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">已邀请 %s 至此文件夹</string>
-    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">已邀请 %s 协作者至此文件夹</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">此项目无协作者。</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">已邀请 %s 至此项目</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">已邀请 %s 名协作者至此项目</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">协作者</string>
 

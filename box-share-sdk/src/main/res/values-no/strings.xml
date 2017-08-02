@@ -10,7 +10,7 @@
     <string description="button to send link to another application" name="box_sharesdk_send_link">SEND KOBLING</string>
     <string description="description for public access" name="box_sharesdk_accessible_public">Tilgjengelig for personer som har koblingen</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Tilgjengelig for personer i firmaet</string>
-    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Tilgjengelig for personer som mappen er delt med</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Tilgjengelig for personer som elementet er delt med</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Passordbeskyttet</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Ikke noe passord</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Henter samarbeidspartnere</string>
@@ -35,7 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Koblingstilgang</string>
     <string description="description for public access" name="box_sharesdk_access_public">Personer med koblingen</string>
     <string description="description for company access" name="box_sharesdk_access_company">Personer i firmaet ditt</string>
-    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">Personer i denne filen og mappen</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Personer i denne mappen</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Tillat nedlastinger</string>
     <string description="header for password section" name="box_sharesdk_password">Passord</string>
@@ -56,7 +56,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Nettverksfeil. Prøv på nytt.</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">Oppdatert eier</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Hvis du setter denne brukeren som eier av mappen, kommer du ikke lenger til å være mappens eier, og du blir degradert til bidragsyter. Vil du fortsette?</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Hvis du gjør denne brukeren til mappeeier, betyr det at du mister eierskap over mappen og blir en redaktør. Vil du fortsette?</string>
 
 
     <!-- menu items -->
@@ -94,9 +94,9 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Samarbeidspartnere er invitert</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">Du kan ikke vise samarbeidspartnerne for dette elementet.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">En annen person</string>
-    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Ingen samarbeidspartnere for denne mappen.</string>
-    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s er allerede invitert til denne mappen</string>
-    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s personer er allerede invitert til denne mappen</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Ingen samarbeidspartnere for dette elementet.</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s er allerede invitert til dette elementet</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s personer er allerede invitert til dette elementet</string>
     <string name="box_sharedsdk_collaborators_initials_count">+ %d</string>
     <string name="box_sharedsdk_collaborators_title">Samarbeidspartnere</string>
 

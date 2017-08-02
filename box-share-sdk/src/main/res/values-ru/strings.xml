@@ -10,7 +10,7 @@
     <string description="button to send link to another application" name="box_sharesdk_send_link">ОТПРАВИТЬ</string>
     <string description="description for public access" name="box_sharesdk_accessible_public">Доступно пользователям со ссылкой</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Доступно сотрудникам вашей компании</string>
-    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Доступно пользователям с общим доступом к папке</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Доступно пользователям, с которыми поделились элементом</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Защищено паролем</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Нет пароля</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Получение списка соавторов</string>
@@ -35,7 +35,7 @@
     <string description="header for different access types" name="box_sharesdk_access">Доступ по ссылке</string>
     <string description="description for public access" name="box_sharesdk_access_public">Пользователи со ссылкой</string>
     <string description="description for company access" name="box_sharesdk_access_company">Сотрудники вашей компании</string>
-    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">People in this file and folder</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">Пользователи в этом файле или папке</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Пользователи в этой папке</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Разрешить скачивания</string>
     <string description="header for password section" name="box_sharesdk_password">Пароль</string>
@@ -56,7 +56,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Ошибка сети. Повторите попытку.</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">Изменение владельца</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Назначение пользователя владельцем папки означает, что вы будете лишены статуса владельца и станете редактором. Продолжить?</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Назначение пользователя владельцем элемента означает, что вы будете лишены статуса владельца и станете редактором. Продолжить?</string>
 
 
     <!-- menu items -->
@@ -94,9 +94,9 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Соавторы приглашены</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">Невозможно просмотреть совместные работы для этого элемента.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Другой пользователь</string>
-    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Нет соавторов для папки.</string>
-    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">Пользователь %s уже приглашен в папку</string>
-    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">Уже приглашено пользователей в папку: %s</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Отсутствуют соавторы для этого элемента.</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">Пользователь %s уже приглашен для работы с этим элементом</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">Уже приглашено пользователей для работы с этим элементом: %s</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Соавторы</string>
 
