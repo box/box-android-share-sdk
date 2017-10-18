@@ -198,7 +198,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         if (v.getId() == R.id.invite_collaborator_role) {
             CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(mRoles, mSelectedRole, getString(R.string.box_sharesdk_access), false, false, null);
             rolesDialog.setOnRoleSelectedListener(this);
-            rolesDialog.show(getFragmentManager(), TAG);
+            rolesDialog.show(getFragmentManager(), CollaborationRolesDialog.TAG);
         }
     }
 
