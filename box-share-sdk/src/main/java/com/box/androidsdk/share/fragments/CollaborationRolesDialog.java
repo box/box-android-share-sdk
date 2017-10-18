@@ -12,7 +12,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
@@ -29,6 +28,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
     protected static final String ARGS_ALLOW_REMOVE = "argsAllowRemove";
     protected static final String ARGS_ALLOW_OWNER_ROLE = "argsAllowOwnerRole";
     protected static final String ARGS_SERIALIZABLE_EXTRA = "argsTargetId";
+    static final String TAG = CollaborationRolesDialog.class.getName();
 
     protected RadioGroup mRadioGroup;
 
