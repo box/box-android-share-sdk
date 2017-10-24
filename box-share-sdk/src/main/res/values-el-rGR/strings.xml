@@ -1,7 +1,6 @@
+<?xml version="1.0" encoding="null"?>
 <resources>
     <string name="box_sharesdk_name">Κοινή χρήση</string>
-    <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">Κοινή χρήση δείγματος SDK</string>
-    <string description="description of available actions for an item" name="box_sharesdk_sample_choose_action">Επιλογή ενέργειας για  \"%s\"</string>
     <string name="box_sharesdk_shared_with">Κοινοποίηση σε</string>
     <string name="box_sharesdk_invite_collaborators">Πρόσκληση ατόμων</string>
     <string name="box_sharesdk_session_is_not_authenticated">Δεν έχει γίνει έλεγχος ταυτότητας της περιόδου λειτουργίας</string>
@@ -10,14 +9,9 @@
     <string description="button to send link to another application" name="box_sharesdk_send_link">ΑΠΟΣΤΟΛΗ ΣΥΝΔΕΣΜΟΥ</string>
     <string description="description for public access" name="box_sharesdk_accessible_public">Δυνατότητα πρόσβασης σε χρήστες με τον σύνδεσμο</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Δυνατότητα πρόσβασης σε χρήστες στην εταιρεία</string>
-    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Δυνατότητα πρόσβασης σε χρήστες στους οποίους έχει κοινοποιηθεί το στοιχείο</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Δυνατότητα πρόσβασης σε χρήστες στους οποίους έχει κοινοποιηθεί ο φάκελος</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Προστασία με κωδικό πρόσβασης</string>
     <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Χωρίς κωδικό πρόσβασης</string>
-    <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Λήψη συνεργατών</string>
-    <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Προσθήκη συνεργατών</string>
-    <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Ενεργοποίηση συνδέσμου κοινοποίησης</string>
-    <string description="message to show on spinner when we are disabling share link" name="box_sharesdk_disabling_share_link">Απενεργοποίηση συνδέσμου κοινοποίησης</string>
-    <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Ενημέρωση συνδέσμου πρόσβασης</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Ο σύνδεσμος κοινοποίησης έχει ενεργοποιηθεί</string>
     <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Ο σύνδεσμος κοινοποίησης έχει απενεργοποιηθεί</string>
@@ -35,7 +29,6 @@
     <string description="header for different access types" name="box_sharesdk_access">Πρόσβαση συνδέσμου</string>
     <string description="description for public access" name="box_sharesdk_access_public">Χρήστες με τον σύνδεσμο</string>
     <string description="description for company access" name="box_sharesdk_access_company">Χρήστες στην εταιρεία</string>
-    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">Χρήστες σε αυτό το αρχείο και φάκελο</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Χρήστες σε αυτόν το φάκελο</string>
     <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Να επιτρέπονται οι λήψεις</string>
     <string description="header for password section" name="box_sharesdk_password">Κωδικός πρόσβασης</string>
@@ -56,7 +49,7 @@
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Σφάλμα δικτύου. Προσπαθήστε ξανά.</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">Ενημέρωση κατόχου</string>
-    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Αν κάνετε αυτόν το χρήστη κάτοχο στοιχείου, θα χάσετε την ιδιοκτησία και θα γίνετε συντάκτης. Θέλετε να συνεχίσετε;</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Αν κάνετε αυτόν το χρήστη κάτοχο φακέλου, θα χάσετε την ιδιοκτησία του φακέλου και θα γίνετε συντάκτης. Θέλετε να συνεχίσετε;</string>
 
 
     <!-- menu items -->
@@ -94,13 +87,12 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Προσκλήθηκαν συνεργάτες</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">Δεν είναι δυνατή η προβολή των συνεργασιών για αυτό το στοιχείο.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Άλλο άτομο</string>
-    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">Δεν υπάρχουν συνεργάτες για αυτό το στοιχείο.</string>
-    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">Ο χρήστης %s έχει ήδη προσκληθεί σε αυτό το στοιχείο</string>
-    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">Οι χρήστες %s έχουν ήδη προσκληθεί σε αυτό το στοιχείο</string>
+    <string description="Message shown when no collaborators have been invited for the current folder" name="box_sharesdk_no_collaborators">Δεν υπάρχουν συνεργάτες για αυτόν τον φάκελο.</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">Ο χρήστης %s έχει ήδη προσκληθεί σε αυτόν το φάκελο</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s έχουν ήδη προσκληθεί σε αυτόν το φάκελο</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Συνεργάτες</string>
 
-    <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">Το στοιχείο που προσπαθείτε να προσπελάσετε είτε έχει διαγραφεί ή δεν είναι διαθέσιμο για εσάς</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Δεν έχετε επαρκή δικαιώματα για αυτήν την ενέργεια.</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Ο χρήστης δεν είναι ακόμη συνεργάτης σε αυτόν τον φάκελο και δεν μπορεί να οριστεί ως κάτοχος.</string>
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Αδύνατη η ενημέρωση του κατόχου. Επικοινωνήστε με την ομάδα υποστήριξης.</string>
