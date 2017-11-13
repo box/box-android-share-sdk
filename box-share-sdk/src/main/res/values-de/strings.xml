@@ -90,7 +90,7 @@
     <string description="Menu item for submitting the invite collaborators request" name="box_sharesdk_action_send">Senden</string>
     <string description="The label for the field where users will enter the collaborators they would like to invite" name="box_sharesdk_to">An</string>
     <string description="Error message for when an incorrect object type is used to launch the collaborations page" name="box_sharesdk_selected_item_not_expected_type">Das ausgewählte Element wies nicht den erwarteten Typ auf.</string>
-    <string description="Success message for inviting a collaborator" name="box_sharesdk_collaborator_invited">%s wurde eingeladen</string>
+    <string description="Success message for inviting a collaborator" name="box_sharesdk_collaborator_invited">%s wurde eingeladen.</string>
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Mitarbeiter wurden eingeladen</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">Sie können die Mitarbeiter, die an diesem Element zusammenarbeiten, nicht anzeigen.</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">Eine andere Person</string>

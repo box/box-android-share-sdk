@@ -1,0 +1,110 @@
+<resources>
+    <string name="box_sharesdk_name">শেয়ার করুন</string>
+    <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">SDK নমুনা শেয়ার করুন</string>
+    <string description="description of available actions for an item" name="box_sharesdk_sample_choose_action">\"%s”-এর জন্য ক্রিয়াকলাপ চয়ন করুন</string>
+    <string name="box_sharesdk_shared_with">এটি ব্যবহার করে শেয়ার করুন</string>
+    <string name="box_sharesdk_invite_collaborators">লোকজনদের আমন্ত্রণ করুন</string>
+    <string name="box_sharesdk_session_is_not_authenticated">সেশন প্রমাণীকৃত নয়</string>
+    <string name="box_sharesdk_no_item_selected">কোনো আইটেম নির্বাচিত নেই</string>
+    <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">লিঙ্ক কপি করুন</string>
+    <string description="button to send link to another application" name="box_sharesdk_send_link">লিঙ্ক প্রেরণ করুন</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">লিঙ্ক সহ লোকজনদের কাছে অ্যাক্সেসযোগ্য</string>
+    <string description="description for company access" name="box_sharesdk_accessible_company">আপনার কোম্পানির লোকজনের কাছে অ্যাক্সেসযোগ্য</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">আইটেমটি যে লোকজনের সাথে শেয়ার করা আছে তাদের কাছে অ্যাক্সেসযোগ্য করে তুলুন</string>
+    <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">পাসওয়ার্ড সুরক্ষিত</string>
+    <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">কোনো পাসওয়ার্ড নাই</string>
+    <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">সহযোগীদের প্রাপ্ত করা হচ্ছে</string>
+    <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">সহযোগীদের যোগ করা হচ্ছে</string>
+    <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">শেয়ার লিঙ্ক সক্ষম করা হচ্ছে</string>
+    <string description="message to show on spinner when we are disabling share link" name="box_sharesdk_disabling_share_link">শেয়ার লিঙ্ক অক্ষম করা হচ্ছে</string>
+    <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">লিঙ্ক অ্যাক্সেস আপডেট করা হচ্ছে</string>
+
+    <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">শেয়ার লিঙ্ক সক্ষম হয়েছে</string>
+    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">শেয়ার লিঙ্ক অক্ষম হয়েছে</string>
+    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">ডাউনলোড অনুমোদিত</string>
+    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">ডাউনলোড অক্ষম করা আছে</string>
+    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">মেয়াদউত্তীর্ণ হওয়ার কোনো তারিখ নেই</string>
+    <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">%1$s-এ লিঙ্কের মেয়াদউত্তীর্ণ হয়</string>
+    <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">লিঙ্ক অ্যাক্সেস সম্পাদনা করুন</string>
+    <string description="button to cancel an action" name="box_sharesdk_cancel">বাতিল করুন</string>
+    <string description="button to cancel an action" name="box_sharesdk_ok">ঠিক আছে</string>
+    <string description="button to disable a shared link" name="box_sharesdk_disable_share_link">শেয়ার লিঙ্ক অক্ষম করুন</string>
+    <string description="shown as title of warning dialog before disabling a shared link" name="box_sharesdk_disable_title">শেয়ার লিঙ্ক অক্ষম করবেন?</string>
+    <string description="shown as message of warning dialog before disabling a shared link" name="box_sharesdk_disable_message">লিঙ্কটি অক্ষম করা স্থায়ীভাবে বর্তমান শেয়ারের লিঙ্কটি মোছে। লিঙ্কটি পুনরায় সক্ষম করা একটি সম্পূর্ণ নতুন এবং অনন্য শেয়ার লিঙ্ক জেনারেট করবে। আপনি কি শেয়ার লিঙ্কটি অক্ষম করতে চান?</string>
+    <string description="separates ui between the shared link box and options to change access" name="box_sharesdk_link_access">অ্যাক্সেস করুন</string>
+    <string description="header for different access types" name="box_sharesdk_access">লিঙ্ক অ্যাক্সেস</string>
+    <string description="description for public access" name="box_sharesdk_access_public">লিঙ্ক সহ লোকজনেরা</string>
+    <string description="description for company access" name="box_sharesdk_access_company">আপনার কোম্পানির লোকজন</string>
+    <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">এই ফাইল এবং ফোল্ডারে লোকজন</string>
+    <string description="description for collaborator access" name="box_sharesdk_access_collaborator">এই ফোল্ডারে অন্তর্ভুক্ত লোকজন</string>
+    <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">ডাউনলোডের অনুমতি দিন</string>
+    <string description="header for password section" name="box_sharesdk_password">পাসওয়ার্ড</string>
+    <string description="hint for password dialog" name="box_sharesdk_set_password">পাসওয়ার্ড সেট করুন</string>
+    <string description="toggle of using password or not" name="box_sharesdk_require_password">পাসওয়ার্ড আবশ্যক</string>
+    <string description="header for link expiration section" name="box_sharesdk_link_expiration">লিঙ্ক মেয়াদউত্তীর্ণ</string>
+    <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">মেয়াদউত্তীর্ণ লিঙ্ক</string>
+    <string description="header for date link expires" name="box_sharesdk_expire_on">মেয়াদউত্তীর্ণ হওয়ার তারিখ</string>
+    <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">এই শেয়ারকৃত লিঙ্কটি অ্যাক্সেস করতে একটি সমস্যা ছিল।</string>
+    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">এই শেয়ারকৃত লিঙ্কটি সংশোধন/অ্যাক্সেস করতে একটি সমস্যা ছিল।</string>
+    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">এই শেয়ারকৃত লিঙ্কটি সংশোধন/অ্যাক্সেস করতে একটি সমস্যা ছিল।</string>
+    <string name="box_sharesdk_title_link_access">লিঙ্ক অ্যাক্সেস</string>
+    <string name="box_sharesdk_title_share_link">লিঙ্ক শেয়ার করুন</string>
+    <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">একটি লিঙ্ক সক্ষম করা একটি শেয়ারযোগ্য লিঙ্ক জেনারেট করে যা অন্যান্যরা এর সামগ্রী অ্যাক্সেস করতে ও দেখতে ব্যবহার করতে পারে।</string>
+    <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">লিঙ্ক ক্লিপবোর্ডে কপি হয়েছে।</string>
+    <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">আমি আপনার সাথে Box-এ \'%1$s\' শেয়ার করেছি।</string>
+    <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">এটি ব্যবহার করে পাঠান:</string>
+    <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">নেটওয়ার্ক ত্রুটি। অনুগ্রহ করে পরে চেষ্টা করুন।</string>
+
+    <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">অধিকারীর আপডেট</string>
+    <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">এই ব্যবহারকারীদের আইটেমের অধিকারী করার অর্থ আপনি মালিকানা হারাবেন এবং একজন সম্পাদক হবেন। আপনি কি চালিয়ে যেতে চান?</string>
+
+
+    <!-- menu items -->
+    <string description="menu item to refresh current item" name="box_sharesdk_refresh">রিফ্রেশ করুন</string>
+    <string description="menu item to add a collaboration" name="box_sharesdk_action_add">যোগ করুন</string>
+
+    <!-- role names -->
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">সম্পাদক</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer">ভিউয়ার</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer">প্রিভিউয়ার</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_uploader">আপলোডকারী</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_previewer_uploader">প্রিভিউয়ার আপলোডকারী</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">ভিউয়ার আপলোডকারী</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">সহ-মালিক</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">মালিক</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">ব্যক্তি অপসারণ করুন</string>
+    <string description="The status to indicate that a person was invited, but they have not accepted the collaboration request" name="box_sharesdk_invited_status">আমন্ত্রিত</string>
+    <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">প্রত্যাখ্যাত</string>
+
+    <!-- role descriptions -->
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_editor">ফাইলগুলি আপলোড, ডাউনলোড করুন, প্রিভিউ দেখুন, শেয়ার ও সম্পাদনা করুন।</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer">ফাইলগুলি ডাউনলোড করুন, প্রিভিউ দেখুন এবং শেয়ার করুন।</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer">শুধুমাত্র ফাইলগুলির প্রিভিউ দেখুন।</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">শুধুমাত্র ফাইলগুলি আপলোড করুন।</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">ফাইলগুলির প্রিভিউ দেখুন ও আপলোড করুন।</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">ফাইলগুলি আপলোড করুন, প্রিভিউ দেখুন এবং শেয়ার করুন।</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">অধিকারীর মতোই একই অনুমতি</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_owner">অধিকারী</string>
+
+    <!-- invite collaborators -->
+    <string description="Menu item for submitting the invite collaborators request" name="box_sharesdk_action_send">পাঠান</string>
+    <string description="The label for the field where users will enter the collaborators they would like to invite" name="box_sharesdk_to">প্রতি</string>
+    <string description="Error message for when an incorrect object type is used to launch the collaborations page" name="box_sharesdk_selected_item_not_expected_type">নির্বাচিত আইটেমটি প্রত্যাশিত ধরণ নয়</string>
+    <string description="Success message for inviting a collaborator" name="box_sharesdk_collaborator_invited">%s আমন্ত্রিত হয়েছে</string>
+    <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">সহযোগীদের আমন্ত্রণ করা হয়েছে</string>
+    <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">আপনি এই আইটেমটির জন্য সহযোগিতা দেখতে পাচ্ছেন না।</string>
+    <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">অন্য ব্যক্তি</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">এই আইটেমের জন্য কোনো সহযোগী নেই।</string>
+    <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s ইতিমধ্যে এই আইটেমে আমন্ত্রিত হয়েছে</string>
+    <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s জন লোকজন ইতিমধ্যে এই আইটেমে আমন্ত্রিত হয়েছে</string>
+    <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
+    <string name="box_sharedsdk_collaborators_title">সহযোগীগণ</string>
+
+    <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">আপনি যে আইটেম অ্যাক্সেস করার চেষ্টা করছেন সেটি হয় মোছা হয়েছে অথবা আপনার কাছে অনুপলব্ধ</string>
+    <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">আপনার এই ক্রিয়াকলাপটির জন্য পর্যাপ্ত অনুমতি নেই।</string>
+    <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">ব্যবহারকারী এখনো এই ফোল্ডারে সহযোগী নন এবং মালিক হিসাবে সেট হতে পারবেন না।</string>
+    <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">অধিকারী আপডেট করতে অক্ষম। অনুগ্রহ করে সহায়্তার সাথে যোগাযোগ করুন।</string>
+    <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">সহযোগীদের পেতে অক্ষম। সমস্যাটি চলতে থাকলে অনুগ্রহ করে সহায়্তার সাথে যোগাযোগ করুন।</string>
+    <string name="box_sharesdk_unable_to_invite">সহযোগীদের আমন্ত্রণ করতে অক্ষম। সমস্যাটি চলতে থাকলে অনুগ্রহ করে সহায়্তার সাথে যোগাযোগ করুন।</string>
+
+</resources>
