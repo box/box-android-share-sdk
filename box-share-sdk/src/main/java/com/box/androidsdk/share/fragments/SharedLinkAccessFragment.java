@@ -237,8 +237,12 @@ public class SharedLinkAccessFragment extends BoxFragment
         if (getFragmentManager().findFragmentByTag(ACCESS_RADIAL_FRAGMENT_TAG) != null){
             return;
         }
-        AccessRadialDialogFragment fragment = AccessRadialDialogFragment.createFragment(mShareItem, this);
-        fragment.show(getActivity().getSupportFragmentManager(), ACCESS_RADIAL_FRAGMENT_TAG);
+        if (mShareItem.getAllowedSharedLinkAccessLevels() != null){
+            AccessRadialDialogFragment fragment = AccessRadialDialogFragment.createFragment(mShareItem, this);
+            fragment.show(getActivity().getSupportFragmentManager(), ACCESS_RADIAL_FRAGMENT_TAG);
+        } else {
+            mController.showToast(getContext(),R.string.box_sharesdk_network_error);
+        }
     }
 
     /**
@@ -409,8 +413,10 @@ public class SharedLinkAccessFragment extends BoxFragment
                         public void run() {
                             if (response.isSuccess()) {
                                 if (response.getRequest() instanceof BoxRequestItem) {
-                                    mShareItem = response.getResult();
-                                    updateUi();
+                                    if (checkIfHasRequiredFields(response.getResult())) {
+                                        mShareItem = response.getResult();
+                                        updateUi();
+                                    }
                                 }
                             } else {
                                 if (response.getException() instanceof BoxException) {
