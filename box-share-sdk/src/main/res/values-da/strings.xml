@@ -83,7 +83,7 @@
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">Upload kun filer.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">Vis eksempel på og upload filer.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">Upload, download, vis eksempel på og del filer.</string>
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">Samme adgangsniveau som ejeren</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">Samme adgangsniveau som ejeren.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_owner">Ejer</string>
 
     <!-- invite collaborators -->
