@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.box.androidsdk.content.models.BoxCollaborationItem;
-import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;

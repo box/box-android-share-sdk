@@ -47,10 +47,10 @@ public abstract class BoxFragment extends Fragment {
         mSpinnerLock = new ReentrantLock();
 
         if (savedInstanceState != null && savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM) != null){
-            mShareItem = (BoxCollaborationItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
+            mShareItem = (BoxItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
         } else if (getArguments() != null) {
             Bundle args = getArguments();
-            mShareItem = (BoxCollaborationItem)args.getSerializable(CollaborationUtils.EXTRA_ITEM);
+            mShareItem = (BoxItem)args.getSerializable(CollaborationUtils.EXTRA_ITEM);
         }
 
         if (mShareItem == null){
