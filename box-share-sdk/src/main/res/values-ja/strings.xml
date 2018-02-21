@@ -94,7 +94,7 @@
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">コラボレータを招待しました</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">この項目のコラボレーションは表示できません。</string>
     <string description="Default name shown when a user without a Box account has been invited" name="box_sharesdk_another_person">別のユーザー</string>
-    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">この項目にコラボレーターは設定されていません。</string>
+    <string description="Message shown when no collaborators have been invited for the current item" name="box_sharesdk_no_collaborators">この項目にコラボレータは設定されていません。</string>
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%sはすでにこの項目に招待済みです</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">この項目には、すでに%s人のユーザーを招待済みです</string>
     <string name="box_sharedsdk_collaborators_initials_count">他%d人</string>
