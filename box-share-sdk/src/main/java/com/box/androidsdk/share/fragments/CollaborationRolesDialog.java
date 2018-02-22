@@ -37,7 +37,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
     protected boolean mAllowRemove;
     protected boolean mAllowOwnerRole;
     protected boolean mIsRemoveCollaborationSelected;
-    protected Serializable mExtra;
+    protected BoxCollaboration mCollaboration;
     protected ArrayList<RadioButton> mRolesOptions = new ArrayList<RadioButton>();
 
     protected OnRoleSelectedListener mOnRoleSelectedListener;
@@ -52,7 +52,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
         mSelectedRole = (BoxCollaboration.Role) getArguments().getSerializable(ARGS_SELECTED_ROLE);
         mAllowRemove = getArguments().getBoolean(ARGS_ALLOW_REMOVE);
         mAllowOwnerRole = getArguments().getBoolean(ARGS_ALLOW_OWNER_ROLE);
-        mExtra = getArguments().getSerializable(ARGS_SERIALIZABLE_EXTRA);
+        mCollaboration = (BoxCollaboration)getArguments().getSerializable(ARGS_SERIALIZABLE_EXTRA);
 
         // Create AlertDialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.ShareDialogTheme);
@@ -121,7 +121,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
         }
     }
 
-    public static CollaborationRolesDialog newInstance(ArrayList<BoxCollaboration.Role> roles, BoxCollaboration.Role selectedRole, String title, boolean allowRemove, boolean allowOwnerRole, Serializable serializableExtra) {
+    public static CollaborationRolesDialog newInstance(ArrayList<BoxCollaboration.Role> roles, BoxCollaboration.Role selectedRole, String title, boolean allowRemove, boolean allowOwnerRole, BoxCollaboration collaboration) {
         CollaborationRolesDialog dialog = new CollaborationRolesDialog();
 
         Bundle b = new Bundle();
@@ -130,7 +130,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
         b.putString(ARGS_TITLE, title);
         b.putBoolean(ARGS_ALLOW_REMOVE, allowRemove);
         b.putBoolean(ARGS_ALLOW_OWNER_ROLE, allowOwnerRole);
-        b.putSerializable(ARGS_SERIALIZABLE_EXTRA, serializableExtra);
+        b.putSerializable(ARGS_SERIALIZABLE_EXTRA, collaboration);
         dialog.setArguments(b);
 
         return dialog;
@@ -186,8 +186,8 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
         return mIsRemoveCollaborationSelected;
     }
 
-    public Serializable getSerializableExtra() {
-        return mExtra;
+    public BoxCollaboration getCollaboration() {
+        return mCollaboration;
     }
 
     public interface OnRoleSelectedListener {

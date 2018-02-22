@@ -112,13 +112,33 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
     @Override
     public void onRoleSelected(CollaborationRolesDialog rolesDialog) {
-        final BoxCollaboration collaboration = (BoxCollaboration) rolesDialog.getSerializableExtra();
+        final BoxCollaboration collaboration = (BoxCollaboration) rolesDialog.getCollaboration();
         if (collaboration == null)
             return;
 
         if (rolesDialog.getIsRemoveCollaborationSelected()) {
-            showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
-            mController.deleteCollaboration(collaboration).addOnCompletedListener(mDeleteCollaborationListener);
+            if (rolesDialog.getCollaboration().getItem().getId().equals(mShareItem.getId())){
+                showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
+                mController.deleteCollaboration(collaboration).addOnCompletedListener(mDeleteCollaborationListener);
+            } else {
+                String deleteDifferentWarning = getResources().getString(R.string.box_sharesdk_warn_remove_different_collaboration_folder,rolesDialog.getCollaboration().getAccessibleBy().getName(),rolesDialog.getCollaboration().getItem().getName());
+                AlertDialog dialog = new AlertDialog.Builder(getActivity()).setTitle(R.string.box_sharesdk_title_remove_different_collaboration_folder)
+                        .setMessage(deleteDifferentWarning)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog, final int which) {
+                                showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
+                                mController.deleteCollaboration(collaboration).addOnCompletedListener(mDeleteCollaborationListener);
+                            }
+                        }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(final DialogInterface dialog, final int which) {
+                                // do nothing
+                            }
+                        }).setIcon(android.R.drawable.ic_dialog_alert).create();
+                dialog.show();
+            }
         } else {
             BoxCollaboration.Role selectedRole = rolesDialog.getSelectedRole();
             if (selectedRole == null || selectedRole == collaboration.getRole())
