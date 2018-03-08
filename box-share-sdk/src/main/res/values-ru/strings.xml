@@ -106,8 +106,8 @@
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">Невозможно обновить данные владельца. Обратитесь в службу поддержки.</string>
     <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Невозможно выбрать соавторов. Если проблема не устранена, обратитесь в службу поддержки.</string>
     <string name="box_sharesdk_unable_to_invite">Невозможно пригласить соавторов. Если проблема не устранена, обратитесь в службу поддержки.</string>
-    <string description="Title for the alert dialog to confirm removing a collaborator for a parent of selected item" name="box_sharesdk_title_remove_different_collaboration_folder">Remove Collaborator</string>
-    <string description="shown as message of warning dialog before removing collaboration for a different than selected item" name="box_sharesdk_warn_remove_different_collaboration_folder">This will remove %1$s from accessing all files within %2$s. Are you sure ?</string>
+    <string description="Title for the alert dialog to confirm removing a collaborator for a parent of selected item" name="box_sharesdk_title_remove_different_collaboration_folder">Удаление соавтора</string>
+    <string description="shown as message of warning dialog before removing collaboration for a different than selected item" name="box_sharesdk_warn_remove_different_collaboration_folder">Пользователю %1$s будет закрыт доступ ко всем файлам %2$s. Продолжить?</string>
 
 
 </resources>
