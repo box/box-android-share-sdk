@@ -106,8 +106,8 @@
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">无法更新所有者。请联系支持部门。</string>
     <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">无法获取协作者。如果问题持续出现，请联系支持部门。</string>
     <string name="box_sharesdk_unable_to_invite">无法邀请协作者。如果问题持续出现，请联系支持部门。</string>
-    <string description="Title for the alert dialog to confirm removing a collaborator for a parent of selected item" name="box_sharesdk_title_remove_different_collaboration_folder">Remove Collaborator</string>
-    <string description="shown as message of warning dialog before removing collaboration for a different than selected item" name="box_sharesdk_warn_remove_different_collaboration_folder">This will remove %1$s from accessing all files within %2$s. Are you sure ?</string>
+    <string description="Title for the alert dialog to confirm removing a collaborator for a parent of selected item" name="box_sharesdk_title_remove_different_collaboration_folder">移除协作者</string>
+    <string description="shown as message of warning dialog before removing collaboration for a different than selected item" name="box_sharesdk_warn_remove_different_collaboration_folder">此操作会禁止 %1$s 访问 %2$s 内的所有文件。确定要这样做吗？</string>
 
 
 </resources>

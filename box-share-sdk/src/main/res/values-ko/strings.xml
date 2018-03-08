@@ -106,8 +106,8 @@
     <string description="Error shown if changing ownership fails for unknown reason" name="box_sharedsdk_unable_to_update_owner">소유자를 업데이트할 수 없습니다. 지원팀에 문의하십시오.</string>
     <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">공동 작업자를 가져올 수 없습니다. 문제가 계속되면 지원팀에 문의하십시오.</string>
     <string name="box_sharesdk_unable_to_invite">공동 작업자를 초대할 수 없습니다. 문제가 계속되면 지원팀에 문의하십시오.</string>
-    <string description="Title for the alert dialog to confirm removing a collaborator for a parent of selected item" name="box_sharesdk_title_remove_different_collaboration_folder">Remove Collaborator</string>
-    <string description="shown as message of warning dialog before removing collaboration for a different than selected item" name="box_sharesdk_warn_remove_different_collaboration_folder">This will remove %1$s from accessing all files within %2$s. Are you sure ?</string>
+    <string description="Title for the alert dialog to confirm removing a collaborator for a parent of selected item" name="box_sharesdk_title_remove_different_collaboration_folder">공동 작업자 제거</string>
+    <string description="shown as message of warning dialog before removing collaboration for a different than selected item" name="box_sharesdk_warn_remove_different_collaboration_folder">이렇게 하면 %2$s 내 모든 파일 액세스에서 %1$s이(가) 제거됩니다. 실행하시겠습니까?</string>
 
 
 </resources>
