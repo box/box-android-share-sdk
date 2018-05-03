@@ -17,7 +17,6 @@ public class DatePickerFragment extends PositiveNegativeDialogFragment
 
     DatePickerDialog mDialog;
     private DatePickerDialog.OnDateSetListener mOnDateSetListener;
-    private DialogInterface.OnDismissListener onDismissListener;
 
     private static final String EXTRA_START_DATE = "extraStartDate";
     private final String EXTRA_KEY_YEAR = "extraYear";
@@ -37,21 +36,21 @@ public class DatePickerFragment extends PositiveNegativeDialogFragment
         // Use the current date as the default date in the picker
         final Calendar c = Calendar.getInstance();
 
-        if (getArguments() != null){
-            Date date = (Date)getArguments().getSerializable(EXTRA_START_DATE);
+        if (getArguments() != null) {
+            Date date = (Date) getArguments().getSerializable(EXTRA_START_DATE);
             if (date != null) {
                 c.setTime(date);
             }
         }
         // we cannot have a minimum date that is earlier than the set date.
-        if (c.getTimeInMillis() < minDateCalendar.getTimeInMillis()){
+        if (c.getTimeInMillis() < minDateCalendar.getTimeInMillis()) {
             c.setTime(minDateCalendar.getTime());
         }
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             year = savedInstanceState.getInt(EXTRA_KEY_YEAR);
             month = savedInstanceState.getInt(EXTRA_KEY_MONTH);
             day = savedInstanceState.getInt(EXTRA_KEY_DAY);
@@ -68,9 +67,9 @@ public class DatePickerFragment extends PositiveNegativeDialogFragment
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(EXTRA_KEY_YEAR,  mDialog.getDatePicker().getYear());
-        outState.putInt(EXTRA_KEY_MONTH,  mDialog.getDatePicker().getMonth());
-        outState.putInt(EXTRA_KEY_DAY,  mDialog.getDatePicker().getDayOfMonth());
+        outState.putInt(EXTRA_KEY_YEAR, mDialog.getDatePicker().getYear());
+        outState.putInt(EXTRA_KEY_MONTH, mDialog.getDatePicker().getMonth());
+        outState.putInt(EXTRA_KEY_DAY, mDialog.getDatePicker().getDayOfMonth());
         super.onSaveInstanceState(outState);
     }
 
@@ -82,15 +81,14 @@ public class DatePickerFragment extends PositiveNegativeDialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         mButtonClicked = true;
-        if (mOnDateSetListener != null){
+        if (mOnDateSetListener != null) {
             mOnDateSetListener.onDateSet(view, year, month, day);
         }
     }
 
 
     @Override
-    public void onDestroyView()
-    {
+    public void onDestroyView() {
         Dialog dialog = getDialog();
 
         // Work around bug: http://code.google.com/p/android/issues/detail?id=17423
@@ -100,7 +98,7 @@ public class DatePickerFragment extends PositiveNegativeDialogFragment
         super.onDestroyView();
     }
 
-    public static final DatePickerFragment createFragment(final Date date, DatePickerDialog.OnDateSetListener dateSetListener, OnPositiveOrNegativeButtonClickedListener listener){
+    public static final DatePickerFragment createFragment(final Date date, DatePickerDialog.OnDateSetListener dateSetListener, OnPositiveOrNegativeButtonClickedListener listener) {
         DatePickerFragment fragment = new DatePickerFragment();
         Bundle b = new Bundle();
         b.putSerializable(EXTRA_START_DATE, date);
