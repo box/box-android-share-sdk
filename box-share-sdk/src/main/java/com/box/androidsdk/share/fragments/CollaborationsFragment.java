@@ -112,7 +112,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
     @Override
     public void onRoleSelected(CollaborationRolesDialog rolesDialog) {
-        final BoxCollaboration collaboration = (BoxCollaboration) rolesDialog.getCollaboration();
+        final BoxCollaboration collaboration = rolesDialog.getCollaboration();
         if (collaboration == null)
             return;
 

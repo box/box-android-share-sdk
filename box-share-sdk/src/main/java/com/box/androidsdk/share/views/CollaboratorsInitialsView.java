@@ -239,7 +239,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
     }
 
     private View addInitialsToList(BoxCollaborator collaborator) {
-        View layoutContainer =  LayoutInflater.from((Activity)getContext()).inflate(R.layout.view_initials, null);
+        View layoutContainer =  LayoutInflater.from(getContext()).inflate(R.layout.view_initials, null);
         BoxAvatarView initialsView = (BoxAvatarView) layoutContainer.findViewById(R.id.collaborator_initials);
 
         if (collaborator == null) {
