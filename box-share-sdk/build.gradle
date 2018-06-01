@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    compileSdkVersion 26
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 26
         group "com.box"
 
         // Set version code and name
@@ -48,12 +48,12 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
     // If using local dependency instead of maven, use the path pointing to the content sdk to replace
     // the maven dependency. e.g.:compile project(':box-android-content-sdk:box-content-sdk')
-    compile 'com.box:box-android-sdk:4.1.0'
-    compile "com.splitwise:tokenautocomplete:2.0.5@aar"
+    api 'com.box:box-android-sdk:4.99.647-SNAPSHOT'
+    api "com.splitwise:tokenautocomplete:2.0.8@aar"
 }
 
 apply from: '../maven_push.gradle'

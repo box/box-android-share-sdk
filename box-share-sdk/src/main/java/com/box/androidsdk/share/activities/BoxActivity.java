@@ -4,22 +4,18 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.box.androidsdk.content.BoxApiBookmark;
-import com.box.androidsdk.content.BoxApiCollaboration;
-import com.box.androidsdk.content.BoxApiFile;
-import com.box.androidsdk.content.BoxApiFolder;
 import com.box.androidsdk.content.BoxConfig;
 import com.box.androidsdk.content.BoxFutureTask;
-import com.box.androidsdk.content.models.BoxIteratorCollaborations;
-import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.auth.BoxAuthentication;
 import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
+import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
@@ -27,8 +23,6 @@ import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.fragments.BoxFragment;
-import com.box.androidsdk.share.internal.BoxApiFeatures;
-import com.box.androidsdk.share.internal.BoxApiInvitee;
 
 /**
  * Base class for all activities that make API requests through the Box Content SDK. This class is responsible for
@@ -36,7 +30,7 @@ import com.box.androidsdk.share.internal.BoxApiInvitee;
  *
  * All BoxRequest tasks should be submitted to getApiExecutor and then handled by overriding handleBoxResponse
  */
-public abstract class BoxActivity extends ActionBarActivity {
+public abstract class BoxActivity extends AppCompatActivity {
 
     protected BoxSession mSession;
     protected BoxItem mShareItem;

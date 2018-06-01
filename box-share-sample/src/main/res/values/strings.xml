@@ -2,5 +2,8 @@
     <string name="app_name">BoxShareSampleApp</string>
     <string name="create_sample_folder" description="Text for btn that creates sample folder on box">Create SDK Sample Folder</string>
     <string name="remove_sample_folder" description="Text for menu option to remove sample folder">Remove Sample Folder</string>
+    <string name="box_sharesdk_name">Share</string>
+    <string name="box_sharesdk_sample_name">Share sample</string>
+    <string name="box_sharesdk_sample_choose_action">Choose</string>
 
 </resources>
