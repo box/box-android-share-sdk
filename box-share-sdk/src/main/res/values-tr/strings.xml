@@ -1,7 +1,4 @@
 <resources>
-    <string name="box_sharesdk_name">Paylaş</string>
-    <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">SDK Örneği Paylaşımı</string>
-    <string description="description of available actions for an item" name="box_sharesdk_sample_choose_action">\"%s\" için bir işlem seçin</string>
     <string name="box_sharesdk_shared_with">Paylaşılanlar:</string>
     <string name="box_sharesdk_invite_collaborators">Kişileri Davet Et</string>
     <string name="box_sharesdk_session_is_not_authenticated">Oturum doğrulanmadı</string>

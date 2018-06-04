@@ -1,7 +1,4 @@
 <resources>
-    <string name="box_sharesdk_name">共用</string>
-    <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">共用 SDK 範例</string>
-    <string description="description of available actions for an item" name="box_sharesdk_sample_choose_action">選擇「%s」的動作</string>
     <string name="box_sharesdk_shared_with">共用對象</string>
     <string name="box_sharesdk_invite_collaborators">邀請人員</string>
     <string name="box_sharesdk_session_is_not_authenticated">工作階段未驗證</string>
