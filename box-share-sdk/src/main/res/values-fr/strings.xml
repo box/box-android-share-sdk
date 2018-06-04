@@ -1,7 +1,4 @@
 <resources>
-    <string name="box_sharesdk_name">Partager</string>
-    <string description="Title of share SDK sample app" name="box_sharesdk_sample_name">Partager l\'échantillon SDK</string>
-    <string description="description of available actions for an item" name="box_sharesdk_sample_choose_action">Choisir l\'action pour \"%s\"</string>
     <string name="box_sharesdk_shared_with">Partagé avec</string>
     <string name="box_sharesdk_invite_collaborators">Inviter des utilisateurs</string>
     <string name="box_sharesdk_session_is_not_authenticated">Pas d\'authentification pour la session</string>
