@@ -19,19 +19,19 @@ The SDK can be obtained by adding it as a maven dependency, cloning the source i
 
 Gradle: 
 ```groovy 
-compile 'com.box:box-android-share-sdk:1.0.0'
+compile 'com.box:box-android-share-sdk:2.3.0'
 ```
 Maven: 
 ```xml
 <dependency>
     <groupId>com.box</groupId>
     <artifactId>box-android-share-sdk</artifactId>
-    <version>1.0.0</version>
+    <version>2.3.0</version>
 </dependency>
 ```
 
 If not using Gradle or Maven, this SDK has the following dependencies and will need to be included in your project:
-* [box-android-sdk](https://github.com/box/box-android-sdk) (maven: `com.box:box-android-sdk:3.0.2`)
+* [box-android-sdk](https://github.com/box/box-android-sdk) (maven: `com.box:box-android-sdk:4.2.0`)
 
 
 Quickstart
