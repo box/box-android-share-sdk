@@ -5,7 +5,7 @@ android {
     buildToolsVersion '27.0.3'
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 26
         group "com.box"
 
@@ -17,9 +17,9 @@ android {
             versionName "2.99." + git_count + "-SNAPSHOT"
             version "2.99." + git_count + "-SNAPSHOT"
         } else {
-            versionCode 22000
-            versionName "2.2.0"
-            version "2.2.0"
+            versionCode 23000
+            versionName "2.3.0"
+            version "2.3.0"
         }
     }
     buildTypes {
@@ -53,7 +53,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
     // If using local dependency instead of maven, use the path pointing to the content sdk to replace
     // the maven dependency. e.g.:compile project(':box-android-content-sdk:box-content-sdk')
-    api 'com.box:box-android-sdk:4.99.647-SNAPSHOT'
+    api 'com.box:box-android-sdk:4.2.0'
     api "com.splitwise:tokenautocomplete:2.0.8@aar"
 }
 
