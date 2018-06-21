@@ -3,7 +3,6 @@
     <color name="box_sharesdk_primary_text">#de000000</color>
     <color name="box_sharesdk_hint">#80000000</color>
     <color name="box_sharesdk_accent">#00adef</color>
-    <color name="box_sharesdk_link_text">@color/box_sharesdk_accent</color>
     <color name="box_sharesdk_background">#ffffffff</color>
 
     <!-- Custom colors -->
@@ -15,7 +14,6 @@
     <color name="box_sharesdk_warning_color">#ffb71c1c</color>
     <color name="box_sharesdk_chip_text_color">#e0000000</color>
     <color name="box_sharesdk_initials_count_color">#e0d4d4d4</color>
-    <color name="box_sharesdk_collaborators_color">#bdc3c7</color>
     <color name="box_sharesdk_accent_transparent">#3f1992D4</color>
     <color name="box_sharesdk_no_collaborators_msg">#757575</color>
     <color name="box_sharesdk_collaborators_label">#404040</color>
