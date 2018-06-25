@@ -9,7 +9,6 @@
     <string description="description for company access" name="box_sharesdk_accessible_company">Toegankelijk voor personen in uw bedrijf</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Toegankelijk voor personen met wie het item is gedeeld</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Met wachtwoord beveiligd</string>
-    <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Geen wachtwoord</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Medebewerkers ophalen</string>
     <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Medebewerkers toevoegen</string>
     <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Gedeelde link inschakelen</string>
@@ -17,10 +16,8 @@
     <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Gedeelde links bijwerken</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Gedeelde link ingeschakeld</string>
-    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Gedeelde link uitgeschakeld</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">Downloads toegestaan</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">Downloads uitgeschakeld</string>
-    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">Geen vervaldatum</string>
     <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">Link vervalt op %1$s</string>
     <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">TOEGANG TOT DE LINK BEWERKEN</string>
     <string description="button to cancel an action" name="box_sharesdk_cancel">ANNULEREN</string>
@@ -34,7 +31,6 @@
     <string description="description for company access" name="box_sharesdk_access_company">Personen in uw bedrijf</string>
     <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">Personen in dit bestand en deze map</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Personen in deze map</string>
-    <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Downloads toestaan</string>
     <string description="header for password section" name="box_sharesdk_password">Wachtwoord</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">Wachtwoord instellen</string>
     <string description="toggle of using password or not" name="box_sharesdk_require_password">Wachtwoord vereisen</string>
@@ -42,7 +38,6 @@
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">Link laten vervallen</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">Laten vervallen op</string>
     <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">Er is een probleem met de toegang tot deze gedeelde link.</string>
-    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">Er is een probleem met het aanpassen/maken van deze gedeelde link.</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">Er is een probleem met het aanpassen/maken van deze gedeelde link.</string>
     <string name="box_sharesdk_title_link_access">Toegang tot link</string>
     <string name="box_sharesdk_title_share_link">Link delen</string>
@@ -57,8 +52,6 @@
 
 
     <!-- menu items -->
-    <string description="menu item to refresh current item" name="box_sharesdk_refresh">Vernieuwen</string>
-    <string description="menu item to add a collaboration" name="box_sharesdk_action_add">Toevoegen</string>
 
     <!-- role names -->
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">Editor</string>

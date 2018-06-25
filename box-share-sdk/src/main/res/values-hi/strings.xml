@@ -9,7 +9,6 @@
     <string description="description for company access" name="box_sharesdk_accessible_company">आपकी कंपनी के लोगों के लिए पहुँचयोग्य</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">उन लोगों के लिए एक्सेस करने योग्य जिनके साथ आइटम शेयर किया गया है</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">पासवर्ड सुरक्षित</string>
-    <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">कोई पासवर्ड नहीं</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">सहयोगी लाए जा रहे हैं</string>
     <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">सहयोगी जोड़े जा रहे हैं</string>
     <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">लिंक शेयर करें सक्षम किया जा रहा है</string>
@@ -17,10 +16,8 @@
     <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">लिंक एक्सेस अपडेट किया जा रहा है</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">लिंक शेयर करें सक्षम किया गया</string>
-    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">लिंक शेयर करें अक्षम किया गया</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">डाउनलोड्स अनुमत है</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">डाउनलोड्स अक्षम किए गए</string>
-    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">कोई समापन तारीख़ नहीं</string>
     <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">लिंक %1$s को समाप्त होती है</string>
     <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">लिंक एक्सेस संपादित करें</string>
     <string description="button to cancel an action" name="box_sharesdk_cancel">रद्द करें</string>
@@ -34,7 +31,6 @@
     <string description="description for company access" name="box_sharesdk_access_company">आपकी कंपनी के लोग</string>
     <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">इस फ़ाइल और फ़ोल्डर में मौजूद लोग</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">इस फ़ोल्डर के लोग</string>
-    <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">डाउनलोड्स की अनुमति दें</string>
     <string description="header for password section" name="box_sharesdk_password">पासवर्ड</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">पासवर्ड सेट करें</string>
     <string description="toggle of using password or not" name="box_sharesdk_require_password">पासवर्ड आवश्यक है</string>
@@ -42,7 +38,6 @@
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">लिंक समाप्त करें</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">इस दिन समाप्त होगा</string>
     <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">इस शेयर की गई लिंक को एक्सेस करने में कोई समस्या थी.</string>
-    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">इस शेयर की गई लिंक को संशोधित करने/बनाने में कोई समस्या थी.</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">इस शेयर की गई लिंक को संशोधित करने/बनाने में कोई समस्या थी.</string>
     <string name="box_sharesdk_title_link_access">लिंक एक्सेस</string>
     <string name="box_sharesdk_title_share_link">लिंक शेयर करें</string>
@@ -57,8 +52,6 @@
 
 
     <!-- menu items -->
-    <string description="menu item to refresh current item" name="box_sharesdk_refresh">रिफ्रेश करें</string>
-    <string description="menu item to add a collaboration" name="box_sharesdk_action_add">जोड़ें</string>
 
     <!-- role names -->
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">संपादक</string>

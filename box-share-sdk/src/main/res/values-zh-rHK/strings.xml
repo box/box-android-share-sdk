@@ -9,7 +9,6 @@
     <string description="description for company access" name="box_sharesdk_accessible_company">公司人員可存取</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">項目的共用對象可存取</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">受密碼保護</string>
-    <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">無密碼</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">擷取共同作業者中</string>
     <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">新增共同作業者中</string>
     <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">啟用共用連結中</string>
@@ -17,10 +16,8 @@
     <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">更新連結存取權限中</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">共用連結已啟用</string>
-    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">共用連結已停用</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">允許下載</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">停用下載</string>
-    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">無到期日</string>
     <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">連結會在 %1$s 到期</string>
     <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">編輯連結存取權限</string>
     <string description="button to cancel an action" name="box_sharesdk_cancel">取消</string>
@@ -34,7 +31,6 @@
     <string description="description for company access" name="box_sharesdk_access_company">公司人員</string>
     <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">共用檔案和資料夾的人員</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">共用資料夾的人員</string>
-    <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">允許下載</string>
     <string description="header for password section" name="box_sharesdk_password">密碼</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">設定密碼</string>
     <string description="toggle of using password or not" name="box_sharesdk_require_password">需要密碼</string>
@@ -42,7 +38,6 @@
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">使連結到期</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">到期時間</string>
     <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">存取此共用連結時發生問題。</string>
-    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">修改/建立此共用的連結時發生問題。</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">修改/建立此共用的連結時發生問題。</string>
     <string name="box_sharesdk_title_link_access">連結存取權限</string>
     <string name="box_sharesdk_title_share_link">共用連結</string>
@@ -57,8 +52,6 @@
 
 
     <!-- menu items -->
-    <string description="menu item to refresh current item" name="box_sharesdk_refresh">重新整理</string>
-    <string description="menu item to add a collaboration" name="box_sharesdk_action_add">新增</string>
 
     <!-- role names -->
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">編輯者</string>

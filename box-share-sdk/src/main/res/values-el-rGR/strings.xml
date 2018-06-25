@@ -9,7 +9,6 @@
     <string description="description for company access" name="box_sharesdk_accessible_company">Δυνατότητα πρόσβασης σε χρήστες στην εταιρεία</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Δυνατότητα πρόσβασης σε χρήστες στους οποίους έχει κοινοποιηθεί το στοιχείο</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Προστασία με κωδικό πρόσβασης</string>
-    <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Χωρίς κωδικό πρόσβασης</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Λήψη συνεργατών</string>
     <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Προσθήκη συνεργατών</string>
     <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Ενεργοποίηση συνδέσμου κοινοποίησης</string>
@@ -17,10 +16,8 @@
     <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Ενημέρωση συνδέσμου πρόσβασης</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Ο σύνδεσμος κοινοποίησης έχει ενεργοποιηθεί</string>
-    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Ο σύνδεσμος κοινοποίησης έχει απενεργοποιηθεί</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">Επιτρέπονται οι λήψεις</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">Οι λήψεις έχουν απενεργοποιηθεί</string>
-    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">Χωρίς ημερομηνία λήξης</string>
     <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">Ο σύνδεσμος λήγει στις %1$s</string>
     <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">ΕΠΕΞΕΡΓΑΣΙΑ ΠΡΟΣΒΑΣΗΣ ΣΥΝΔΕΣΜΟΥ</string>
     <string description="button to cancel an action" name="box_sharesdk_cancel">ΑΚΥΡΟ</string>
@@ -34,7 +31,6 @@
     <string description="description for company access" name="box_sharesdk_access_company">Χρήστες στην εταιρεία</string>
     <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">Χρήστες σε αυτό το αρχείο και φάκελο</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Χρήστες σε αυτόν το φάκελο</string>
-    <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Να επιτρέπονται οι λήψεις</string>
     <string description="header for password section" name="box_sharesdk_password">Κωδικός πρόσβασης</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">Ορισμός κωδικού πρόσβασης</string>
     <string description="toggle of using password or not" name="box_sharesdk_require_password">Απαίτηση κωδικού πρόσβασης</string>
@@ -42,7 +38,6 @@
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">Λήξη συνδέσμου</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">Λήξη στις</string>
     <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">Παρουσιάστηκε πρόβλημα κατά την πρόσβαση σε αυτόν τον κοινόχρηστο σύνδεσμο.</string>
-    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">Παρουσιάστηκε πρόβλημα κατά την τροποποίηση/δημιουργία αυτού του κοινόχρηστου συνδέσμου.</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">Παρουσιάστηκε πρόβλημα κατά την τροποποίηση/δημιουργία αυτού του κοινόχρηστου συνδέσμου.</string>
     <string name="box_sharesdk_title_link_access">Πρόσβαση συνδέσμου</string>
     <string name="box_sharesdk_title_share_link">Κοινοποίηση συνδέσμου</string>
@@ -57,8 +52,6 @@
 
 
     <!-- menu items -->
-    <string description="menu item to refresh current item" name="box_sharesdk_refresh">Ανανέωση</string>
-    <string description="menu item to add a collaboration" name="box_sharesdk_action_add">Προσθήκη</string>
 
     <!-- role names -->
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">Επιμελητής</string>
