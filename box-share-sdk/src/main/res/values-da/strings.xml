@@ -9,7 +9,6 @@
     <string description="description for company access" name="box_sharesdk_accessible_company">Tilgængelig for personer i din virksomhed</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Tilgængelig for personer, som elementet er delt med</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Adgangskodebeskyttet</string>
-    <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Ingen adgangskode</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Hent samarbejdspartnere</string>
     <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Tilføjelse af samarbejdspartnere</string>
     <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Aktivering af delingslink</string>
@@ -17,10 +16,8 @@
     <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Opdaterer linkadgang</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Deling af link aktiveret</string>
-    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Deling af link deaktiveret</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">Downloads tilladt</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">Downloads deaktiveret</string>
-    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">Ingen udløbsdato</string>
     <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">Link udløber den %1$s</string>
     <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">REDIGER ADGANG TIL LINK</string>
     <string description="button to cancel an action" name="box_sharesdk_cancel">ANNULLER</string>
@@ -34,7 +31,6 @@
     <string description="description for company access" name="box_sharesdk_access_company">Personer i din virksomhed</string>
     <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">Personer i denne fil og mappe</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Personer i denne mappe</string>
-    <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Tillad downloads</string>
     <string description="header for password section" name="box_sharesdk_password">Adgangskode</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">Indstil adgangskode</string>
     <string description="toggle of using password or not" name="box_sharesdk_require_password">Kræver adgangskode</string>
@@ -42,7 +38,6 @@
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">Indstil link som udløbet</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">Udløber den</string>
     <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">Der opstod et problem med at få adgang til dette delte link.</string>
-    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">Der opstod et problem med at ændre/oprette dette delte link.</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">Der opstod et problem med at ændre/oprette dette delte link.</string>
     <string name="box_sharesdk_title_link_access">Adgang til link</string>
     <string name="box_sharesdk_title_share_link">Del link</string>
@@ -57,8 +52,6 @@
 
 
     <!-- menu items -->
-    <string description="menu item to refresh current item" name="box_sharesdk_refresh">Genindlæs</string>
-    <string description="menu item to add a collaboration" name="box_sharesdk_action_add">Tilføj</string>
 
     <!-- role names -->
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">Redaktør</string>

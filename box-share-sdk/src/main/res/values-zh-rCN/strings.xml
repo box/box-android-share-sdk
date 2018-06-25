@@ -9,7 +9,6 @@
     <string description="description for company access" name="box_sharesdk_accessible_company">公司内部的协作者可访问</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">已共享本项目的协作者可访问</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">受密码保护</string>
-    <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">无密码</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">正在获取协作者</string>
     <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">正在添加协作者</string>
     <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">正在启用共享链接</string>
@@ -17,10 +16,8 @@
     <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">正在更新链接访问</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">已启用共享链接</string>
-    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">已禁用共享链接</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">允许下载</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">禁用下载</string>
-    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">无到期日</string>
     <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">链接将于 %1$s 到期</string>
     <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">编辑链接访问</string>
     <string description="button to cancel an action" name="box_sharesdk_cancel">取消</string>
@@ -34,7 +31,6 @@
     <string description="description for company access" name="box_sharesdk_access_company">公司内部的协作者</string>
     <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">文件和文件夹协作者</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">此文件夹中的人员</string>
-    <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">允许下载</string>
     <string description="header for password section" name="box_sharesdk_password">密码</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">设置密码</string>
     <string description="toggle of using password or not" name="box_sharesdk_require_password">需要密码</string>
@@ -42,7 +38,6 @@
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">使链接到期</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">于下列日期到期</string>
     <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">访问此共享链接时出现问题。</string>
-    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">修改/创建此共享链接时出现问题。</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">修改/创建此共享链接时出现问题。</string>
     <string name="box_sharesdk_title_link_access">链接访问</string>
     <string name="box_sharesdk_title_share_link">共享链接</string>
@@ -57,8 +52,6 @@
 
 
     <!-- menu items -->
-    <string description="menu item to refresh current item" name="box_sharesdk_refresh">刷新</string>
-    <string description="menu item to add a collaboration" name="box_sharesdk_action_add">添加</string>
 
     <!-- role names -->
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">编辑者</string>

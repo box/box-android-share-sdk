@@ -9,7 +9,6 @@
     <string description="description for company access" name="box_sharesdk_accessible_company">Доступно сотрудникам вашей компании</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Доступно пользователям, с которыми поделились элементом</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Защищено паролем</string>
-    <string description="description for if a shared link is not password proceted" name="box_sharesdk_password_unprotected">Нет пароля</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Получение списка соавторов</string>
     <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Добавление соавторов</string>
     <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Включение общей ссылки</string>
@@ -17,10 +16,8 @@
     <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Обновление доступа по ссылке</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Общая ссылка включена</string>
-    <string description="shown if share link is disabled" name="box_sharesdk_share_link_disabled">Общая ссылка отключена</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">Скачивания разрешены</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">Скачивания запрещены</string>
-    <string description="shown if no expiration time is set" name="box_sharesdk_link_expires_not_set">Без срока действия</string>
     <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">Ссылка действует до %1$s</string>
     <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">ИЗМЕНИТЬ ДОСТУП ПО ССЫЛКЕ</string>
     <string description="button to cancel an action" name="box_sharesdk_cancel">ОТМЕНА</string>
@@ -34,7 +31,6 @@
     <string description="description for company access" name="box_sharesdk_access_company">Сотрудники вашей компании</string>
     <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">Пользователи в этом файле или папке</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Пользователи в этой папке</string>
-    <string description="toggle of whether to allow downloading" name="box_sharesdk_allow_downloads">Разрешить скачивания</string>
     <string description="header for password section" name="box_sharesdk_password">Пароль</string>
     <string description="hint for password dialog" name="box_sharesdk_set_password">Установить пароль</string>
     <string description="toggle of using password or not" name="box_sharesdk_require_password">Запрашивать пароль</string>
@@ -42,7 +38,6 @@
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">Срок действия ссылки истек</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">Действует до</string>
     <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">Проблема при доступе к общей ссылке.</string>
-    <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify">Проблема при изменении/создании общей ссылки.</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">Проблема при изменении/создании общей ссылки.</string>
     <string name="box_sharesdk_title_link_access">Доступ к ссылке</string>
     <string name="box_sharesdk_title_share_link">Поделиться ссылкой</string>
@@ -57,8 +52,6 @@
 
 
     <!-- menu items -->
-    <string description="menu item to refresh current item" name="box_sharesdk_refresh">Обновить</string>
-    <string description="menu item to add a collaboration" name="box_sharesdk_action_add">Добавить</string>
 
     <!-- role names -->
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">Редактор</string>
