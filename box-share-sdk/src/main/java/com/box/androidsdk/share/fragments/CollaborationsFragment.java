@@ -121,7 +121,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
                 mController.deleteCollaboration(collaboration).addOnCompletedListener(mDeleteCollaborationListener);
             } else {
-                String deleteDifferentWarning = getResources().getString(R.string.box_sharesdk_warn_remove_different_collaboration_folder,rolesDialog.getCollaboration().getAccessibleBy().getName(),rolesDialog.getCollaboration().getItem().getName());
+                String deleteDifferentWarning = getResources().getString(R.string.box_sharesdk_warn_remove_different_collaboration_folder,rolesDialog.getCollaboratorName(),rolesDialog.getCollaboration().getItem().getName());
                 AlertDialog dialog = new AlertDialog.Builder(getActivity()).setTitle(R.string.box_sharesdk_title_remove_different_collaboration_folder)
                         .setMessage(deleteDifferentWarning)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
