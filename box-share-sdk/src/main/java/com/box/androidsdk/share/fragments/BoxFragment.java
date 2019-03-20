@@ -11,7 +11,6 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.TextAppearanceSpan;
 import android.view.View;
 
-import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.share.CollaborationUtils;
@@ -68,6 +67,10 @@ public abstract class BoxFragment extends Fragment {
 
     public void addResult(Intent data) {
         data.putExtra(CollaborationUtils.EXTRA_ITEM, mShareItem);
+    }
+
+    public int getActivityResultCode() {
+        return Activity.RESULT_OK;
     }
 
     public void setController(ShareController controller) {
