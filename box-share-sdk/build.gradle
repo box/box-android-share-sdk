@@ -54,7 +54,7 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
     // If using local dependency instead of maven, use the path pointing to the content sdk to replace
     // the maven dependency. e.g.:compile project(':box-android-content-sdk:box-content-sdk')
-    api 'com.box:box-android-sdk:4.2.0'
+    api 'com.box:box-android-sdk:4.99.695-SNAPSHOT'
     api "com.splitwise:tokenautocomplete:2.0.8@aar"
 }
 

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -19,6 +20,7 @@ import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
+import com.box.androidsdk.content.models.BoxFile;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
@@ -59,7 +61,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     }
 
     private static final Integer MY_PERMISSIONS_REQUEST_READ_CONTACTS = 32;
-    private static final String COLLABORATOR_ERROR_DEFAULT_ITEM_TYPE = "file";
     public static final String TAG = InviteCollaboratorsFragment.class.getName();
     public static final String EXTRA_USE_CONTACTS_PROVIDER = "InviteCollaboratorsFragment.ExtraUseContactsProvider";
     private Button mRoleButton;
@@ -380,7 +381,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         if (didRequestFail) {
             if (!failedCollaboratorsList.isEmpty()) {
                 StringBuilder collaborators = new StringBuilder();
-                for (int i=0; i< failedCollaboratorsList.size(); i++) {
+                for (int i = 0; i < failedCollaboratorsList.size(); i++) {
                     collaborators.append(failedCollaboratorsList.get(i));
                     if (i < failedCollaboratorsList.size() - 1) {
                         collaborators.append(' ');
@@ -388,11 +389,10 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                 }
 
                 BoxItem boxItem = (BoxItem) getArguments().getSerializable(CollaborationUtils.EXTRA_ITEM);
-                String itemType = COLLABORATOR_ERROR_DEFAULT_ITEM_TYPE;
-                if (boxItem != null) {
-                    itemType = boxItem.getType();
-                }
+                String itemType = getItemType(boxItem);
+
                 msg = String.format(getString(R.string.box_sharesdk_num_collaborators_error), collaborators.toString(), itemType);
+
             } else if (alreadyAddedCount == 1) {
                 msg = String.format(getString(R.string.box_sharesdk_has_already_been_invited), name);
             } else if (alreadyAddedCount > 1) {
@@ -423,6 +423,18 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         } else {
             mController.showToast(getActivity(), msg);
             getActivity().finish();
+        }
+    }
+
+    @NonNull
+    private String getItemType(BoxItem boxItem) {
+        if (boxItem instanceof BoxFolder) {
+            return getString(com.box.sdk.android.R.string.boxsdk_folder);
+        } else if (boxItem instanceof BoxFile) {
+            return getString(com.box.sdk.android.R.string.boxsdk_file);
+        } else {
+            //default return folder as the type
+            return getString(com.box.sdk.android.R.string.boxsdk_folder);
         }
     }
 
