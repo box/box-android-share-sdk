@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
+import com.box.androidsdk.content.models.BoxFile;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
@@ -68,6 +71,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     private InviteCollaboratorsListener mInviteCollaboratorsListener;
     private String mFilterTerm;
     private CollaboratorsInitialsView mCollabInitialsView;
+    private boolean mInvitationFailed = false;
 
     @Nullable
     @Override
@@ -135,6 +139,15 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
 
         return false;
+    }
+
+    @Override
+    public int getActivityResultCode() {
+        if (mInvitationFailed) {
+            return Activity.RESULT_CANCELED;
+        }
+
+        return Activity.RESULT_OK;
     }
 
     @Override
@@ -307,6 +320,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                                         return;
                                     } else if (boxException.getErrorType() == BoxException.ErrorType.NETWORK_ERROR) {
                                         mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error) + responseCode);
+
                                     }
 
                                 }
@@ -346,14 +360,17 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         int alreadyAddedCount = 0;
         boolean didRequestFail = false;
         String name = "";
+        List<String> failedCollaboratorsList = new ArrayList<String>();
         for (BoxResponse<BoxCollaboration> r : responses.getResponses()) {
             if (!r.isSuccess()) {
                 if (r.getException() instanceof BoxException && ((BoxException) r.getException()).getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
                     String code = ((BoxException) r.getException()).getAsBoxError().getCode();
+                    BoxUser user = (BoxUser) ((BoxRequestsShare.AddCollaboration) r.getRequest()).getAccessibleBy();
                     if (!SdkUtils.isBlank(code) && code.equals(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR)) {
                         alreadyAddedCount++;
-                        BoxUser user = (BoxUser) ((BoxRequestsShare.AddCollaboration) r.getRequest()).getAccessibleBy();
                         name = user == null ? "" : user.getLogin();
+                    } else {
+                        failedCollaboratorsList.add(user == null ? "" : user.getLogin());
                     }
                 }
                 didRequestFail = true;
@@ -362,7 +379,21 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
 
         String msg;
         if (didRequestFail) {
-            if (alreadyAddedCount == 1) {
+            if (!failedCollaboratorsList.isEmpty()) {
+                StringBuilder collaborators = new StringBuilder();
+                for (int i = 0; i < failedCollaboratorsList.size(); i++) {
+                    collaborators.append(failedCollaboratorsList.get(i));
+                    if (i < failedCollaboratorsList.size() - 1) {
+                        collaborators.append(' ');
+                    }
+                }
+
+                BoxItem boxItem = (BoxItem) getArguments().getSerializable(CollaborationUtils.EXTRA_ITEM);
+                String itemType = getItemType(boxItem);
+
+                msg = String.format(getString(R.string.box_sharesdk_num_collaborators_error), collaborators.toString(), itemType);
+
+            } else if (alreadyAddedCount == 1) {
                 msg = String.format(getString(R.string.box_sharesdk_has_already_been_invited), name);
             } else if (alreadyAddedCount > 1) {
                 msg = String.format(getString(R.string.box_sharesdk_num_has_already_been_invited), Integer.toString(alreadyAddedCount));
@@ -383,13 +414,28 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                 msg = getString(R.string.box_sharesdk_collaborators_invited);
             }
         }
-        mController.showToast(getActivity(), msg);
-        if (responses.getResponses().size() == alreadyAddedCount) {
-            getActivity().setResult(Activity.RESULT_CANCELED);
+
+        mInvitationFailed = (didRequestFail && !failedCollaboratorsList.isEmpty());
+
+        if (mInvitationFailed) {
+            Snackbar.make(getView(), msg, Snackbar.LENGTH_INDEFINITE).show();
+            refreshUi();
         } else {
-            getActivity().setResult(Activity.RESULT_OK);
+            mController.showToast(getActivity(), msg);
+            getActivity().finish();
         }
-        getActivity().finish();
+    }
+
+    @NonNull
+    private String getItemType(BoxItem boxItem) {
+        if (boxItem instanceof BoxFolder) {
+            return getString(com.box.sdk.android.R.string.boxsdk_folder);
+        } else if (boxItem instanceof BoxFile) {
+            return getString(com.box.sdk.android.R.string.boxsdk_file);
+        } else {
+            //default return folder as the type
+            return getString(com.box.sdk.android.R.string.boxsdk_folder);
+        }
     }
 
     private void showNoPermissionToast() {

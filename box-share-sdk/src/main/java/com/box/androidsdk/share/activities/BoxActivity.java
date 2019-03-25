@@ -1,6 +1,5 @@
 package com.box.androidsdk.share.activities;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -133,7 +132,7 @@ public abstract class BoxActivity extends AppCompatActivity {
     public void finish() {
         Intent data = new Intent();
         mFragment.addResult(data);
-        setResult(Activity.RESULT_OK, data);
+        setResult(mFragment.getActivityResultCode(), data);
         super.finish();
     }
 
