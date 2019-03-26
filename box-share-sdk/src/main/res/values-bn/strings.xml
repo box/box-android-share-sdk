@@ -89,6 +89,7 @@
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s জন লোকজন ইতিমধ্যে এই আইটেমে আমন্ত্রিত হয়েছে</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">সহযোগীগণ</string>
+    <string description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)" name="box_sharesdk_num_collaborators_error">%s could not be invited to this %s</string>
 
     <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">আপনি যে আইটেম অ্যাক্সেস করার চেষ্টা করছেন সেটি হয় মোছা হয়েছে অথবা আপনার কাছে অনুপলব্ধ</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">আপনার এই ক্রিয়াকলাপটির জন্য পর্যাপ্ত অনুমতি নেই।</string>
