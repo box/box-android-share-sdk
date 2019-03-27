@@ -67,8 +67,9 @@ public class BoxShareController implements ShareController {
     }
 
     private String[] initializeShareFieldsArray(String[] originalFields) {
-        String[] shareFieldsArray = Arrays.copyOf(originalFields, originalFields.length + 1);
+        String[] shareFieldsArray = Arrays.copyOf(originalFields, originalFields.length + 2);
         shareFieldsArray[originalFields.length] = BoxItem.FIELD_ALLOWED_SHARED_LINK_ACCESS_LEVELS;
+        shareFieldsArray[originalFields.length + 1] = BoxCollaborationItem.FIELD_DEFAULT_INVITEE_ROLE;
         return shareFieldsArray;
     }
 
@@ -166,7 +167,7 @@ public class BoxShareController implements ShareController {
             task = mFileApi.getCollaborationsRequest(boxCollaborationItem.getId()).toTask();
         }
         if (task == null){
-            BoxLogUtils.nonFatalE("BoxShareConteroller","unhandled type " + boxCollaborationItem, new RuntimeException("bad argument"));
+            BoxLogUtils.nonFatalE("BoxShareController","unhandled type " + boxCollaborationItem, new RuntimeException("bad argument"));
             return null;
         }
         getApiExecutor().submit(task);
@@ -184,14 +185,14 @@ public class BoxShareController implements ShareController {
     public BoxFutureTask<BoxCollaborationItem> fetchRoles(BoxCollaborationItem boxCollaborationItem) {
         BoxRequest request = null;
         if (boxCollaborationItem instanceof BoxFile) {
-            request = mFileApi.getInfoRequest(boxCollaborationItem.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES);
+            request = mFileApi.getInfoRequest(boxCollaborationItem.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES, BoxCollaborationItem.FIELD_DEFAULT_INVITEE_ROLE);
 
         }
         if (boxCollaborationItem instanceof BoxFolder){
-            request = mFolderApi.getInfoRequest(boxCollaborationItem.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES);
+            request = mFolderApi.getInfoRequest(boxCollaborationItem.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES, BoxCollaborationItem.FIELD_DEFAULT_INVITEE_ROLE);
         }
         if (request == null){
-            BoxLogUtils.nonFatalE("BoxShareConteroller","unhandled type " + boxCollaborationItem, new RuntimeException("bad argument"));
+            BoxLogUtils.nonFatalE("BoxShareController","unhandled type " + boxCollaborationItem, new RuntimeException("bad argument"));
             return null;
         }
         BoxFutureTask<BoxCollaborationItem> task = new BoxFutureTask<BoxCollaborationItem>(BoxCollaborationItem.class, request);

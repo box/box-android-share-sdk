@@ -95,8 +95,8 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         if (getCollaborationItem() != null && getCollaborationItem().getAllowedInviteeRoles() != null) {
             if(getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
                 mRoles = getCollaborationItem().getAllowedInviteeRoles();
-                BoxCollaboration.Role selectedRole = mRoles.get(0);
-                setSelectedRole(selectedRole);
+                BoxCollaboration.Role defaultRole = getBestDefaultRole(getCollaborationItem().getDefaultInviteeRole(), mRoles);
+                setSelectedRole(defaultRole);
             } else {
                 showNoPermissionToast();
                 getActivity().finish();
@@ -111,6 +111,15 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         }
 
         return view;
+    }
+
+    private BoxCollaboration.Role getBestDefaultRole(String roleName, List<BoxCollaboration.Role> roles){
+        try {
+            return BoxCollaboration.Role.fromString(roleName);
+        } catch (IllegalArgumentException e){
+            BoxLogUtils.e("invalid role name " + roleName, e);
+            return roles.get(0);
+        }
     }
 
     /**
