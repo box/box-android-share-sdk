@@ -35,7 +35,7 @@
     <string description="hint for password dialog" name="box_sharesdk_set_password">パスワードを設定</string>
     <string description="toggle of using password or not" name="box_sharesdk_require_password">パスワードが必要</string>
     <string description="header for link expiration section" name="box_sharesdk_link_expiration">リンクの有効期限</string>
-    <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">リンクの有効期限を終了</string>
+    <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">リンクの有効期限</string>
     <string description="header for date link expires" name="box_sharesdk_expire_on">有効期限</string>
     <string description="Description shown when there is a problem with a shared link" name="box_sharesdk_problem_accessing_this_shared_link">この共有リンクへのアクセス中に問題が発生しました。</string>
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">この共有リンクの編集/作成中に問題が発生しました。</string>
@@ -89,6 +89,7 @@
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">この項目には、すでに%s人のユーザーを招待済みです</string>
     <string name="box_sharedsdk_collaborators_initials_count">他%d人</string>
     <string name="box_sharedsdk_collaborators_title">コラボレータ</string>
+    <string description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)" name="box_sharesdk_num_collaborators_error">%s could not be invited to this %s</string>
 
     <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">アクセスしようとしている項目は削除されているか、または使用できません</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">この操作を実行する権限がありません。</string>

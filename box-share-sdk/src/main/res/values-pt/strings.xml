@@ -89,6 +89,7 @@
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s pessoas já foram convidadas para este item</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Colaboradores</string>
+    <string description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)" name="box_sharesdk_num_collaborators_error">%s could not be invited to this %s</string>
 
     <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">O item que você está tentando acessar foi excluído ou não está disponível para você</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Você não tem permissões suficientes para executar esta ação.</string>

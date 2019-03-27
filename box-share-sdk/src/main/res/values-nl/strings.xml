@@ -13,7 +13,7 @@
     <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Medebewerkers toevoegen</string>
     <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Gedeelde link inschakelen</string>
     <string description="message to show on spinner when we are disabling share link" name="box_sharesdk_disabling_share_link">Gedeelde link uitschakelen</string>
-    <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Gedeelde links bijwerken</string>
+    <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">Toegang via links bijwerken</string>
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Gedeelde link ingeschakeld</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">Downloads toegestaan</string>
@@ -89,6 +89,7 @@
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s personen zijn al uitgenodigd voor dit item</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Medebewerkers</string>
+    <string description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)" name="box_sharesdk_num_collaborators_error">%s could not be invited to this %s</string>
 
     <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">Het item dat u probeert te openen, is verwijderd of is niet beschikbaar voor u</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">U hebt onvoldoende machtigingen voor deze actie.</string>

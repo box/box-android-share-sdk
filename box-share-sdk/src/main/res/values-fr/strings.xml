@@ -89,6 +89,7 @@
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s utilisateurs ont déjà été invités à accéder à cet élément</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Collaborateurs</string>
+    <string description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)" name="box_sharesdk_num_collaborators_error">%s could not be invited to this %s</string>
 
     <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">L\'élément auquel vous essayez d\'accéder a été supprimé ou vous n\'êtes pas autorisé à y accéder</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Vous n\'avez pas les autorisations suffisantes pour effectuer cette action.</string>
@@ -97,7 +98,7 @@
     <string description="Error shown when api fetching collaborators fails due to unknown reasons " name="box_sharesdk_cannot_get_collaborators">Impossible de récupérer les collaborateurs. Veuillez contacter l\'assistance si le problème persiste.</string>
     <string name="box_sharesdk_unable_to_invite">Impossible d\'inviter les collaborateurs. Veuillez contacter l\'assistance si le problème persiste.</string>
     <string description="Title for the alert dialog to confirm removing a collaborator for a parent of selected item" name="box_sharesdk_title_remove_different_collaboration_folder">Supprimer un collaborateur</string>
-    <string description="shown as message of warning dialog before removing collaboration for a different than selected item" name="box_sharesdk_warn_remove_different_collaboration_folder">Cette action va supprimer %1$s de l\'accès à tous les fichiers dans %2$s. Êtes-vous sûr ?</string>
+    <string description="shown as message of warning dialog before removing collaboration for a different than selected item" name="box_sharesdk_warn_remove_different_collaboration_folder">Cette action va supprimer l\'accès de %1$s à tous les fichiers dans %2$s. Êtes-vous sûr ?</string>
 
 
 </resources>
