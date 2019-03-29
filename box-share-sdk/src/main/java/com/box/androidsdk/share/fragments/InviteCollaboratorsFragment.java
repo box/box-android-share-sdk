@@ -260,7 +260,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                                     if (mSelectedRole != null) {
                                         setSelectedRole(mSelectedRole);
                                     } else {
-                                        BoxCollaboration.Role selectedRole = mRoles != null && mRoles.size() > 0 ? mRoles.get(0) : null;
+                                        BoxCollaboration.Role selectedRole = mRoles != null && mRoles.size() > 0 ? getBestDefaultRole(collaborationItem.getDefaultInviteeRole(), mRoles) : null;
                                         setSelectedRole(selectedRole);
                                     }
                                     mShareItem = collaborationItem;
