@@ -89,7 +89,7 @@
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s명의 사용자가 이미 이 항목에 초대되었습니다.</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">공동 작업자</string>
-    <string description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)" name="box_sharesdk_num_collaborators_error">%s could not be invited to this %s</string>
+    <string description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)" name="box_sharesdk_num_collaborators_error">%s을(를) 이 %s에 초대할 수 없습니다.</string>
 
     <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">액세스하려는 항목이 삭제되었거나 사용할 수 없습니다.</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">이 작업을 수행할 충분한 권한이 없습니다.</string>
