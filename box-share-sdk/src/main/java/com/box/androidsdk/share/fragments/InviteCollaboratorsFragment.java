@@ -41,6 +41,7 @@ import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -372,7 +373,10 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         List<String> failedCollaboratorsList = new ArrayList<String>();
         for (BoxResponse<BoxCollaboration> r : responses.getResponses()) {
             if (!r.isSuccess()) {
-                if (r.getException() instanceof BoxException && ((BoxException) r.getException()).getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
+                HashSet<Integer> failureCodes = new HashSet<Integer>();
+                failureCodes.add(HttpURLConnection.HTTP_BAD_REQUEST );
+                failureCodes.add(HttpURLConnection.HTTP_FORBIDDEN);
+                if (r.getException() instanceof BoxException && failureCodes.contains(((BoxException) r.getException()).getResponseCode())) {
                     String code = ((BoxException) r.getException()).getAsBoxError().getCode();
                     BoxUser user = (BoxUser) ((BoxRequestsShare.AddCollaboration) r.getRequest()).getAccessibleBy();
                     if (!SdkUtils.isBlank(code) && code.equals(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR)) {
