@@ -5,7 +5,7 @@
     <string name="box_sharesdk_no_item_selected">Seçili öğe yok</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">BAĞLANTIYI KOPYALA</string>
     <string description="button to send link to another application" name="box_sharesdk_send_link">BAĞLANTIYI GÖNDER</string>
-    <string description="description for public access" name="box_sharesdk_accessible_public">Bağlantıya sahip kişiler tarafından erişilebilir</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">Bağlantıya sahip herkes bu içeriğe erişebilir. Oturum açmak gerekmez.</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Şirketinizdeki kişiler tarafından erişilebilir</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Öğenin paylaşıldığı kişiler tarafından erişilebilir</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Parola korumalı</string>

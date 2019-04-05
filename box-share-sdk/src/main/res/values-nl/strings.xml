@@ -5,7 +5,7 @@
     <string name="box_sharesdk_no_item_selected">Er is geen item geselecteerd</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">LINK KOPIËREN</string>
     <string description="button to send link to another application" name="box_sharesdk_send_link">LINK VERZENDEN</string>
-    <string description="description for public access" name="box_sharesdk_accessible_public">Toegankelijk voor personen met de link</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">Deze inhoud is toegankelijk voor iedereen met de link. Inloggen is niet vereist.</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Toegankelijk voor personen in uw bedrijf</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Toegankelijk voor personen met wie het item is gedeeld</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Met wachtwoord beveiligd</string>

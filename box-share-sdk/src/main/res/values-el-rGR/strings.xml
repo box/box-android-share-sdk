@@ -5,7 +5,7 @@
     <string name="box_sharesdk_no_item_selected">Δεν επιλέχθηκε κάποιο στοιχείο</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">ΑΝΤΙΓΡΑΦΗ ΣΥΝΔΕΣΜΟΥ</string>
     <string description="button to send link to another application" name="box_sharesdk_send_link">ΑΠΟΣΤΟΛΗ ΣΥΝΔΕΣΜΟΥ</string>
-    <string description="description for public access" name="box_sharesdk_accessible_public">Δυνατότητα πρόσβασης σε χρήστες με τον σύνδεσμο</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">Αυτό το περιεχόμενο είναι δημόσια προσβάσιμο σε όποιον έχει τον σχετικό σύνδεσμο. Δεν απαιτείται σύνδεση.</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Δυνατότητα πρόσβασης σε χρήστες στην εταιρεία</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Δυνατότητα πρόσβασης σε χρήστες στους οποίους έχει κοινοποιηθεί το στοιχείο</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Προστασία με κωδικό πρόσβασης</string>

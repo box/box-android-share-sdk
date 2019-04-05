@@ -5,7 +5,7 @@
     <string name="box_sharesdk_no_item_selected">未选择项目</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">复制链接</string>
     <string description="button to send link to another application" name="box_sharesdk_send_link">发送链接</string>
-    <string description="description for public access" name="box_sharesdk_accessible_public">拥有此链接的协作者可访问</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">任何人均可通过该链接公开访问此内容。无需登录。</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">公司内部的协作者可访问</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">已共享本项目的协作者可访问</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">受密码保护</string>
