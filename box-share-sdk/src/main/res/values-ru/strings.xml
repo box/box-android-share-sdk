@@ -5,7 +5,7 @@
     <string name="box_sharesdk_no_item_selected">Нет выбранных элементов</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">КОПИРОВАТЬ</string>
     <string description="button to send link to another application" name="box_sharesdk_send_link">ОТПРАВИТЬ</string>
-    <string description="description for public access" name="box_sharesdk_accessible_public">Доступно пользователям со ссылкой</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">Этот контент доступен всем пользователям, у которых есть ссылка. Выполнять вход в учетную запись не требуется.</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Доступно сотрудникам вашей компании</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Доступно пользователям, с которыми поделились элементом</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Защищено паролем</string>

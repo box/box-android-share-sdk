@@ -5,7 +5,7 @@
     <string name="box_sharesdk_no_item_selected">Nie wybrano elementu</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">KOPIUJ ŁĄCZE</string>
     <string description="button to send link to another application" name="box_sharesdk_send_link">WYŚLIJ ŁĄCZE</string>
-    <string description="description for public access" name="box_sharesdk_accessible_public">Dostępne dla osób dysponujących łączem</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">Zawartość jest dostępna publicznie dla wszystkich użytkowników dysponujących łączem. Logowanie nie jest wymagane.</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Dostępne dla osób w Twojej firmie</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Dostępne dla osób, którym udostępniono element</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Chronione hasłem</string>

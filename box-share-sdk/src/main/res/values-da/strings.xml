@@ -5,7 +5,7 @@
     <string name="box_sharesdk_no_item_selected">Intet element valgt</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">KOPIÉR LINK</string>
     <string description="button to send link to another application" name="box_sharesdk_send_link">SEND LINK</string>
-    <string description="description for public access" name="box_sharesdk_accessible_public">Tilgængelig for personer med linket</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">Dette indhold er tilgængeligt for alle med linket. Login er ikke nødvendigt.</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Tilgængelig for personer i din virksomhed</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Tilgængelig for personer, som elementet er delt med</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Adgangskodebeskyttet</string>

@@ -5,7 +5,7 @@
     <string name="box_sharesdk_no_item_selected">選択済みアイテムなし</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">リンクをコピー</string>
     <string description="button to send link to another application" name="box_sharesdk_send_link">リンクを送信</string>
-    <string description="description for public access" name="box_sharesdk_accessible_public">リンクを知っている全員がアクセス可能</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">このコンテンツは、リンクを知っている全ユーザーがアクセスできます。ログインは不要です。</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">会社のユーザーがアクセス可能</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">この項目を共有しているユーザーがアクセス可能</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">パスワードによる保護</string>
