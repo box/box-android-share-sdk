@@ -185,11 +185,11 @@ public class BoxShareController implements ShareController {
     public BoxFutureTask<BoxCollaborationItem> fetchRoles(BoxCollaborationItem boxCollaborationItem) {
         BoxRequest request = null;
         if (boxCollaborationItem instanceof BoxFile) {
-            request = mFileApi.getInfoRequest(boxCollaborationItem.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES, BoxCollaborationItem.FIELD_DEFAULT_INVITEE_ROLE);
+            request = mFileApi.getInfoRequest(boxCollaborationItem.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES, BoxCollaborationItem.FIELD_DEFAULT_INVITEE_ROLE, BoxFolder.FIELD_PERMISSIONS);
 
         }
         if (boxCollaborationItem instanceof BoxFolder){
-            request = mFolderApi.getInfoRequest(boxCollaborationItem.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES, BoxCollaborationItem.FIELD_DEFAULT_INVITEE_ROLE);
+            request = mFolderApi.getInfoRequest(boxCollaborationItem.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES, BoxCollaborationItem.FIELD_DEFAULT_INVITEE_ROLE, BoxFolder.FIELD_PERMISSIONS);
         }
         if (request == null){
             BoxLogUtils.nonFatalE("BoxShareController","unhandled type " + boxCollaborationItem, new RuntimeException("bad argument"));

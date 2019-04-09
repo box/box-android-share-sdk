@@ -94,6 +94,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
 
         // Get serialized roles or fetch them if they are not available
         if (getCollaborationItem() != null && getCollaborationItem().getAllowedInviteeRoles() != null) {
+            System.out.println("aaa " + getCollaborationItem() +  " " + getCollaborationItem().getPermissions() );
             if(getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
                 mRoles = getCollaborationItem().getAllowedInviteeRoles();
                 BoxCollaboration.Role defaultRole = getBestDefaultRole(getCollaborationItem().getDefaultInviteeRole(), mRoles);
@@ -404,7 +405,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                 BoxItem boxItem = (BoxItem) getArguments().getSerializable(CollaborationUtils.EXTRA_ITEM);
                 String itemType = getItemType(boxItem);
 
-                msg = String.format(getString(R.string.box_sharesdk_num_collaborators_error), collaborators.toString(), itemType);
+                msg = String.format(getString(R.string.box_sharesdk_following_collaborators_error), collaborators.toString());
 
             } else if (alreadyAddedCount == 1) {
                 msg = String.format(getString(R.string.box_sharesdk_has_already_been_invited), name);
