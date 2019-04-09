@@ -94,7 +94,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
 
         // Get serialized roles or fetch them if they are not available
         if (getCollaborationItem() != null && getCollaborationItem().getAllowedInviteeRoles() != null) {
-            System.out.println("aaa " + getCollaborationItem() +  " " + getCollaborationItem().getPermissions() );
             if(getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
                 mRoles = getCollaborationItem().getAllowedInviteeRoles();
                 BoxCollaboration.Role defaultRole = getBestDefaultRole(getCollaborationItem().getDefaultInviteeRole(), mRoles);
