@@ -90,7 +90,7 @@
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">सहयोगी</string>
     <string description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)" name="box_sharesdk_num_collaborators_error">%s को इस %s पर आमंत्रित नहीं किया जा सका</string>
-
+    <string description="Error message to display when users cannot be invited to current item, for truncation purposes emails must be at the end" name="box_sharesdk_following_collaborators_error">निम्नलिखित सहयोगियों को आमंत्रित नहीं किया जा सकता है: %s</string>
     <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">आप जिस आइटम को एक्सेस करने का प्रयास कर रहे हैं, वह या तो हटा दिया गया है या आपके लिए उपलब्ध नहीं है</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">इस कार्रवाई के लिए आपके पास पर्याप्त अनुमतियाँ नहीं हैं.</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">उपयोगकर्ता अभी तक इस फ़ोल्डर पर एक सहयोगी नहीं है, और उसे स्वामी के रूप में सेट नहीं किया जा सकता है.</string>

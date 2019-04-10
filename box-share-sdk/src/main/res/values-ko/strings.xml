@@ -90,7 +90,7 @@
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">공동 작업자</string>
     <string description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)" name="box_sharesdk_num_collaborators_error">%s을(를) 이 %s에 초대할 수 없습니다.</string>
-
+    <string description="Error message to display when users cannot be invited to current item, for truncation purposes emails must be at the end" name="box_sharesdk_following_collaborators_error">다음 공동 작업자를 초대할 수 없습니다. %s</string>
     <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">액세스하려는 항목이 삭제되었거나 사용할 수 없습니다.</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">이 작업을 수행할 충분한 권한이 없습니다.</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">사용자가 아직 이 폴더의 공동 작업자가 아니며 소유자로 설정할 수 없습니다.</string>
