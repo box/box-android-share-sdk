@@ -20,6 +20,7 @@ import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
+import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFile;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
@@ -64,6 +65,8 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     private static final Integer MY_PERMISSIONS_REQUEST_READ_CONTACTS = 32;
     public static final String TAG = InviteCollaboratorsFragment.class.getName();
     public static final String EXTRA_USE_CONTACTS_PROVIDER = "InviteCollaboratorsFragment.ExtraUseContactsProvider";
+    public static final String EXTRA_COLLAB_SELECTED_ROLE = "collabSelectedRole";
+
     private Button mRoleButton;
     private ChipCollaborationView mAutoComplete;
     private InviteeAdapter mAdapter;
@@ -91,13 +94,23 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
 
         mCollabInitialsView = (CollaboratorsInitialsView) view.findViewById(R.id.collaboratorsInitialsView);
         mCollabInitialsView.setArguments((BoxCollaborationItem)mShareItem, mController);
+        if (savedInstanceState != null){
+            String selected_role_enum = savedInstanceState.getString(EXTRA_COLLAB_SELECTED_ROLE);
+            if (selected_role_enum != null){
+                mSelectedRole = BoxCollaboration.Role.fromString(selected_role_enum);
+            }
+        }
 
         // Get serialized roles or fetch them if they are not available
         if (getCollaborationItem() != null && getCollaborationItem().getAllowedInviteeRoles() != null) {
             if(getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
                 mRoles = getCollaborationItem().getAllowedInviteeRoles();
-                BoxCollaboration.Role defaultRole = getBestDefaultRole(getCollaborationItem().getDefaultInviteeRole(), mRoles);
-                setSelectedRole(defaultRole);
+                if (mSelectedRole == null){
+                    BoxCollaboration.Role defaultRole = getBestDefaultRole(getCollaborationItem().getDefaultInviteeRole(), mRoles);
+                    setSelectedRole(defaultRole);
+                } else {
+                    setSelectedRole(mSelectedRole);
+                }
             } else {
                 showNoPermissionToast();
                 getActivity().finish();
@@ -121,6 +134,14 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
             BoxLogUtils.e("invalid role name " + roleName, e);
             return roles.get(0);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (mSelectedRole != null) {
+            outState.putString(EXTRA_COLLAB_SELECTED_ROLE, mSelectedRole.toString());
+        }
+        super.onSaveInstanceState(outState);
     }
 
     /**

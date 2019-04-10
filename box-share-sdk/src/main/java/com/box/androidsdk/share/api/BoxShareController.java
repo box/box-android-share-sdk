@@ -50,6 +50,12 @@ public class BoxShareController implements ShareController {
     private String[] mFolderShareFields;
     private String[] mFileShareFields;
     private String[] mBookmarkShareFields;
+    private static String[] REQUIRED_COLLABORATION_FIELDS = new String[]{
+            BoxFolder.FIELD_ALLOWED_INVITEE_ROLES,
+            BoxCollaborationItem.FIELD_DEFAULT_INVITEE_ROLE,
+            BoxItem.FIELD_PERMISSIONS,
+            BoxCollaborationItem.FIELD_OWNED_BY
+    };
 
     public BoxShareController(BoxSession session) {
         mSession = session;
@@ -185,11 +191,10 @@ public class BoxShareController implements ShareController {
     public BoxFutureTask<BoxCollaborationItem> fetchRoles(BoxCollaborationItem boxCollaborationItem) {
         BoxRequest request = null;
         if (boxCollaborationItem instanceof BoxFile) {
-            request = mFileApi.getInfoRequest(boxCollaborationItem.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES, BoxCollaborationItem.FIELD_DEFAULT_INVITEE_ROLE, BoxFolder.FIELD_PERMISSIONS);
-
+            request = mFileApi.getInfoRequest(boxCollaborationItem.getId()).setFields(REQUIRED_COLLABORATION_FIELDS);
         }
         if (boxCollaborationItem instanceof BoxFolder){
-            request = mFolderApi.getInfoRequest(boxCollaborationItem.getId()).setFields(BoxFolder.FIELD_ALLOWED_INVITEE_ROLES, BoxCollaborationItem.FIELD_DEFAULT_INVITEE_ROLE, BoxFolder.FIELD_PERMISSIONS);
+            request = mFolderApi.getInfoRequest(boxCollaborationItem.getId()).setFields(REQUIRED_COLLABORATION_FIELDS);
         }
         if (request == null){
             BoxLogUtils.nonFatalE("BoxShareController","unhandled type " + boxCollaborationItem, new RuntimeException("bad argument"));
