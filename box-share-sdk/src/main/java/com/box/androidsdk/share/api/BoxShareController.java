@@ -51,9 +51,9 @@ public class BoxShareController implements ShareController {
     private String[] mFileShareFields;
     private String[] mBookmarkShareFields;
     private static String[] REQUIRED_COLLABORATION_FIELDS = new String[]{
-            BoxFolder.FIELD_ALLOWED_INVITEE_ROLES,
+            BoxCollaborationItem.FIELD_ALLOWED_INVITEE_ROLES,
             BoxCollaborationItem.FIELD_DEFAULT_INVITEE_ROLE,
-            BoxItem.FIELD_PERMISSIONS,
+            BoxCollaborationItem.FIELD_PERMISSIONS,
             BoxCollaborationItem.FIELD_OWNED_BY
     };
 

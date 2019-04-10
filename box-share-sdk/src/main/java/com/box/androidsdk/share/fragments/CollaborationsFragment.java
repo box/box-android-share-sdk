@@ -61,7 +61,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
         if (savedInstanceState == null) {
             fetchCollaborations();
-        }else if (savedInstanceState != null) {
+        } else if (savedInstanceState != null) {
             mCollaborations = (BoxIteratorCollaborations)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_COLLABORATIONS);
             updateUi();
         } else if (getArguments() != null){

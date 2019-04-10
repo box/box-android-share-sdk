@@ -94,7 +94,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
 
         mCollabInitialsView = (CollaboratorsInitialsView) view.findViewById(R.id.collaboratorsInitialsView);
         mCollabInitialsView.setArguments((BoxCollaborationItem)mShareItem, mController);
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             String selected_role_enum = savedInstanceState.getString(EXTRA_COLLAB_SELECTED_ROLE);
             if (selected_role_enum != null){
                 mSelectedRole = BoxCollaboration.Role.fromString(selected_role_enum);
@@ -105,7 +105,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         if (getCollaborationItem() != null && getCollaborationItem().getAllowedInviteeRoles() != null) {
             if(getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
                 mRoles = getCollaborationItem().getAllowedInviteeRoles();
-                if (mSelectedRole == null){
+                if (mSelectedRole == null) {
                     BoxCollaboration.Role defaultRole = getBestDefaultRole(getCollaborationItem().getDefaultInviteeRole(), mRoles);
                     setSelectedRole(defaultRole);
                 } else {
