@@ -60,16 +60,22 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         mNoCollaboratorsText = (TextView) view.findViewById(R.id.no_collaborators_text);
 
         if (savedInstanceState == null) {
+            if (getArguments() != null){
+                Bundle args = getArguments();
+                mCollaborations = (BoxIteratorCollaborations)args.getSerializable(CollaborationUtils.EXTRA_COLLABORATIONS);
+            }
+            if (mCollaborations != null){
+                updateUi();
+            }
             fetchCollaborations();
-        } else if (savedInstanceState != null) {
+
+        } else {
             mCollaborations = (BoxIteratorCollaborations)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_COLLABORATIONS);
             updateUi();
-        } else if (getArguments() != null){
-            Bundle args = getArguments();
-            mCollaborations = (BoxIteratorCollaborations)args.getSerializable(CollaborationUtils.EXTRA_COLLABORATIONS);
-            updateUi();
+            if (mCollaborations == null) {
+                fetchCollaborations();
+            }
         }
-
         // Get serialized roles or fetch them if they are not available
         if (getItem().getAllowedInviteeRoles() == null) {
             fetchRoles();
