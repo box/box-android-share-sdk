@@ -404,7 +404,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
                 BoxItem boxItem = (BoxItem) getArguments().getSerializable(CollaborationUtils.EXTRA_ITEM);
                 String itemType = getItemType(boxItem);
 
-                msg = String.format(getString(R.string.box_sharesdk_num_collaborators_error), collaborators.toString(), itemType);
+                msg = String.format(getString(R.string.box_sharesdk_following_collaborators_error), collaborators.toString());
 
             } else if (alreadyAddedCount == 1) {
                 msg = String.format(getString(R.string.box_sharesdk_has_already_been_invited), name);
