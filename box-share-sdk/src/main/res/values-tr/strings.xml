@@ -90,7 +90,7 @@
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">İşbirlikçiler</string>
     <string description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)" name="box_sharesdk_num_collaborators_error">%s, bu %s davet edilemedi</string>
-
+    <string description="Error message to display when users cannot be invited to current item, for truncation purposes emails must be at the end" name="box_sharesdk_following_collaborators_error">Şu işbirlikçiler davet edilemedi: %s</string>
     <string description="Error message to display when a user launches box to a file that no longer exists for their account" name="box_sharesdk_item_unavailable">Erişmeye çalıştığınız öğe silinmiş ya da kullanımınıza açık değil</string>
     <string description="Error shown if user does not have sufficient permissions for an action" name="box_sharesdk_insufficient_permissions">Bu işlemi gerçekleştirmek için gerekli izinlere sahip değilsiniz.</string>
     <string desription="Error shown if user tries to change a pending invite to an owner of the folder" name="box_sharedsdk_new_owner_not_collaborator">Kullanıcı henüz bu klasörün işbirlikçisi değil ve sahip olarak ayarlanamaz.</string>
