@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
@@ -101,6 +102,12 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         CollaboratorsAdapter.ViewHolder holder = (CollaboratorsAdapter.ViewHolder) view.getTag();
         if (holder != null && holder.collaboration != null) {
             ArrayList<BoxCollaboration.Role> rolesArr = getRoles();
+
+            if (rolesArr == null || rolesArr.size() == 0) {
+                SdkUtils.toastSafely(getContext(), R.string.box_sharesdk_cannot_get_collaborators, Toast.LENGTH_SHORT);
+                return;
+            }
+
             BoxCollaborator collaborator = holder.collaboration.getAccessibleBy();
             BoxCollaboration.Role role = holder.collaboration.getRole();
             String name = collaborator == null ? getString(R.string.box_sharesdk_another_person) : collaborator.getName();
@@ -109,6 +116,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 // currently changing owner only seems to be supported for folders (does not show up as a allowed invitee role).
                 allowOwner = getItem() instanceof BoxFolder;
             }
+
             CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(rolesArr, role, name, true, allowOwner, holder.collaboration);
             rolesDialog.setOnRoleSelectedListener(this);
             rolesDialog.show(getFragmentManager(), TAG);
