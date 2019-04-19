@@ -15,12 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
-import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxFile;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
@@ -240,6 +240,11 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.invite_collaborator_role) {
+            if (mRoles == null || mRoles.size() == 0) {
+                SdkUtils.toastSafely(getContext(), R.string.box_sharesdk_cannot_get_collaborators, Toast.LENGTH_SHORT);
+                return;
+            }
+
             CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(mRoles, mSelectedRole, getString(R.string.box_sharesdk_access), false, false, null);
             rolesDialog.setOnRoleSelectedListener(this);
             rolesDialog.show(getFragmentManager(), CollaborationRolesDialog.TAG);
