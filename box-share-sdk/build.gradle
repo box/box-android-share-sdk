@@ -12,13 +12,13 @@ android {
         def env = System.getenv()
         def git_count = env['GIT_COUNT'] as Integer
         if (git_count != null) {
-            versionCode git_count + 22000
-            versionName "2.99." + git_count + "-SNAPSHOT"
-            version "2.99." + git_count + "-SNAPSHOT"
+            versionCode git_count + 30000
+            versionName "3.99." + git_count + "-SNAPSHOT"
+            version "3.99." + git_count + "-SNAPSHOT"
         } else {
-            versionCode 23000
-            versionName "2.3.0"
-            version "2.3.0"
+            versionCode 30000
+            versionName "3.0.0"
+            version "3.0.0"
         }
     }
     buildTypes {
@@ -54,7 +54,7 @@ dependencies {
     // If using local dependency instead of maven, use the path pointing to the content sdk to replace
     // the maven dependency. e.g.:compile project(':box-android-content-sdk:box-content-sdk')
 
-    api 'com.box:box-android-sdk:4.99.697-SNAPSHOT'
+    api 'com.box:box-android-sdk:5.99.702-SNAPSHOT'
     api "com.splitwise:tokenautocomplete:2.0.8@aar"
 }
 
