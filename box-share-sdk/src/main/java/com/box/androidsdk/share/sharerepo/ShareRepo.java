@@ -25,6 +25,12 @@ public class ShareRepo implements ShareRepoInterface {
         this.mController = controller;
     }
 
+    /**
+     * Returns a LiveData<BoxResponse<BoxIteratorInvitees>> that will be observed by ViewModel to react to its changes
+     * @param boxCollaborationItem the item to get a list of invitees on
+     * @param filter the filter term
+     * @return a LiveData<BoxResponse<BoxIteratorInvitees>> object that holds a reponse with a list of invitees filtered based on the filter term
+     */
     @Override
     public LiveData<BoxResponse<BoxIteratorInvitees>> getInvitees(BoxCollaborationItem boxCollaborationItem, String filter) {
         handleTaskAndPostValue(mController.getInvitees(boxCollaborationItem,filter), mInvitees);
@@ -39,12 +45,24 @@ public class ShareRepo implements ShareRepoInterface {
         });
     }
 
+    /**
+     * Returns a LiveData<BoxResponse<BoxCollaborationItem>> that will be observed by ViewModel to react to its changes
+     * @param boxCollaborationItem the item to fetch roles on
+     * @returna a LiveData<BoxResponse<BoxCollaborationItem>> object that holds a response with a list of collaboration roles applicable.
+     */
     @Override
     public LiveData<BoxResponse<BoxCollaborationItem>> fetchRoles(BoxCollaborationItem boxCollaborationItem) {
         handleTaskAndPostValue(mController.fetchRoles(boxCollaborationItem), mShareItem);
         return mShareItem;
     }
 
+    /**
+     * Returns a LiveData<BoxResponse<BoxResponseBatch>> that will be observed by ViewModel to react to its changes
+     * @param boxCollaborationItem the item to add collaborators on
+     * @param selectedRole the collaboration role selected for the new collaborators
+     * @param emails the list of collaborators that will be invited
+     * @return a LiveData<BoxResponse<BoxResponseBatch>> object that holds a response with a list of response for each collaborator.
+     */
     @Override
     public LiveData<BoxResponse<BoxResponseBatch>> addCollabs(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
         handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mInvitingCollabsChecker);
