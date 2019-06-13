@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.fragments;
+package com.box.androidsdk.share.legacy.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -91,7 +91,7 @@ public abstract class BoxFragment extends Fragment {
                         try {
                             mDialog.dismiss();
                         } catch (IllegalStateException e){
-                            BoxLogUtils.e("com.box.androidsdk.share.fragments.dismissSpinner " , e);
+                            BoxLogUtils.e("com.box.androidsdk.share.legacy.fragments.dismissSpinner " , e);
                         }
                         mDialog = null;
                     }

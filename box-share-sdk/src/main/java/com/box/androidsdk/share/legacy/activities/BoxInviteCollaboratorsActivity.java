@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.activities;
+package com.box.androidsdk.share.legacy.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,13 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.box.androidsdk.content.models.BoxCollaborationItem;
-import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.fragments.InviteCollaboratorsFragment;
+import com.box.androidsdk.share.legacy.fragments.InviteCollaboratorsFragment;
 
 /**
  * Activity used to allow users to invite additional collaborators to the folder. Email addresses will auto complete from the phones address book
@@ -28,7 +27,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_invite_collaborators);
+        setContentView(R.layout.legacy_activity_invite_collaborators);
         initToolbar();
 
     }

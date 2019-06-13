@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.fragments;
+package com.box.androidsdk.share.legacy.fragments;
 
 import android.Manifest;
 import android.app.Activity;
@@ -80,7 +80,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_invite_collaborators, container, false);
+        View view = inflater.inflate(R.layout.legacy_fragment_invite_collaborators, container, false);
 
         mFilterTerm = "";
         mRoleButton = (Button) view.findViewById(R.id.invite_collaborator_role);

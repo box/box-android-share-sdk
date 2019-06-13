@@ -65,27 +65,24 @@ class ShareRepoTest {
 
     @Test
     fun `test fetch roles update LiveData values correctly`() {
-        assertNull(shareRepo.getmShareItem().value) //initially the LiveData should not have any value
-        shareRepo.fetchRoles(mockBoxCollaborationItem) //get a value and update as needed
-        assertEquals(mockFetchRolesResponse, shareRepo.getmShareItem().value)
+        assertNull(shareRepo.getmFetchRoleItem().value) //initially the LiveData should not have any value
+        shareRepo.fetchRolesApi(mockBoxCollaborationItem) //get a value and update as needed
+        assertEquals(mockFetchRolesResponse, shareRepo.getmFetchRoleItem().value)
     }
 
 
     @Test
     fun `test get invitees update LiveData values correctly`() {
         assertNull(shareRepo.getmInvitees().value) //initially the LiveData should not have any value
-        shareRepo.getInvitees(mockBoxCollaborationItem, mockFilter) //get a value and update as needed
+        shareRepo.getInviteesApi(mockBoxCollaborationItem, mockFilter) //get a value and update as needed
         assertEquals(mockGetInviteeResponse, shareRepo.getmInvitees().value)
     }
 
     @Test
     fun `test get collab update LiveData values correctly` () {
         assertNull(shareRepo.getmInviteCollabBatch().value) //initially the LiveData should not have any value
-        shareRepo.addCollabs(mockBoxCollaborationItem, mockSelectedRole, mockEmailList) //get a value and update as needed
+        shareRepo.addCollabsApi(mockBoxCollaborationItem, mockSelectedRole, mockEmailList) //get a value and update as needed
         assertEquals(mockAddCollabsResponse, shareRepo.getmInviteCollabBatch().value)
     }
 
 }
-
-// /Users/mthiha/Documents/android-app/box-android-share-sdk/box-share-sdk/src/androidTest/java/com/box/androidsdk/share/ShareRepoTest.kt
-// /Users/mthiha/Documents/android-app/app/src/test/java/com/box/android/tasksrepo/TasksRepoTest.kt

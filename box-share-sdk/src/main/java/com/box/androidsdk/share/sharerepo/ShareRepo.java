@@ -11,18 +11,12 @@ import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
-public class ShareRepo implements ShareRepoInterface {
+public class ShareRepo extends BaseShareRepo {
 
-    ShareController mController;
 
-    private final MutableLiveData<BoxResponse<BoxIteratorInvitees>> mInvitees = new MutableLiveData<BoxResponse<BoxIteratorInvitees>>();
-
-    private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mShareItem = new MutableLiveData<BoxResponse<BoxCollaborationItem>>();
-
-    private final MutableLiveData<BoxResponse<BoxResponseBatch>> mInviteCollabBatch = new MutableLiveData<BoxResponse<BoxResponseBatch>>();
 
     public ShareRepo(ShareController controller) {
-        this.mController = controller;
+        super(controller);
     }
 
     /**
@@ -32,7 +26,7 @@ public class ShareRepo implements ShareRepoInterface {
      * @return a LiveData<BoxResponse<BoxIteratorInvitees>> object that holds a reponse with a list of invitees filtered based on the filter term
      */
     @Override
-    public LiveData<BoxResponse<BoxIteratorInvitees>> getInvitees(BoxCollaborationItem boxCollaborationItem, String filter) {
+    public LiveData<BoxResponse<BoxIteratorInvitees>> getInviteesApi(BoxCollaborationItem boxCollaborationItem, String filter) {
         handleTaskAndPostValue(mController.getInvitees(boxCollaborationItem,filter), mInvitees);
         return mInvitees;
     }
@@ -51,9 +45,9 @@ public class ShareRepo implements ShareRepoInterface {
      * @returna a LiveData<BoxResponse<BoxCollaborationItem>> object that holds a response with a list of collaboration roles applicable.
      */
     @Override
-    public LiveData<BoxResponse<BoxCollaborationItem>> fetchRoles(BoxCollaborationItem boxCollaborationItem) {
-        handleTaskAndPostValue(mController.fetchRoles(boxCollaborationItem), mShareItem);
-        return mShareItem;
+    public LiveData<BoxResponse<BoxCollaborationItem>> fetchRolesApi(BoxCollaborationItem boxCollaborationItem) {
+        handleTaskAndPostValue(mController.fetchRoles(boxCollaborationItem), mFetchRoleItem);
+        return mFetchRoleItem;
     }
 
     /**
@@ -64,21 +58,8 @@ public class ShareRepo implements ShareRepoInterface {
      * @return a LiveData<BoxResponse<BoxResponseBatch>> object that holds a response with a list of response for each collaborator.
      */
     @Override
-    public LiveData<BoxResponse<BoxResponseBatch>> addCollabs(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
+    public LiveData<BoxResponse<BoxResponseBatch>> addCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
         handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mInviteCollabBatch);
-        return mInviteCollabBatch;
-    }
-
-
-    public MutableLiveData<BoxResponse<BoxIteratorInvitees>> getmInvitees() {
-        return mInvitees;
-    }
-
-    public MutableLiveData<BoxResponse<BoxCollaborationItem>> getmShareItem() {
-        return mShareItem;
-    }
-
-    public MutableLiveData<BoxResponse<BoxResponseBatch>> getmInviteCollabBatch() {
         return mInviteCollabBatch;
     }
 }

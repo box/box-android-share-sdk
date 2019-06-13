@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.fragments;
+package com.box.androidsdk.share.legacy.fragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -56,7 +56,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
 
         // Create AlertDialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.ShareDialogTheme);
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_collaboration_roles_dialog, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.legacy_fragment_collaboration_roles_dialog, null);
         builder.setView(view)
             .setNegativeButton(R.string.box_sharesdk_cancel, this)
             .setPositiveButton(R.string.box_sharesdk_ok, this);
@@ -89,7 +89,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
                 }
             }
 
-            View radioView = getActivity().getLayoutInflater().inflate(R.layout.radio_item_roles, null);
+            View radioView = getActivity().getLayoutInflater().inflate(R.layout.legacy_radio_item_roles, null);
             TextView rolesName = (TextView) radioView.findViewById(R.id.roles_name);
             rolesName.setText(CollaborationUtils.getRoleName(getActivity(), role));
             TextView rolesDescription = (TextView) radioView.findViewById(R.id.roles_description);
@@ -109,7 +109,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
 
         if (mAllowRemove) {
             // Add remove person option
-            View radioView = getActivity().getLayoutInflater().inflate(R.layout.radio_item_remove, null);
+            View radioView = getActivity().getLayoutInflater().inflate(R.layout.legacy_radio_item_remove, null);
             TextView rolesText = (TextView) radioView.findViewById(R.id.roles_name);
             rolesText.setTag(null);
             rolesText.setOnClickListener(this);

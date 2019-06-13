@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.fragments;
+package com.box.androidsdk.share.legacy.fragments;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;

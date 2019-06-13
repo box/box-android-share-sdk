@@ -25,9 +25,9 @@ import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxIteratorItems;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxSharedLink;
-import com.box.androidsdk.share.activities.BoxActivity;
-import com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity;
-import com.box.androidsdk.share.activities.BoxSharedLinkActivity;
+import com.box.androidsdk.share.legacy.activities.BoxActivity;
+import com.box.androidsdk.share.legacy.activities.BoxInviteCollaboratorsActivity;
+import com.box.androidsdk.share.legacy.activities.BoxSharedLinkActivity;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.box_sharesdk_sample_name);
 
         BoxConfig.IS_LOG_ENABLED = true;
-        BoxConfig.CLIENT_ID = "your_client_id";
-        BoxConfig.CLIENT_SECRET = "your_client_secret";
+        BoxConfig.CLIENT_ID = "9itlbj9i8mh5qxpj5vr2pjy08t43n3yy";
+        BoxConfig.CLIENT_SECRET = "MVLrHgvscnPCpkNhiD2rrETuh2vNBftz";
 
         if (savedInstanceState != null) {
             mSampleItem = (BoxFolder) savedInstanceState.getSerializable(EXTRA_SAMPLE_FOLDER);
