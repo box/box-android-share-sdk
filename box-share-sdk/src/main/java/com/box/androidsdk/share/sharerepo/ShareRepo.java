@@ -19,7 +19,7 @@ public class ShareRepo implements ShareRepoInterface {
 
     private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mShareItem = new MutableLiveData<BoxResponse<BoxCollaborationItem>>();
 
-    private final MutableLiveData<BoxResponse<BoxResponseBatch>> mInvitingCollabsChecker = new MutableLiveData<BoxResponse<BoxResponseBatch>>();
+    private final MutableLiveData<BoxResponse<BoxResponseBatch>> mInviteCollabBatch = new MutableLiveData<BoxResponse<BoxResponseBatch>>();
 
     public ShareRepo(ShareController controller) {
         this.mController = controller;
@@ -65,9 +65,20 @@ public class ShareRepo implements ShareRepoInterface {
      */
     @Override
     public LiveData<BoxResponse<BoxResponseBatch>> addCollabs(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
-        handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mInvitingCollabsChecker);
-        return mInvitingCollabsChecker;
+        handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mInviteCollabBatch);
+        return mInviteCollabBatch;
     }
 
 
+    public MutableLiveData<BoxResponse<BoxIteratorInvitees>> getmInvitees() {
+        return mInvitees;
+    }
+
+    public MutableLiveData<BoxResponse<BoxCollaborationItem>> getmShareItem() {
+        return mShareItem;
+    }
+
+    public MutableLiveData<BoxResponse<BoxResponseBatch>> getmInviteCollabBatch() {
+        return mInviteCollabBatch;
+    }
 }
