@@ -1,15 +1,12 @@
 package com.box.androidsdk.share.sharerepo;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.requests.BoxResponse;
-import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.share.api.ShareController;
-import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
 public class ShareRepo extends BaseShareRepo {
 
