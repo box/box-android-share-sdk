@@ -10,6 +10,9 @@ import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
+/**
+ * The Base ShareRepo class that will be used by ViewModels to make calls to the backend and should be extended by other ShareRepos
+ */
 public abstract class BaseShareRepo {
     protected  ShareController mController;
 
@@ -24,14 +27,26 @@ public abstract class BaseShareRepo {
     public abstract void fetchRolesApi(BoxCollaborationItem boxCollaborationItem);
     public abstract void addCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails);
 
+    /**
+     * Get mInvitees which is a list of invitees based on your filter
+     * @return mInvitees
+     */
     public LiveData<BoxResponse<BoxIteratorInvitees>> getInvitees() {
         return mInvitees;
     }
 
+    /**
+     * Get mFetchRoleItem which is the item which will hold allowed roles for new invitees
+     * @return mFetchRoleItem
+     */
     public LiveData<BoxResponse<BoxCollaborationItem>> getFetchRoleItem() {
         return mFetchRoleItem;
     }
 
+    /**
+     * Get mInviteCollabBatch which is a batch of responses for each collaborator invited.
+     * @return mInviteColalbBatch
+     */
     public LiveData<BoxResponse<BoxResponseBatch>> getInviteCollabBatch() {
         return mInviteCollabBatch;
     }

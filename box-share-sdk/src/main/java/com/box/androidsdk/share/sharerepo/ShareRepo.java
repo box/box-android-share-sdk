@@ -8,6 +8,9 @@ import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.share.api.ShareController;
 
+/**
+ * A repo class that will be used by ViewModel to make calls to the backend.
+ */
 public class ShareRepo extends BaseShareRepo {
 
 
@@ -38,7 +41,7 @@ public class ShareRepo extends BaseShareRepo {
     /**
      * Returns a LiveData<BoxResponse<BoxCollaborationItem>> that will be observed by ViewModel to react to its changes
      * @param boxCollaborationItem the item to fetch roles on
-     * @returna a LiveData<BoxResponse<BoxCollaborationItem>> object that holds a response with a list of collaboration roles applicable.
+     * @return a LiveData<BoxResponse<BoxCollaborationItem>> object that holds a response with a list of collaboration roles applicable.
      */
     @Override
     public void fetchRolesApi(BoxCollaborationItem boxCollaborationItem) {

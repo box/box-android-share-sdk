@@ -45,6 +45,9 @@ class ShareRepoTest {
         createStubs()
     }
 
+    /**
+     * Mock callback responses.
+     */
     private fun createStubs() {
         doAnswer {
             val callback = it.arguments[0] as BoxFutureTask.OnCompletedListener<BoxIteratorInvitees>
