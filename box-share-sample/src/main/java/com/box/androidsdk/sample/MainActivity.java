@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button mShareBtn;
     Button mCollabsBtn;
+    Button mShareBtnNew;
+    Button mCollabsBtnNew;
     Button mCreateSampleFolderBtn;
     TextView mChooseActionTv;
     LinearLayout mCreateSampleFolderContainer;
@@ -168,6 +170,14 @@ public class MainActivity extends AppCompatActivity {
     public void onShareLinkButtonClick(final View view){
         if (mSampleItem != null)
             startActivityForResult(BoxSharedLinkActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_SHARE_LINK);
+    }
+    public void onShareLinkButtonClickNew(final View view){
+        if (mSampleItem != null)
+            startActivityForResult(com.box.androidsdk.share.activities.BoxSharedLinkActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_SHARE_LINK);
+    }
+    public void onInvitePeopleButtonClickNew(final View view){
+        if (mSampleItem != null)
+            startActivityForResult(com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_SHARE_LINK);
     }
 
     /**

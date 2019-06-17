@@ -3,6 +3,7 @@ package com.box.androidsdk.share.fragments;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -56,7 +57,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
 
         // Create AlertDialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.ShareDialogTheme);
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_collaboration_roles_dialog, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_collaboration_roles, null);
         builder.setView(view)
             .setNegativeButton(R.string.box_sharesdk_cancel, this)
             .setPositiveButton(R.string.box_sharesdk_ok, this);
@@ -94,7 +95,7 @@ public class CollaborationRolesDialog extends DialogFragment implements Button.O
             rolesName.setText(CollaborationUtils.getRoleName(getActivity(), role));
             TextView rolesDescription = (TextView) radioView.findViewById(R.id.roles_description);
             rolesDescription.setText(CollaborationUtils.getRoleDescription(getActivity(), role));
-            LinearLayout rolesTextLayout = (LinearLayout) radioView.findViewById(R.id.roles_text_layout);
+            ConstraintLayout rolesTextLayout = (ConstraintLayout) radioView.findViewById(R.id.roles_text_layout);
             rolesTextLayout.setTag(role);
             rolesTextLayout.setOnClickListener(this);
             RadioButton rolesRadio = (RadioButton) radioView.findViewById(R.id.roles_radio);

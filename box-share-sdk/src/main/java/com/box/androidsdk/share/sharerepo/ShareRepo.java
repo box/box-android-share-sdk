@@ -26,9 +26,8 @@ public class ShareRepo extends BaseShareRepo {
      * @return a LiveData<BoxResponse<BoxIteratorInvitees>> object that holds a reponse with a list of invitees filtered based on the filter term
      */
     @Override
-    public LiveData<BoxResponse<BoxIteratorInvitees>> getInviteesApi(BoxCollaborationItem boxCollaborationItem, String filter) {
+    public void getInviteesApi(BoxCollaborationItem boxCollaborationItem, String filter) {
         handleTaskAndPostValue(mController.getInvitees(boxCollaborationItem,filter), mInvitees);
-        return mInvitees;
     }
     private void handleTaskAndPostValue(BoxFutureTask task, final MutableLiveData source) {
         task.addOnCompletedListener(new BoxFutureTask.OnCompletedListener() {
@@ -45,9 +44,8 @@ public class ShareRepo extends BaseShareRepo {
      * @returna a LiveData<BoxResponse<BoxCollaborationItem>> object that holds a response with a list of collaboration roles applicable.
      */
     @Override
-    public LiveData<BoxResponse<BoxCollaborationItem>> fetchRolesApi(BoxCollaborationItem boxCollaborationItem) {
+    public void fetchRolesApi(BoxCollaborationItem boxCollaborationItem) {
         handleTaskAndPostValue(mController.fetchRoles(boxCollaborationItem), mFetchRoleItem);
-        return mFetchRoleItem;
     }
 
     /**
@@ -58,8 +56,7 @@ public class ShareRepo extends BaseShareRepo {
      * @return a LiveData<BoxResponse<BoxResponseBatch>> object that holds a response with a list of response for each collaborator.
      */
     @Override
-    public LiveData<BoxResponse<BoxResponseBatch>> addCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
+    public void addCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
         handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mInviteCollabBatch);
-        return mInviteCollabBatch;
     }
 }

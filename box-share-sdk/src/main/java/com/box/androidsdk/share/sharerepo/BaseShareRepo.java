@@ -21,9 +21,9 @@ public abstract class BaseShareRepo {
     public BaseShareRepo(ShareController controller) {
         this.mController = controller;
     }
-    public abstract LiveData<BoxResponse<BoxIteratorInvitees>> getInviteesApi(BoxCollaborationItem boxCollaborationItem, String filter);
-    public abstract LiveData<BoxResponse<BoxCollaborationItem>> fetchRolesApi(BoxCollaborationItem boxCollaborationItem);
-    public abstract LiveData<BoxResponse<BoxResponseBatch>> addCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails);
+    public abstract void getInviteesApi(BoxCollaborationItem boxCollaborationItem, String filter);
+    public abstract void fetchRolesApi(BoxCollaborationItem boxCollaborationItem);
+    public abstract void addCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails);
 
     public MutableLiveData<BoxResponse<BoxIteratorInvitees>> getmInvitees() {
         return mInvitees;

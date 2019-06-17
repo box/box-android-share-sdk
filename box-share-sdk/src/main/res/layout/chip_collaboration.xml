@@ -1,38 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView android:id="@+id/name"
+        style="@style/BoxChipText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp">
-        <TextView android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:background="@drawable/token_background"
-            android:textColor="@color/box_sharesdk_chip_text_color"
-            android:textSize="14sp"
-            android:paddingLeft="24dp"
-            android:paddingRight="12dp"
-            android:layout_marginLeft="-16dp"
-            android:gravity="center_vertical"
-            android:layout_toRightOf="@+id/collaborator_initials"/>
-        <TextView
-            android:id="@+id/collaborator_initials"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            />
-        </RelativeLayout>
+        android:layout_height="@dimen/box_sharesdk_chip_size"
+        android:background="@drawable/token_background"
+        android:paddingLeft="24dp"
+        android:paddingRight="12dp"
+        android:layout_marginLeft="-16dp"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@+id/collaborator_initials"/>
+    <TextView
+        android:id="@+id/collaborator_initials"
+        android:layout_width="@dimen/box_sharesdk_chip_size"
+        android:layout_height="@dimen/box_sharesdk_chip_size"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        />
 </RelativeLayout>

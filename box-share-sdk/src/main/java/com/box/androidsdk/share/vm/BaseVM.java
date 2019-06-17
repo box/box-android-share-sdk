@@ -17,5 +17,7 @@ public class BaseVM extends ViewModel {
         this.mShareItem.postValue(shareItem);
     }
 
-
+    public MutableLiveData<BoxCollaborationItem> getmShareItem() {
+        return mShareItem;
+    }
 }

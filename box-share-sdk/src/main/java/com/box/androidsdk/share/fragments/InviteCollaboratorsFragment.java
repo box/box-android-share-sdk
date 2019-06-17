@@ -14,8 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
@@ -53,7 +54,7 @@ import java.util.List;
  * 2. ShowCollaboratorsListener is used to set up a listener by this fragment on the child custom view called CollaboratorsInitialsView.
  */
 
-public class InviteCollaboratorsFragment extends BoxFragment implements View.OnClickListener, CollaborationRolesDialog.OnRoleSelectedListener, TokenCompleteTextView.TokenListener<BoxInvitee>, InviteeAdapter.InviteeAdapterListener, CollaboratorsInitialsView.ShowCollaboratorsListener {
+public class InviteCollaboratorsFragment extends BoxFragment implements CollaborationRolesDialog.OnRoleSelectedListener, TokenCompleteTextView.TokenListener<BoxInvitee>, InviteeAdapter.InviteeAdapterListener, CollaboratorsInitialsView.ShowCollaboratorsListener {
 
     // Should be implemented by the parent Fragment or Activity
     public interface InviteCollaboratorsListener {
@@ -68,6 +69,9 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     public static final String EXTRA_COLLAB_SELECTED_ROLE = "collabSelectedRole";
 
     private Button mRoleButton;
+    private Button mAddPersonalMessageButton;
+    private EditText mPersonalMessageEditText;
+    private TextView mPersonalMessageTextView;
     private ChipCollaborationView mAutoComplete;
     private InviteeAdapter mAdapter;
     private BoxCollaboration.Role mSelectedRole;
@@ -75,22 +79,43 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
     private InviteCollaboratorsListener mInviteCollaboratorsListener;
     private String mFilterTerm;
     private CollaboratorsInitialsView mCollabInitialsView;
+    private View bottomDivider;
     private boolean mInvitationFailed = false;
+
+    private View.OnClickListener mOnEditAcessListener;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_invite_collaborators, container, false);
-
+        bottomDivider = view.findViewById(R.id.bottom_divider);
         mFilterTerm = "";
         mRoleButton = (Button) view.findViewById(R.id.invite_collaborator_role);
-        mRoleButton.setOnClickListener(this);
+        mRoleButton.setOnClickListener(mOnEditAcessListener);
         mAutoComplete = (ChipCollaborationView) view.findViewById(R.id.invite_collaborator_autocomplete);
         mAutoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         mAdapter = createInviteeAdapter(getActivity());
         mAdapter.setInviteeAdapterListener(this);
         mAutoComplete.setAdapter(mAdapter);
         mAutoComplete.setTokenListener(this);
+
+        mPersonalMessageEditText = (EditText) view.findViewById(R.id.personal_message_edit_text);
+        mPersonalMessageEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!view.isFocused() && ((EditText)view).getText().toString().isEmpty()) {
+                    onEmptyMessage();
+                }
+            }
+        });
+        mPersonalMessageTextView = (TextView) view.findViewById(R.id.personal_message_text_view) ;
+        mAddPersonalMessageButton = (Button) view.findViewById(R.id.add_personal_message_button);
+        mAddPersonalMessageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAddPersonalMessage();
+            }
+        });
 
         mCollabInitialsView = (CollaboratorsInitialsView) view.findViewById(R.id.collaboratorsInitialsView);
         mCollabInitialsView.setArguments((BoxCollaborationItem)mShareItem, mController);
@@ -123,8 +148,22 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         if (getArguments().getBoolean(EXTRA_USE_CONTACTS_PROVIDER)){
             requestPermissionsIfNecessary();
         }
-
         return view;
+    }
+
+    private void onEmptyMessage() {
+        mAddPersonalMessageButton.setVisibility(View.VISIBLE);
+        mPersonalMessageTextView.setVisibility(View.GONE);
+        mPersonalMessageEditText.setVisibility(View.GONE);
+        bottomDivider.setVisibility(View.GONE);
+    }
+
+    private void onAddPersonalMessage() {
+        mAddPersonalMessageButton.setVisibility(View.GONE);
+        mPersonalMessageTextView.setVisibility(View.VISIBLE);
+        mPersonalMessageEditText.setVisibility(View.VISIBLE);
+        bottomDivider.setVisibility(View.VISIBLE);
+        mPersonalMessageEditText.requestFocus();
     }
 
     private BoxCollaboration.Role getBestDefaultRole(String roleName, List<BoxCollaboration.Role> roles){
@@ -237,18 +276,35 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
         notifyInviteCollaboratorsListener();
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.invite_collaborator_role) {
-            if (mRoles == null || mRoles.size() == 0) {
-                SdkUtils.toastSafely(getContext(), R.string.box_sharesdk_cannot_get_collaborators, Toast.LENGTH_SHORT);
-                return;
-            }
+//    @Override
+//    public void onClick(View v) {
+//        if (v.getId() == R.id.invite_collaborator_role) {
+//            if (mRoles == null || mRoles.size() == 0) {
+//                SdkUtils.toastSafely(getContext(), R.string.box_sharesdk_cannot_get_collaborators, Toast.LENGTH_SHORT);
+//                return;
+//            }
+//            //CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance(mRoles, mSelectedRole, getString(R.string.box_sharesdk_access), false, false, null);
+////            CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(mRoles, mSelectedRole, getString(R.string.box_sharesdk_access), false, false, null);
+////            rolesDialog.setOnRoleSelectedListener(this);
+////            rolesDialog.show(getFragmentManager(), CollaborationRolesDialog.TAG);
+//        }
+//    }
 
-            CollaborationRolesDialog rolesDialog = CollaborationRolesDialog.newInstance(mRoles, mSelectedRole, getString(R.string.box_sharesdk_access), false, false, null);
-            rolesDialog.setOnRoleSelectedListener(this);
-            rolesDialog.show(getFragmentManager(), CollaborationRolesDialog.TAG);
+    public void setOnEditAccessListener(View.OnClickListener listener) {
+        mOnEditAcessListener = listener;
+        if (mRoleButton != null) {
+            mRoleButton.setOnClickListener(mOnEditAcessListener);
         }
+    }
+    public Bundle getData() {
+        Bundle b = new Bundle();
+        b.putSerializable(CollaboratorsRolesFragment.ARGS_ROLES, mRoles);
+        b.putSerializable(CollaboratorsRolesFragment.ARGS_SELECTED_ROLE, mSelectedRole);
+        b.putSerializable(CollaboratorsRolesFragment.ARGS_ALLOW_OWNER_ROLE, false);
+        b.putSerializable(CollaboratorsRolesFragment.ARGS_ALLOW_REMOVE, false);
+        b.putSerializable(CollaboratorsRolesFragment.ARGS_NAME, "");
+        b.putSerializable(CollaboratorsRolesFragment.ARGS_SERIALIZABLE_EXTRA, null);
+        return b;
     }
 
     @Override
@@ -488,7 +544,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
      */
     private void setSelectedRole(BoxCollaboration.Role role) {
         mSelectedRole = role;
-        mRoleButton.setText(createTitledSpannable(getString(R.string.box_sharesdk_access), CollaborationUtils.getRoleName(getActivity(), role)));
     }
 
     protected BoxCollaborationItem getCollaborationItem() {

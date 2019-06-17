@@ -8,23 +8,32 @@ import com.box.androidsdk.content.requests.BoxResponse
 import com.box.androidsdk.content.requests.BoxResponseBatch
 import com.box.androidsdk.share.api.ShareController
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees
-import com.nhaarman.mockitokotlin2.*
-import junit.framework.Assert.*
-
-import org.junit.*
+import com.box.androidsdk.share.vm.InviteCollaboratorsDataWrapper
+import com.box.androidsdk.share.vm.InviteCollaboratorsVM
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.doAnswer
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
+import junit.framework.Assert
+import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertNull
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.TestRule
 
-class ShareRepoTest {
+class InviteCollaboratorsVMTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
 
     private val shareController: ShareController = mock()
 
-    private val mockmShareItem: BoxCollaborationItem = mock()
+    private val mockBoxCollaborationItem: BoxCollaborationItem = mock()
     private val mockEmailList: Array<String> = arrayOf("boxuser@box.com", "boxuser2@box.com")
     private val mockSelectedRole: BoxCollaboration.Role = BoxCollaboration.Role.EDITOR
     private val mockFilter: String = "filter"
+    private val mockmShareItem: BoxCollaborationItem = mock()
 
     private val mockGetInviteeResponseTask: BoxFutureTask<BoxIteratorInvitees> = mock()
     private val mockGetInviteeResponse: BoxResponse<BoxIteratorInvitees> = mock()
@@ -35,12 +44,18 @@ class ShareRepoTest {
 
     private lateinit var shareRepo: ShareRepo
 
+    private lateinit var inviteCollabVM: InviteCollaboratorsVM
+
     @Before
     fun setup() {
+
         whenever(shareController.getInvitees(mockmShareItem, mockFilter)).thenReturn(mockGetInviteeResponseTask)
         whenever(shareController.fetchRoles(mockmShareItem)).thenReturn(mockFetchRolesResponseTask)
         whenever(shareController.addCollaborations(mockmShareItem, mockSelectedRole, mockEmailList)).thenReturn(mockAddCollabsResponseTask)
+
         shareRepo = ShareRepo(shareController)
+        inviteCollabVM = InviteCollaboratorsVM(shareRepo, mockmShareItem)
+
         createStubs()
     }
 
@@ -64,26 +79,19 @@ class ShareRepoTest {
     }
 
 
-    @Test
-    fun `test fetch roles update LiveData values correctly`() {
-        assertNull(shareRepo.getmFetchRoleItem().value) //initially the LiveData should not have any value
-        shareRepo.fetchRolesApi(mockmShareItem) //get a value and update as needed
-        assertEquals(mockFetchRolesResponse, shareRepo.getmFetchRoleItem().value)
-    }
-
 
     @Test
-    fun `test get invitees update LiveData values correctly`() {
-        assertNull(shareRepo.getmInvitees().value) //initially the LiveData should not have any value
-        shareRepo.getInviteesApi(mockmShareItem, mockFilter) //get a value and update as needed
-        assertEquals(mockGetInviteeResponse, shareRepo.getmInvitees().value)
-    }
+    fun `test fetch role item data update success`() {
+        //values are initially null
+        assertNull(shareRepo.getmFetchRoleItem().value)
+        assertNull(inviteCollabVM.getmFetchRoleItem().value)
 
-    @Test
-    fun `test get collab update LiveData values correctly` () {
-        assertNull(shareRepo.getmInviteCollabBatch().value) //initially the LiveData should not have any value
-        shareRepo.addCollabsApi(mockmShareItem, mockSelectedRole, mockEmailList) //get a value and update as needed
-        assertEquals(mockAddCollabsResponse, shareRepo.getmInviteCollabBatch().value)
-    }
+        whenever(mockFetchRolesResponse.isSuccess).thenReturn(true)
+        whenever(mockFetchRolesResponse.result).thenReturn(mockBoxCollaborationItem)
+        //make a network call to fetch roles
+        inviteCollabVM.fetchRolesApi(mockmShareItem)
 
+        //ShareRepo reacts by updating its LiveData correctly
+        assertEquals(shareRepo.getmFetchRoleItem().value, mockFetchRolesResponse)
+    }
 }

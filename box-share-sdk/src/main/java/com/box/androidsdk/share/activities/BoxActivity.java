@@ -152,7 +152,7 @@ public abstract class BoxActivity extends AppCompatActivity {
         Toolbar actionBar = (Toolbar) findViewById(R.id.box_action_bar);
         setSupportActionBar(actionBar);
         actionBar.setTitle(getTitle());
-        actionBar.setNavigationIcon(R.drawable.ic_box_sharesdk_arrow_back_grey_24dp);
+        actionBar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
