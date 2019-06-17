@@ -33,7 +33,6 @@ public class BoxCollaborationRolesActivity extends BoxActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); //to get blackText on status bar. will be moved to BoxActivity after all screens are updated.
     }
 
     @Override

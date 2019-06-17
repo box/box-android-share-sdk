@@ -159,6 +159,7 @@ public abstract class BoxActivity extends AppCompatActivity {
                 finish();
             }
         });
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
     // Class to interpret result from share SDK activities
