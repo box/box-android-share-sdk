@@ -26,13 +26,13 @@ import java.util.List;
 public class InviteCollaboratorsVM extends BaseVM {
 
     private LiveData<DataWrapper<BoxCollaborationItem>> mFetchRoleItem;
-    private LiveData<InviteCollaboratorsDataWrapper> mAddCollabItem;
-    private LiveData<DataWrapper<BoxIteratorInvitees>> mInviteesItem;
+    private LiveData<InviteCollaboratorsDataWrapper> mAddCollabs;
+    private LiveData<DataWrapper<BoxIteratorInvitees>> mInvitees;
     public InviteCollaboratorsVM(BaseShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
         mFetchRoleItem = Transformations.map(shareRepo.getFetchRoleItem(), response -> createFetchRoleItemData(response));
-        mAddCollabItem = Transformations.map(shareRepo.getInviteCollabBatch(), response -> createAddCollabsItemData(response));
-        mInviteesItem = Transformations.map(shareRepo.getInvitees(), response -> createGetInviteesItemData(response));
+        mAddCollabs = Transformations.map(shareRepo.getInviteCollabBatch(), response -> createAddCollabsItemData(response));
+        mInvitees = Transformations.map(shareRepo.getInvitees(), response -> createGetInviteesItemData(response));
     }
 
     /**
@@ -71,19 +71,19 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
 
     /**
-     * Get mAddCollabItem which holds the status message from the response for adding new collaborators.
-     * @return mAddCollabItem
+     * Get mAddCollabs which holds the status message from the response for adding new collaborators.
+     * @return mAddCollabs
      */
-    public LiveData<InviteCollaboratorsDataWrapper> getAddCollabItem() {
-        return mAddCollabItem;
+    public LiveData<InviteCollaboratorsDataWrapper> getAddCollabs() {
+        return mAddCollabs;
     }
 
     /**
-     * Get mInviteesItem which holds a list of invitees that can be invited
-     * @return mInviteesItem
+     * Get mInvitees which holds a list of invitees that can be invited
+     * @return mInvitees
      */
-    public LiveData<DataWrapper<BoxIteratorInvitees>> getInviteesItem() {
-        return mInviteesItem;
+    public LiveData<DataWrapper<BoxIteratorInvitees>> getInvitees() {
+        return mInvitees;
     }
 
     /**

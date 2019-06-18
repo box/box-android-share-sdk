@@ -1,11 +1,13 @@
 package com.box.androidsdk.share.sharerepo
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.box.androidsdk.content.BoxException
 import com.box.androidsdk.content.BoxFutureTask
 import com.box.androidsdk.content.models.BoxCollaboration
 import com.box.androidsdk.content.models.BoxCollaborationItem
 import com.box.androidsdk.content.requests.BoxResponse
 import com.box.androidsdk.content.requests.BoxResponseBatch
+import com.box.androidsdk.share.R
 import com.box.androidsdk.share.api.ShareController
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees
 import com.box.androidsdk.share.vm.InviteCollaboratorsVM
@@ -19,6 +21,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
+import javax.net.ssl.HttpsURLConnection
 
 class InviteCollaboratorsVMTest {
     @get:Rule
@@ -40,6 +43,8 @@ class InviteCollaboratorsVMTest {
     private val mockAddCollabsResponseTask: BoxFutureTask<BoxResponseBatch> = mock()
     private val mockAddCollabsResponse: BoxResponse<BoxResponseBatch> = mock()
 
+    private val mockHttpForbiddenException: BoxException = mock();
+
     private lateinit var shareRepo: BaseShareRepo
 
     private lateinit var inviteCollabVM: InviteCollaboratorsVM
@@ -54,7 +59,18 @@ class InviteCollaboratorsVMTest {
         shareRepo = ShareRepo(shareController)
         inviteCollabVM = InviteCollaboratorsVM(shareRepo, mockmShareItem)
 
+        attachObservers()
+        createExceptions()
         createStubs()
+    }
+
+    private fun createExceptions() {
+        whenever(mockHttpForbiddenException.responseCode).thenReturn(HttpsURLConnection.HTTP_FORBIDDEN)
+    }
+
+    private fun attachObservers() {
+        inviteCollabVM.fetchRoleItem.observeForever(mock())
+        inviteCollabVM.invitees.observeForever(mock())
     }
 
     private fun createStubs() {
@@ -76,20 +92,66 @@ class InviteCollaboratorsVMTest {
         }.whenever(mockAddCollabsResponseTask).addOnCompletedListener(any<BoxFutureTask.OnCompletedListener<BoxResponseBatch>>())
     }
 
-
-
     @Test
-    fun `test fetch role item data update success`() {
+    fun `test fetch role success`() {
         //values are initially null
         assertNull(shareRepo.mFetchRoleItem.value)
         assertNull(inviteCollabVM.fetchRoleItem.value)
 
+        //configs
         whenever(mockFetchRolesResponse.isSuccess).thenReturn(true)
         whenever(mockFetchRolesResponse.result).thenReturn(mockBoxCollaborationItem)
+
         //make a network call to fetch roles
         inviteCollabVM.fetchRolesApi(mockmShareItem)
 
-        //ShareRepo reacts by updating its LiveData correctly
+        //ShareRepo and VM reacts by updating its LiveData correctly
         assertEquals(shareRepo.mFetchRoleItem.value, mockFetchRolesResponse)
+        assertEquals(inviteCollabVM.fetchRoleItem.value?.data, mockBoxCollaborationItem)
+    }
+
+    @Test
+    fun `test fetch role failure`() {
+        //values are initially null
+        assertNull(shareRepo.mFetchRoleItem.value)
+        assertNull(inviteCollabVM.fetchRoleItem.value)
+
+        //configs
+        whenever(mockFetchRolesResponse.isSuccess).thenReturn(false)
+
+        //make a network call to fetch roles
+        inviteCollabVM.fetchRolesApi(mockmShareItem)
+
+
+        //ShareRepo reacts to data changes
+        assertEquals(shareRepo.mFetchRoleItem.value, mockFetchRolesResponse)
+
+        //should be null since the request was a failure
+        assertEquals(inviteCollabVM.fetchRoleItem.value?.data, null)
+
+        //associated failure message
+        assertEquals(inviteCollabVM.fetchRoleItem.value?.strCode, R.string.box_sharesdk_network_error)
+    }
+
+    @Test
+    fun `test get invitees failure http forbidden`() {
+        //values are initially null
+        assertNull(shareRepo.invitees.value)
+        assertNull(inviteCollabVM.invitees.value)
+
+        //configs
+        whenever(mockGetInviteeResponse.isSuccess).thenReturn(false)
+        whenever(mockGetInviteeResponse.exception).thenReturn(mockHttpForbiddenException)
+
+        //make a network call to fetch roles
+        inviteCollabVM.getInviteesApi(mockmShareItem, mockFilter)
+
+
+        //ShareRepo reacts to data changes
+        assertEquals(shareRepo.invitees.value, mockGetInviteeResponse)
+
+        //should be null since the request was a failure
+        assertEquals(inviteCollabVM.invitees.value?.data, null)
+        assertEquals(inviteCollabVM.invitees.value?.strCode, R.string.box_sharesdk_insufficient_permissions)
     }
 }
