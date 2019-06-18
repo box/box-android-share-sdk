@@ -103,8 +103,8 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
     /**
      * Helper method for transforming BoxResponse to UI Model for getInviteesApi
-     * @param response the response to transform on
-     * @return the transformed data
+     * @param response the response to transform
+     * @return the transformed model
      */
     private DataWrapper<BoxIteratorInvitees> createGetInviteesItemData(BoxResponse<BoxIteratorInvitees> response) {
         final DataWrapper<BoxIteratorInvitees> data = new DataWrapper<BoxIteratorInvitees>();
@@ -126,13 +126,18 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
     /**
      * Helper method for transforming BoxResponse to UI Model for addCollabsApi
-     * @param response the response to transform on
-     * @return the transformed data
+     * @param response the response to transform
+     * @return the transformed model
      */
     private InviteCollaboratorsDataWrapper createAddCollabsItemData(BoxResponse<BoxResponseBatch> response) {
         return handleCollaboratorsInvited(response.getResult());
     }
 
+    /**
+     * Helper method for helping with transformation of BoxBatchResponse to UI Model
+     * @param responses the batch response to transform
+     * @return the transformed model
+     */
     private InviteCollaboratorsDataWrapper handleCollaboratorsInvited(BoxResponseBatch responses) {
         int strCode = R.string.box_sharesdk_generic_error; //default generic error
         boolean mInvitationFailed;
