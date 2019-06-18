@@ -46,6 +46,7 @@ class InviteCollaboratorsVMTest {
     private val mockAddCollabsResponseTask: BoxFutureTask<BoxResponseBatch> = mock()
     private val mockAddCollabsResponse: BoxResponse<BoxResponseBatch> = mock()
 
+    private val mockFailedToAddException: BoxException = mock()
     private val mockHttpForbiddenException: BoxException = mock()
     private val mockBoxNetworkErrorException: BoxException = mock()
     private val mockAlreadyAddedCollabException: BoxException = mock()
@@ -77,9 +78,12 @@ class InviteCollaboratorsVMTest {
     private fun createExceptions() {
         whenever(mockHttpForbiddenException.responseCode).thenReturn(HttpsURLConnection.HTTP_FORBIDDEN)
         whenever(mockBoxNetworkErrorException.errorType).thenReturn(BoxException.ErrorType.NETWORK_ERROR)
-        val boxError: BoxError = mock()
-        whenever(mockAlreadyAddedCollabException.asBoxError).thenReturn(boxError)
-        whenever(boxError.code).thenReturn(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR)
+        val boxErrorAlreadyAdded: BoxError = mock()
+        whenever(boxErrorAlreadyAdded.code).thenReturn(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR)
+        whenever(mockAlreadyAddedCollabException.asBoxError).thenReturn(boxErrorAlreadyAdded)
+        val boxErrorFailedToAdd: BoxError = mock()
+        whenever(boxErrorFailedToAdd.code).thenReturn("")
+        whenever(mockFailedToAddException.asBoxError).thenReturn(boxErrorFailedToAdd)
         whenever(mockBadRequestException.responseCode).thenReturn(HttpsURLConnection.HTTP_BAD_REQUEST)
     }
 
@@ -181,7 +185,7 @@ class InviteCollaboratorsVMTest {
     }
 
     @Test
-    fun `test update failure stats already added`() {
+    fun `test update failure stats already added case`() {
         //configs
         val boxResponse: BoxResponse<BoxCollaboration> = mock()
         whenever(boxResponse.exception).thenReturn(mockAlreadyAddedCollabException)
@@ -199,5 +203,31 @@ class InviteCollaboratorsVMTest {
         //the names should be equal since dummy name was already added.
         assertEquals(name, dummyName)
         assertEquals(failedCollaboratorList.size, 0)
+    }
+
+    @Test
+    fun `test update failure stats failed to add collaborator`() {
+        //configs
+        val boxResponse: BoxResponse<BoxCollaboration> = mock()
+        whenever(boxResponse.exception).thenReturn(mockFailedToAddException)
+        val boxUser: BoxUser = mock()
+        val dummyName = "Box User"
+        whenever(boxUser.login).thenReturn(dummyName)
+        val boxRequestShare: BoxRequestsShare.AddCollaboration = mock()
+        whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
+        whenever(boxResponse.request).thenReturn(boxRequestShare)
+        val failedCollaboratorList = arrayListOf<String>()
+
+        //update stats
+        inviteCollabVM.updateFailureStats(boxResponse, failedCollaboratorList)
+
+        //the names should be equal since dummy name was already added.
+        assertEquals(failedCollaboratorList[0], dummyName)
+        assertEquals(failedCollaboratorList.size, 1)
+
+        inviteCollabVM.updateFailureStats(boxResponse, failedCollaboratorList)
+
+        //more failure should update the size to 2
+        assertEquals(failedCollaboratorList.size, 2)
     }
 }
