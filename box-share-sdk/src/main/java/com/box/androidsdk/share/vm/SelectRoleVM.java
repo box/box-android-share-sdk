@@ -25,47 +25,47 @@ public class SelectRoleVM extends BaseVM {
     }
 
     /**
-     * Get mRoles which holds a list of valid roles for collaborator
-     * @return mRoles
+     * Returns a LiveData which holds a list of valid roles for collaborator.
+     * @return a LiveData which holds a list of valid roles for collaborator
      */
     public LiveData<List<BoxCollaboration.Role>> getRoles() {
         return mRoles;
     }
 
     /**
-     * Get mAllowOwnerRole which tells whether the collaborator can be given owner permission or not
-     * @return mAllowOwnerRole
+     * Returns a LiveData which tells whether the collaborator can be given owner permission or not.
+     * @return a LiveData which tells whether the collaborator can be given owner permission or not
      */
     public LiveData<Boolean> getAllowOwnerRole() {
         return mAllowOwnerRole;
     }
 
     /**
-     * Get mSelectedRole which tells which role is selected.
-     * @return mSelectedRole
+     * Returns a LiveData which tells which role is selected.
+     * @return a LiveData which tells which role is selected
      */
     public LiveData<BoxCollaboration.Role> getSelectedRole() {
         return mSelectedRole;
     }
 
     /**
-     * Get mAllowRemove which tells whether the collaborator can be removed
-     * @return mAllowRemove
+     * Returns a LiveData which tells whether the collaborator can be removed.
+     * @return a LiveData which tells whether the collaborator can be removed
      */
     public LiveData<Boolean> getAllowRemove() {
         return mAllowRemove;
     }
 
     /**
-     * Get mCollaboration which tells the collaboration rules on the item
-     * @return mCollaboration
+     * Returns a LiveData which tells the collaboration rules on the item.
+     * @return  LiveData which tells the collaboration rules on the item
      */
     public LiveData<BoxCollaboration> getCollaboration() {
         return mCollaboration;
     }
 
     /**
-     * Update list of valid roles
+     * Updates list of valid roles
      * @param roles the new list of valid roles
      */
     public void updateRoles(List<BoxCollaboration.Role> roles) {
@@ -73,7 +73,7 @@ public class SelectRoleVM extends BaseVM {
     }
 
     /**
-     * Update whether owner role is allowed or not
+     * Updates whether owner role is allowed or not
      * @param allowOwnerRole the new permission level for owner role
      */
     public void updateAllowOwnerRole(Boolean allowOwnerRole) {
@@ -81,7 +81,7 @@ public class SelectRoleVM extends BaseVM {
     }
 
     /**
-     * Update the currently selected role
+     * Updates the currently selected role
      * @param mSelectedRole the new selected role
      */
     public void updateSelectedRole(BoxCollaboration.Role mSelectedRole) {
@@ -89,7 +89,7 @@ public class SelectRoleVM extends BaseVM {
     }
 
     /**
-     * Update whether the collaborator can be removed or not
+     * Updates whether the collaborator can be removed or not
      * @param mAllowRemove the new permission level for removing
      */
     public void updateAllowRemove(Boolean mAllowRemove) {
@@ -97,7 +97,7 @@ public class SelectRoleVM extends BaseVM {
     }
 
     /**
-     * Update collaborating settings on the item
+     * Updates collaborating settings on the item
      * @param collaboration the new collaboration setting
      */
     public void updateCollaboration(BoxCollaboration collaboration) {

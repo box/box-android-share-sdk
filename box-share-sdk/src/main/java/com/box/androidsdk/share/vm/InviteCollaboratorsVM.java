@@ -37,7 +37,7 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
 
     /**
-     * Fetch roles using the ShareRepo
+     * Make a backend call through share repo for fetching roles.
      * @param item the item to fetch roles on
      */
     public void fetchRolesApi(BoxCollaborationItem item) {
@@ -45,7 +45,7 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
 
     /**
-     * Make a backend call through share repo for adding new collaborators
+     * Make a backend call through share repo for adding new collaborators.
      * @param boxCollaborationItem the item to add collaborators on
      * @param selectedRole the role for the new collaborators
      * @param emails a list of collaborators represented in emails
@@ -55,7 +55,7 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
 
     /**
-     * Make a backend call through share repo for getting invitees for an item
+     * Make a backend call through share repo for getting invitees.
      * @param boxCollaborationItem the item to get invitees on
      * @param filter the term used for filtering invitees
      */
@@ -64,24 +64,24 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
 
     /**
-     * Get mFetchRoleItem which holds a box item that has allowed roles for invitees
-     * @return mFetchRoleItem
+     * Returns a LiveData which holds a data wrapper that contains a box item that has allowed roles for invitees and a string resource code.
+     * @return a LiveData which holds a data wrapper that contains box item that has allowed roles for invitees and a string resource code
      */
     public LiveData<DataWrapper<BoxCollaborationItem>> getFetchRoleItem() {
         return mFetchRoleItem;
     }
 
     /**
-     * Get mAddCollabs which holds the status message from the response for adding new collaborators.
-     * @return mAddCollabs
+     * Returns a LiveData which holds a data wrapper that contains the status message from the response for adding new collaborators.
+     * @return a LiveData which holds a data wrapper that contains
      */
     public LiveData<InviteCollaboratorsDataWrapper> getAddCollabs() {
         return mAddCollabs;
     }
 
     /**
-     * Get mInvitees which holds a list of invitees that can be invited
-     * @return mInvitees
+     * Returns a LiveData which holds a data wrapper that contains a list of invitees that can be invited and a string resource code.
+     * @return a LiveData which holds a data wrapper that contains a list of invitees that can be invited and a string resource code
      */
     public LiveData<DataWrapper<BoxIteratorInvitees>> getInvitees() {
         return mInvitees;

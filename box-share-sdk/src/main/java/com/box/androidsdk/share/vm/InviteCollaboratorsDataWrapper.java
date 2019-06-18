@@ -14,16 +14,16 @@ public class InviteCollaboratorsDataWrapper extends DataWrapper<String> {
     }
 
     /**
-     * Check if any invitation failed
-     * @return true if at least one invitation to a collaborator failed
+     * Returns true if at least one invitation failed.
+     * @return true if at least one invitation failed.
      */
     public boolean isInvitationFailed() {
         return mInvitationFailed;
     }
 
     /**
-     * Check if the String formatted part exists
-     * @return true if String formatted part exists
+     * Returns true if the String formatted part exists.
+     * @return true if the String formatted part exists
      */
     public boolean hasSubMessage() {
         return mData != null;
