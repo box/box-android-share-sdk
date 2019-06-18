@@ -3,10 +3,7 @@ package com.box.androidsdk.share.vm
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.box.androidsdk.content.BoxException
 import com.box.androidsdk.content.BoxFutureTask
-import com.box.androidsdk.content.models.BoxCollaboration
-import com.box.androidsdk.content.models.BoxCollaborationItem
-import com.box.androidsdk.content.models.BoxError
-import com.box.androidsdk.content.models.BoxUser
+import com.box.androidsdk.content.models.*
 import com.box.androidsdk.content.requests.BoxRequestsShare
 import com.box.androidsdk.content.requests.BoxResponse
 import com.box.androidsdk.content.requests.BoxResponseBatch
@@ -37,7 +34,7 @@ class InviteCollaboratorsVMTest {
     private val mockEmailList: Array<String> = arrayOf("boxuser@box.com", "boxuser2@box.com")
     private val mockSelectedRole: BoxCollaboration.Role = BoxCollaboration.Role.EDITOR
     private val mockFilter: String = "filter"
-    private val mockmShareItem: BoxCollaborationItem = mock()
+    private val mockShareItem: BoxCollaborationItem = mock()
 
     private val mockGetInviteeResponseTask: BoxFutureTask<BoxIteratorInvitees> = mock()
     private val mockGetInviteeResponse: BoxResponse<BoxIteratorInvitees> = mock()
@@ -63,12 +60,12 @@ class InviteCollaboratorsVMTest {
     @Before
     fun setup() {
 
-        whenever(shareController.getInvitees(mockmShareItem, mockFilter)).thenReturn(mockGetInviteeResponseTask)
-        whenever(shareController.fetchRoles(mockmShareItem)).thenReturn(mockFetchRolesResponseTask)
-        whenever(shareController.addCollaborations(mockmShareItem, mockSelectedRole, mockEmailList)).thenReturn(mockAddCollabsResponseTask)
+        whenever(shareController.getInvitees(mockShareItem, mockFilter)).thenReturn(mockGetInviteeResponseTask)
+        whenever(shareController.fetchRoles(mockShareItem)).thenReturn(mockFetchRolesResponseTask)
+        whenever(shareController.addCollaborations(mockShareItem, mockSelectedRole, mockEmailList)).thenReturn(mockAddCollabsResponseTask)
 
         shareRepo = ShareRepo(shareController)
-        inviteCollabVM = InviteCollaboratorsVM(shareRepo, mockmShareItem)
+        inviteCollabVM = InviteCollaboratorsVM(shareRepo, mockShareItem)
 
         attachObservers()
         createExceptions()
@@ -118,10 +115,10 @@ class InviteCollaboratorsVMTest {
         whenever(mockFetchRolesResponse.result).thenReturn(mockFetchRoleItemResult)
 
         //make a network call to fetch roles
-        inviteCollabVM.fetchRolesApi(mockmShareItem)
+        inviteCollabVM.fetchRolesApi(mockShareItem)
 
         //VM reacts by updating its LiveData correctly
-        assertEquals(inviteCollabVM.fetchRoleItem.value?.data, mockFetchRoleItemResult)
+        assertEquals(mockFetchRoleItemResult, inviteCollabVM.fetchRoleItem.value?.data)
     }
 
     @Test
@@ -130,13 +127,13 @@ class InviteCollaboratorsVMTest {
         whenever(mockFetchRolesResponse.isSuccess).thenReturn(false)
 
         //make a network call to fetch roles
-        inviteCollabVM.fetchRolesApi(mockmShareItem)
+        inviteCollabVM.fetchRolesApi(mockShareItem)
 
         //should be null since the request was a failure
-        assertEquals(inviteCollabVM.fetchRoleItem.value?.data, null)
+        assertEquals(null, inviteCollabVM.fetchRoleItem.value?.data, null)
 
         //associated failure message
-        assertEquals(inviteCollabVM.fetchRoleItem.value?.strCode, R.string.box_sharesdk_network_error)
+        assertEquals(R.string.box_sharesdk_network_error, inviteCollabVM.fetchRoleItem.value?.strCode)
     }
 
     @Test
@@ -146,10 +143,10 @@ class InviteCollaboratorsVMTest {
         whenever(mockGetInviteeResponse.result).thenReturn(mockGetInviteesResult)
 
         //make a network call to fetch roles
-        inviteCollabVM.getInviteesApi(mockmShareItem, mockFilter)
+        inviteCollabVM.getInviteesApi(mockShareItem, mockFilter)
 
         //VM reacts by updating its LiveData correctly
-        assertEquals(inviteCollabVM.invitees.value?.data, mockGetInviteesResult)
+        assertEquals(mockGetInviteesResult, inviteCollabVM.invitees.value?.data)
     }
 
     @Test
@@ -159,13 +156,13 @@ class InviteCollaboratorsVMTest {
         whenever(mockGetInviteeResponse.exception).thenReturn(mockHttpForbiddenException)
 
         //make a network call to fetch roles
-        inviteCollabVM.getInviteesApi(mockmShareItem, mockFilter)
+        inviteCollabVM.getInviteesApi(mockShareItem, mockFilter)
 
         //should be null since the request was a failure
-        assertEquals(inviteCollabVM.invitees.value?.data, null)
+        assertEquals(null, inviteCollabVM.invitees.value?.data)
 
         //associated error message
-        assertEquals(inviteCollabVM.invitees.value?.strCode, R.string.box_sharesdk_insufficient_permissions)
+        assertEquals(R.string.box_sharesdk_insufficient_permissions, inviteCollabVM.invitees.value?.strCode)
     }
 
     @Test
@@ -175,13 +172,13 @@ class InviteCollaboratorsVMTest {
         whenever(mockGetInviteeResponse.exception).thenReturn(mockBoxNetworkErrorException)
 
         //make a network call to fetch roles
-        inviteCollabVM.getInviteesApi(mockmShareItem, mockFilter)
+        inviteCollabVM.getInviteesApi(mockShareItem, mockFilter)
 
         //should be null since the request was a failure
-        assertEquals(inviteCollabVM.invitees.value?.data, null)
+        assertEquals(null, inviteCollabVM.invitees.value?.data)
 
         //associated error message
-        assertEquals(inviteCollabVM.invitees.value?.strCode, R.string.box_sharesdk_network_error)
+        assertEquals(R.string.box_sharesdk_network_error, inviteCollabVM.invitees.value?.strCode)
     }
 
     @Test
@@ -201,17 +198,17 @@ class InviteCollaboratorsVMTest {
         val name = inviteCollabVM.updateFailureStats(boxResponse, failedCollaboratorList)
 
         //the names should be equal since dummy name was already added.
-        assertEquals(name, dummyName)
-        assertEquals(failedCollaboratorList.size, 0)
+        assertEquals(dummyName, name)
+        assertEquals(0, failedCollaboratorList.size)
     }
 
     @Test
     fun `test update failure stats failed to add collaborator`() {
         //configs
+        val dummyName = "Box User"
         val boxResponse: BoxResponse<BoxCollaboration> = mock()
         whenever(boxResponse.exception).thenReturn(mockFailedToAddException)
         val boxUser: BoxUser = mock()
-        val dummyName = "Box User"
         whenever(boxUser.login).thenReturn(dummyName)
         val boxRequestShare: BoxRequestsShare.AddCollaboration = mock()
         whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
@@ -222,12 +219,154 @@ class InviteCollaboratorsVMTest {
         inviteCollabVM.updateFailureStats(boxResponse, failedCollaboratorList)
 
         //the names should be equal since dummy name was already added.
-        assertEquals(failedCollaboratorList[0], dummyName)
-        assertEquals(failedCollaboratorList.size, 1)
+        assertEquals(dummyName, failedCollaboratorList[0])
+        assertEquals(1, failedCollaboratorList.size)
 
+        //simulate second failure
         inviteCollabVM.updateFailureStats(boxResponse, failedCollaboratorList)
 
         //more failure should update the size to 2
-        assertEquals(failedCollaboratorList.size, 2)
+        assertEquals(2, failedCollaboratorList.size)
+    }
+
+    @Test
+    fun `test process request success size 1 non null`() {
+        //configs
+        val dummyName = "Box User"
+        val boxResponse: BoxResponse<BoxCollaboration> = mock()
+        val boxUser: BoxUser = mock()
+        whenever(boxUser.login).thenReturn(dummyName)
+        val boxRequestShare: BoxCollaboration = mock()
+        whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
+        whenever(boxResponse.result).thenReturn(boxRequestShare)
+
+        val boxResponses: BoxResponseBatch = mock()
+        val boxResponseList = arrayListOf<BoxResponse<BoxObject>>()
+        boxResponseList.add(boxResponse as BoxResponse<BoxObject>)
+        whenever(boxResponses.responses).thenReturn(boxResponseList)
+
+        //process request
+        val result = inviteCollabVM.processRequestSuccess(boxResponses)
+
+        //compare values
+        assertEquals(R.string.box_sharesdk_collaborator_invited, Integer.parseInt(result[0]))
+        assertEquals(dummyName, result[1])
+    }
+
+    @Test
+    fun `test process request success size 1 getAccessibly by is null`() {
+        //configs
+        val dummyName = "Box User"
+        val boxResponse: BoxResponse<BoxCollaboration> = mock()
+        val boxRequestShare: BoxCollaboration = mock()
+        val boxUser: BoxUser = mock()
+        whenever(boxUser.login).thenReturn(dummyName)
+        whenever(boxRequestShare.accessibleBy).thenReturn(null)
+        whenever(boxResponse.result).thenReturn(boxRequestShare)
+
+        val boxResponses: BoxResponseBatch = mock()
+        val boxResponseList = arrayListOf<BoxResponse<BoxObject>>()
+        boxResponseList.add(boxResponse as BoxResponse<BoxObject>)
+        whenever(boxResponses.responses).thenReturn(boxResponseList)
+
+        //process request
+        val result = inviteCollabVM.processRequestSuccess(boxResponses)
+
+        //compare values
+        assertEquals(R.string.box_sharesdk_collaborators_invited, Integer.parseInt(result[0]))
+        assertEquals(null, result[1])
+    }
+
+    @Test
+    fun `test process request success greater than 1`() {
+        //configs
+        val dummyName = "Box User"
+        val boxResponse: BoxResponse<BoxCollaboration> = mock()
+        val boxRequestShare: BoxCollaboration = mock()
+        val boxUser: BoxUser = mock()
+        whenever(boxUser.login).thenReturn(dummyName)
+        whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
+        whenever(boxResponse.result).thenReturn(boxRequestShare)
+
+        val boxResponses: BoxResponseBatch = mock()
+        val boxResponseList = arrayListOf<BoxResponse<BoxObject>>()
+        boxResponseList.add(boxResponse as BoxResponse<BoxObject>)
+        boxResponseList.add(boxResponse as BoxResponse<BoxObject>)
+        whenever(boxResponses.responses).thenReturn(boxResponseList)
+
+        //process request
+        val result = inviteCollabVM.processRequestSuccess(boxResponses)
+
+        //compare values
+        assertEquals(R.string.box_sharesdk_collaborators_invited, Integer.parseInt(result[0]))
+        assertEquals(null, result[1])
+    }
+
+    @Test
+    fun `test process request failed collaborator non empty`() {
+        //configs
+        val dummyName = "already added user"
+        val alreadyAddedCount = 1
+        val failedCollabs = arrayListOf<String>()
+        failedCollabs.add("failure 1")
+        failedCollabs.add("failure 2")
+        val res = "failure 1 failure 2"
+
+
+        //process request
+        val result = inviteCollabVM.processRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
+
+        //compare values (ignored already added since failure to add is more important)
+        assertEquals(R.string.box_sharesdk_following_collaborators_error, Integer.parseInt(result[0]))
+        assertEquals(res, result[1])
+
+    }
+
+    @Test
+    fun `test process request failed collaborator empty alreadyAddedCount 1`() {
+        //configs
+        val dummyName = "already added user"
+        val alreadyAddedCount = 1
+        val failedCollabs = arrayListOf<String>()
+
+        //process request
+        val result = inviteCollabVM.processRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
+
+        //compare values
+        assertEquals(R.string.box_sharesdk_has_already_been_invited, Integer.parseInt(result[0]))
+        assertEquals(dummyName, result[1])
+
+    }
+
+    @Test
+    fun `test process request failed collaborator empty alreadyAddedCount greater than 1`() {
+        //configs
+        val dummyName = "already added user"
+        val alreadyAddedCount = 2
+        val failedCollabs = arrayListOf<String>()
+
+        //process request
+        val result = inviteCollabVM.processRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
+
+        //compare values
+        assertEquals(R.string.box_sharesdk_num_has_already_been_invited, Integer.parseInt(result[0]))
+        assertEquals(Integer.toString(alreadyAddedCount), result[1])
+
+    }
+
+    @Test
+    fun `test process request failed collaborator empty alreadyAddedCount 0`() {
+        //configs
+        val dummyName = "already added user"
+        val alreadyAddedCount = 0
+        val failedCollabs = arrayListOf<String>()
+
+        //process request
+        val result = inviteCollabVM.processRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
+
+        //compare values
+        assertEquals(R.string.box_sharesdk_unable_to_invite, Integer.parseInt(result[0]))
+        assertEquals(null, result[1])
+
     }
 }
