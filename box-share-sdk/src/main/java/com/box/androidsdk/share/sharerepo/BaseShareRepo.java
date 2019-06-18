@@ -16,7 +16,7 @@ import java.util.List;
  * The Base ShareRepo class that will be used by ViewModels to make calls to the backend and should be extended by other ShareRepos
  */
 public abstract class BaseShareRepo {
-    protected  ShareController mController;
+    protected ShareController mController;
 
     protected final MutableLiveData<BoxResponse<BoxIteratorInvitees>> mInvitees = new MutableLiveData<>();
     protected final MutableLiveData<BoxResponse<BoxCollaborationItem>> mFetchRoleItem = new MutableLiveData<>();

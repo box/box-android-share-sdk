@@ -9,11 +9,9 @@ import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.share.api.ShareController;
 
 /**
- * A repo class that will be used by ViewModel to make calls to the backend.
+ * A repo class that will be used by ViewModel to make calls to the backend
  */
 public class ShareRepo extends BaseShareRepo {
-
-
 
     public ShareRepo(ShareController controller) {
         super(controller);
@@ -43,7 +41,6 @@ public class ShareRepo extends BaseShareRepo {
             }
         });
     }
-
 
     @Override
     /**
