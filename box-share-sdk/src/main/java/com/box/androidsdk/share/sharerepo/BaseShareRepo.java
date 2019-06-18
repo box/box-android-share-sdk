@@ -27,14 +27,14 @@ public abstract class BaseShareRepo {
     }
 
     /**
-     * Get a list of invitees based on the filter term on an item and update the corresponding LiveData
+     * Get a list of invitees based on the filter term on an item and update the corresponding LiveData.
      * @param boxCollaborationItem the item to get invitees on
      * @param filter the filter term
      */
     public abstract void getInviteesApi(BoxCollaborationItem boxCollaborationItem, String filter);
 
     /**
-     * Get an item with allowed roles for the invitees and update the corresponding LiveData
+     * Get an item with allowed roles for the invitees and update the corresponding LiveData.
      * @param boxCollaborationItem the item to fetch roles on
      */
     public abstract void fetchRolesApi(BoxCollaborationItem boxCollaborationItem);
@@ -48,7 +48,7 @@ public abstract class BaseShareRepo {
     public abstract void addCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails);
 
     /**
-     * Returns a LiveData which holds a list of invitees based on your filter
+     * Returns a LiveData which holds a list of invitees based on your filter.
      * @return a LiveData which holds a list of invitees based on your filter
      */
     public LiveData<BoxResponse<BoxIteratorInvitees>> getInvitees() {
@@ -56,7 +56,7 @@ public abstract class BaseShareRepo {
     }
 
     /**
-     * Returns a LiveData which holds the item with allowed roles for new invitees
+     * Returns a LiveData which holds the item with allowed roles for new invitees.
      * @return a LiveData which holds the item with allowed roles for new invitees
      */
     public LiveData<BoxResponse<BoxCollaborationItem>> getFetchRoleItem() {

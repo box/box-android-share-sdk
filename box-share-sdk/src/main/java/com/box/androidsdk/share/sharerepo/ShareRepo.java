@@ -8,11 +8,9 @@ import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.share.api.ShareController;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 /**
- * A repo class that will be used by ViewModel to make calls to the backend
+ * This is an extension of BaseShareRepo that will be used by ViewModel to make calls to the backend.
  */
 public class ShareRepo extends BaseShareRepo {
 
@@ -20,9 +18,8 @@ public class ShareRepo extends BaseShareRepo {
         super(controller);
     }
 
-
     /**
-     * Get a list of invitees based on the filter term on an item and update the corresponding LiveData
+     * Get a list of invitees based on the filter term on an item and update the corresponding LiveData.
      * @param boxCollaborationItem the item to get invitees on
      * @param filter the filter term
      */
@@ -31,7 +28,7 @@ public class ShareRepo extends BaseShareRepo {
     }
 
     /**
-     * Generic helper method to post the response from the task to a LiveData
+     * Post the response from the task to a LiveData.
      * @param task the task to wait for respond from
      * @param source the LiveData to update with the response
      */
@@ -45,7 +42,7 @@ public class ShareRepo extends BaseShareRepo {
     }
 
     /**
-     * Get an item with allowed roles for the invitees and update the corresponding LiveData
+     * Get an item with allowed roles for the invitees and update the corresponding LiveData.
      * @param boxCollaborationItem the item to fetch roles on
      */
     public void fetchRolesApi(BoxCollaborationItem boxCollaborationItem) {
