@@ -181,17 +181,23 @@ class InviteCollaboratorsVMTest {
         assertEquals(R.string.box_sharesdk_network_error, inviteCollabVM.invitees.value?.strCode)
     }
 
-    @Test
-    fun `test update failure stats already added case`() {
-        //configs
+    private fun createAlreadyAddedExceptionBoxResponse(dummyName: String): BoxResponse<BoxCollaboration> {
         val boxResponse: BoxResponse<BoxCollaboration> = mock()
         whenever(boxResponse.exception).thenReturn(mockAlreadyAddedCollabException)
         val boxUser: BoxUser = mock()
-        val dummyName = "Box User"
+
         whenever(boxUser.login).thenReturn(dummyName)
         val boxRequestShare: BoxRequestsShare.AddCollaboration = mock()
         whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
         whenever(boxResponse.request).thenReturn(boxRequestShare)
+        return boxResponse
+    }
+
+    @Test
+    fun `test update failure stats already added case`() {
+        //configs
+        val dummyName = "Box User"
+        val boxResponse = createAlreadyAddedExceptionBoxResponse(dummyName)
         val failedCollaboratorList = arrayListOf<String>()
 
         //update stats
@@ -201,11 +207,7 @@ class InviteCollaboratorsVMTest {
         assertEquals(dummyName, name)
         assertEquals(0, failedCollaboratorList.size)
     }
-
-    @Test
-    fun `test update failure stats failed to add collaborator`() {
-        //configs
-        val dummyName = "Box User"
+    private fun createFailedToAddException(dummyName: String): BoxResponse<BoxCollaboration> {
         val boxResponse: BoxResponse<BoxCollaboration> = mock()
         whenever(boxResponse.exception).thenReturn(mockFailedToAddException)
         val boxUser: BoxUser = mock()
@@ -213,6 +215,14 @@ class InviteCollaboratorsVMTest {
         val boxRequestShare: BoxRequestsShare.AddCollaboration = mock()
         whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
         whenever(boxResponse.request).thenReturn(boxRequestShare)
+        return boxResponse
+    }
+
+    @Test
+    fun `test update failure stats failed to add collaborator`() {
+        //configs
+        val dummyName = "Box User"
+        val boxResponse = createFailedToAddException(dummyName)
         val failedCollaboratorList = arrayListOf<String>()
 
         //update stats
@@ -229,16 +239,24 @@ class InviteCollaboratorsVMTest {
         assertEquals(2, failedCollaboratorList.size)
     }
 
+    private fun createSuccessResponse(dummyName: String?): BoxResponse<BoxCollaboration> {
+        val boxResponse: BoxResponse<BoxCollaboration> = mock()
+        var boxUser: BoxUser? = null
+        if (dummyName != null) {
+            boxUser = mock()
+            whenever(boxUser.login).thenReturn(dummyName)
+        }
+        val boxRequestShare: BoxCollaboration = mock()
+        whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
+        whenever(boxResponse.result).thenReturn(boxRequestShare)
+        return boxResponse
+    }
+
     @Test
     fun `test process request success size 1 non null`() {
         //configs
         val dummyName = "Box User"
-        val boxResponse: BoxResponse<BoxCollaboration> = mock()
-        val boxUser: BoxUser = mock()
-        whenever(boxUser.login).thenReturn(dummyName)
-        val boxRequestShare: BoxCollaboration = mock()
-        whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
-        whenever(boxResponse.result).thenReturn(boxRequestShare)
+        val boxResponse = createSuccessResponse(dummyName)
 
         val boxResponses: BoxResponseBatch = mock()
         val boxResponseList = arrayListOf<BoxResponse<BoxObject>>()
@@ -256,13 +274,8 @@ class InviteCollaboratorsVMTest {
     @Test
     fun `test process request success size 1 getAccessibly by is null`() {
         //configs
-        val dummyName = "Box User"
-        val boxResponse: BoxResponse<BoxCollaboration> = mock()
-        val boxRequestShare: BoxCollaboration = mock()
-        val boxUser: BoxUser = mock()
-        whenever(boxUser.login).thenReturn(dummyName)
-        whenever(boxRequestShare.accessibleBy).thenReturn(null)
-        whenever(boxResponse.result).thenReturn(boxRequestShare)
+        val dummyName = null
+        val boxResponse = createSuccessResponse(dummyName)
 
         val boxResponses: BoxResponseBatch = mock()
         val boxResponseList = arrayListOf<BoxResponse<BoxObject>>()
@@ -281,12 +294,7 @@ class InviteCollaboratorsVMTest {
     fun `test process request success greater than 1`() {
         //configs
         val dummyName = "Box User"
-        val boxResponse: BoxResponse<BoxCollaboration> = mock()
-        val boxRequestShare: BoxCollaboration = mock()
-        val boxUser: BoxUser = mock()
-        whenever(boxUser.login).thenReturn(dummyName)
-        whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
-        whenever(boxResponse.result).thenReturn(boxRequestShare)
+        val boxResponse: BoxResponse<BoxCollaboration> = createSuccessResponse(dummyName)
 
         val boxResponses: BoxResponseBatch = mock()
         val boxResponseList = arrayListOf<BoxResponse<BoxObject>>()

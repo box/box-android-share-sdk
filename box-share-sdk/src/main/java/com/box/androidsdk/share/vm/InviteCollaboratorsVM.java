@@ -143,7 +143,7 @@ public class InviteCollaboratorsVM extends BaseVM {
     private InviteCollaboratorsDataWrapper handleCollaboratorsInvited(BoxResponseBatch responses) {
         int strCode = R.string.box_sharesdk_generic_error; //default generic error
         boolean mInvitationFailed;
-        String subMssg = null;
+        String subMssg;
 
         int alreadyAddedCount = 0;
         boolean didRequestFail = false;
@@ -170,7 +170,6 @@ public class InviteCollaboratorsVM extends BaseVM {
             String[] result = processRequestSuccess(responses);
             strCode = Integer.parseInt(result[0]);
             subMssg = result[1];
-
         }
 
         mInvitationFailed = (didRequestFail && !failedCollaboratorsList.isEmpty());
