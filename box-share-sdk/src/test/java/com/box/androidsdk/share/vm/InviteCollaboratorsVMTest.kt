@@ -94,10 +94,6 @@ class InviteCollaboratorsVMTest {
 
     @Test
     fun `test fetch role success`() {
-        //values are initially null
-        assertNull(shareRepo.mFetchRoleItem.value)
-        assertNull(inviteCollabVM.fetchRoleItem.value)
-
         //configs
         whenever(mockFetchRolesResponse.isSuccess).thenReturn(true)
         whenever(mockFetchRolesResponse.result).thenReturn(mockBoxCollaborationItem)
@@ -105,26 +101,17 @@ class InviteCollaboratorsVMTest {
         //make a network call to fetch roles
         inviteCollabVM.fetchRolesApi(mockmShareItem)
 
-        //ShareRepo and VM reacts by updating its LiveData correctly
-        assertEquals(shareRepo.mFetchRoleItem.value, mockFetchRolesResponse)
+        //VM reacts by updating its LiveData correctly
         assertEquals(inviteCollabVM.fetchRoleItem.value?.data, mockBoxCollaborationItem)
     }
 
     @Test
     fun `test fetch role failure`() {
-        //values are initially null
-        assertNull(shareRepo.mFetchRoleItem.value)
-        assertNull(inviteCollabVM.fetchRoleItem.value)
-
         //configs
         whenever(mockFetchRolesResponse.isSuccess).thenReturn(false)
 
         //make a network call to fetch roles
         inviteCollabVM.fetchRolesApi(mockmShareItem)
-
-
-        //ShareRepo reacts to data changes
-        assertEquals(shareRepo.mFetchRoleItem.value, mockFetchRolesResponse)
 
         //should be null since the request was a failure
         assertEquals(inviteCollabVM.fetchRoleItem.value?.data, null)
@@ -135,10 +122,6 @@ class InviteCollaboratorsVMTest {
 
     @Test
     fun `test get invitees failure http forbidden`() {
-        //values are initially null
-        assertNull(shareRepo.invitees.value)
-        assertNull(inviteCollabVM.invitees.value)
-
         //configs
         whenever(mockGetInviteeResponse.isSuccess).thenReturn(false)
         whenever(mockGetInviteeResponse.exception).thenReturn(mockHttpForbiddenException)
@@ -146,12 +129,10 @@ class InviteCollaboratorsVMTest {
         //make a network call to fetch roles
         inviteCollabVM.getInviteesApi(mockmShareItem, mockFilter)
 
-
-        //ShareRepo reacts to data changes
-        assertEquals(shareRepo.invitees.value, mockGetInviteeResponse)
-
         //should be null since the request was a failure
         assertEquals(inviteCollabVM.invitees.value?.data, null)
+
+        //associated error message
         assertEquals(inviteCollabVM.invitees.value?.strCode, R.string.box_sharesdk_insufficient_permissions)
     }
 }
