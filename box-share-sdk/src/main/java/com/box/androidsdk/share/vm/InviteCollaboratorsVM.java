@@ -134,73 +134,118 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
 
     private InviteCollaboratorsDataWrapper handleCollaboratorsInvited(BoxResponseBatch responses) {
-        int strCode;
+        int strCode = R.string.box_sharesdk_generic_error; //default generic error
         boolean mInvitationFailed;
         String subMssg = null;
 
         int alreadyAddedCount = 0;
         boolean didRequestFail = false;
         String name = "";
-        List<String> failedCollaboratorsList = new ArrayList<String>();
+        HashSet<Integer> failureCodes = generateFailureCodes();
+
+        List<String> failedCollaboratorsList = new ArrayList<>();
         for (BoxResponse<BoxCollaboration> r : responses.getResponses()) {
             if (!r.isSuccess()) {
-                HashSet<Integer> failureCodes = new HashSet<Integer>();
-                failureCodes.add(HttpURLConnection.HTTP_BAD_REQUEST );
-                failureCodes.add(HttpURLConnection.HTTP_FORBIDDEN);
-                if (r.getException() instanceof BoxException && failureCodes.contains(((BoxException) r.getException()).getResponseCode())) {
+                if (checkIfKnownFailure(r, failureCodes)) {
                     String code = ((BoxException) r.getException()).getAsBoxError().getCode();
                     BoxUser user = (BoxUser) ((BoxRequestsShare.AddCollaboration) r.getRequest()).getAccessibleBy();
-                    if (!SdkUtils.isBlank(code) && code.equals(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR)) {
+
+                    if (alreadyAddedFailure(code)) {
                         alreadyAddedCount++;
                         name = user == null ? "" : user.getLogin();
                     } else {
                         failedCollaboratorsList.add(user == null ? "" : user.getLogin());
                     }
+
                 }
                 didRequestFail = true;
             }
         }
 
         if (didRequestFail) {
-            if (!failedCollaboratorsList.isEmpty()) {
-                StringBuilder collaborators = new StringBuilder();
-                for (int i = 0; i < failedCollaboratorsList.size(); i++) {
-                    collaborators.append(failedCollaboratorsList.get(i));
-                    if (i < failedCollaboratorsList.size() - 1) {
-                        collaborators.append(' ');
-                    }
-                }
-                strCode = R.string.box_sharesdk_following_collaborators_error;
-                subMssg = collaborators.toString();
-
-            } else if (alreadyAddedCount == 1) {
-                strCode = R.string.box_sharesdk_has_already_been_invited;
-                subMssg = name;
-            } else if (alreadyAddedCount > 1) {
-                strCode = R.string.box_sharesdk_num_has_already_been_invited;
-                subMssg = Integer.toString(alreadyAddedCount);
-            } else {
-                strCode = R.string.box_sharesdk_unable_to_invite;
-            }
+            String[] result = processRequestFailure(failedCollaboratorsList, name, alreadyAddedCount);
+            strCode = Integer.parseInt(result[0]);
+            subMssg = result[1];
         } else {
-            if (responses.getResponses().size() == 1) {
-                BoxCollaboration collaboration = (BoxCollaboration) responses.getResponses().get(0).getResult();
-                if (collaboration.getAccessibleBy() == null) {
-                    strCode = R.string.box_sharesdk_collaborators_invited;
-                } else {
-                    String login = ((BoxUser)(collaboration).getAccessibleBy()).getLogin();
-                    strCode = R.string.box_sharesdk_collaborator_invited;
-                    subMssg = login;
-                }
+            String[] result = processRequestSuccess(responses);
+            strCode = Integer.parseInt(result[0]);
+            subMssg = result[1];
 
-            } else {
-                strCode = R.string.box_sharesdk_collaborators_invited;
-            }
         }
 
         mInvitationFailed = (didRequestFail && !failedCollaboratorsList.isEmpty());
 
         return new InviteCollaboratorsDataWrapper(subMssg, strCode, mInvitationFailed);
+    }
+
+    /**
+     * Helper method for processing request if all requests were successful
+     * @param responses the responses that was successful
+     * @return index 0 is string resource code, index 1 is the string formatted part of the message.
+     */
+    private String[] processRequestSuccess(BoxResponseBatch responses) {
+        String[] res = new String[2];
+        if (responses.getResponses().size() == 1) {
+            BoxCollaboration collaboration = (BoxCollaboration) responses.getResponses().get(0).getResult();
+            if (collaboration.getAccessibleBy() == null) {
+                res[0] = Integer.toString(R.string.box_sharesdk_collaborators_invited);
+            } else {
+                String login = ((BoxUser)(collaboration).getAccessibleBy()).getLogin();
+                res[0] = Integer.toString(R.string.box_sharesdk_collaborator_invited);
+                res[1] = login;
+            }
+
+        } else {
+            res[0] = Integer.toString(R.string.box_sharesdk_collaborators_invited);
+        }
+        return res;
+    }
+    /**
+     * Helper method for processing request if any requests were successful
+     * @param failedCollaboratorsList the list of collaborators for whom requests were not successful
+     * @param name the name of a collaborator that is already added
+     * @param alreadyAddedCount how many collaborators were already added
+     * @return index 0 is string resource code, index 1 is the string formatted part of the message.
+     */
+    private String[] processRequestFailure(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
+        String[] res = new String[2];
+        if (!failedCollaboratorsList.isEmpty()) {
+            StringBuilder collaborators = new StringBuilder();
+            for (int i = 0; i < failedCollaboratorsList.size(); i++) {
+                collaborators.append(failedCollaboratorsList.get(i));
+                if (i < failedCollaboratorsList.size() - 1) {
+                    collaborators.append(' ');
+                }
+            }
+            res[0] = Integer.toString(R.string.box_sharesdk_following_collaborators_error);
+            res[1] = collaborators.toString();
+
+        } else if (alreadyAddedCount == 1) {
+            res[0] = Integer.toString(R.string.box_sharesdk_has_already_been_invited);
+            res[1] = name;
+        } else if (alreadyAddedCount > 1) {
+            res[0] = Integer.toString(R.string.box_sharesdk_num_has_already_been_invited);
+            res[1] = Integer.toString(alreadyAddedCount);
+        } else {
+            res[0] = Integer.toString(R.string.box_sharesdk_unable_to_invite);
+        }
+        return res;
+    }
+
+    private boolean alreadyAddedFailure(String code) {
+        return !SdkUtils.isBlank(code) && code.equals(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR);
+    }
+
+    private boolean checkIfKnownFailure(BoxResponse<BoxCollaboration> r, HashSet<Integer> failureCodes) {
+        return r.getException() instanceof BoxException && failureCodes.contains(((BoxException) r.getException()).getResponseCode());
+    }
+
+    private HashSet<Integer> generateFailureCodes() {
+        HashSet<Integer> failureCodes = new HashSet<>();
+        failureCodes.add(HttpURLConnection.HTTP_BAD_REQUEST );
+        failureCodes.add(HttpURLConnection.HTTP_FORBIDDEN);
+
+        return failureCodes;
     }
 
 }
