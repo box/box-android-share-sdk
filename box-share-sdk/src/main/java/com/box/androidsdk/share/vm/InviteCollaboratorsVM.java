@@ -1,5 +1,6 @@
 package com.box.androidsdk.share.vm;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
@@ -138,6 +139,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @param responses the batch response to transform
      * @return the transformed model
      */
+    @VisibleForTesting
     private InviteCollaboratorsDataWrapper handleCollaboratorsInvited(BoxResponseBatch responses) {
         int strCode = R.string.box_sharesdk_generic_error; //default generic error
         boolean mInvitationFailed;
@@ -147,28 +149,21 @@ public class InviteCollaboratorsVM extends BaseVM {
         boolean didRequestFail = false;
         String name = "";
         HashSet<Integer> failureCodes = generateFailureCodes();
-
         List<String> failedCollaboratorsList = new ArrayList<>();
+
+
         for (BoxResponse<BoxCollaboration> r : responses.getResponses()) {
             if (!r.isSuccess()) {
                 if (checkIfKnownFailure(r, failureCodes)) {
-                    String code = ((BoxException) r.getException()).getAsBoxError().getCode();
-                    BoxUser user = (BoxUser) ((BoxRequestsShare.AddCollaboration) r.getRequest()).getAccessibleBy();
-
-                    if (alreadyAddedFailure(code)) {
-                        alreadyAddedCount++;
-                        name = user == null ? "" : user.getLogin();
-                    } else {
-                        failedCollaboratorsList.add(user == null ? "" : user.getLogin());
-                    }
-
+                    name = updateFailureStats(r, failedCollaboratorsList);
+                    alreadyAddedCount += name != null ? 1 : 0;
                 }
                 didRequestFail = true;
             }
         }
 
         if (didRequestFail) {
-            String[] result = processRequestFailure(failedCollaboratorsList, name, alreadyAddedCount);
+            String[] result = processRequestFailure(failedCollaboratorsList, name.toString(), alreadyAddedCount);
             strCode = Integer.parseInt(result[0]);
             subMssg = result[1];
         } else {
@@ -184,11 +179,31 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
 
     /**
+     * A helper method for updating attributes used for keeping track of stats for failure
+     * @param r the response to get request infos from
+     * @param failedCollaboratorsList list of failed collabs to be updated
+     * @return the name of collaborator that is already added
+     */
+    @VisibleForTesting
+    String updateFailureStats(BoxResponse<BoxCollaboration> r, List<String> failedCollaboratorsList) {
+        String code = ((BoxException) r.getException()).getAsBoxError().getCode();
+        BoxUser user = (BoxUser) ((BoxRequestsShare.AddCollaboration) r.getRequest()).getAccessibleBy();
+
+        if (alreadyAddedFailure(code)) {
+            return user == null ? "" : user.getLogin();
+        } else {
+            failedCollaboratorsList.add(user == null ? "" : user.getLogin());
+            return null;
+        }
+    }
+
+    /**
      * Helper method for processing request if all requests were successful
      * @param responses the responses that was successful
      * @return index 0 is string resource code, index 1 is the string formatted part of the message.
      */
-    private String[] processRequestSuccess(BoxResponseBatch responses) {
+    @VisibleForTesting
+    String[] processRequestSuccess(BoxResponseBatch responses) {
         String[] res = new String[2];
         if (responses.getResponses().size() == 1) {
             BoxCollaboration collaboration = (BoxCollaboration) responses.getResponses().get(0).getResult();
@@ -212,7 +227,8 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @param alreadyAddedCount how many collaborators were already added
      * @return index 0 is string resource code, index 1 is the string formatted part of the message.
      */
-    private String[] processRequestFailure(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
+    @VisibleForTesting
+    String[] processRequestFailure(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
         String[] res = new String[2];
         if (!failedCollaboratorsList.isEmpty()) {
             StringBuilder collaborators = new StringBuilder();
@@ -245,6 +261,10 @@ public class InviteCollaboratorsVM extends BaseVM {
         return r.getException() instanceof BoxException && failureCodes.contains(((BoxException) r.getException()).getResponseCode());
     }
 
+    /**
+     * Generate failure codes for checking known errors
+     * @return a HashSet of known errors
+     */
     private HashSet<Integer> generateFailureCodes() {
         HashSet<Integer> failureCodes = new HashSet<>();
         failureCodes.add(HttpURLConnection.HTTP_BAD_REQUEST );
