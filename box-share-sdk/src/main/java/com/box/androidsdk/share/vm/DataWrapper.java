@@ -10,7 +10,7 @@ public class DataWrapper<T> {
     public static final int SUCCEESS = -1;
 
     /**
-     * Update the item with the data passed in. Use this if the request was successful.
+     * Updates the item with the data passed in. Use this if the request was successful.
      * @param data the data from the result
      */
     public void success(T data) {
@@ -19,7 +19,7 @@ public class DataWrapper<T> {
     }
 
     /**
-     * Update the item with the stringCode passed in. Use this if request was unsuccessful
+     * Updates the item with the stringCode passed in. Use this if request was unsuccessful
      * @param strCode The String resource code for the error message
      */
     public void failure(int strCode) {

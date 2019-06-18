@@ -37,7 +37,7 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
 
     /**
-     * Make a backend call through share repo for fetching roles.
+     * Makes a backend call through share repo for fetching roles.
      * @param item the item to fetch roles on
      */
     public void fetchRolesApi(BoxCollaborationItem item) {
@@ -45,7 +45,7 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
 
     /**
-     * Make a backend call through share repo for adding new collaborators.
+     * Makes a backend call through share repo for adding new collaborators.
      * @param boxCollaborationItem the item to add collaborators on
      * @param selectedRole the role for the new collaborators
      * @param emails a list of collaborators represented in emails
@@ -55,7 +55,7 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
 
     /**
-     * Make a backend call through share repo for getting invitees.
+     * Makes a backend call through share repo for getting invitees.
      * @param boxCollaborationItem the item to get invitees on
      * @param filter the term used for filtering invitees
      */
@@ -262,7 +262,7 @@ public class InviteCollaboratorsVM extends BaseVM {
     }
 
     /**
-     * Generate failure codes for checking known errors
+     * Generates failure codes for checking known errors
      * @return a HashSet of known errors
      */
     private HashSet<Integer> generateFailureCodes() {
