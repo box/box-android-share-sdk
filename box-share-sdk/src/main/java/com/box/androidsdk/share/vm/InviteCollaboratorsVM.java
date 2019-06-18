@@ -163,7 +163,7 @@ public class InviteCollaboratorsVM extends BaseVM {
         }
 
         if (didRequestFail) {
-            String[] result = processRequestFailure(failedCollaboratorsList, name.toString(), alreadyAddedCount);
+            String[] result = processRequestFailure(failedCollaboratorsList, name, alreadyAddedCount);
             strCode = Integer.parseInt(result[0]);
             subMssg = result[1];
         } else {
