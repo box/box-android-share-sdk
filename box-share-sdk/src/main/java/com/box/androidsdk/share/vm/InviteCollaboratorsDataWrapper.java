@@ -14,8 +14,8 @@ public class InviteCollaboratorsDataWrapper extends DataWrapper<String> {
     }
 
     /**
-     * Returns true if all invitation succeeded.
-     * @return true if all invitation succeeded
+     * Returns true if all invitations succeeded.
+     * @return true if all invitations succeeded
      */
     public boolean isSuccess() {
         return !isInvitationFailed();
