@@ -30,7 +30,6 @@ class InviteCollaboratorsVMTest {
 
     private val shareController: ShareController = mock()
 
-    private val mockBoxCollaborationItem: BoxCollaborationItem = mock()
     private val mockEmailList: Array<String> = arrayOf("boxuser@box.com", "boxuser2@box.com")
     private val mockSelectedRole: BoxCollaboration.Role = BoxCollaboration.Role.EDITOR
     private val mockFilter: String = "filter"
@@ -46,12 +45,12 @@ class InviteCollaboratorsVMTest {
     private val mockFailedToAddException: BoxException = mock()
     private val mockHttpForbiddenException: BoxException = mock()
     private val mockBoxNetworkErrorException: BoxException = mock()
-    private val mockAlreadyAddedCollabException: BoxException = mock()
+    private val mockAlreadyCollabException: BoxException = mock()
     private val mockBadRequestException: BoxException = mock()
 
     private val mockGetInviteesResult: BoxIteratorInvitees = mock()
     private val mockFetchRoleItemResult: BoxCollaborationItem = mock()
-    private val mockAddCollabResult: BoxResponseBatch = mock()
+    private lateinit var mockAddCollabResult: BoxResponseBatch
 
     private lateinit var shareRepo: BaseShareRepo
 
@@ -79,8 +78,8 @@ class InviteCollaboratorsVMTest {
 
         val boxErrorAlreadyAdded: BoxError = mock()
         whenever(boxErrorAlreadyAdded.code).thenReturn(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR)
-        whenever(mockAlreadyAddedCollabException.asBoxError).thenReturn(boxErrorAlreadyAdded)
-        whenever(mockAlreadyAddedCollabException.responseCode).thenReturn(HttpsURLConnection.HTTP_BAD_REQUEST) //not sure it it is bad request but good enough for testing
+        whenever(mockAlreadyCollabException.asBoxError).thenReturn(boxErrorAlreadyAdded)
+        whenever(mockAlreadyCollabException.responseCode).thenReturn(HttpsURLConnection.HTTP_BAD_REQUEST) //not sure it it is bad request but good enough for testing
 
         val boxErrorFailedToAdd: BoxError = mock()
         whenever(boxErrorFailedToAdd.code).thenReturn("")
@@ -227,7 +226,7 @@ class InviteCollaboratorsVMTest {
     fun `test update failure stats already added case`() {
         //configs
         val dummyName = "Box User"
-        val boxResponse = createFailureException(dummyName, mockAlreadyAddedCollabException)
+        val boxResponse = createFailureException(dummyName, mockAlreadyCollabException)
         val failedCollaboratorList = arrayListOf<String>()
 
         //update stats
@@ -382,8 +381,8 @@ class InviteCollaboratorsVMTest {
         val boxResponse = createSuccessResponse("user1")
         val boxResponse2 = createSuccessResponse("user2")
         val boxResponse3 = createSuccessResponse("user3")
-        val boxResponseBatch = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
-        whenever(mockAddCollabsResponse.result).thenReturn(boxResponseBatch)
+        mockAddCollabResult= createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        whenever(mockAddCollabsResponse.result).thenReturn(mockAddCollabResult)
 
         //process request
         inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
@@ -399,14 +398,14 @@ class InviteCollaboratorsVMTest {
         //configs
         val dummyName = "Box User"
         val boxResponse = createSuccessResponse(dummyName)
-        val boxResponseBatch = createBoxResponseBatch(boxResponse)
-        whenever(mockAddCollabsResponse.result).thenReturn(boxResponseBatch)
+        mockAddCollabResult = createBoxResponseBatch(boxResponse)
+        whenever(mockAddCollabsResponse.result).thenReturn(mockAddCollabResult)
 
         //process request
         inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
         val res = inviteCollabVM.addCollabs
 
-        assertEquals(true, res.value?.isSuccess )
+        assertEquals(true, res.value?.isSuccess)
         assertEquals(dummyName, res.value?.mData )
         assertEquals(R.string.box_sharesdk_collaborator_invited, res.value?.strCode)
     }
@@ -416,9 +415,9 @@ class InviteCollaboratorsVMTest {
         //configs
         val dummyName = "user2"
         val boxResponse = createSuccessResponse("user1")
-        val boxResponse2 = createFailureException(dummyName, mockAlreadyAddedCollabException)
-        val boxResponseBatch = createBoxResponseBatch(boxResponse, boxResponse2)
-        whenever(mockAddCollabsResponse.result).thenReturn(boxResponseBatch)
+        val boxResponse2 = createFailureException(dummyName, mockAlreadyCollabException)
+        mockAddCollabResult = createBoxResponseBatch(boxResponse, boxResponse2)
+        whenever(mockAddCollabsResponse.result).thenReturn(mockAddCollabResult)
 
         //process request
         inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
@@ -433,10 +432,10 @@ class InviteCollaboratorsVMTest {
     fun `test add collab succeed 1 already add 2`() {
         //configs
         val boxResponse = createSuccessResponse("user1")
-        val boxResponse2 = createFailureException("user2", mockAlreadyAddedCollabException)
-        val boxResponse3 = createFailureException("user3", mockAlreadyAddedCollabException)
-        val boxResponseBatch = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
-        whenever(mockAddCollabsResponse.result).thenReturn(boxResponseBatch)
+        val boxResponse2 = createFailureException("user2", mockAlreadyCollabException)
+        val boxResponse3 = createFailureException("user3", mockAlreadyCollabException)
+        mockAddCollabResult= createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        whenever(mockAddCollabsResponse.result).thenReturn(mockAddCollabResult)
 
         //process request
         inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
@@ -453,8 +452,8 @@ class InviteCollaboratorsVMTest {
         val failedName = "user2"
         val boxResponse = createSuccessResponse("user1")
         val boxResponse2 = createFailureException("user2", mockFailedToAddException)
-        val boxResponseBatch = createBoxResponseBatch(boxResponse, boxResponse2)
-        whenever(mockAddCollabsResponse.result).thenReturn(boxResponseBatch)
+        mockAddCollabResult = createBoxResponseBatch(boxResponse, boxResponse2)
+        whenever(mockAddCollabsResponse.result).thenReturn(mockAddCollabResult)
 
         //process request
         inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
@@ -473,8 +472,8 @@ class InviteCollaboratorsVMTest {
         val boxResponse = createSuccessResponse("user1")
         val boxResponse2 = createFailureException(failedName1, mockFailedToAddException)
         val boxResponse3 = createFailureException(failedName2, mockFailedToAddException)
-        val boxResponseBatch = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
-        whenever(mockAddCollabsResponse.result).thenReturn(boxResponseBatch)
+        mockAddCollabResult = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        whenever(mockAddCollabsResponse.result).thenReturn(mockAddCollabResult)
 
         //process request
         inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)

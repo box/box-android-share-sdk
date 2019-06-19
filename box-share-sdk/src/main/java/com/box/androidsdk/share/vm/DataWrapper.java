@@ -7,7 +7,7 @@ package com.box.androidsdk.share.vm;
 public class DataWrapper<T> {
     protected T mData;
     protected int mStrCode;
-    public static final int SUCCEESS = -1;
+    public static final int SUCCESS = -1;
 
     /**
      * Updates the item with the data passed in. Use this if the request was successful.
@@ -15,7 +15,7 @@ public class DataWrapper<T> {
      */
     public void success(T data) {
         this.mData = data;
-        this.mStrCode = SUCCEESS;
+        this.mStrCode = SUCCESS;
     }
 
     /**
