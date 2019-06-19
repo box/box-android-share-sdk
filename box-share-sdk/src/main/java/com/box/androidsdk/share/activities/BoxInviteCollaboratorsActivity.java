@@ -4,24 +4,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.FragmentTransaction;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
+import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
-import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.fragments.CollaboratorsRolesFragment;
 import com.box.androidsdk.share.fragments.InviteCollaboratorsFragment;
+
+import java.util.ArrayList;
 
 /**
  * Activity used to allow users to invite additional collaborators to the folder. Email addresses will auto complete from the phones address book
  * as well as Box's internal invitee endpoint. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
-public class BoxInviteCollaboratorsActivity extends BoxActivity implements InviteCollaboratorsFragment.InviteCollaboratorsListener {
+public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.OnClickListener{
 
-    private boolean mSendEnabled;
     private static int REQUEST_SHOW_COLLABORATORS = 32;
 
     @Override
@@ -30,6 +32,12 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
         setContentView(R.layout.activity_invite_collaborators);
         initToolbar();
 
+    }
+
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        //to get blackText on status bar. will be moved to BoxActivity after all screens are updated.
     }
 
     @Override
@@ -43,34 +51,24 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
             ft.commit();
         }
         mFragment.setController(mController);
-        ((InviteCollaboratorsFragment)mFragment).setInviteCollaboratorsListener(this);
-        mSendEnabled = ((InviteCollaboratorsFragment)mFragment).areCollaboratorsPresent();
+        ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_invite_collaborators, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem sendMenuItem = menu.findItem(R.id.box_sharesdk_action_send);
-        if (mSendEnabled) {
-            sendMenuItem.setEnabled(true);
-            sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_accent_24dp);
-        } else {
-            sendMenuItem.setEnabled(false);
-            sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_light_24dp);
+    public void onClick(View v) {
+        Bundle data = ((InviteCollaboratorsFragment)mFragment).getData();
+        String collaboratorName = data.getString(CollaboratorsRolesFragment.ARGS_NAME);
+        ArrayList<BoxCollaboration.Role> roles = (ArrayList<BoxCollaboration.Role>) data.getSerializable(CollaboratorsRolesFragment.ARGS_ROLES);
+        BoxCollaboration.Role selectedRole = (BoxCollaboration.Role) data.getSerializable(CollaboratorsRolesFragment.ARGS_SELECTED_ROLE);
+        boolean allowRemove = data.getBoolean(CollaboratorsRolesFragment.ARGS_ALLOW_REMOVE);
+        boolean allowOwnerRole = data.getBoolean(CollaboratorsRolesFragment.ARGS_ALLOW_OWNER_ROLE);
+        BoxCollaboration collaboration = (BoxCollaboration)data.getSerializable(CollaboratorsRolesFragment.ARGS_SERIALIZABLE_EXTRA);
+        if (roles == null || roles.size() == 0) {
+            SdkUtils.toastSafely(getApplicationContext(), R.string.box_sharesdk_cannot_get_collaborators, Toast.LENGTH_SHORT);
+            return;
         }
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public void onShowCollaborators(BoxIteratorCollaborations collaborations) {
-        Intent collabsIntent = BoxCollaborationsActivity.getLaunchIntent(this, (BoxCollaborationItem)mShareItem, mSession, collaborations);
-        startActivityForResult(collabsIntent, REQUEST_SHOW_COLLABORATORS);
+        Intent intent = BoxCollaborationRolesActivity.getLaunchIntent(this, mShareItem, mSession, roles, selectedRole, collaboratorName,allowRemove, allowOwnerRole, collaboration);
+        startActivity(intent);
     }
 
     @Override
@@ -79,37 +77,6 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
             InviteCollaboratorsFragment fragment = (InviteCollaboratorsFragment) getSupportFragmentManager().findFragmentByTag(InviteCollaboratorsFragment.TAG);
             fragment.refreshUi();
         }
-    }
-
-    @Override
-    public void onCollaboratorsPresent() {
-        if (!mSendEnabled) {
-            mSendEnabled = true;
-            invalidateOptionsMenu();
-        }
-    }
-
-    @Override
-    public void onCollaboratorsAbsent() {
-        if (mSendEnabled) {
-            mSendEnabled = false;
-            invalidateOptionsMenu();
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.box_sharesdk_action_send) {
-            ((InviteCollaboratorsFragment)mFragment).addCollaborations();
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**
