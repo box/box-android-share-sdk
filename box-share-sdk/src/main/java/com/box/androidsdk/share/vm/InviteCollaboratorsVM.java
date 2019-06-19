@@ -163,11 +163,11 @@ public class InviteCollaboratorsVM extends BaseVM {
         }
 
         if (didRequestFail) {
-            String[] result = processRequestFailure(failedCollaboratorsList, name, alreadyAddedCount);
+            String[] result = processAddCollabsRequestFailure(failedCollaboratorsList, name, alreadyAddedCount);
             strCode = Integer.parseInt(result[0]);
             subMssg = result[1];
         } else {
-            String[] result = processRequestSuccess(responses);
+            String[] result = processAddCollabsRequestSuccess(responses);
             strCode = Integer.parseInt(result[0]);
             subMssg = result[1];
         }
@@ -202,7 +202,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @return index 0 is string resource code, index 1 is the string formatted part of the message.
      */
     @VisibleForTesting
-    String[] processRequestSuccess(BoxResponseBatch responses) {
+    String[] processAddCollabsRequestSuccess(BoxResponseBatch responses) {
         String[] res = new String[2];
         if (responses.getResponses().size() == 1) {
             BoxCollaboration collaboration = (BoxCollaboration) responses.getResponses().get(0).getResult();
@@ -227,7 +227,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @return index 0 is string resource code, index 1 is the string formatted part of the message.
      */
     @VisibleForTesting
-    String[] processRequestFailure(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
+    String[] processAddCollabsRequestFailure(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
         String[] res = new String[2];
         if (!failedCollaboratorsList.isEmpty()) {
             StringBuilder collaborators = new StringBuilder();
