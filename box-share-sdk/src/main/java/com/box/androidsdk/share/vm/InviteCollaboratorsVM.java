@@ -266,7 +266,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      */
     private HashSet<Integer> generateFailureCodes() {
         HashSet<Integer> failureCodes = new HashSet<>();
-        failureCodes.add(HttpURLConnection.HTTP_BAD_REQUEST );
+        failureCodes.add(HttpURLConnection.HTTP_BAD_REQUEST);
         failureCodes.add(HttpURLConnection.HTTP_FORBIDDEN);
 
         return failureCodes;

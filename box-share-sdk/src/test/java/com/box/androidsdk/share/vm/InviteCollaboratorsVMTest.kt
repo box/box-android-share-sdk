@@ -73,20 +73,26 @@ class InviteCollaboratorsVMTest {
     }
 
     private fun createExceptions() {
+
         whenever(mockHttpForbiddenException.responseCode).thenReturn(HttpsURLConnection.HTTP_FORBIDDEN)
         whenever(mockBoxNetworkErrorException.errorType).thenReturn(BoxException.ErrorType.NETWORK_ERROR)
+
         val boxErrorAlreadyAdded: BoxError = mock()
         whenever(boxErrorAlreadyAdded.code).thenReturn(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR)
         whenever(mockAlreadyAddedCollabException.asBoxError).thenReturn(boxErrorAlreadyAdded)
+        whenever(mockAlreadyAddedCollabException.responseCode).thenReturn(HttpsURLConnection.HTTP_BAD_REQUEST) //not sure it it is bad request but good enough for testing
+
         val boxErrorFailedToAdd: BoxError = mock()
         whenever(boxErrorFailedToAdd.code).thenReturn("")
         whenever(mockFailedToAddException.asBoxError).thenReturn(boxErrorFailedToAdd)
+        whenever(mockFailedToAddException.responseCode).thenReturn(HttpsURLConnection.HTTP_BAD_REQUEST) //not sure if it is bad request but good enough for testing
         whenever(mockBadRequestException.responseCode).thenReturn(HttpsURLConnection.HTTP_BAD_REQUEST)
     }
 
     private fun attachObservers() {
         inviteCollabVM.fetchRoleItem.observeForever(mock())
         inviteCollabVM.invitees.observeForever(mock())
+        inviteCollabVM.addCollabs.observeForever(mock())
     }
 
     private fun createStubs() {
@@ -108,26 +114,16 @@ class InviteCollaboratorsVMTest {
         }.whenever(mockAddCollabsResponseTask).addOnCompletedListener(any<BoxFutureTask.OnCompletedListener<BoxResponseBatch>>())
     }
 
-    private fun createAlreadyAddedExceptionBoxResponse(dummyName: String): BoxResponse<BoxCollaboration> {
+    private fun createFailureException(dummyName: String, exception: BoxException): BoxResponse<BoxCollaboration> {
         val boxResponse: BoxResponse<BoxCollaboration> = mock()
-        whenever(boxResponse.exception).thenReturn(mockAlreadyAddedCollabException)
+        whenever(boxResponse.exception).thenReturn(exception)
         val boxUser: BoxUser = mock()
 
         whenever(boxUser.login).thenReturn(dummyName)
         val boxRequestShare: BoxRequestsShare.AddCollaboration = mock()
         whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
         whenever(boxResponse.request).thenReturn(boxRequestShare)
-        return boxResponse
-    }
-
-    private fun createFailedToAddException(dummyName: String): BoxResponse<BoxCollaboration> {
-        val boxResponse: BoxResponse<BoxCollaboration> = mock()
-        whenever(boxResponse.exception).thenReturn(mockFailedToAddException)
-        val boxUser: BoxUser = mock()
-        whenever(boxUser.login).thenReturn(dummyName)
-        val boxRequestShare: BoxRequestsShare.AddCollaboration = mock()
-        whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
-        whenever(boxResponse.request).thenReturn(boxRequestShare)
+        whenever(boxResponse.isSuccess).thenReturn(false)
         return boxResponse
     }
 
@@ -141,10 +137,11 @@ class InviteCollaboratorsVMTest {
         val boxRequestShare: BoxCollaboration = mock()
         whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
         whenever(boxResponse.result).thenReturn(boxRequestShare)
+        whenever(boxResponse.isSuccess).thenReturn(true)
         return boxResponse
     }
 
-    private fun createBoxResponses(vararg respones: BoxResponse<BoxCollaboration>): BoxResponseBatch {
+    private fun createBoxResponseBatch(vararg respones: BoxResponse<BoxCollaboration>): BoxResponseBatch {
         val boxResponses: BoxResponseBatch = mock()
         val boxResponseList = arrayListOf<BoxResponse<BoxObject>>()
         respones.forEach { boxResponse ->  boxResponseList.add(boxResponse as BoxResponse<BoxObject>)}
@@ -230,7 +227,7 @@ class InviteCollaboratorsVMTest {
     fun `test update failure stats already added case`() {
         //configs
         val dummyName = "Box User"
-        val boxResponse = createAlreadyAddedExceptionBoxResponse(dummyName)
+        val boxResponse = createFailureException(dummyName, mockAlreadyAddedCollabException)
         val failedCollaboratorList = arrayListOf<String>()
 
         //update stats
@@ -246,7 +243,7 @@ class InviteCollaboratorsVMTest {
     fun `test update failure stats failed to add collaborator`() {
         //configs
         val dummyName = "Box User"
-        val boxResponse = createFailedToAddException(dummyName)
+        val boxResponse = createFailureException(dummyName, mockFailedToAddException)
         val failedCollaboratorList = arrayListOf<String>()
 
         //update stats
@@ -269,7 +266,7 @@ class InviteCollaboratorsVMTest {
         val dummyName = "Box User"
         val boxResponse = createSuccessResponse(dummyName)
 
-        val boxResponses = createBoxResponses(boxResponse)
+        val boxResponses = createBoxResponseBatch(boxResponse)
 
         //process request
         val result = inviteCollabVM.processRequestSuccess(boxResponses)
@@ -285,7 +282,7 @@ class InviteCollaboratorsVMTest {
         val dummyName = null
         val boxResponse = createSuccessResponse(dummyName)
 
-        val boxResponses = createBoxResponses(boxResponse)
+        val boxResponses = createBoxResponseBatch(boxResponse)
 
         //process request
         val result = inviteCollabVM.processRequestSuccess(boxResponses)
@@ -301,7 +298,7 @@ class InviteCollaboratorsVMTest {
         val dummyName = "Box User"
         val boxResponse: BoxResponse<BoxCollaboration> = createSuccessResponse(dummyName)
         val boxResponse2: BoxResponse<BoxCollaboration> = createSuccessResponse(dummyName+"2")
-        val boxResponses = createBoxResponses(boxResponse, boxResponse2)
+        val boxResponses = createBoxResponseBatch(boxResponse, boxResponse2)
 
         //process request
         val result = inviteCollabVM.processRequestSuccess(boxResponses)
@@ -378,4 +375,115 @@ class InviteCollaboratorsVMTest {
         assertEquals(null, result[1])
 
     }
+
+    @Test
+    fun `test add collab all succeed`() {
+        //configs
+        val boxResponse = createSuccessResponse("user1")
+        val boxResponse2 = createSuccessResponse("user2")
+        val boxResponse3 = createSuccessResponse("user3")
+        val boxResponseBatch = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        whenever(mockAddCollabsResponse.result).thenReturn(boxResponseBatch)
+
+        //process request
+        inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
+        val res = inviteCollabVM.addCollabs
+
+        assertEquals(true, res.value?.isSuccess )
+        assertEquals(null, res.value?.mData ) //no submessage for 3 success
+        assertEquals(R.string.box_sharesdk_collaborators_invited, res.value?.strCode)
+    }
+
+    @Test
+    fun `test add collab 1 succeed no failure`() {
+        //configs
+        val dummyName = "Box User"
+        val boxResponse = createSuccessResponse(dummyName)
+        val boxResponseBatch = createBoxResponseBatch(boxResponse)
+        whenever(mockAddCollabsResponse.result).thenReturn(boxResponseBatch)
+
+        //process request
+        inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
+        val res = inviteCollabVM.addCollabs
+
+        assertEquals(true, res.value?.isSuccess )
+        assertEquals(dummyName, res.value?.mData )
+        assertEquals(R.string.box_sharesdk_collaborator_invited, res.value?.strCode)
+    }
+
+    @Test
+    fun `test add collab succeed 1 already added 1`() {
+        //configs
+        val dummyName = "user2"
+        val boxResponse = createSuccessResponse("user1")
+        val boxResponse2 = createFailureException(dummyName, mockAlreadyAddedCollabException)
+        val boxResponseBatch = createBoxResponseBatch(boxResponse, boxResponse2)
+        whenever(mockAddCollabsResponse.result).thenReturn(boxResponseBatch)
+
+        //process request
+        inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
+        val res = inviteCollabVM.addCollabs
+
+        assertEquals(true, res.value?.isSuccess) //already added is not considered a failure
+        assertEquals(dummyName, res.value?.mData)
+        assertEquals(R.string.box_sharesdk_has_already_been_invited, res.value?.strCode)
+    }
+
+    @Test
+    fun `test add collab succeed 1 already add 2`() {
+        //configs
+        val boxResponse = createSuccessResponse("user1")
+        val boxResponse2 = createFailureException("user2", mockAlreadyAddedCollabException)
+        val boxResponse3 = createFailureException("user3", mockAlreadyAddedCollabException)
+        val boxResponseBatch = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        whenever(mockAddCollabsResponse.result).thenReturn(boxResponseBatch)
+
+        //process request
+        inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
+        val res = inviteCollabVM.addCollabs
+
+        assertEquals(true, res.value?.isSuccess)
+        assertEquals(Integer.toString(2), res.value?.mData) //already added 2
+        assertEquals(R.string.box_sharesdk_num_has_already_been_invited, res.value?.strCode)
+    }
+
+    @Test
+    fun `test add collab succeed 1 failed to add 1`() {
+        //configs
+        val failedName = "user2"
+        val boxResponse = createSuccessResponse("user1")
+        val boxResponse2 = createFailureException("user2", mockFailedToAddException)
+        val boxResponseBatch = createBoxResponseBatch(boxResponse, boxResponse2)
+        whenever(mockAddCollabsResponse.result).thenReturn(boxResponseBatch)
+
+        //process request
+        inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
+        val res = inviteCollabVM.addCollabs
+
+        assertEquals(false, res.value?.isSuccess)
+        assertEquals(failedName, res.value?.mData)
+        assertEquals(R.string.box_sharesdk_following_collaborators_error, res.value?.strCode)
+    }
+
+    @Test
+    fun `test add collab succeed 1 failed to add 2`() {
+        //configs
+        val failedName1 = "user2"
+        val failedName2 = "user3"
+        val boxResponse = createSuccessResponse("user1")
+        val boxResponse2 = createFailureException(failedName1, mockFailedToAddException)
+        val boxResponse3 = createFailureException(failedName2, mockFailedToAddException)
+        val boxResponseBatch = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        whenever(mockAddCollabsResponse.result).thenReturn(boxResponseBatch)
+
+        //process request
+        inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
+        val res = inviteCollabVM.addCollabs
+
+        assertEquals(false, res.value?.isSuccess)
+        assertEquals("$failedName1 $failedName2", res.value?.mData) //appending all failures
+        assertEquals(R.string.box_sharesdk_following_collaborators_error, res.value?.strCode)
+    }
+
+
 }
