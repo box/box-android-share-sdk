@@ -115,13 +115,13 @@ public class InviteCollaboratorsVM extends BaseVM {
         } else {
             BoxException boxException = (BoxException) response.getException();
             int responseCode = boxException.getResponseCode();
-            int strCode = -1;
+            int errorStrCode = R.string.box_sharesdk_generic_error;
             if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
-                strCode = R.string.box_sharesdk_insufficient_permissions;
+                errorStrCode = R.string.box_sharesdk_insufficient_permissions;
             } else if (boxException.getErrorType() == BoxException.ErrorType.NETWORK_ERROR) {
-                strCode = R.string.box_sharesdk_network_error;
+                errorStrCode = R.string.box_sharesdk_network_error;
             }
-            data.failure(strCode);
+            data.failure(errorStrCode);
         }
         return data;
     }
