@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.box.androidsdk.share.views.CollaboratorsInitialsView;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -19,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.BoxFutureTask;
@@ -28,7 +26,6 @@ import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxFile;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
-import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxUser;
 import com.box.androidsdk.content.requests.BoxRequestsShare;
 import com.box.androidsdk.content.requests.BoxResponse;
@@ -41,7 +38,6 @@ import com.box.androidsdk.share.adapters.InviteeAdapter;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 import com.box.androidsdk.share.views.ChipCollaborationView;
-import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -76,7 +72,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements InviteeA
     private View bottomDivider;
     private boolean mInvitationFailed = false;
 
-    private View.OnClickListener mOnEditAcessListener;
+    private View.OnClickListener mOnEditAccessListener;
 
     @Nullable
     @Override
@@ -85,7 +81,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements InviteeA
         bottomDivider = view.findViewById(R.id.bottom_divider);
         mFilterTerm = "";
         mRoleButton = (Button) view.findViewById(R.id.invite_collaborator_role);
-        mRoleButton.setOnClickListener(mOnEditAcessListener);
+        mRoleButton.setOnClickListener(mOnEditAccessListener);
         mAutoComplete = (ChipCollaborationView) view.findViewById(R.id.invite_collaborator_autocomplete);
         mAutoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         mAdapter = createInviteeAdapter(getActivity());
@@ -251,9 +247,9 @@ public class InviteCollaboratorsFragment extends BoxFragment implements InviteeA
 //    }
 
     public void setOnEditAccessListener(View.OnClickListener listener) {
-        mOnEditAcessListener = listener;
+        mOnEditAccessListener = listener;
         if (mRoleButton != null) {
-            mRoleButton.setOnClickListener(mOnEditAcessListener);
+            mRoleButton.setOnClickListener(mOnEditAccessListener);
         }
     }
     public Bundle getData() {
