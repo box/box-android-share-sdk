@@ -156,9 +156,10 @@ class InviteCollaboratorsVMTest {
 
         //make a network call to fetch roles
         inviteCollabVM.fetchRolesApi(mockShareItem)
+        val fetchRoleItemValue = inviteCollabVM.fetchRoleItem.value
 
-        //VM reacts by updating its LiveData correctly
-        assertEquals(mockFetchRoleItemResult, inviteCollabVM.fetchRoleItem.value?.data)
+        assertEquals(true, fetchRoleItemValue?.isSuccess)
+        assertEquals(mockFetchRoleItemResult, fetchRoleItemValue?.data)
     }
 
     @Test
@@ -168,12 +169,10 @@ class InviteCollaboratorsVMTest {
 
         //make a network call to fetch roles
         inviteCollabVM.fetchRolesApi(mockShareItem)
+        val fetchRoleItemValue = inviteCollabVM.fetchRoleItem.value
 
-        //should be null since the request was a failure
-        assertEquals(null, inviteCollabVM.fetchRoleItem.value?.data, null)
-
-        //associated failure message
-        assertEquals(R.string.box_sharesdk_network_error, inviteCollabVM.fetchRoleItem.value?.strCode)
+        assertEquals(false, fetchRoleItemValue?.isSuccess)
+        assertEquals(R.string.box_sharesdk_network_error, fetchRoleItemValue?.strCode)
     }
 
     @Test
@@ -184,9 +183,10 @@ class InviteCollaboratorsVMTest {
 
         //make a network call to fetch roles
         inviteCollabVM.getInviteesApi(mockShareItem, mockFilter)
+        val inviteCollabValue = inviteCollabVM.invitees.value
 
-        //VM reacts by updating its LiveData correctly
-        assertEquals(mockGetInviteesResult, inviteCollabVM.invitees.value?.data)
+        assertEquals(true, inviteCollabValue?.isSuccess)
+        assertEquals(mockGetInviteesResult, inviteCollabValue?.data)
     }
 
     @Test
@@ -197,12 +197,10 @@ class InviteCollaboratorsVMTest {
 
         //make a network call to fetch roles
         inviteCollabVM.getInviteesApi(mockShareItem, mockFilter)
+        val inviteCollabValue = inviteCollabVM.invitees.value
 
-        //should be null since the request was a failure
-        assertEquals(null, inviteCollabVM.invitees.value?.data)
-
-        //associated error message
-        assertEquals(R.string.box_sharesdk_insufficient_permissions, inviteCollabVM.invitees.value?.strCode)
+        assertEquals(false, inviteCollabValue?.isSuccess)
+        assertEquals(R.string.box_sharesdk_insufficient_permissions, inviteCollabValue?.strCode)
     }
 
     @Test
@@ -213,12 +211,10 @@ class InviteCollaboratorsVMTest {
 
         //make a network call to fetch roles
         inviteCollabVM.getInviteesApi(mockShareItem, mockFilter)
+        val inviteCollabValue = inviteCollabVM.invitees.value
 
-        //should be null since the request was a failure
-        assertEquals(null, inviteCollabVM.invitees.value?.data)
-
-        //associated error message
-        assertEquals(R.string.box_sharesdk_network_error, inviteCollabVM.invitees.value?.strCode)
+        assertEquals(false, inviteCollabValue?.isSuccess)
+        assertEquals(R.string.box_sharesdk_network_error, inviteCollabValue?.strCode)
     }
 
 
@@ -245,18 +241,12 @@ class InviteCollaboratorsVMTest {
         val boxResponse = createFailureException(dummyName, mockFailedToAddException)
         val failedCollaboratorList = arrayListOf<String>()
 
-        //update stats
-        inviteCollabVM.updateFailureStats(boxResponse, failedCollaboratorList)
-
-        //the names should be equal since dummy name was already added.
-        assertEquals(dummyName, failedCollaboratorList[0])
-        assertEquals(1, failedCollaboratorList.size)
-
-        //simulate second failure
-        inviteCollabVM.updateFailureStats(boxResponse, failedCollaboratorList)
-
-        //more failure should update the size to 2
-        assertEquals(2, failedCollaboratorList.size)
+        //simulating failing multiple times correctly updating failedCollabList
+        for (i in 1..2) {
+            inviteCollabVM.updateFailureStats(boxResponse, failedCollaboratorList)
+            assertEquals(dummyName, failedCollaboratorList[i - 1])
+            assertEquals(i, failedCollaboratorList.size)
+        }
     }
 
     @Test
@@ -386,11 +376,11 @@ class InviteCollaboratorsVMTest {
 
         //process request
         inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
-        val res = inviteCollabVM.addCollabs
+        val addCollabValue = inviteCollabVM.addCollabs.value
 
-        assertEquals(true, res.value?.isSuccess )
-        assertEquals(null, res.value?.mData ) //no submessage for 3 success
-        assertEquals(R.string.box_sharesdk_collaborators_invited, res.value?.strCode)
+        assertEquals(true, addCollabValue?.isSuccess)
+        assertEquals(null, addCollabValue?.mData) //no submessage for 3 success
+        assertEquals(R.string.box_sharesdk_collaborators_invited, addCollabValue?.strCode)
     }
 
     @Test
@@ -403,11 +393,11 @@ class InviteCollaboratorsVMTest {
 
         //process request
         inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
-        val res = inviteCollabVM.addCollabs
+        val addCollabValue = inviteCollabVM.addCollabs.value
 
-        assertEquals(true, res.value?.isSuccess)
-        assertEquals(dummyName, res.value?.mData )
-        assertEquals(R.string.box_sharesdk_collaborator_invited, res.value?.strCode)
+        assertEquals(true, addCollabValue?.isSuccess)
+        assertEquals(dummyName, addCollabValue?.mData)
+        assertEquals(R.string.box_sharesdk_collaborator_invited, addCollabValue?.strCode)
     }
 
     @Test
@@ -421,11 +411,11 @@ class InviteCollaboratorsVMTest {
 
         //process request
         inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
-        val res = inviteCollabVM.addCollabs
+        val addCollabValue = inviteCollabVM.addCollabs.value
 
-        assertEquals(true, res.value?.isSuccess) //already added is not considered a failure
-        assertEquals(dummyName, res.value?.mData)
-        assertEquals(R.string.box_sharesdk_has_already_been_invited, res.value?.strCode)
+        assertEquals(true, addCollabValue?.isSuccess) //already added is not considered a failure
+        assertEquals(dummyName, addCollabValue?.mData)
+        assertEquals(R.string.box_sharesdk_has_already_been_invited, addCollabValue?.strCode)
     }
 
     @Test
@@ -439,11 +429,11 @@ class InviteCollaboratorsVMTest {
 
         //process request
         inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
-        val res = inviteCollabVM.addCollabs
+        val addCollabValue = inviteCollabVM.addCollabs.value
 
-        assertEquals(true, res.value?.isSuccess)
-        assertEquals(Integer.toString(2), res.value?.mData) //already added 2
-        assertEquals(R.string.box_sharesdk_num_has_already_been_invited, res.value?.strCode)
+        assertEquals(true, addCollabValue?.isSuccess)
+        assertEquals(Integer.toString(2), addCollabValue?.mData) //already added 2
+        assertEquals(R.string.box_sharesdk_num_has_already_been_invited, addCollabValue?.strCode)
     }
 
     @Test
@@ -457,11 +447,11 @@ class InviteCollaboratorsVMTest {
 
         //process request
         inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
-        val res = inviteCollabVM.addCollabs
+        val addCollabValue = inviteCollabVM.addCollabs.value
 
-        assertEquals(false, res.value?.isSuccess)
-        assertEquals(failedName, res.value?.mData)
-        assertEquals(R.string.box_sharesdk_following_collaborators_error, res.value?.strCode)
+        assertEquals(false, addCollabValue?.isSuccess)
+        assertEquals(failedName, addCollabValue?.mData)
+        assertEquals(R.string.box_sharesdk_following_collaborators_error, addCollabValue?.strCode)
     }
 
     @Test
@@ -477,11 +467,11 @@ class InviteCollaboratorsVMTest {
 
         //process request
         inviteCollabVM.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)
-        val res = inviteCollabVM.addCollabs
+        val addCollabValue = inviteCollabVM.addCollabs.value
 
-        assertEquals(false, res.value?.isSuccess)
-        assertEquals("$failedName1 $failedName2", res.value?.mData) //appending all failures
-        assertEquals(R.string.box_sharesdk_following_collaborators_error, res.value?.strCode)
+        assertEquals(false, addCollabValue?.isSuccess)
+        assertEquals("$failedName1 $failedName2", addCollabValue?.mData) //appending all failures
+        assertEquals(R.string.box_sharesdk_following_collaborators_error, addCollabValue?.strCode)
     }
 
 
