@@ -36,8 +36,8 @@ import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.adapters.InviteeAdapter;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
-import com.box.androidsdk.share.views.ChipCollaborationView;
-import com.box.androidsdk.share.views.CollaboratorsInitialsView;
+import com.box.androidsdk.share.legacy.views.ChipCollaborationView;
+import com.box.androidsdk.share.legacy.views.CollaboratorsInitialsView;
 import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.net.HttpURLConnection;

@@ -18,7 +18,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/box_sharesdk_hint"
             android:text="@string/box_sharesdk_to" />
-        <com.box.androidsdk.share.legacy.views.ChipCollaborationView
+        <com.box.androidsdk.share.views.ChipCollaborationView
             android:id="@+id/invite_collaborator_autocomplete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

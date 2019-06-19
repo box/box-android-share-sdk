@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.legacy.activities;
+package com.box.androidsdk.share.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,7 +21,7 @@ import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
-import com.box.androidsdk.share.legacy.fragments.BoxFragment;
+import com.box.androidsdk.share.fragments.BoxFragment;
 
 /**
  * Base class for all activities that make API requests through the Box Content SDK. This class is responsible for

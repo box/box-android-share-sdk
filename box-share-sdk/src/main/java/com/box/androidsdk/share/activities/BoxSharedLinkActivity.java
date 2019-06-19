@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.legacy.activities;
+package com.box.androidsdk.share.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.legacy.fragments.SharedLinkFragment;
+import com.box.androidsdk.share.fragments.SharedLinkFragment;
 
 /**
  * Activity used to share/unshare an item from Box. The intent to launch this activity can be retrieved via the static getLaunchIntent method
@@ -22,7 +22,7 @@ public class BoxSharedLinkActivity extends BoxActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.legacy_activity_shared_link);
+        setContentView(R.layout.activity_shared_link);
         initToolbar();
     }
 
