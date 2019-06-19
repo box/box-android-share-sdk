@@ -41,24 +41,14 @@
             android:id="@+id/chooseAction" />
 
         <Button
-            style="@style/RaisedButton"
+            style="@style/RaisedGrayButton"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:gravity="center"
-            android:text="@string/box_sharesdk_title_share_link"
+            android:text="@string/box_sharesdk_share_link_legacy"
             android:onClick="onShareLinkButtonClick"
             android:id="@+id/launchShare" />
-
-        <Button
-            style="@style/RaisedButton"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:text="@string/box_sharesdk_invite_collaborators"
-            android:onClick="onInvitePeopleButtonClick"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:id="@+id/launchCollabs" />
 
         <Button
             style="@style/RaisedButton"
@@ -69,6 +59,18 @@
             android:text="@string/box_sharesdk_title_share_link"
             android:onClick="onShareLinkButtonClickNew"
             android:id="@+id/launchShareNew" />
+
+
+        <Button
+            style="@style/RaisedGrayButton"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:text="@string/box_sharesdk_invite_people_legacy"
+            android:onClick="onInvitePeopleButtonClick"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:id="@+id/launchCollabs" />
+
 
         <Button
             style="@style/RaisedButton"
