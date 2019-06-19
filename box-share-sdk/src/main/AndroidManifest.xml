@@ -4,22 +4,22 @@
 
     <application android:allowBackup="true">
         <activity
-            android:name=".activities.BoxCollaborationsActivity"
+            android:name=".legacy.activities.BoxCollaborationsActivity"
             android:label="@string/box_sharesdk_shared_with"
             android:theme="@style/ShareTheme" >
         </activity>
         <activity
-            android:name=".activities.BoxInviteCollaboratorsActivity"
+            android:name=".legacy.activities.BoxInviteCollaboratorsActivity"
             android:label="@string/box_sharesdk_invite_collaborators"
             android:theme="@style/ShareTheme" >
         </activity>
         <activity
-            android:name=".activities.BoxSharedLinkActivity"
+            android:name=".legacy.activities.BoxSharedLinkActivity"
             android:label="@string/box_sharesdk_title_share_link"
             android:theme="@style/ShareTheme" >
         </activity>
         <activity
-            android:name=".activities.BoxSharedLinkAccessActivity"
+            android:name=".legacy.activities.BoxSharedLinkAccessActivity"
             android:label="@string/box_sharesdk_title_link_access"
             android:theme="@style/ShareTheme" >
         </activity>

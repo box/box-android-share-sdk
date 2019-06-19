@@ -25,9 +25,9 @@ import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxIteratorItems;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxSharedLink;
-import com.box.androidsdk.share.activities.BoxActivity;
-import com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity;
-import com.box.androidsdk.share.activities.BoxSharedLinkActivity;
+import com.box.androidsdk.share.legacy.activities.BoxActivity;
+import com.box.androidsdk.share.legacy.activities.BoxInviteCollaboratorsActivity;
+import com.box.androidsdk.share.legacy.activities.BoxSharedLinkActivity;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;

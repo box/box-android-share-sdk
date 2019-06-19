@@ -10,11 +10,9 @@ import android.widget.TextView;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxCollaborator;
-import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxUser;
-import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
@@ -80,7 +78,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_collaboration, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.legacy_list_item_collaboration, parent, false);
             holder = new ViewHolder();
             holder.nameView = (TextView) convertView.findViewById(R.id.collaborator_role_title);
             holder.roleView = (TextView) convertView.findViewById(R.id.collaborator_role);
