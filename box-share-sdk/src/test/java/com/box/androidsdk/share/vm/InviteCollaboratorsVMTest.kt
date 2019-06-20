@@ -1,19 +1,15 @@
 package com.box.androidsdk.share.vm
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import com.box.androidsdk.content.BoxException
-import com.box.androidsdk.content.BoxFutureTask
 import com.box.androidsdk.content.models.*
 import com.box.androidsdk.content.requests.BoxRequestsShare
 import com.box.androidsdk.content.requests.BoxResponse
 import com.box.androidsdk.content.requests.BoxResponseBatch
 import com.box.androidsdk.share.R
-import com.box.androidsdk.share.api.ShareController
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees
 import com.box.androidsdk.share.sharerepo.BaseShareRepo
-import com.box.androidsdk.share.sharerepo.ShareRepo
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.Assert.assertEquals
@@ -27,19 +23,14 @@ class InviteCollaboratorsVMTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-
-    private val shareController: ShareController = mock()
-
     private val mockEmailList: Array<String> = arrayOf("boxuser@box.com", "boxuser2@box.com")
     private val mockSelectedRole: BoxCollaboration.Role = BoxCollaboration.Role.EDITOR
     private val mockFilter: String = "filter"
     private val mockShareItem: BoxCollaborationItem = mock()
 
-    private val mockGetInviteeResponseTask: BoxFutureTask<BoxIteratorInvitees> = mock()
+
     private val mockGetInviteeResponse: BoxResponse<BoxIteratorInvitees> = mock()
-    private val mockFetchRolesResponseTask: BoxFutureTask<BoxCollaborationItem> = mock()
     private val mockFetchRolesResponse: BoxResponse<BoxCollaborationItem> = mock()
-    private val mockAddCollabsResponseTask: BoxFutureTask<BoxResponseBatch> = mock()
     private val mockAddCollabsResponse: BoxResponse<BoxResponseBatch> = mock()
 
     private val mockFailedToAddException: BoxException = mock()
@@ -52,23 +43,39 @@ class InviteCollaboratorsVMTest {
     private val mockFetchRoleItemResult: BoxCollaborationItem = mock()
     private lateinit var mockAddCollabResult: BoxResponseBatch
 
-    private lateinit var shareRepo: BaseShareRepo
+    private val mockShareRepo: BaseShareRepo = mock()
 
     private lateinit var inviteCollabVM: InviteCollaboratorsVM
 
     @Before
     fun setup() {
+        mockShareRepo()
 
-        whenever(shareController.getInvitees(mockShareItem, mockFilter)).thenReturn(mockGetInviteeResponseTask)
-        whenever(shareController.fetchRoles(mockShareItem)).thenReturn(mockFetchRolesResponseTask)
-        whenever(shareController.addCollaborations(mockShareItem, mockSelectedRole, mockEmailList)).thenReturn(mockAddCollabsResponseTask)
-
-        shareRepo = ShareRepo(shareController)
-        inviteCollabVM = InviteCollaboratorsVM(shareRepo, mockShareItem)
+        inviteCollabVM = InviteCollaboratorsVM(mockShareRepo, mockShareItem)
 
         attachObservers()
         createExceptions()
-        createStubs()
+    }
+
+    private fun mockShareRepo() {
+        whenever(mockShareRepo.fetchRoleItem).thenReturn(MutableLiveData())
+        whenever(mockShareRepo.inviteCollabBatch).thenReturn(MutableLiveData())
+        whenever(mockShareRepo.invitees).thenReturn(MutableLiveData())
+
+        whenever(mockShareRepo.fetchRolesApi(mockShareItem)).then {
+            val data = mockShareRepo.fetchRoleItem as MutableLiveData
+            data.postValue(mockFetchRolesResponse)
+        }
+
+        whenever(mockShareRepo.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)).then {
+            val data = mockShareRepo.inviteCollabBatch as MutableLiveData
+            data.postValue(mockAddCollabsResponse)
+        }
+
+        whenever(mockShareRepo.getInviteesApi(mockShareItem, mockFilter)).then {
+            val data = mockShareRepo.invitees as MutableLiveData
+            data.postValue(mockGetInviteeResponse)
+        }
     }
 
     private fun createExceptions() {
@@ -92,25 +99,6 @@ class InviteCollaboratorsVMTest {
         inviteCollabVM.fetchRoleItem.observeForever(mock())
         inviteCollabVM.invitees.observeForever(mock())
         inviteCollabVM.addCollabs.observeForever(mock())
-    }
-
-    private fun createStubs() {
-        doAnswer {
-            val callback = it.arguments[0] as BoxFutureTask.OnCompletedListener<BoxIteratorInvitees>
-            callback.onCompleted(mockGetInviteeResponse)
-            null
-        }.whenever(mockGetInviteeResponseTask).addOnCompletedListener(any<BoxFutureTask.OnCompletedListener<BoxIteratorInvitees>>())
-        doAnswer {
-            val callback = it.arguments[0] as BoxFutureTask.OnCompletedListener<BoxCollaborationItem>
-            callback.onCompleted(mockFetchRolesResponse)
-            null
-        }.whenever(mockFetchRolesResponseTask).addOnCompletedListener(any<BoxFutureTask.OnCompletedListener<BoxCollaborationItem>>())
-
-        doAnswer {
-            val callback = it.arguments[0] as BoxFutureTask.OnCompletedListener<BoxResponseBatch>
-            callback.onCompleted(mockAddCollabsResponse)
-            null
-        }.whenever(mockAddCollabsResponseTask).addOnCompletedListener(any<BoxFutureTask.OnCompletedListener<BoxResponseBatch>>())
     }
 
     private fun createFailureException(dummyName: String, exception: BoxException): BoxResponse<BoxCollaboration> {
