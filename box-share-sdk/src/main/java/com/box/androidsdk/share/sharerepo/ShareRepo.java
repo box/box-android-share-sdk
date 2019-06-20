@@ -56,6 +56,6 @@ public class ShareRepo extends BaseShareRepo {
      * @param emails the list of collaborators to invite
      */
     public void addCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
-        handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mInviteCollabBatch);
+        handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mAddCollabsBatch);
     }
 }

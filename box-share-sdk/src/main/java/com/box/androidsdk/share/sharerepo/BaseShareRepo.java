@@ -10,8 +10,6 @@ import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
-import java.util.List;
-
 /**
  * The Base ShareRepo class that will be used by ViewModels to make calls to the backend and should be extended by other ShareRepos
  */
@@ -20,7 +18,7 @@ public abstract class BaseShareRepo {
 
     protected final MutableLiveData<BoxResponse<BoxIteratorInvitees>> mInvitees = new MutableLiveData<>();
     protected final MutableLiveData<BoxResponse<BoxCollaborationItem>> mFetchRoleItem = new MutableLiveData<>();
-    protected final MutableLiveData<BoxResponse<BoxResponseBatch>> mInviteCollabBatch = new MutableLiveData<>();
+    protected final MutableLiveData<BoxResponse<BoxResponseBatch>> mAddCollabsBatch = new MutableLiveData<>();
 
     public BaseShareRepo(ShareController controller) {
         this.mController = controller;
@@ -67,7 +65,7 @@ public abstract class BaseShareRepo {
      * Returns a LiveData which holds a batch of responses for each collaborator invited.
      * @return a LiveData which holds a batch of responses for each collaborator invited
      */
-    public LiveData<BoxResponse<BoxResponseBatch>> getInviteCollabBatch() {
-        return mInviteCollabBatch;
+    public LiveData<BoxResponse<BoxResponseBatch>> getAddCollabsBatch() {
+        return mAddCollabsBatch;
     }
 }

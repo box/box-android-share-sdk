@@ -32,7 +32,7 @@ public class InviteCollaboratorsVM extends BaseVM {
     public InviteCollaboratorsVM(BaseShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
         mFetchRoleItem = Transformations.map(shareRepo.getFetchRoleItem(), response -> createFetchRoleItemData(response));
-        mAddCollabs = Transformations.map(shareRepo.getInviteCollabBatch(), response -> createAddCollabsItemData(response));
+        mAddCollabs = Transformations.map(shareRepo.getAddCollabsBatch(), response -> createAddCollabsItemData(response));
         mInvitees = Transformations.map(shareRepo.getInvitees(), response -> createGetInviteesItemData(response));
     }
 

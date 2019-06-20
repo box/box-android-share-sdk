@@ -59,7 +59,7 @@ class InviteCollaboratorsVMTest {
 
     private fun mockShareRepo() {
         whenever(mockShareRepo.fetchRoleItem).thenReturn(MutableLiveData())
-        whenever(mockShareRepo.inviteCollabBatch).thenReturn(MutableLiveData())
+        whenever(mockShareRepo.addCollabsBatch).thenReturn(MutableLiveData())
         whenever(mockShareRepo.invitees).thenReturn(MutableLiveData())
 
         whenever(mockShareRepo.fetchRolesApi(mockShareItem)).then {
@@ -68,7 +68,7 @@ class InviteCollaboratorsVMTest {
         }
 
         whenever(mockShareRepo.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)).then {
-            val data = mockShareRepo.inviteCollabBatch as MutableLiveData
+            val data = mockShareRepo.addCollabsBatch as MutableLiveData
             data.postValue(mockAddCollabsResponse)
         }
 
