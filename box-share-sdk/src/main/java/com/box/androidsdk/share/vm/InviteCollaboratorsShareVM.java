@@ -149,7 +149,7 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
         String subMssg;
 
         int alreadyAddedCount = 0;
-        boolean didRequestFail = false;
+        boolean didRequestSuceed = true;
         String name = "";
 
         List<String> failedCollaboratorsList = new ArrayList<>();
@@ -162,21 +162,23 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
                         failedCollaboratorsList.add(res[1]);
                     }
                 }
-                didRequestFail = true;
+                didRequestSuceed = false;
             }
         }
 
-        if (didRequestFail) {
-            String[] result = getAddCollabsRequestFailure(failedCollaboratorsList, name, alreadyAddedCount);
-            strCode = Integer.parseInt(result[0]);
-            subMssg = result[1];
-        } else {
+        if (didRequestSuceed) {
             String[] result = getAddCollabsRequestSuccess(responses);
             strCode = Integer.parseInt(result[0]);
             subMssg = result[1];
+
+        } else {
+            String[] result = getAddCollabsRequestFailure(failedCollaboratorsList, name, alreadyAddedCount);
+            strCode = Integer.parseInt(result[0]);
+            subMssg = result[1];
+
         }
 
-        mInvitationFailed = (didRequestFail && !failedCollaboratorsList.isEmpty());
+        mInvitationFailed = !(didRequestSuceed || failedCollaboratorsList.isEmpty());
 
         return new InviteCollaboratorsPresenterData(subMssg, strCode, mInvitationFailed);
     }
