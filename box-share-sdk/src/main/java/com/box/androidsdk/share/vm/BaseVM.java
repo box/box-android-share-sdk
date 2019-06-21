@@ -15,19 +15,26 @@ import com.box.androidsdk.share.sharerepo.BaseShareRepo;
 public class BaseVM extends ViewModel {
 
     protected final BaseShareRepo mShareRepo;
-    protected final MutableLiveData<BoxCollaborationItem> mShareItem;
+    protected BoxCollaborationItem mShareItem;
 
     public BaseVM(BaseShareRepo shareRepo, BoxCollaborationItem shareItem) {
         this.mShareRepo = shareRepo;
-        this.mShareItem = new MutableLiveData<>();
-        this.mShareItem.postValue(shareItem);
+        this.mShareItem = shareItem;
     }
 
     /**
      * Returns a LiveData which holds the item the user is currently doing share operation on.
      * @return a LiveData which holds the item the user is currently doing share operation on
      */
-    public LiveData<BoxCollaborationItem> getShareItem() {
+    public BoxCollaborationItem getShareItem() {
         return mShareItem;
+    }
+
+    /**
+     * Update the share item with a new share item.
+     * @param shareItem the new share item.
+     */
+    public void setShareItem(BoxCollaborationItem shareItem) {
+        this.mShareItem = shareItem;
     }
 }

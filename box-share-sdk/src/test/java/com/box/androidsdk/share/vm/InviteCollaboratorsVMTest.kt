@@ -214,7 +214,7 @@ class InviteCollaboratorsVMTest {
         val failedCollaboratorList = arrayListOf<String>()
 
         //update stats
-        val name = inviteCollabVM.updateFailureStats(boxResponse, failedCollaboratorList)
+        val name = InviteCollaboratorsVM.updateFailureStats(boxResponse, failedCollaboratorList)
 
         //the names should be equal since dummy name was already added.
         assertEquals(dummyName, name)
@@ -231,7 +231,7 @@ class InviteCollaboratorsVMTest {
 
         //simulating failing multiple times correctly updating failedCollabList
         for (i in 1..3) {
-            inviteCollabVM.updateFailureStats(boxResponse, failedCollaboratorList)
+            InviteCollaboratorsVM.updateFailureStats(boxResponse, failedCollaboratorList)
             assertEquals(dummyName, failedCollaboratorList[i - 1])
             assertEquals(i, failedCollaboratorList.size)
         }
@@ -246,7 +246,7 @@ class InviteCollaboratorsVMTest {
         val boxResponses = createBoxResponseBatch(boxResponse)
 
         //process request
-        val result = inviteCollabVM.processAddCollabsRequestSuccess(boxResponses)
+        val result = InviteCollaboratorsVM.processAddCollabsRequestSuccess(boxResponses)
 
         //compare values
         assertEquals(R.string.box_sharesdk_collaborator_invited, Integer.parseInt(result[0]))
@@ -262,7 +262,7 @@ class InviteCollaboratorsVMTest {
         val boxResponses = createBoxResponseBatch(boxResponse)
 
         //process request
-        val result = inviteCollabVM.processAddCollabsRequestSuccess(boxResponses)
+        val result = InviteCollaboratorsVM.processAddCollabsRequestSuccess(boxResponses)
 
         //compare values
         assertEquals(R.string.box_sharesdk_collaborators_invited, Integer.parseInt(result[0]))
@@ -278,7 +278,7 @@ class InviteCollaboratorsVMTest {
         val boxResponses = createBoxResponseBatch(boxResponse, boxResponse2)
 
         //process request
-        val result = inviteCollabVM.processAddCollabsRequestSuccess(boxResponses)
+        val result = InviteCollaboratorsVM.processAddCollabsRequestSuccess(boxResponses)
 
         //compare values
         assertEquals(R.string.box_sharesdk_collaborators_invited, Integer.parseInt(result[0]))
@@ -297,7 +297,7 @@ class InviteCollaboratorsVMTest {
 
 
         //process request
-        val result = inviteCollabVM.processAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
+        val result = InviteCollaboratorsVM.processAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values (ignored already added since failure to add is more important)
         assertEquals(R.string.box_sharesdk_following_collaborators_error, Integer.parseInt(result[0]))
@@ -313,7 +313,7 @@ class InviteCollaboratorsVMTest {
         val failedCollabs = arrayListOf<String>()
 
         //process request
-        val result = inviteCollabVM.processAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
+        val result = InviteCollaboratorsVM.processAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
         assertEquals(R.string.box_sharesdk_has_already_been_invited, Integer.parseInt(result[0]))
@@ -329,7 +329,7 @@ class InviteCollaboratorsVMTest {
         val failedCollabs = arrayListOf<String>()
 
         //process request
-        val result = inviteCollabVM.processAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
+        val result = InviteCollaboratorsVM.processAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
         assertEquals(R.string.box_sharesdk_num_has_already_been_invited, Integer.parseInt(result[0]))
@@ -345,7 +345,7 @@ class InviteCollaboratorsVMTest {
         val failedCollabs = arrayListOf<String>()
 
         //process request
-        val result = inviteCollabVM.processAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
+        val result = InviteCollaboratorsVM.processAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
         assertEquals(R.string.box_sharesdk_unable_to_invite, Integer.parseInt(result[0]))

@@ -1,12 +1,14 @@
 package com.box.androidsdk.share.vm;
 
+import androidx.annotation.StringRes;
+
 /**
  * A data wrapper to make sure LiveData changes can take network responses into account
  * @param <T> the data type of the item in the response that will be returned
  */
 public class DataWrapper<T> {
     protected T mData;
-    protected int mStrCode;
+    protected int mStrRes;
     public static final int SUCCESS = -1;
 
     /**
@@ -15,16 +17,16 @@ public class DataWrapper<T> {
      */
     public void success(T data) {
         this.mData = data;
-        this.mStrCode = SUCCESS;
+        this.mStrRes = SUCCESS;
     }
 
     /**
      * Updates the item with the stringCode passed in. Use this if request was unsuccessful
-     * @param strCode The String resource code for the error message
+     * @param strRes The String resource code for the error message
      */
-    public void failure(int strCode) {
+    public void failure(@StringRes int strRes) {
         this.mData = null;
-        this.mStrCode = strCode;
+        this.mStrRes = strRes;
     }
 
     /**
@@ -48,6 +50,6 @@ public class DataWrapper<T> {
      * @return the string resource code
      */
     public int getStrCode() {
-        return mStrCode;
+        return mStrRes;
     }
 }

@@ -92,7 +92,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @param response the response to transform on
      * @return the transformed data
      */
-    private DataWrapper<BoxCollaborationItem> createFetchRoleItemData(BoxResponse<BoxCollaborationItem> response) {
+    private static DataWrapper<BoxCollaborationItem> createFetchRoleItemData(BoxResponse<BoxCollaborationItem> response) {
         final DataWrapper<BoxCollaborationItem> data = new DataWrapper<BoxCollaborationItem>();
         if (response.isSuccess()) {
             BoxCollaborationItem collaborationItem = response.getResult();
@@ -107,7 +107,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @param response the response to transform
      * @return the transformed model
      */
-    private DataWrapper<BoxIteratorInvitees> createGetInviteesItemData(BoxResponse<BoxIteratorInvitees> response) {
+    private static DataWrapper<BoxIteratorInvitees> createGetInviteesItemData(BoxResponse<BoxIteratorInvitees> response) {
         final DataWrapper<BoxIteratorInvitees> data = new DataWrapper<BoxIteratorInvitees>();
         if (response.isSuccess()) {
             final BoxIteratorInvitees invitees = response.getResult();
@@ -130,7 +130,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @param response the response to transform
      * @return the transformed model
      */
-    private InviteCollaboratorsDataWrapper createAddCollabsItemData(BoxResponse<BoxResponseBatch> response) {
+    private static InviteCollaboratorsDataWrapper createAddCollabsItemData(BoxResponse<BoxResponseBatch> response) {
         return handleCollaboratorsInvited(response.getResult());
     }
 
@@ -139,8 +139,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @param responses the batch response to transform
      * @return the transformed model
      */
-    @VisibleForTesting
-    private InviteCollaboratorsDataWrapper handleCollaboratorsInvited(BoxResponseBatch responses) {
+    private static InviteCollaboratorsDataWrapper handleCollaboratorsInvited(BoxResponseBatch responses) {
         int strCode = R.string.box_sharesdk_generic_error; //default generic error
         boolean mInvitationFailed;
         String subMssg;
@@ -184,7 +183,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @return the name of collaborator that is already added
      */
     @VisibleForTesting
-    String updateFailureStats(BoxResponse<BoxCollaboration> r, List<String> failedCollaboratorsList) {
+    static String updateFailureStats(BoxResponse<BoxCollaboration> r, List<String> failedCollaboratorsList) {
         String code = ((BoxException) r.getException()).getAsBoxError().getCode();
         BoxUser user = (BoxUser) ((BoxRequestsShare.AddCollaboration) r.getRequest()).getAccessibleBy();
 
@@ -202,7 +201,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @return index 0 is string resource code, index 1 is the string formatted part of the message.
      */
     @VisibleForTesting
-    String[] processAddCollabsRequestSuccess(BoxResponseBatch responses) {
+    static String[] processAddCollabsRequestSuccess(BoxResponseBatch responses) {
         String[] res = new String[2];
         if (responses.getResponses().size() == 1) {
             BoxCollaboration collaboration = (BoxCollaboration) responses.getResponses().get(0).getResult();
@@ -227,7 +226,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @return index 0 is string resource code, index 1 is the string formatted part of the message.
      */
     @VisibleForTesting
-    String[] processAddCollabsRequestFailure(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
+    static String[] processAddCollabsRequestFailure(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
         String[] res = new String[2];
         if (!failedCollaboratorsList.isEmpty()) {
             StringBuilder collaborators = new StringBuilder();
@@ -252,11 +251,11 @@ public class InviteCollaboratorsVM extends BaseVM {
         return res;
     }
 
-    private boolean alreadyAddedFailure(String code) {
+    private static boolean alreadyAddedFailure(String code) {
         return !SdkUtils.isBlank(code) && code.equals(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR);
     }
 
-    private boolean checkIfKnownFailure(BoxResponse<BoxCollaboration> r, HashSet<Integer> failureCodes) {
+    private static boolean checkIfKnownFailure(BoxResponse<BoxCollaboration> r, HashSet<Integer> failureCodes) {
         return r.getException() instanceof BoxException && failureCodes.contains(((BoxException) r.getException()).getResponseCode());
     }
 
@@ -264,7 +263,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * Generates failure codes for checking known errors
      * @return a HashSet of known errors
      */
-    private HashSet<Integer> generateFailureCodes() {
+    private static HashSet<Integer> generateFailureCodes() {
         HashSet<Integer> failureCodes = new HashSet<>();
         failureCodes.add(HttpURLConnection.HTTP_BAD_REQUEST);
         failureCodes.add(HttpURLConnection.HTTP_FORBIDDEN);

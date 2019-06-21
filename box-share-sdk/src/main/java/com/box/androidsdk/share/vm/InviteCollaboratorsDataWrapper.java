@@ -9,7 +9,7 @@ public class InviteCollaboratorsDataWrapper extends DataWrapper<String> {
 
     public InviteCollaboratorsDataWrapper(String data, int strCode, boolean invitationFailed) {
         this.mData = data;
-        this.mStrCode = strCode;
+        this.mStrRes = strCode;
         this.mInvitationFailed = invitationFailed;
     }
 
@@ -17,6 +17,7 @@ public class InviteCollaboratorsDataWrapper extends DataWrapper<String> {
      * Returns true if all invitations succeeded.
      * @return true if all invitations succeeded
      */
+    @Override
     public boolean isSuccess() {
         return !isInvitationFailed();
     }
