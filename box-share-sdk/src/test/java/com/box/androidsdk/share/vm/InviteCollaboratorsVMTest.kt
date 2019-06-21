@@ -9,7 +9,7 @@ import com.box.androidsdk.content.requests.BoxResponse
 import com.box.androidsdk.content.requests.BoxResponseBatch
 import com.box.androidsdk.share.R
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees
-import com.box.androidsdk.share.sharerepo.BaseShareRepo
+import com.box.androidsdk.share.sharerepo.ShareRepo
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.Assert.assertEquals
@@ -43,7 +43,7 @@ class InviteCollaboratorsVMTest {
     private val mockFetchRoleItemResult: BoxCollaborationItem = mock()
     private lateinit var mockAddCollabResult: BoxResponseBatch
 
-    private val mockShareRepo: BaseShareRepo = mock()
+    private val mockShareRepo: ShareRepo = mock()
 
     private lateinit var inviteCollabVM: InviteCollaboratorsVM
 

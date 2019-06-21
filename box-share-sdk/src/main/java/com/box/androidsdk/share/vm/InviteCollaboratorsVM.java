@@ -14,7 +14,7 @@ import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
-import com.box.androidsdk.share.sharerepo.BaseShareRepo;
+import com.box.androidsdk.share.sharerepo.ShareRepo;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class InviteCollaboratorsVM extends BaseVM {
     private LiveData<DataWrapper<BoxCollaborationItem>> mFetchRoleItem;
     private LiveData<InviteCollaboratorsDataWrapper> mAddCollabs;
     private LiveData<DataWrapper<BoxIteratorInvitees>> mInvitees;
-    public InviteCollaboratorsVM(BaseShareRepo shareRepo, BoxCollaborationItem shareItem) {
+    public InviteCollaboratorsVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
         mFetchRoleItem = Transformations.map(shareRepo.getFetchRoleItem(), response -> createFetchRoleItemData(response));
         mAddCollabs = Transformations.map(shareRepo.getAddCollabsBatch(), response -> createAddCollabsItemData(response));

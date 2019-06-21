@@ -3,7 +3,7 @@ package com.box.androidsdk.share.vm
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.box.androidsdk.content.models.BoxCollaboration
 import com.box.androidsdk.content.models.BoxCollaborationItem
-import com.box.androidsdk.share.sharerepo.BaseShareRepo
+import com.box.androidsdk.share.sharerepo.ShareRepo
 import com.nhaarman.mockitokotlin2.mock
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNull
@@ -17,7 +17,7 @@ class SelectRoleVMTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-    private val mockRepo: BaseShareRepo = mock()
+    private val mockRepo: ShareRepo = mock()
     private val mockShareItem: BoxCollaborationItem = mock()
     private lateinit var selectRoleVM: SelectRoleVM
 

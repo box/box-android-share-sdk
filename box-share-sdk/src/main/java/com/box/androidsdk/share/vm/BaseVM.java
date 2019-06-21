@@ -1,11 +1,9 @@
 package com.box.androidsdk.share.vm;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.box.androidsdk.content.models.BoxCollaborationItem;
-import com.box.androidsdk.share.sharerepo.BaseShareRepo;
+import com.box.androidsdk.share.sharerepo.ShareRepo;
 
 
 /**
@@ -14,10 +12,10 @@ import com.box.androidsdk.share.sharerepo.BaseShareRepo;
  */
 public class BaseVM extends ViewModel {
 
-    protected final BaseShareRepo mShareRepo;
+    protected final ShareRepo mShareRepo;
     protected BoxCollaborationItem mShareItem;
 
-    public BaseVM(BaseShareRepo shareRepo, BoxCollaborationItem shareItem) {
+    public BaseVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         this.mShareRepo = shareRepo;
         this.mShareItem = shareItem;
     }
