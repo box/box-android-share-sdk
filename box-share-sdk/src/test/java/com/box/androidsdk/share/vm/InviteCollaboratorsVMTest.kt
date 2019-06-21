@@ -214,7 +214,7 @@ class InviteCollaboratorsVMTest {
         val failedCollaboratorList = arrayListOf<String>()
 
         //update stats
-        val res = InviteCollaboratorsShareVM.getFailureStats(boxResponse)
+        val res = InviteCollaboratorsShareVM.getFailureInfo(boxResponse)
 
         //the names should be equal since dummy name was already added.
         assertEquals(dummyName, res[0])
@@ -230,7 +230,7 @@ class InviteCollaboratorsVMTest {
         val failedCollaboratorList = arrayListOf<String>()
 
         //simulating failing multiple times correctly updating failedCollabList
-        val res = InviteCollaboratorsShareVM.getFailureStats(boxResponse)
+        val res = InviteCollaboratorsShareVM.getFailureInfo(boxResponse)
         assertEquals(dummyName, res[1])
         assertEquals(null, res[0])
     }

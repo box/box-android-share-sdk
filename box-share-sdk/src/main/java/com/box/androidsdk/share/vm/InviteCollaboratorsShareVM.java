@@ -156,7 +156,7 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
         for (BoxResponse<BoxCollaboration> r : responses.getResponses()) {
             if (!r.isSuccess()) {
                 if (checkIfKnownFailure(r, failureCodes)) {
-                    String[] res = getFailureStats(r);
+                    String[] res = getFailureInfo(r);
                     name = res[0];
                     alreadyAddedCount += name != null ? 1 : 0;
                     if (res[1] != null) {
@@ -183,12 +183,12 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
     }
 
     /**
-     * A helper method for updating attributes used for keeping track of stats for failure
+     * A helper method for returning info for the type of error that occurred. If the type of error did not occurred, the specified index will be null.
      * @param r the response to get request infos from
      * @return index 0 is name of the person already added; index 1 is the name of collaborator that failed (only one of them will be used at a time)
      */
     @VisibleForTesting
-    static String[] getFailureStats(BoxResponse<BoxCollaboration> r) {
+    static String[] getFailureInfo(BoxResponse<BoxCollaboration> r) {
         String[] res = new String[2];
         String code = ((BoxException) r.getException()).getAsBoxError().getCode();
         BoxUser user = (BoxUser) ((BoxRequestsShare.AddCollaboration) r.getRequest()).getAccessibleBy();
