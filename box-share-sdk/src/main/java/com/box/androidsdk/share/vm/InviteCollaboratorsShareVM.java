@@ -24,12 +24,16 @@ import java.util.List;
 /**
  * A ViewModel for holding data needed for InviteCollaborators Screen
  */
-public class InviteCollaboratorsVM extends BaseVM {
+public class InviteCollaboratorsShareVM extends BaseShareVM {
 
-    private LiveData<DataWrapper<BoxCollaborationItem>> mFetchRoleItem;
-    private LiveData<InviteCollaboratorsDataWrapper> mAddCollabs;
-    private LiveData<DataWrapper<BoxIteratorInvitees>> mInvitees;
-    public InviteCollaboratorsVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
+    private LiveData<PresenterData<BoxCollaborationItem>> mFetchRoleItem;
+    private LiveData<InviteCollaboratorsPresenterData> mAddCollabs;
+    private LiveData<PresenterData<BoxIteratorInvitees>> mInvitees;
+    private static HashSet<Integer> failureCodes;
+    static {
+        failureCodes = getFailureCodes();
+    }
+    public InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
         mFetchRoleItem = Transformations.map(shareRepo.getFetchRoleItem(), response -> createFetchRoleItemData(response));
         mAddCollabs = Transformations.map(shareRepo.getAddCollabsBatch(), response -> createAddCollabsItemData(response));
@@ -67,7 +71,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * Returns a LiveData which holds a data wrapper that contains a box item that has allowed roles for invitees and a string resource code.
      * @return a LiveData which holds a data wrapper that contains box item that has allowed roles for invitees and a string resource code
      */
-    public LiveData<DataWrapper<BoxCollaborationItem>> getFetchRoleItem() {
+    public LiveData<PresenterData<BoxCollaborationItem>> getFetchRoleItem() {
         return mFetchRoleItem;
     }
 
@@ -75,7 +79,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * Returns a LiveData which holds a data wrapper that contains the status message from the response for adding new collaborators.
      * @return a LiveData which holds a data wrapper that contains
      */
-    public LiveData<InviteCollaboratorsDataWrapper> getAddCollabs() {
+    public LiveData<InviteCollaboratorsPresenterData> getAddCollabs() {
         return mAddCollabs;
     }
 
@@ -83,7 +87,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * Returns a LiveData which holds a data wrapper that contains a list of invitees that can be invited and a string resource code.
      * @return a LiveData which holds a data wrapper that contains a list of invitees that can be invited and a string resource code
      */
-    public LiveData<DataWrapper<BoxIteratorInvitees>> getInvitees() {
+    public LiveData<PresenterData<BoxIteratorInvitees>> getInvitees() {
         return mInvitees;
     }
 
@@ -92,8 +96,8 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @param response the response to transform on
      * @return the transformed data
      */
-    private static DataWrapper<BoxCollaborationItem> createFetchRoleItemData(BoxResponse<BoxCollaborationItem> response) {
-        final DataWrapper<BoxCollaborationItem> data = new DataWrapper<BoxCollaborationItem>();
+    private static PresenterData<BoxCollaborationItem> createFetchRoleItemData(BoxResponse<BoxCollaborationItem> response) {
+        final PresenterData<BoxCollaborationItem> data = new PresenterData<BoxCollaborationItem>();
         if (response.isSuccess()) {
             BoxCollaborationItem collaborationItem = response.getResult();
             data.success(collaborationItem);
@@ -107,8 +111,8 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @param response the response to transform
      * @return the transformed model
      */
-    private static DataWrapper<BoxIteratorInvitees> createGetInviteesItemData(BoxResponse<BoxIteratorInvitees> response) {
-        final DataWrapper<BoxIteratorInvitees> data = new DataWrapper<BoxIteratorInvitees>();
+    private static PresenterData<BoxIteratorInvitees> createGetInviteesItemData(BoxResponse<BoxIteratorInvitees> response) {
+        final PresenterData<BoxIteratorInvitees> data = new PresenterData<BoxIteratorInvitees>();
         if (response.isSuccess()) {
             final BoxIteratorInvitees invitees = response.getResult();
             data.success(invitees);
@@ -130,8 +134,8 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @param response the response to transform
      * @return the transformed model
      */
-    private static InviteCollaboratorsDataWrapper createAddCollabsItemData(BoxResponse<BoxResponseBatch> response) {
-        return handleCollaboratorsInvited(response.getResult());
+    private static InviteCollaboratorsPresenterData createAddCollabsItemData(BoxResponse<BoxResponseBatch> response) {
+        return getAddCollabsItemData(response.getResult());
     }
 
     /**
@@ -139,7 +143,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @param responses the batch response to transform
      * @return the transformed model
      */
-    private static InviteCollaboratorsDataWrapper handleCollaboratorsInvited(BoxResponseBatch responses) {
+    private static InviteCollaboratorsPresenterData getAddCollabsItemData(BoxResponseBatch responses) {
         int strCode = R.string.box_sharesdk_generic_error; //default generic error
         boolean mInvitationFailed;
         String subMssg;
@@ -147,7 +151,7 @@ public class InviteCollaboratorsVM extends BaseVM {
         int alreadyAddedCount = 0;
         boolean didRequestFail = false;
         String name = "";
-        HashSet<Integer> failureCodes = generateFailureCodes();
+
         List<String> failedCollaboratorsList = new ArrayList<>();
 
 
@@ -162,18 +166,18 @@ public class InviteCollaboratorsVM extends BaseVM {
         }
 
         if (didRequestFail) {
-            String[] result = processAddCollabsRequestFailure(failedCollaboratorsList, name, alreadyAddedCount);
+            String[] result = getAddCollabsRequestFailure(failedCollaboratorsList, name, alreadyAddedCount);
             strCode = Integer.parseInt(result[0]);
             subMssg = result[1];
         } else {
-            String[] result = processAddCollabsRequestSuccess(responses);
+            String[] result = getAddCollabsRequestSuccess(responses);
             strCode = Integer.parseInt(result[0]);
             subMssg = result[1];
         }
 
         mInvitationFailed = (didRequestFail && !failedCollaboratorsList.isEmpty());
 
-        return new InviteCollaboratorsDataWrapper(subMssg, strCode, mInvitationFailed);
+        return new InviteCollaboratorsPresenterData(subMssg, strCode, mInvitationFailed);
     }
 
     /**
@@ -201,16 +205,15 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @return index 0 is string resource code, index 1 is the string formatted part of the message.
      */
     @VisibleForTesting
-    static String[] processAddCollabsRequestSuccess(BoxResponseBatch responses) {
+    static String[] getAddCollabsRequestSuccess(BoxResponseBatch responses) {
         String[] res = new String[2];
         if (responses.getResponses().size() == 1) {
             BoxCollaboration collaboration = (BoxCollaboration) responses.getResponses().get(0).getResult();
             if (collaboration.getAccessibleBy() == null) {
                 res[0] = Integer.toString(R.string.box_sharesdk_collaborators_invited);
             } else {
-                String login = ((BoxUser)(collaboration).getAccessibleBy()).getLogin();
                 res[0] = Integer.toString(R.string.box_sharesdk_collaborator_invited);
-                res[1] = login;
+                res[1] = ((BoxUser)(collaboration).getAccessibleBy()).getLogin();
             }
 
         } else {
@@ -226,7 +229,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * @return index 0 is string resource code, index 1 is the string formatted part of the message.
      */
     @VisibleForTesting
-    static String[] processAddCollabsRequestFailure(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
+    static String[] getAddCollabsRequestFailure(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
         String[] res = new String[2];
         if (!failedCollaboratorsList.isEmpty()) {
             StringBuilder collaborators = new StringBuilder();
@@ -263,7 +266,7 @@ public class InviteCollaboratorsVM extends BaseVM {
      * Generates failure codes for checking known errors
      * @return a HashSet of known errors
      */
-    private static HashSet<Integer> generateFailureCodes() {
+    private static HashSet<Integer> getFailureCodes() {
         HashSet<Integer> failureCodes = new HashSet<>();
         failureCodes.add(HttpURLConnection.HTTP_BAD_REQUEST);
         failureCodes.add(HttpURLConnection.HTTP_FORBIDDEN);

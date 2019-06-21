@@ -13,7 +13,7 @@ import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
 
 /**
- * This is an extension of BaseShareRepo that will be used by ViewModel to make calls to the backend.
+ * This is the ShareRepo that will be used by ViewModel to make calls to the backend.
  */
 public class ShareRepo  {
 
@@ -42,12 +42,7 @@ public class ShareRepo  {
      * @param source the LiveData to update with the response
      */
     private void handleTaskAndPostValue(BoxFutureTask task, final MutableLiveData source) {
-        task.addOnCompletedListener(new BoxFutureTask.OnCompletedListener() {
-            @Override
-            public void onCompleted(BoxResponse response) {
-                source.postValue(response);
-            }
-        });
+        task.addOnCompletedListener(response -> source.postValue(response));
     }
 
     /**

@@ -45,13 +45,13 @@ class InviteCollaboratorsVMTest {
 
     private val mockShareRepo: ShareRepo = mock()
 
-    private lateinit var inviteCollabVM: InviteCollaboratorsVM
+    private lateinit var inviteCollabVM: InviteCollaboratorsShareVM
 
     @Before
     fun setup() {
         mockShareRepo()
 
-        inviteCollabVM = InviteCollaboratorsVM(mockShareRepo, mockShareItem)
+        inviteCollabVM = InviteCollaboratorsShareVM(mockShareRepo, mockShareItem)
 
         attachObservers()
         createExceptions()
@@ -214,7 +214,7 @@ class InviteCollaboratorsVMTest {
         val failedCollaboratorList = arrayListOf<String>()
 
         //update stats
-        val name = InviteCollaboratorsVM.updateFailureStats(boxResponse, failedCollaboratorList)
+        val name = InviteCollaboratorsShareVM.updateFailureStats(boxResponse, failedCollaboratorList)
 
         //the names should be equal since dummy name was already added.
         assertEquals(dummyName, name)
@@ -231,7 +231,7 @@ class InviteCollaboratorsVMTest {
 
         //simulating failing multiple times correctly updating failedCollabList
         for (i in 1..3) {
-            InviteCollaboratorsVM.updateFailureStats(boxResponse, failedCollaboratorList)
+            InviteCollaboratorsShareVM.updateFailureStats(boxResponse, failedCollaboratorList)
             assertEquals(dummyName, failedCollaboratorList[i - 1])
             assertEquals(i, failedCollaboratorList.size)
         }
@@ -246,7 +246,7 @@ class InviteCollaboratorsVMTest {
         val boxResponses = createBoxResponseBatch(boxResponse)
 
         //process request
-        val result = InviteCollaboratorsVM.processAddCollabsRequestSuccess(boxResponses)
+        val result = InviteCollaboratorsShareVM.getAddCollabsRequestSuccess(boxResponses)
 
         //compare values
         assertEquals(R.string.box_sharesdk_collaborator_invited, Integer.parseInt(result[0]))
@@ -262,7 +262,7 @@ class InviteCollaboratorsVMTest {
         val boxResponses = createBoxResponseBatch(boxResponse)
 
         //process request
-        val result = InviteCollaboratorsVM.processAddCollabsRequestSuccess(boxResponses)
+        val result = InviteCollaboratorsShareVM.getAddCollabsRequestSuccess(boxResponses)
 
         //compare values
         assertEquals(R.string.box_sharesdk_collaborators_invited, Integer.parseInt(result[0]))
@@ -278,7 +278,7 @@ class InviteCollaboratorsVMTest {
         val boxResponses = createBoxResponseBatch(boxResponse, boxResponse2)
 
         //process request
-        val result = InviteCollaboratorsVM.processAddCollabsRequestSuccess(boxResponses)
+        val result = InviteCollaboratorsShareVM.getAddCollabsRequestSuccess(boxResponses)
 
         //compare values
         assertEquals(R.string.box_sharesdk_collaborators_invited, Integer.parseInt(result[0]))
@@ -297,7 +297,7 @@ class InviteCollaboratorsVMTest {
 
 
         //process request
-        val result = InviteCollaboratorsVM.processAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
+        val result = InviteCollaboratorsShareVM.getAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values (ignored already added since failure to add is more important)
         assertEquals(R.string.box_sharesdk_following_collaborators_error, Integer.parseInt(result[0]))
@@ -313,7 +313,7 @@ class InviteCollaboratorsVMTest {
         val failedCollabs = arrayListOf<String>()
 
         //process request
-        val result = InviteCollaboratorsVM.processAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
+        val result = InviteCollaboratorsShareVM.getAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
         assertEquals(R.string.box_sharesdk_has_already_been_invited, Integer.parseInt(result[0]))
@@ -329,7 +329,7 @@ class InviteCollaboratorsVMTest {
         val failedCollabs = arrayListOf<String>()
 
         //process request
-        val result = InviteCollaboratorsVM.processAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
+        val result = InviteCollaboratorsShareVM.getAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
         assertEquals(R.string.box_sharesdk_num_has_already_been_invited, Integer.parseInt(result[0]))
@@ -345,7 +345,7 @@ class InviteCollaboratorsVMTest {
         val failedCollabs = arrayListOf<String>()
 
         //process request
-        val result = InviteCollaboratorsVM.processAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
+        val result = InviteCollaboratorsShareVM.getAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
         assertEquals(R.string.box_sharesdk_unable_to_invite, Integer.parseInt(result[0]))
@@ -367,7 +367,7 @@ class InviteCollaboratorsVMTest {
         val addCollabValue = inviteCollabVM.addCollabs.value
 
         assertEquals(true, addCollabValue?.isSuccess)
-        assertEquals(null, addCollabValue?.mData) //no submessage for 3 success
+        assertEquals(null, addCollabValue?.data) //no submessage for 3 success
         assertEquals(R.string.box_sharesdk_collaborators_invited, addCollabValue?.strCode)
     }
 
@@ -384,7 +384,7 @@ class InviteCollaboratorsVMTest {
         val addCollabValue = inviteCollabVM.addCollabs.value
 
         assertEquals(true, addCollabValue?.isSuccess)
-        assertEquals(dummyName, addCollabValue?.mData)
+        assertEquals(dummyName, addCollabValue?.data)
         assertEquals(R.string.box_sharesdk_collaborator_invited, addCollabValue?.strCode)
     }
 
@@ -402,7 +402,7 @@ class InviteCollaboratorsVMTest {
         val addCollabValue = inviteCollabVM.addCollabs.value
 
         assertEquals(true, addCollabValue?.isSuccess) //already added is not considered a failure
-        assertEquals(dummyName, addCollabValue?.mData)
+        assertEquals(dummyName, addCollabValue?.data)
         assertEquals(R.string.box_sharesdk_has_already_been_invited, addCollabValue?.strCode)
     }
 
@@ -420,7 +420,7 @@ class InviteCollaboratorsVMTest {
         val addCollabValue = inviteCollabVM.addCollabs.value
 
         assertEquals(true, addCollabValue?.isSuccess)
-        assertEquals(Integer.toString(2), addCollabValue?.mData) //already added 2
+        assertEquals(Integer.toString(2), addCollabValue?.data) //already added 2
         assertEquals(R.string.box_sharesdk_num_has_already_been_invited, addCollabValue?.strCode)
     }
 
@@ -438,7 +438,7 @@ class InviteCollaboratorsVMTest {
         val addCollabValue = inviteCollabVM.addCollabs.value
 
         assertEquals(false, addCollabValue?.isSuccess)
-        assertEquals(failedName, addCollabValue?.mData)
+        assertEquals(failedName, addCollabValue?.data)
         assertEquals(R.string.box_sharesdk_following_collaborators_error, addCollabValue?.strCode)
     }
 
@@ -458,7 +458,7 @@ class InviteCollaboratorsVMTest {
         val addCollabValue = inviteCollabVM.addCollabs.value
 
         assertEquals(false, addCollabValue?.isSuccess)
-        assertEquals("$failedName1 $failedName2", addCollabValue?.mData) //appending all failures
+        assertEquals("$failedName1 $failedName2", addCollabValue?.data) //appending all failures
         assertEquals(R.string.box_sharesdk_following_collaborators_error, addCollabValue?.strCode)
     }
 

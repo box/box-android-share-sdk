@@ -11,7 +11,7 @@ import com.box.androidsdk.share.sharerepo.ShareRepo;
 
 import java.util.List;
 
-public class SelectRoleVM extends BaseVM {
+public class SelectRoleShareVM extends BaseShareVM {
 
 
     private MutableLiveData<List<BoxCollaboration.Role>> mRoles = new MutableLiveData<>();
@@ -20,7 +20,7 @@ public class SelectRoleVM extends BaseVM {
     private MutableLiveData<Boolean> mAllowRemove = new MutableLiveData<>();
     private MutableLiveData<BoxCollaboration> mCollaboration = new MutableLiveData<>();
 
-    public SelectRoleVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
+    public SelectRoleShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
     }
 

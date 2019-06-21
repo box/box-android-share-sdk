@@ -84,7 +84,7 @@ class ShareRepoTest {
     }
 
     @Test
-    fun `test get collab update LiveData values correctly` () {
+    fun `test add collabs update LiveData values correctly` () {
         assertNull(shareRepo.getAddCollabsBatch().value) //initially the LiveData should not have any value
         shareRepo.addCollabsApi(mockmShareItem, mockSelectedRole, mockEmailList) //get a value and update as needed
         assertEquals(mockAddCollabsResponse, shareRepo.getAddCollabsBatch().value)

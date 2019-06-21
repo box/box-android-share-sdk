@@ -10,12 +10,12 @@ import com.box.androidsdk.share.sharerepo.ShareRepo;
  * The base ViewModel class which should be extended by other ViewModels
  * Hold a BoxCollaborationItem and a BaseShareRepo that is required in all ViewModels
  */
-public class BaseVM extends ViewModel {
+public class BaseShareVM extends ViewModel {
 
     protected final ShareRepo mShareRepo;
     protected BoxCollaborationItem mShareItem;
 
-    public BaseVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
+    public BaseShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         this.mShareRepo = shareRepo;
         this.mShareItem = shareItem;
     }

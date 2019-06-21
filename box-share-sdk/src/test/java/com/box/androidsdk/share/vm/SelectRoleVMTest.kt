@@ -19,7 +19,7 @@ class SelectRoleVMTest {
 
     private val mockRepo: ShareRepo = mock()
     private val mockShareItem: BoxCollaborationItem = mock()
-    private lateinit var selectRoleVM: SelectRoleVM
+    private lateinit var selectRoleVM: SelectRoleShareVM
 
     private val mockRolesList: List<BoxCollaboration.Role> = mock()
     private val mockAllowOwnerRole = true
@@ -29,7 +29,7 @@ class SelectRoleVMTest {
 
     @Before
     fun setup() {
-        selectRoleVM = SelectRoleVM(mockRepo, mockShareItem)
+        selectRoleVM = SelectRoleShareVM(mockRepo, mockShareItem)
     }
 
     @Test

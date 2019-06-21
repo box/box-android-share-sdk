@@ -1,15 +1,14 @@
 package com.box.androidsdk.share.vm;
 
 /**
- * A special extension of DataWrapper to hold data for inviting a new Collaborator
+ * A special extension of PresenterData to hold data for inviting a new Collaborator
  */
-public class InviteCollaboratorsDataWrapper extends DataWrapper<String> {
+public class InviteCollaboratorsPresenterData extends PresenterData<String> {
 
     private boolean mInvitationFailed;
 
-    public InviteCollaboratorsDataWrapper(String data, int strCode, boolean invitationFailed) {
-        this.mData = data;
-        this.mStrRes = strCode;
+    public InviteCollaboratorsPresenterData(String data, int strCode, boolean invitationFailed) {
+        super(data, strCode);
         this.mInvitationFailed = invitationFailed;
     }
 
@@ -35,6 +34,6 @@ public class InviteCollaboratorsDataWrapper extends DataWrapper<String> {
      * @return true if the String formatted part exists
      */
     public boolean hasSubMessage() {
-        return mData != null;
+        return getData() != null;
     }
 }
