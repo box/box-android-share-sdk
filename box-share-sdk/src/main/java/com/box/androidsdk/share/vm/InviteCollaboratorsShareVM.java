@@ -157,8 +157,7 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
             if (!r.isSuccess()) {
                 if (checkIfKnownFailure(r, failureCodes)) {
                     String[] res = getFailureInfo(r);
-                    name = res[0];
-                    alreadyAddedCount += name != null ? 1 : 0;
+                    alreadyAddedCount += (name = res[0]) != null ? 1 : 0;
                     if (res[1] != null) {
                         failedCollaboratorsList.add(res[1]);
                     }
