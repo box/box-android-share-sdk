@@ -207,34 +207,32 @@ class InviteCollaboratorsVMTest {
 
 
     @Test
-    fun `test update failure stats already added case`() {
+    fun `test get failure stats already added case`() {
         //configs
         val dummyName = "Box User"
         val boxResponse = createFailureException(dummyName, mockAlreadyCollabException)
         val failedCollaboratorList = arrayListOf<String>()
 
         //update stats
-        val name = InviteCollaboratorsShareVM.updateFailureStats(boxResponse, failedCollaboratorList)
+        val res = InviteCollaboratorsShareVM.getFailureStats(boxResponse)
 
         //the names should be equal since dummy name was already added.
-        assertEquals(dummyName, name)
-        assertEquals(0, failedCollaboratorList.size)
+        assertEquals(dummyName, res[0])
+        assertEquals(null, res[1])
     }
 
 
     @Test
-    fun `test update failure stats failed to add collaborator`() {
+    fun `test get failure stats failed to add collaborator`() {
         //configs
         val dummyName = "Box User"
         val boxResponse = createFailureException(dummyName, mockFailedToAddException)
         val failedCollaboratorList = arrayListOf<String>()
 
         //simulating failing multiple times correctly updating failedCollabList
-        for (i in 1..3) {
-            InviteCollaboratorsShareVM.updateFailureStats(boxResponse, failedCollaboratorList)
-            assertEquals(dummyName, failedCollaboratorList[i - 1])
-            assertEquals(i, failedCollaboratorList.size)
-        }
+        val res = InviteCollaboratorsShareVM.getFailureStats(boxResponse)
+        assertEquals(dummyName, res[1])
+        assertEquals(null, res[0])
     }
 
     @Test

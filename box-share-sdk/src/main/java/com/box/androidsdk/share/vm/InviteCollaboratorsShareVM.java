@@ -153,13 +153,15 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
         String name = "";
 
         List<String> failedCollaboratorsList = new ArrayList<>();
-
-
         for (BoxResponse<BoxCollaboration> r : responses.getResponses()) {
             if (!r.isSuccess()) {
                 if (checkIfKnownFailure(r, failureCodes)) {
-                    name = updateFailureStats(r, failedCollaboratorsList);
+                    String[] res = getFailureStats(r);
+                    name = res[0];
                     alreadyAddedCount += name != null ? 1 : 0;
+                    if (res[1] != null) {
+                        failedCollaboratorsList.add(res[1]);
+                    }
                 }
                 didRequestFail = true;
             }
@@ -183,20 +185,21 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
     /**
      * A helper method for updating attributes used for keeping track of stats for failure
      * @param r the response to get request infos from
-     * @param failedCollaboratorsList list of failed collabs to be updated
-     * @return the name of collaborator that is already added
+     * @return index 0 is name of the person already added; index 1 is the name of collaborator that failed (only one of them will be used at a time)
      */
     @VisibleForTesting
-    static String updateFailureStats(BoxResponse<BoxCollaboration> r, List<String> failedCollaboratorsList) {
+    static String[] getFailureStats(BoxResponse<BoxCollaboration> r) {
+        String[] res = new String[2];
         String code = ((BoxException) r.getException()).getAsBoxError().getCode();
         BoxUser user = (BoxUser) ((BoxRequestsShare.AddCollaboration) r.getRequest()).getAccessibleBy();
 
+        String name = user == null ? "" : user.getLogin();
         if (alreadyAddedFailure(code)) {
-            return user == null ? "" : user.getLogin();
+            res[0] = name;
         } else {
-            failedCollaboratorsList.add(user == null ? "" : user.getLogin());
-            return null;
+            res[1] = name;
         }
+        return res;
     }
 
     /**
