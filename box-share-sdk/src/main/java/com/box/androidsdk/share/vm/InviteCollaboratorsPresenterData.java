@@ -53,10 +53,10 @@ public class InviteCollaboratorsPresenterData extends PresenterData<String> {
     }
 
     /**
-     * Returns true if the String formatted part exists.
-     * @return true if the String formatted part exists
+     * Returns true if there is data that can be used to display a message.
+     * @return true if there is data that can be used to display a message
      */
-    public boolean hasSubMessage() {
+    public boolean hasData() {
         return getData() != null;
     }
 
