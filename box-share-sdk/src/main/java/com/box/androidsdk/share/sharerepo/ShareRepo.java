@@ -21,7 +21,7 @@ public class ShareRepo  {
 
     private final MutableLiveData<BoxResponse<BoxIteratorInvitees>> mInvitees = new MutableLiveData<>();
     private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mFetchRoleItem = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxResponseBatch>> mAddCollabsBatch = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxResponseBatch>> mInviteCollabsBatch = new MutableLiveData<>();
 
     public ShareRepo(ShareController controller) {
         this.mController = controller;
@@ -60,7 +60,7 @@ public class ShareRepo  {
      * @param emails the list of collaborators to invite
      */
     public void addCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
-        handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mAddCollabsBatch);
+        handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mInviteCollabsBatch);
     }
 
     /**
@@ -83,7 +83,7 @@ public class ShareRepo  {
      * Returns a LiveData which holds a batch of responses for each collaborator invited.
      * @return a LiveData which holds a batch of responses for each collaborator invited
      */
-    public LiveData<BoxResponse<BoxResponseBatch>> getAddCollabsBatch() {
-        return mAddCollabsBatch;
+    public LiveData<BoxResponse<BoxResponseBatch>> getInviteCollabsBatch() {
+        return mInviteCollabsBatch;
     }
 }

@@ -3,6 +3,14 @@ package com.box.androidsdk.share.vm;
 import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
 
+import com.box.androidsdk.content.BoxException;
+import com.box.androidsdk.content.models.BoxCollaborationItem;
+import com.box.androidsdk.content.requests.BoxResponse;
+import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
+
+import java.net.HttpURLConnection;
+
 /**
  * A data wrapper that can also take an accompanying string resource to display message to users.
  * @param <T> the data type of the item in the response that will be returned
@@ -73,4 +81,5 @@ public class PresenterData<T> {
     public int getStrCode() {
         return mStrRes;
     }
+
 }
