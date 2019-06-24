@@ -94,11 +94,11 @@ public class InviteCollabsTransformer {
         List<String> failedCollaboratorsList = new ArrayList<>();
         for (BoxResponse<BoxCollaboration> r : responses.getResponses()) {
             if (!r.isSuccess()) {
-                if (checkIfKnownFailure(r, failureCodes)) {
+                if (isKnownFailure(r, failureCodes)) {
                     String code = ((BoxException) r.getException()).getAsBoxError().getCode();
                     BoxUser user = (BoxUser) ((BoxRequestsShare.AddCollaboration) r.getRequest()).getAccessibleBy();
                     name = user == null ? "" : user.getLogin();
-                    if (alreadyAddedFailure(code)) {
+                    if (isAlreadyAddedFailure(code)) {
                         alreadyAddedCount++;
                     }
                 }
@@ -159,11 +159,11 @@ public class InviteCollabsTransformer {
         }
     }
 
-    private static boolean alreadyAddedFailure(String code) {
+    private static boolean isAlreadyAddedFailure(String code) {
         return !SdkUtils.isBlank(code) && code.equals(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR);
     }
 
-    private static boolean checkIfKnownFailure(BoxResponse<BoxCollaboration> r, HashSet<Integer> failureCodes) {
+    private static boolean isKnownFailure(BoxResponse<BoxCollaboration> r, HashSet<Integer> failureCodes) {
         return r.getException() instanceof BoxException && failureCodes.contains(((BoxException) r.getException()).getResponseCode());
     }
 
