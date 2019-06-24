@@ -1,5 +1,6 @@
 package com.box.androidsdk.share.vm;
 
+import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
 
 /**
@@ -15,7 +16,7 @@ public class PresenterData<T> {
 
     }
 
-    public PresenterData(T data, @StringRes int strRes) {
+    public PresenterData(T data, @StringRes @PluralsRes int strRes) {
         this.mData = data;
         this.mStrRes = strRes;
     }
@@ -35,7 +36,7 @@ public class PresenterData<T> {
      * @param data the data from the result
      * @param strRes the String resource for the success message
      */
-    public void success(T data, @StringRes int strRes) {
+    public void success(T data, @StringRes @PluralsRes int strRes) {
         this.mData = data;
         this.mStrRes = strRes;
     }
@@ -44,7 +45,7 @@ public class PresenterData<T> {
      * Updates the item with the stringCode passed in. Use this if request was unsuccessful
      * @param strRes the String resource for the error message
      */
-    public void failure(@StringRes int strRes) {
+    public void failure(@StringRes @PluralsRes int strRes) {
         this.mData = null;
         this.mStrRes = strRes;
     }

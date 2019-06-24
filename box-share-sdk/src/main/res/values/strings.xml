@@ -85,8 +85,6 @@
     <string name="box_sharesdk_cannot_view_collaborations" description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available">You cannot view the collaborations for this item.</string>
     <string name="box_sharesdk_another_person" description="Default name shown when a user without a Box account has been invited">Another Person</string>
     <string name="box_sharesdk_no_collaborators" description="Message shown when no collaborators have been invited for the current item">No collaborators for this item.</string>
-    <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s has already been invited to this item</string>
-    <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s people have already been invited to this item</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
     <string name="box_sharedsdk_collaborators_title">Collaborators</string>
     <string name="box_sharesdk_num_collaborators_error" description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)">%s could not be invited to this %s</string>
@@ -99,6 +97,11 @@
     <string name="box_sharesdk_unable_to_invite">Unable to invite collaborators. Please contact support if the issue persists.</string>
     <string name="box_sharesdk_title_remove_different_collaboration_folder" description="Title for the alert dialog to confirm removing a collaborator for a parent of selected item">Remove Collaborator</string>
     <string name="box_sharesdk_warn_remove_different_collaboration_folder" description="shown as message of warning dialog before removing collaboration for a different than selected item">This will remove %1$s from accessing all files within %2$s. Are you sure ?</string>
+    <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s has already been invited to this item</string>
+    <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s people have already been invited to this item</string>
 
-
+    <plurals name="box_sharesdk_already_been_invited">
+        <item quantity="one" description="The string displayed when a person was already invited, %s being the email of the person">%s has already been invited to this item</item>
+        <item quantity="many" description="The string displayed when some number of people have already been invited, %s being number of people">%s people have already been invited to this item</item>
+    </plurals>
 </resources>
