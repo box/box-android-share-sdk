@@ -100,6 +100,8 @@ public class InviteCollabsTransformer {
                     name = user == null ? "" : user.getLogin();
                     if (isAlreadyAddedFailure(code)) {
                         alreadyAddedCount++;
+                    } else {
+                        failedCollaboratorsList.add(name);
                     }
                 }
                 didRequestSuceed = false;
