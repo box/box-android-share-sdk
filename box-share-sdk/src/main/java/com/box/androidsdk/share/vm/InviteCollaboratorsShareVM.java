@@ -41,7 +41,7 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
      * @param emails a list of collaborators represented in emails
      */
     public void addCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
-        mShareRepo.addCollabsApi(boxCollaborationItem, selectedRole, emails);
+        mShareRepo.inviteCollabsApi(boxCollaborationItem, selectedRole, emails);
     }
 
     /**

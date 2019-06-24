@@ -67,7 +67,7 @@ class InviteCollaboratorsVMTest {
             data.postValue(mockFetchRolesResponse)
         }
 
-        whenever(mockShareRepo.addCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)).then {
+        whenever(mockShareRepo.inviteCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)).then {
             val data = mockShareRepo.inviteCollabsBatch as MutableLiveData
             data.postValue(mockAddCollabsResponse)
         }

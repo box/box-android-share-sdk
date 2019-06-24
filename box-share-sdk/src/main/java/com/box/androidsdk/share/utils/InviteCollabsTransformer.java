@@ -73,7 +73,7 @@ public class InviteCollabsTransformer {
     }
 
     /**
-     * Helper method for transforming BoxResponse to UI Model for addCollabsApi
+     * Helper method for transforming BoxResponse to UI Model for inviteCollabsApi
      * @param response the response to transform
      * @return the transformed model
      */

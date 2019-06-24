@@ -54,12 +54,12 @@ public class ShareRepo  {
     }
 
     /**
-     * Add collaborators to an item based on the selectedRole and emails.
+     * Invite collaborators to an item based on the selectedRole and emails.
      * @param boxCollaborationItem the item to add collaborators on
      * @param selectedRole the role for the new collaborators
      * @param emails the list of collaborators to invite
      */
-    public void addCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
+    public void inviteCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
         handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mInviteCollabsBatch);
     }
 
