@@ -78,15 +78,15 @@ public class InviteCollabsTransformer {
      * @return the transformed model
      */
     public static InviteCollaboratorsPresenterData getInviteCollabsPresenterDataFromBoxResponse(BoxResponse<BoxResponseBatch> response) {
-        return getPresenterData(response.getResult());
+        return getInviteCollabsPresenterData(response.getResult());
     }
 
     /**
-     * Helper method for helping with transformation of BoxBatchResponse to UI Model
+     * Helper method for transforming BoxBatchResponse to UI Model for Inviting Collabs
      * @param responses the batch response to transform
      * @return the transformed model
      */
-    private static InviteCollaboratorsPresenterData getPresenterData(BoxResponseBatch responses) {
+    private static InviteCollaboratorsPresenterData getInviteCollabsPresenterData(BoxResponseBatch responses) {
         int alreadyAddedCount = 0;
         boolean didRequestSuceed = true;
         String name = "";
@@ -114,9 +114,9 @@ public class InviteCollabsTransformer {
     }
 
     /**
-     * Returns a UI Model of a Box Response for Inviting new Collaborators for a successful request.
+     * Returns a UI Model of a Box Response for Inviting new collaborators for a successful request.
      * @param responses the responses that was successful
-     * @return a UI Model of a Box Response for Inviting new Collaborators for a successful request
+     * @return a UI Model of a Box Response for Inviting new collaborators for a successful request
      */
     @VisibleForTesting
     static InviteCollaboratorsPresenterData getPresenterDataForSuccessfulRequest(BoxResponseBatch responses) {
@@ -134,11 +134,11 @@ public class InviteCollabsTransformer {
         }
     }
     /**
-     * Returns a UI Model of a Box Response for Inviting new Collaborators for a failed request.
+     * Returns a UI Model of a Box Response for Inviting new collaborators for a failed request.
      * @param failedCollaboratorsList the list of collaborators for whom requests were not successful
      * @param name the name of a collaborator that is already added
      * @param alreadyAddedCount how many collaborators were already added
-     * @return a UI Model of a Box Response for Inviting new Collaborators for a failed request
+     * @return a UI Model of a Box Response for Inviting new collaborators for a failed request
      */
     @VisibleForTesting
     static InviteCollaboratorsPresenterData getPresenterDataForFailedRequest(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
