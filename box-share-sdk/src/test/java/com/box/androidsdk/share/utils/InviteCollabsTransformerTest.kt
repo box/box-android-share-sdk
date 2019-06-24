@@ -7,11 +7,12 @@ import com.box.androidsdk.content.models.BoxCollaborationItem
 import com.box.androidsdk.content.models.BoxError
 import com.box.androidsdk.content.requests.BoxRequestsShare
 import com.box.androidsdk.content.requests.BoxResponse
+import com.box.androidsdk.content.requests.BoxResponseBatch
 import com.box.androidsdk.share.R
+import com.box.androidsdk.share.internal.models.BoxIteratorInvitees
 import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createBoxResponseBatch
+import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createFailureResponse
 import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createSuccessResponse
-import com.box.androidsdk.share.vm.InviteCollaboratorsShareVM
-import com.box.androidsdk.share.vm.PresenterData
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.Assert.assertEquals
@@ -24,6 +25,108 @@ import javax.net.ssl.HttpsURLConnection
 class InviteCollabsTransformerTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
+
+    private val mockFailedToAddException: BoxException = mock()
+    private val mockHttpForbiddenException: BoxException = mock()
+    private val mockBoxNetworkErrorException: BoxException = mock()
+    private val mockAlreadyCollabException: BoxException = mock()
+    private val mockBadRequestException: BoxException = mock()
+
+    private val mockGetInviteeResponse: BoxResponse<BoxIteratorInvitees> = mock()
+    private val mockFetchRolesResponse: BoxResponse<BoxCollaborationItem> = mock()
+    private val mockInviteCollabsResponse: BoxResponse<BoxResponseBatch> = mock()
+
+    private val mockGetInviteesResult: BoxIteratorInvitees = mock()
+    private val mockFetchRoleItemResult: BoxCollaborationItem = mock()
+    private lateinit var mockInviteCollabsResult: BoxResponseBatch
+
+
+    @Before
+    fun setup() {
+        createExceptions()
+    }
+
+    private fun createExceptions() {
+
+        whenever(mockHttpForbiddenException.responseCode).thenReturn(HttpsURLConnection.HTTP_FORBIDDEN)
+        whenever(mockBoxNetworkErrorException.errorType).thenReturn(BoxException.ErrorType.NETWORK_ERROR)
+
+        val boxErrorAlreadyAdded: BoxError = mock()
+        whenever(boxErrorAlreadyAdded.code).thenReturn(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR)
+        whenever(mockAlreadyCollabException.asBoxError).thenReturn(boxErrorAlreadyAdded)
+        whenever(mockAlreadyCollabException.responseCode).thenReturn(HttpsURLConnection.HTTP_BAD_REQUEST)
+
+        val boxErrorFailedToAdd: BoxError = mock()
+        whenever(boxErrorFailedToAdd.code).thenReturn("")
+        whenever(mockFailedToAddException.asBoxError).thenReturn(boxErrorFailedToAdd)
+        whenever(mockFailedToAddException.responseCode).thenReturn(HttpsURLConnection.HTTP_BAD_REQUEST)
+        whenever(mockBadRequestException.responseCode).thenReturn(HttpsURLConnection.HTTP_BAD_REQUEST)
+    }
+
+    @Test
+    fun `test fetch role success`() {
+        //configs
+        whenever(mockFetchRolesResponse.isSuccess).thenReturn(true)
+        whenever(mockFetchRolesResponse.result).thenReturn(mockFetchRoleItemResult)
+
+        //make a network call to fetch roles
+        val result = InviteCollabsTransformer.getFetchRolesItemPresenterData(mockFetchRolesResponse)
+
+        assertEquals(true, result?.isSuccess)
+        assertEquals(mockFetchRoleItemResult, result?.data)
+    }
+
+    @Test
+    fun `test fetch role failure`() {
+        //configs
+        whenever(mockFetchRolesResponse.isSuccess).thenReturn(false)
+
+        //make a network call to fetch roles
+        val result = InviteCollabsTransformer.getFetchRolesItemPresenterData(mockFetchRolesResponse)
+
+        assertEquals(false, result?.isSuccess)
+        assertEquals(R.string.box_sharesdk_network_error, result?.strCode)
+    }
+
+    @Test
+    fun `test get invitees success`() {
+        //configs
+        whenever(mockGetInviteeResponse.isSuccess).thenReturn(true)
+        whenever(mockGetInviteeResponse.result).thenReturn(mockGetInviteesResult)
+
+        //make a network call to fetch roles
+        val result = InviteCollabsTransformer.getInviteesPresenterData(mockGetInviteeResponse)
+
+        assertEquals(true, result?.isSuccess)
+        assertEquals(mockGetInviteesResult, result?.data)
+    }
+
+    @Test
+    fun `test get invitees failure http forbidden`() {
+        //configs
+        whenever(mockGetInviteeResponse.isSuccess).thenReturn(false)
+        whenever(mockGetInviteeResponse.exception).thenReturn(mockHttpForbiddenException)
+
+        //make a network call to fetch roles
+        val result = InviteCollabsTransformer.getInviteesPresenterData(mockGetInviteeResponse)
+
+        assertEquals(false, result?.isSuccess)
+        assertEquals(R.string.box_sharesdk_insufficient_permissions, result?.strCode)
+    }
+
+    @Test
+    fun `test get invitees failure box network error`() {
+        //configs
+        whenever(mockGetInviteeResponse.isSuccess).thenReturn(false)
+        whenever(mockGetInviteeResponse.exception).thenReturn(mockBoxNetworkErrorException)
+
+        //make a network call to fetch roles
+        val result = InviteCollabsTransformer.getInviteesPresenterData(mockGetInviteeResponse)
+
+        assertEquals(false, result?.isSuccess)
+        assertEquals(R.string.box_sharesdk_network_error, result?.strCode)
+    }
+
 
     @Test
     fun `test get invite collabs presenter data for successful request where response size is 1 and accessible by is not null`() {
@@ -162,4 +265,122 @@ class InviteCollabsTransformerTest {
         assertEquals(0, result.alreadyAdddedCount)
 
     }
+
+    @Test
+    fun `test get invite presenter data where all requests succeed`() {
+        //configs
+        val boxResponse = createSuccessResponse("user1")
+        val boxResponse2 = createSuccessResponse("user2")
+        val boxResponse3 = createSuccessResponse("user3")
+        mockInviteCollabsResult = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
+
+        //process request
+        val result = InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+
+        assertEquals(R.string.box_sharesdk_collaborators_invited, result.strCode)
+        assertEquals(null, result.data)
+        assertEquals(true, result.isSuccess)
+        assertEquals(false, result.isSnackBarMessage)
+        assertEquals(0, result.alreadyAdddedCount)
+    }
+
+    @Test
+    fun `test add collab 1 succeed no failure`() {
+        //configs
+        val dummyName = "Box User"
+        val boxResponse = createSuccessResponse(dummyName)
+        mockInviteCollabsResult = createBoxResponseBatch(boxResponse)
+        whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
+
+        //process request
+        val result = InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+
+        assertEquals(R.string.box_sharesdk_collaborator_invited, result.strCode)
+        assertEquals(dummyName, result.data)
+        assertEquals(true, result.isSuccess)
+        assertEquals(false, result.isSnackBarMessage)
+        assertEquals(0, result.alreadyAdddedCount)
+    }
+
+    @Test
+    fun `test add collab succeed 1 already added 1`() {
+        //configs
+        val dummyName = "user2"
+        val boxResponse = createSuccessResponse("user1")
+        val boxResponse2 = createFailureResponse(dummyName, mockAlreadyCollabException)
+        mockInviteCollabsResult = createBoxResponseBatch(boxResponse, boxResponse2)
+        whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
+
+        //process request
+        val result = InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+
+        assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
+        assertEquals(dummyName, result.data)
+        assertEquals(true, result.isSuccess)
+        assertEquals(false, result.isSnackBarMessage)
+        assertEquals(1, result.alreadyAdddedCount)
+    }
+
+    @Test
+    fun `test add collab succeed 1 already add 2`() {
+        //configs
+        val boxResponse = createSuccessResponse("user1")
+        val boxResponse2 = createFailureResponse("user2", mockAlreadyCollabException)
+        val boxResponse3 = createFailureResponse("user3", mockAlreadyCollabException)
+        mockInviteCollabsResult= createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
+
+        //process request
+        val result = InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+
+        assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
+        assertEquals("user3", result.data)
+        assertEquals(true, result.isSuccess)
+        assertEquals(false, result.isSnackBarMessage)
+        assertEquals(2, result.alreadyAdddedCount)
+    }
+
+    @Test
+    fun `test add collab succeed 1 failed to add 1 already added 1`() {
+        //configs
+        val failedName = "user2"
+        val boxResponse = createSuccessResponse("user1")
+        val boxResponse2 = createFailureResponse(failedName, mockFailedToAddException)
+        val boxResponse3 = createFailureResponse("user3", mockAlreadyCollabException)
+        mockInviteCollabsResult = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
+
+        //process request
+        val result = InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+
+        assertEquals(R.string.box_sharesdk_following_collaborators_error, result.strCode)
+        assertEquals(failedName, result.data)
+        assertEquals(false, result.isSuccess)
+        assertEquals(true, result.isSnackBarMessage)
+        assertEquals(1, result.alreadyAdddedCount)
+    }
+
+    @Test
+    fun `test add collab succeed 1 failed to add 2`() {
+        //configs
+        val failedName1 = "user2"
+        val failedName2 = "user3"
+        val boxResponse = createSuccessResponse("user1")
+        val boxResponse2 = createFailureResponse(failedName1, mockFailedToAddException)
+        val boxResponse3 = createFailureResponse(failedName2, mockFailedToAddException)
+        mockInviteCollabsResult = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
+
+        //process request
+        val result = InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+
+
+        assertEquals(R.string.box_sharesdk_following_collaborators_error, result.strCode)
+        assertEquals("$failedName1 $failedName2", result.data)
+        assertEquals(false, result.isSuccess)
+        assertEquals(true, result.isSnackBarMessage)
+        assertEquals(0, result.alreadyAdddedCount)
+    }
+
 }
