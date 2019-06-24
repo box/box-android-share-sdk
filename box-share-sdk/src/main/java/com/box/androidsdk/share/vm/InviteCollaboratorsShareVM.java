@@ -29,6 +29,7 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
     }
 
 
+    //used for mocking the transformer since it's not VM job.
     @VisibleForTesting
     InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem, InviteCollabsTransformer transformer) {
         super(shareRepo, shareItem);
