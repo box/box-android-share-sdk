@@ -26,7 +26,7 @@ import java.util.List;
 public class InviteCollabsTransformer {
 
     private static HashSet<Integer> failureCodes;
-
+    private static char divider = ' ';
     static {
         failureCodes = getFailureCodes();
     }
@@ -142,7 +142,6 @@ public class InviteCollabsTransformer {
      */
     @VisibleForTesting
     static InviteCollaboratorsPresenterData getPresenterDataForFailedRequest(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
-        char divider = ' ';
         if (!failedCollaboratorsList.isEmpty()) {
             StringBuilder collaborators = new StringBuilder();
             for (int i = 0; i < failedCollaboratorsList.size(); i++) {
