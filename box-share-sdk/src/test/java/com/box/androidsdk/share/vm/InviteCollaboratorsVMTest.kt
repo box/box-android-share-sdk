@@ -10,6 +10,9 @@ import com.box.androidsdk.content.requests.BoxResponseBatch
 import com.box.androidsdk.share.R
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees
 import com.box.androidsdk.share.sharerepo.ShareRepo
+import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createBoxResponseBatch
+import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createFailureResponse
+import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createSuccessResponse
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.Assert.assertEquals
@@ -101,41 +104,6 @@ class InviteCollaboratorsVMTest {
         inviteCollabVM.inviteCollabs.observeForever(mock())
     }
 
-    private fun createFailureException(dummyName: String, exception: BoxException): BoxResponse<BoxCollaboration> {
-        val boxResponse: BoxResponse<BoxCollaboration> = mock()
-        whenever(boxResponse.exception).thenReturn(exception)
-        val boxUser: BoxUser = mock()
-
-        whenever(boxUser.login).thenReturn(dummyName)
-        val boxRequestShare: BoxRequestsShare.AddCollaboration = mock()
-        whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
-        whenever(boxResponse.request).thenReturn(boxRequestShare)
-        whenever(boxResponse.isSuccess).thenReturn(false)
-        return boxResponse
-    }
-
-    private fun createSuccessResponse(dummyName: String?): BoxResponse<BoxCollaboration> {
-        val boxResponse: BoxResponse<BoxCollaboration> = mock()
-        var boxUser: BoxUser? = null
-        if (dummyName != null) {
-            boxUser = mock()
-            whenever(boxUser.login).thenReturn(dummyName)
-        }
-        val boxRequestShare: BoxCollaboration = mock()
-        whenever(boxRequestShare.accessibleBy).thenReturn(boxUser)
-        whenever(boxResponse.result).thenReturn(boxRequestShare)
-        whenever(boxResponse.isSuccess).thenReturn(true)
-        return boxResponse
-    }
-
-    private fun createBoxResponseBatch(vararg respones: BoxResponse<BoxCollaboration>): BoxResponseBatch {
-        val boxResponses: BoxResponseBatch = mock()
-        val boxResponseList = arrayListOf<BoxResponse<BoxObject>>()
-        respones.forEach { boxResponse ->  boxResponseList.add(boxResponse as BoxResponse<BoxObject>)}
-        whenever(boxResponses.responses).thenReturn(boxResponseList)
-        return boxResponses
-    }
-
     @Test
     fun `test fetch role success`() {
         //configs
@@ -205,152 +173,6 @@ class InviteCollaboratorsVMTest {
         assertEquals(R.string.box_sharesdk_network_error, inviteCollabValue?.strCode)
     }
 
-
-//    @Test
-//    fun `test get failure stats already added case`() {
-//        //configs
-//        val dummyName = "Box User"
-//        val boxResponse = createFailureException(dummyName, mockAlreadyCollabException)
-//        val failedCollaboratorList = arrayListOf<String>()
-//
-//        //update stats
-//        val res = InviteCollaboratorsShareVM.getFailureInfo(boxResponse)
-//
-//        //the names should be equal since dummy name was already added.
-//        assertEquals(dummyName, res[0])
-//        assertEquals(null, res[1])
-//    }
-//
-//
-//    @Test
-//    fun `test get failure stats failed to add collaborator`() {
-//        //configs
-//        val dummyName = "Box User"
-//        val boxResponse = createFailureException(dummyName, mockFailedToAddException)
-//        val failedCollaboratorList = arrayListOf<String>()
-//
-//        //simulating failing multiple times correctly updating failedCollabList
-//        val res = InviteCollaboratorsShareVM.getFailureInfo(boxResponse)
-//        assertEquals(dummyName, res[1])
-//        assertEquals(null, res[0])
-//    }
-//
-//    @Test
-//    fun `test process request success size 1 non null`() {
-//        //configs
-//        val dummyName = "Box User"
-//        val boxResponse = createSuccessResponse(dummyName)
-//
-//        val boxResponses = createBoxResponseBatch(boxResponse)
-//
-//        //process request
-//        val result = InviteCollaboratorsShareVM.getAddCollabsRequestSuccess(boxResponses)
-//
-//        //compare values
-//        assertEquals(R.string.box_sharesdk_collaborator_invited, Integer.parseInt(result[0]))
-//        assertEquals(dummyName, result[1])
-//    }
-//
-//    @Test
-//    fun `test process request success size 1 getAccessibly by is null`() {
-//        //configs
-//        val dummyName = null
-//        val boxResponse = createSuccessResponse(dummyName)
-//
-//        val boxResponses = createBoxResponseBatch(boxResponse)
-//
-//        //process request
-//        val result = InviteCollaboratorsShareVM.getAddCollabsRequestSuccess(boxResponses)
-//
-//        //compare values
-//        assertEquals(R.string.box_sharesdk_collaborators_invited, Integer.parseInt(result[0]))
-//        assertEquals(null, result[1])
-//    }
-//
-//    @Test
-//    fun `test process request success greater than 1`() {
-//        //configs
-//        val dummyName = "Box User"
-//        val boxResponse: BoxResponse<BoxCollaboration> = createSuccessResponse(dummyName)
-//        val boxResponse2: BoxResponse<BoxCollaboration> = createSuccessResponse(dummyName+"2")
-//        val boxResponses = createBoxResponseBatch(boxResponse, boxResponse2)
-//
-//        //process request
-//        val result = InviteCollaboratorsShareVM.getAddCollabsRequestSuccess(boxResponses)
-//
-//        //compare values
-//        assertEquals(R.string.box_sharesdk_collaborators_invited, Integer.parseInt(result[0]))
-//        assertEquals(null, result[1])
-//    }
-//
-//    @Test
-//    fun `test process request failed collaborator non empty`() {
-//        //configs
-//        val dummyName = "already added user"
-//        val alreadyAddedCount = 1
-//        val failedCollabs = arrayListOf<String>()
-//        failedCollabs.add("failure 1")
-//        failedCollabs.add("failure 2")
-//        val res = "failure 1 failure 2"
-//
-//
-//        //process request
-//        val result = InviteCollaboratorsShareVM.getAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
-//
-//        //compare values (ignored already added since failure to add is more important)
-//        assertEquals(R.string.box_sharesdk_following_collaborators_error, Integer.parseInt(result[0]))
-//        assertEquals(res, result[1])
-//
-//    }
-//
-//    @Test
-//    fun `test process request failed collaborator empty alreadyAddedCount 1`() {
-//        //configs
-//        val dummyName = "already added user"
-//        val alreadyAddedCount = 1
-//        val failedCollabs = arrayListOf<String>()
-//
-//        //process request
-//        val result = InviteCollaboratorsShareVM.getAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
-//
-//        //compare values
-//        assertEquals(R.string.box_sharesdk_has_already_been_invited, Integer.parseInt(result[0]))
-//        assertEquals(dummyName, result[1])
-//
-//    }
-//
-//    @Test
-//    fun `test process request failed collaborator empty alreadyAddedCount greater than 1`() {
-//        //configs
-//        val dummyName = "already added user"
-//        val alreadyAddedCount = 2
-//        val failedCollabs = arrayListOf<String>()
-//
-//        //process request
-//        val result = InviteCollaboratorsShareVM.getAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
-//
-//        //compare values
-//        assertEquals(R.string.box_sharesdk_num_has_already_been_invited, Integer.parseInt(result[0]))
-//        assertEquals(Integer.toString(alreadyAddedCount), result[1])
-//
-//    }
-//
-//    @Test
-//    fun `test process request failed collaborator empty alreadyAddedCount 0`() {
-//        //configs
-//        val dummyName = "already added user"
-//        val alreadyAddedCount = 0
-//        val failedCollabs = arrayListOf<String>()
-//
-//        //process request
-//        val result = InviteCollaboratorsShareVM.getAddCollabsRequestFailure(failedCollabs, dummyName, alreadyAddedCount)
-//
-//        //compare values
-//        assertEquals(R.string.box_sharesdk_unable_to_invite, Integer.parseInt(result[0]))
-//        assertEquals(null, result[1])
-//
-//    }
-
     @Test
     fun `test add collab all succeed`() {
         //configs
@@ -391,7 +213,7 @@ class InviteCollaboratorsVMTest {
         //configs
         val dummyName = "user2"
         val boxResponse = createSuccessResponse("user1")
-        val boxResponse2 = createFailureException(dummyName, mockAlreadyCollabException)
+        val boxResponse2 = createFailureResponse(dummyName, mockAlreadyCollabException)
         mockAddCollabResult = createBoxResponseBatch(boxResponse, boxResponse2)
         whenever(mockAddCollabsResponse.result).thenReturn(mockAddCollabResult)
 
@@ -408,8 +230,8 @@ class InviteCollaboratorsVMTest {
     fun `test add collab succeed 1 already add 2`() {
         //configs
         val boxResponse = createSuccessResponse("user1")
-        val boxResponse2 = createFailureException("user2", mockAlreadyCollabException)
-        val boxResponse3 = createFailureException("user3", mockAlreadyCollabException)
+        val boxResponse2 = createFailureResponse("user2", mockAlreadyCollabException)
+        val boxResponse3 = createFailureResponse("user3", mockAlreadyCollabException)
         mockAddCollabResult= createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
         whenever(mockAddCollabsResponse.result).thenReturn(mockAddCollabResult)
 
@@ -427,7 +249,7 @@ class InviteCollaboratorsVMTest {
         //configs
         val failedName = "user2"
         val boxResponse = createSuccessResponse("user1")
-        val boxResponse2 = createFailureException("user2", mockFailedToAddException)
+        val boxResponse2 = createFailureResponse("user2", mockFailedToAddException)
         mockAddCollabResult = createBoxResponseBatch(boxResponse, boxResponse2)
         whenever(mockAddCollabsResponse.result).thenReturn(mockAddCollabResult)
 
@@ -446,8 +268,8 @@ class InviteCollaboratorsVMTest {
         val failedName1 = "user2"
         val failedName2 = "user3"
         val boxResponse = createSuccessResponse("user1")
-        val boxResponse2 = createFailureException(failedName1, mockFailedToAddException)
-        val boxResponse3 = createFailureException(failedName2, mockFailedToAddException)
+        val boxResponse2 = createFailureResponse(failedName1, mockFailedToAddException)
+        val boxResponse3 = createFailureResponse(failedName2, mockFailedToAddException)
         mockAddCollabResult = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
         whenever(mockAddCollabsResponse.result).thenReturn(mockAddCollabResult)
 

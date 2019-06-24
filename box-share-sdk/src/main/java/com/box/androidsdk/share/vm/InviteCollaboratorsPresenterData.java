@@ -39,7 +39,7 @@ public class InviteCollaboratorsPresenterData extends PresenterData<String> {
         return mAlreadyAddedCount;
     }
 
-    public boolean showSnackBar() {
+    public boolean isSnackBarMessage() {
         return mShowSnackbar;
     }
 
@@ -56,7 +56,7 @@ public class InviteCollaboratorsPresenterData extends PresenterData<String> {
      * Returns true if there is data that can be used to display a message.
      * @return true if there is data that can be used to display a message
      */
-    public boolean hasData() {
+    public boolean isNonNullData() {
         return getData() != null;
     }
 

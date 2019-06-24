@@ -154,7 +154,7 @@ public class InviteCollabsTransformer {
             }
             return new InviteCollaboratorsPresenterData(collaborators.toString(), R.string.box_sharesdk_following_collaborators_error, true, alreadyAddedCount, true);
 
-        } else if (alreadyAddedCount >= 1) {
+        } else if (alreadyAddedCount >= 1) { //request failing due to adding already added collabs is still considered a success
             return new InviteCollaboratorsPresenterData(name, R.plurals.box_sharesdk_already_been_invited, false, alreadyAddedCount, false);
         }  else {
             return new InviteCollaboratorsPresenterData(null, R.string.box_sharesdk_unable_to_invite, true, alreadyAddedCount, false);
