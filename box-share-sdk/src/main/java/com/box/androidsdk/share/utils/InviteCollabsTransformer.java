@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * A utility class for transforming BoxResponses into PresenterData for InviteCollaboratorsShareVM
+ * A utility class for transforming BoxResponses into PresenterData for InviteCollaboratorsShareVM.
  */
 public class InviteCollabsTransformer {
 
@@ -33,7 +33,7 @@ public class InviteCollabsTransformer {
 
 
     /**
-     * Helper method for transforming BoxResponse to UI Model for fetchRoleApi
+     * Helper method for transforming BoxResponse to UI Model for fetchRoleApi.
      * @param response the response to transform on
      * @return the transformed data
      */
@@ -49,7 +49,7 @@ public class InviteCollabsTransformer {
     }
 
     /**
-     * Helper method for transforming BoxResponse to UI Model for getInviteesApi
+     * Helper method for transforming BoxResponse to UI Model for getInviteesApi.
      * @param response the response to transform
      * @return the transformed model
      */
@@ -73,7 +73,7 @@ public class InviteCollabsTransformer {
     }
 
     /**
-     * Helper method for transforming BoxResponse to UI Model for inviteCollabsApi
+     * Helper method for transforming BoxResponse to UI Model for inviteCollabsApi.
      * @param response the response to transform
      * @return the transformed model
      */
@@ -82,7 +82,7 @@ public class InviteCollabsTransformer {
     }
 
     /**
-     * Helper method for transforming BoxBatchResponse to UI Model for Inviting Collabs
+     * Helper method for transforming BoxBatchResponse to UI Model for inviting collabs.
      * @param responses the batch response to transform
      * @return the transformed model
      */
@@ -114,9 +114,9 @@ public class InviteCollabsTransformer {
     }
 
     /**
-     * Returns a UI Model of a Box Response for Inviting new collaborators for a successful request.
+     * Returns a UI Model of a Box Response for inviting new collaborators for a successful request.
      * @param responses the responses that was successful
-     * @return a UI Model of a Box Response for Inviting new collaborators for a successful request
+     * @return a UI Model of a Box Response for inviting new collaborators for a successful request
      */
     @VisibleForTesting
     static InviteCollaboratorsPresenterData getPresenterDataForSuccessfulRequest(BoxResponseBatch responses) {
@@ -134,11 +134,11 @@ public class InviteCollabsTransformer {
         }
     }
     /**
-     * Returns a UI Model of a Box Response for Inviting new collaborators for a failed request.
+     * Returns a UI Model of a Box Response for inviting new collaborators for a failed request.
      * @param failedCollaboratorsList the list of collaborators for whom requests were not successful
      * @param name the name of a collaborator that is already added
      * @param alreadyAddedCount how many collaborators were already added
-     * @return a UI Model of a Box Response for Inviting new collaborators for a failed request
+     * @return a UI Model of a Box Response for inviting new collaborators for a failed request
      */
     @VisibleForTesting
     static InviteCollaboratorsPresenterData getPresenterDataForFailedRequest(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
