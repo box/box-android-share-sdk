@@ -1,5 +1,6 @@
 package com.box.androidsdk.share.vm;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
@@ -27,6 +28,15 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
         mInvitees = Transformations.map(shareRepo.getInvitees(), response -> transformer.getInviteesPresenterData(response));
     }
 
+
+    @VisibleForTesting
+    InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem, InviteCollabsTransformer transformer) {
+        super(shareRepo, shareItem);
+        mFetchRoleItem = Transformations.map(shareRepo.getFetchRoleItem(), response -> transformer.getFetchRolesItemPresenterData(response));
+        mInviteCollabs = Transformations.map(shareRepo.getInviteCollabsBatch(), response -> transformer.getInviteCollabsPresenterDataFromBoxResponse(response));
+        mInvitees = Transformations.map(shareRepo.getInvitees(), response -> transformer.getInviteesPresenterData(response));
+    }
+
     /**
      * Makes a backend call through share repo for fetching roles.
      * @param item the item to fetch roles on
@@ -41,7 +51,7 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
      * @param selectedRole the role for the new collaborators
      * @param emails a list of collaborators represented in emails
      */
-    public void addCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
+    public void inviteCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
         mShareRepo.inviteCollabsApi(boxCollaborationItem, selectedRole, emails);
     }
 

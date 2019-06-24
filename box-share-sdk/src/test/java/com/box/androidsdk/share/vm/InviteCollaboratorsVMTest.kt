@@ -44,7 +44,7 @@ class InviteCollaboratorsVMTest {
     @Before
     fun setup() {
         mockShareRepo()
-        inviteCollabVM = InviteCollaboratorsShareVM(mockShareRepo, mockShareItem)
+        inviteCollabVM = InviteCollaboratorsShareVM(mockShareRepo, mockShareItem, mockTransformer)
 
         attachObservers()
         mockTransformers()
@@ -84,12 +84,33 @@ class InviteCollaboratorsVMTest {
     }
 
     @Test
-    fun `test get fetch role item get transformed presenter data`() {
+    fun `test get fetch role item transforms to presenter data on live data change`() {
         assertNull(inviteCollabVM.fetchRoleItem.value)
+
         //trigger a network request which make changes in LiveData
         mockShareRepo.fetchRolesApi(mockShareItem)
 
         assertEquals(inviteCollabVM.fetchRoleItem.value, mockFetchRolesTransformedResponse)
+    }
+
+    @Test
+    fun `test get invite collabs transforms to presenter data on live data change`() {
+        assertNull(inviteCollabVM.inviteCollabs.value)
+
+        //trigger a network request which make changes in LiveData
+        mockShareRepo.inviteCollabsApi(mockShareItem, mockSelectedRole,mockEmailList)
+
+        assertEquals(inviteCollabVM.inviteCollabs.value, mockInviteCollabsTransformedResponse)
+    }
+
+    @Test
+    fun `test get invitees transforms to presenter data on live data change`() {
+        assertNull(inviteCollabVM.invitees.value)
+
+        //trigger a network request which make changes in LiveData
+        mockShareRepo.getInviteesApi(mockShareItem, mockFilter)
+
+        assertEquals(inviteCollabVM.invitees.value, mockGetInviteeTransformedResponse)
     }
 
 }
