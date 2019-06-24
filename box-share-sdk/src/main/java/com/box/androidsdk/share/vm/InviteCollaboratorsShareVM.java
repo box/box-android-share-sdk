@@ -21,9 +21,10 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
 
     public InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
-        mFetchRoleItem = Transformations.map(shareRepo.getFetchRoleItem(), response -> InviteCollabsTransformer.getFetchRolesItemPresenterData(response));
-        mInviteCollabs = Transformations.map(shareRepo.getInviteCollabsBatch(), response -> InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(response));
-        mInvitees = Transformations.map(shareRepo.getInvitees(), response -> InviteCollabsTransformer.getInviteesPresenterData(response));
+        InviteCollabsTransformer transformer = new InviteCollabsTransformer();
+        mFetchRoleItem = Transformations.map(shareRepo.getFetchRoleItem(), response -> transformer.getFetchRolesItemPresenterData(response));
+        mInviteCollabs = Transformations.map(shareRepo.getInviteCollabsBatch(), response -> transformer.getInviteCollabsPresenterDataFromBoxResponse(response));
+        mInvitees = Transformations.map(shareRepo.getInvitees(), response -> transformer.getInviteesPresenterData(response));
     }
 
     /**

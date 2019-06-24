@@ -31,15 +31,12 @@ public class InviteCollabsTransformer {
         failureCodes = getFailureCodes();
     }
 
-
-
-
     /**
      * Helper method for transforming BoxResponse to UI Model for fetchRoleApi.
      * @param response the response to transform on
      * @return the transformed data
      */
-    public static PresenterData<BoxCollaborationItem> getFetchRolesItemPresenterData(BoxResponse<BoxCollaborationItem> response) {
+    public PresenterData<BoxCollaborationItem> getFetchRolesItemPresenterData(BoxResponse<BoxCollaborationItem> response) {
         final PresenterData<BoxCollaborationItem> data = new PresenterData<BoxCollaborationItem>();
         if (response.isSuccess()) {
             BoxCollaborationItem collaborationItem = response.getResult();
@@ -55,7 +52,7 @@ public class InviteCollabsTransformer {
      * @param response the response to transform
      * @return the transformed model
      */
-    public static PresenterData<BoxIteratorInvitees> getInviteesPresenterData(BoxResponse<BoxIteratorInvitees> response) {
+    public PresenterData<BoxIteratorInvitees> getInviteesPresenterData(BoxResponse<BoxIteratorInvitees> response) {
         final PresenterData<BoxIteratorInvitees> data = new PresenterData<BoxIteratorInvitees>();
         if (response.isSuccess()) {
             final BoxIteratorInvitees invitees = response.getResult();
@@ -79,7 +76,7 @@ public class InviteCollabsTransformer {
      * @param response the response to transform
      * @return the transformed model
      */
-    public static InviteCollaboratorsPresenterData getInviteCollabsPresenterDataFromBoxResponse(BoxResponse<BoxResponseBatch> response) {
+    public InviteCollaboratorsPresenterData getInviteCollabsPresenterDataFromBoxResponse(BoxResponse<BoxResponseBatch> response) {
         return getInviteCollabsPresenterData(response.getResult());
     }
 
@@ -88,7 +85,7 @@ public class InviteCollabsTransformer {
      * @param responses the batch response to transform
      * @return the transformed model
      */
-    private static InviteCollaboratorsPresenterData getInviteCollabsPresenterData(BoxResponseBatch responses) {
+    private InviteCollaboratorsPresenterData getInviteCollabsPresenterData(BoxResponseBatch responses) {
         int alreadyAddedCount = 0;
         boolean didRequestSuceed = true;
         String name = "";
@@ -123,7 +120,7 @@ public class InviteCollabsTransformer {
      * @return a UI Model of a Box Response for inviting new collaborators for a successful request
      */
     @VisibleForTesting
-    static InviteCollaboratorsPresenterData getPresenterDataForSuccessfulRequest(BoxResponseBatch responses) {
+    InviteCollaboratorsPresenterData getPresenterDataForSuccessfulRequest(BoxResponseBatch responses) {
         if (responses.getResponses().size() == 1) {
             BoxCollaboration collaboration = (BoxCollaboration) responses.getResponses().get(0).getResult();
             if (collaboration.getAccessibleBy() == null) {
@@ -145,7 +142,7 @@ public class InviteCollabsTransformer {
      * @return a UI Model of a Box Response for inviting new collaborators for a failed request
      */
     @VisibleForTesting
-    static InviteCollaboratorsPresenterData getPresenterDataForFailedRequest(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
+    InviteCollaboratorsPresenterData getPresenterDataForFailedRequest(List<String> failedCollaboratorsList, String name, int alreadyAddedCount) {
         if (!failedCollaboratorsList.isEmpty()) {
             StringBuilder collaborators = new StringBuilder();
             for (int i = 0; i < failedCollaboratorsList.size(); i++) {
@@ -163,11 +160,11 @@ public class InviteCollabsTransformer {
         }
     }
 
-    private static boolean isAlreadyAddedFailure(String code) {
+    private boolean isAlreadyAddedFailure(String code) {
         return !SdkUtils.isBlank(code) && code.equals(BoxRequestsShare.AddCollaboration.ERROR_CODE_USER_ALREADY_COLLABORATOR);
     }
 
-    private static boolean isKnownFailure(BoxResponse<BoxCollaboration> r, HashSet<Integer> failureCodes) {
+    private boolean isKnownFailure(BoxResponse<BoxCollaboration> r, HashSet<Integer> failureCodes) {
         return r.getException() instanceof BoxException && failureCodes.contains(((BoxException) r.getException()).getResponseCode());
     }
 

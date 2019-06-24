@@ -39,6 +39,8 @@ class InviteCollabsTransformerTest {
     private val mockGetInviteesResult: BoxIteratorInvitees = mock()
     private val mockFetchRoleItemResult: BoxCollaborationItem = mock()
     private lateinit var mockInviteCollabsResult: BoxResponseBatch
+    
+    private val inviteCollabsTransformer = InviteCollabsTransformer()
 
 
     @Before
@@ -70,7 +72,7 @@ class InviteCollabsTransformerTest {
         whenever(mockFetchRolesResponse.result).thenReturn(mockFetchRoleItemResult)
 
         //make a network call to fetch roles
-        val result = InviteCollabsTransformer.getFetchRolesItemPresenterData(mockFetchRolesResponse)
+        val result = inviteCollabsTransformer.getFetchRolesItemPresenterData(mockFetchRolesResponse)
 
         assertEquals(true, result?.isSuccess)
         assertEquals(mockFetchRoleItemResult, result?.data)
@@ -82,7 +84,7 @@ class InviteCollabsTransformerTest {
         whenever(mockFetchRolesResponse.isSuccess).thenReturn(false)
 
         //make a network call to fetch roles
-        val result = InviteCollabsTransformer.getFetchRolesItemPresenterData(mockFetchRolesResponse)
+        val result = inviteCollabsTransformer.getFetchRolesItemPresenterData(mockFetchRolesResponse)
 
         assertEquals(false, result?.isSuccess)
         assertEquals(R.string.box_sharesdk_network_error, result?.strCode)
@@ -95,7 +97,7 @@ class InviteCollabsTransformerTest {
         whenever(mockGetInviteeResponse.result).thenReturn(mockGetInviteesResult)
 
         //make a network call to fetch roles
-        val result = InviteCollabsTransformer.getInviteesPresenterData(mockGetInviteeResponse)
+        val result = inviteCollabsTransformer.getInviteesPresenterData(mockGetInviteeResponse)
 
         assertEquals(true, result?.isSuccess)
         assertEquals(mockGetInviteesResult, result?.data)
@@ -108,7 +110,7 @@ class InviteCollabsTransformerTest {
         whenever(mockGetInviteeResponse.exception).thenReturn(mockHttpForbiddenException)
 
         //make a network call to fetch roles
-        val result = InviteCollabsTransformer.getInviteesPresenterData(mockGetInviteeResponse)
+        val result = inviteCollabsTransformer.getInviteesPresenterData(mockGetInviteeResponse)
 
         assertEquals(false, result?.isSuccess)
         assertEquals(R.string.box_sharesdk_insufficient_permissions, result?.strCode)
@@ -121,7 +123,7 @@ class InviteCollabsTransformerTest {
         whenever(mockGetInviteeResponse.exception).thenReturn(mockBoxNetworkErrorException)
 
         //make a network call to fetch roles
-        val result = InviteCollabsTransformer.getInviteesPresenterData(mockGetInviteeResponse)
+        val result = inviteCollabsTransformer.getInviteesPresenterData(mockGetInviteeResponse)
 
         assertEquals(false, result?.isSuccess)
         assertEquals(R.string.box_sharesdk_network_error, result?.strCode)
@@ -137,7 +139,7 @@ class InviteCollabsTransformerTest {
         val boxResponses = createBoxResponseBatch(boxResponse)
 
         //process request
-        val result = InviteCollabsTransformer.getPresenterDataForSuccessfulRequest(boxResponses)
+        val result = inviteCollabsTransformer.getPresenterDataForSuccessfulRequest(boxResponses)
 
         //compare values
         assertEquals(R.string.box_sharesdk_collaborator_invited, result.strCode)
@@ -156,7 +158,7 @@ class InviteCollabsTransformerTest {
         val boxResponses = createBoxResponseBatch(boxResponse)
 
         //process request
-        val result = InviteCollabsTransformer.getPresenterDataForSuccessfulRequest(boxResponses)
+        val result = inviteCollabsTransformer.getPresenterDataForSuccessfulRequest(boxResponses)
 
 
         //compare values
@@ -176,7 +178,7 @@ class InviteCollabsTransformerTest {
         val boxResponses = createBoxResponseBatch(boxResponse, boxResponse2)
 
         //process request
-        val result = InviteCollabsTransformer.getPresenterDataForSuccessfulRequest(boxResponses)
+        val result = inviteCollabsTransformer.getPresenterDataForSuccessfulRequest(boxResponses)
 
         //compare values
         assertEquals(R.string.box_sharesdk_collaborators_invited, result.strCode)
@@ -198,7 +200,7 @@ class InviteCollabsTransformerTest {
 
 
         //process request
-        val result = InviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
+        val result = inviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
         assertEquals(R.string.box_sharesdk_following_collaborators_error, result.strCode)
@@ -217,7 +219,7 @@ class InviteCollabsTransformerTest {
         val failedCollabs = arrayListOf<String>()
 
         //process request
-        val result = InviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
+        val result = inviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
         assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
@@ -236,7 +238,7 @@ class InviteCollabsTransformerTest {
         val failedCollabs = arrayListOf<String>()
 
         //process request
-        val result = InviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
+        val result = inviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
         assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
@@ -255,7 +257,7 @@ class InviteCollabsTransformerTest {
         val failedCollabs = arrayListOf<String>()
 
         //process request
-        val result = InviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
+        val result = inviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
         assertEquals(R.string.box_sharesdk_unable_to_invite, result.strCode)
@@ -276,7 +278,7 @@ class InviteCollabsTransformerTest {
         whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
 
         //process request
-        val result = InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+        val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
         assertEquals(R.string.box_sharesdk_collaborators_invited, result.strCode)
         assertEquals(null, result.data)
@@ -294,7 +296,7 @@ class InviteCollabsTransformerTest {
         whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
 
         //process request
-        val result = InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+        val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
         assertEquals(R.string.box_sharesdk_collaborator_invited, result.strCode)
         assertEquals(dummyName, result.data)
@@ -313,7 +315,7 @@ class InviteCollabsTransformerTest {
         whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
 
         //process request
-        val result = InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+        val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
         assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
         assertEquals(dummyName, result.data)
@@ -332,7 +334,7 @@ class InviteCollabsTransformerTest {
         whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
 
         //process request
-        val result = InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+        val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
         assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
         assertEquals("user3", result.data)
@@ -352,7 +354,7 @@ class InviteCollabsTransformerTest {
         whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
 
         //process request
-        val result = InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+        val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
         assertEquals(R.string.box_sharesdk_following_collaborators_error, result.strCode)
         assertEquals(failedName, result.data)
@@ -373,7 +375,7 @@ class InviteCollabsTransformerTest {
         whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
 
         //process request
-        val result = InviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+        val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
 
         assertEquals(R.string.box_sharesdk_following_collaborators_error, result.strCode)
