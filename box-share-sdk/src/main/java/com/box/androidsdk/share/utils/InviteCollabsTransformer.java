@@ -48,7 +48,7 @@ public class InviteCollabsTransformer {
     }
 
     /**
-     * Helper method for transforming BoxResponse to UI Model for fetchInviteesFromBackend.
+     * Helper method for transforming BoxResponse to UI Model for fetchInviteesFromRemote.
      * @param response the response to transform
      * @return the transformed model
      */

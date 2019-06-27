@@ -52,21 +52,21 @@ class InviteCollaboratorsVMTest {
     }
 
     private fun mockShareRepo() {
-        whenever(mockShareRepo.fetchRoleItem).thenReturn(MutableLiveData())
-        whenever(mockShareRepo.inviteCollabsBatch).thenReturn(MutableLiveData())
+        whenever(mockShareRepo.roleItem).thenReturn(MutableLiveData())
+        whenever(mockShareRepo.inviteCollabsBatchResponse).thenReturn(MutableLiveData())
         whenever(mockShareRepo.invitees).thenReturn(MutableLiveData())
 
-        whenever(mockShareRepo.fetchRolesFromBackend(mockShareItem)).then {
-            val data = mockShareRepo.fetchRoleItem as MutableLiveData
+        whenever(mockShareRepo.fetchRolesFromRemote(mockShareItem)).then {
+            val data = mockShareRepo.roleItem as MutableLiveData
             data.postValue(mockFetchRolesResponse)
         }
 
         whenever(mockShareRepo.inviteCollabs(mockShareItem, mockSelectedRole, mockEmailList)).then {
-            val data = mockShareRepo.inviteCollabsBatch as MutableLiveData
+            val data = mockShareRepo.inviteCollabsBatchResponse as MutableLiveData
             data.postValue(mockInviteCollabsResponse)
         }
 
-        whenever(mockShareRepo.fetchInviteesFromBackend(mockShareItem, mockFilter)).then {
+        whenever(mockShareRepo.fetchInviteesFromRemote(mockShareItem, mockFilter)).then {
             val data = mockShareRepo.invitees as MutableLiveData
             data.postValue(mockGetInviteeResponse)
         }
@@ -78,19 +78,19 @@ class InviteCollaboratorsVMTest {
     }
 
     private fun attachObservers() {
-        inviteCollabVM.fetchRoleItem.observeForever(mock())
+        inviteCollabVM.roleItem.observeForever(mock())
         inviteCollabVM.invitees.observeForever(mock())
         inviteCollabVM.inviteCollabs.observeForever(mock())
     }
 
     @Test
     fun `test get fetch role item transforms to presenter data on live data change`() {
-        assertNull(inviteCollabVM.fetchRoleItem.value)
+        assertNull(inviteCollabVM.roleItem.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.fetchRolesFromBackend(mockShareItem)
+        mockShareRepo.fetchRolesFromRemote(mockShareItem)
 
-        assertEquals(inviteCollabVM.fetchRoleItem.value, mockFetchRolesTransformedResponse)
+        assertEquals(inviteCollabVM.roleItem.value, mockFetchRolesTransformedResponse)
     }
 
     @Test
@@ -108,7 +108,7 @@ class InviteCollaboratorsVMTest {
         assertNull(inviteCollabVM.invitees.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.fetchInviteesFromBackend(mockShareItem, mockFilter)
+        mockShareRepo.fetchInviteesFromRemote(mockShareItem, mockFilter)
 
         assertEquals(inviteCollabVM.invitees.value, mockGetInviteeTransformedResponse)
     }

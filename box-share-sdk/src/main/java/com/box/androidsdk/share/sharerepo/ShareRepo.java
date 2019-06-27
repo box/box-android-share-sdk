@@ -20,8 +20,8 @@ public class ShareRepo  {
     private ShareController mController;
 
     private final MutableLiveData<BoxResponse<BoxIteratorInvitees>> mInvitees = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mFetchRoleItem = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxResponseBatch>> mInviteCollabsBatch = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mRoleItem = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxResponseBatch>> mInviteCollabsBatchResponse = new MutableLiveData<>();
 
     public ShareRepo(ShareController controller) {
         this.mController = controller;
@@ -32,7 +32,7 @@ public class ShareRepo  {
      * @param boxCollaborationItem the item to get invitees on
      * @param filter the filter term
      */
-    public void fetchInviteesFromBackend(BoxCollaborationItem boxCollaborationItem, String filter) {
+    public void fetchInviteesFromRemote(BoxCollaborationItem boxCollaborationItem, String filter) {
         handleTaskAndPostValue(mController.getInvitees(boxCollaborationItem,filter), mInvitees);
     }
 
@@ -49,8 +49,8 @@ public class ShareRepo  {
      * Get an item with allowed roles for the invitees and update the corresponding LiveData.
      * @param boxCollaborationItem the item to fetch roles on
      */
-    public void fetchRolesFromBackend(BoxCollaborationItem boxCollaborationItem) {
-        handleTaskAndPostValue(mController.fetchRoles(boxCollaborationItem), mFetchRoleItem);
+    public void fetchRolesFromRemote(BoxCollaborationItem boxCollaborationItem) {
+        handleTaskAndPostValue(mController.fetchRoles(boxCollaborationItem), mRoleItem);
     }
 
     /**
@@ -60,7 +60,7 @@ public class ShareRepo  {
      * @param emails the list of collaborators to invite
      */
     public void inviteCollabs(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
-        handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mInviteCollabsBatch);
+        handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mInviteCollabsBatchResponse);
     }
 
     /**
@@ -75,15 +75,15 @@ public class ShareRepo  {
      * Returns a LiveData which holds the item with allowed roles for new invitees.
      * @return a LiveData which holds the item with allowed roles for new invitees
      */
-    public LiveData<BoxResponse<BoxCollaborationItem>> getFetchRoleItem() {
-        return mFetchRoleItem;
+    public LiveData<BoxResponse<BoxCollaborationItem>> getRoleItem() {
+        return mRoleItem;
     }
 
     /**
      * Returns a LiveData which holds a batch of responses for each collaborator invited.
      * @return a LiveData which holds a batch of responses for each collaborator invited
      */
-    public LiveData<BoxResponse<BoxResponseBatch>> getInviteCollabsBatch() {
-        return mInviteCollabsBatch;
+    public LiveData<BoxResponse<BoxResponseBatch>> getInviteCollabsBatchResponse() {
+        return mInviteCollabsBatchResponse;
     }
 }
