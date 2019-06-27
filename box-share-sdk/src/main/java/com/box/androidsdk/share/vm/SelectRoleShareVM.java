@@ -1,106 +1,80 @@
 package com.box.androidsdk.share.vm;
 
-
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
-import com.box.androidsdk.content.models.BoxCollaborationItem;
-import com.box.androidsdk.share.sharerepo.ShareRepo;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class SelectRoleShareVM extends BaseShareVM {
+/**
+ * This ViewModel is for an activity which just needs to pass data back to the previous activity.
+ */
+public class SelectRoleShareVM extends ViewModel {
 
 
-    private MutableLiveData<List<BoxCollaboration.Role>> mRoles = new MutableLiveData<>();
-    private MutableLiveData<Boolean> mAllowOwnerRole = new MutableLiveData<>();
-    private MutableLiveData<BoxCollaboration.Role> mSelectedRole = new MutableLiveData<>();
-    private MutableLiveData<Boolean> mAllowRemove = new MutableLiveData<>();
-    private MutableLiveData<BoxCollaboration> mCollaboration = new MutableLiveData<>();
+    private List<BoxCollaboration.Role> mRoles = new ArrayList<>();
+    private boolean mAllowOwnerRole = false;
+    private BoxCollaboration.Role mSelectedRole;
+    private boolean mAllowRemove = false;
+    private BoxCollaboration mCollaboration = new BoxCollaboration();
 
-    public SelectRoleShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
-        super(shareRepo, shareItem);
+    public SelectRoleShareVM(List<BoxCollaboration.Role>
+                        roles, boolean allowOwnerRole, BoxCollaboration.Role selectedRole, boolean allowRemove,
+                             BoxCollaboration collaboration) {
+        this.mRoles = roles;
+        this.mAllowOwnerRole = allowOwnerRole;
+        this.mSelectedRole = selectedRole;
+        this.mAllowRemove = allowRemove;
+        this.mCollaboration = collaboration;
     }
 
     /**
-     * Returns a LiveData which holds a list of valid roles for collaborator.
-     * @return a LiveData which holds a list of valid roles for collaborator
+     * Returns a list of valid roles for collaborator.
+     * @return a list of valid roles for collaborator
      */
-    public LiveData<List<BoxCollaboration.Role>> getRoles() {
+    public List<BoxCollaboration.Role> getRoles() {
         return mRoles;
     }
 
     /**
-     * Returns a LiveData which tells whether the collaborator can be given owner permission or not.
-     * @return a LiveData which tells whether the collaborator can be given owner permission or not
+     * Returns true if the collaborator can be given owner permission.
+     * @return true if the collaborator can be given owner permission
      */
-    public LiveData<Boolean> getAllowOwnerRole() {
+    public boolean isAllowOwnerRole() {
         return mAllowOwnerRole;
     }
 
     /**
-     * Returns a LiveData which tells which role is selected.
-     * @return a LiveData which tells which role is selected
+     * Returns the selected collaboration role.
+     * @return the selected collaboration role
      */
-    public LiveData<BoxCollaboration.Role> getSelectedRole() {
+    public BoxCollaboration.Role getSelectedRole() {
         return mSelectedRole;
     }
 
     /**
-     * Returns a LiveData which tells whether the collaborator can be removed.
-     * @return a LiveData which tells whether the collaborator can be removed
+     * Returns true if the collaborator can be removed.
+     * @return true if the collaborator can be removed
      */
-    public LiveData<Boolean> getAllowRemove() {
+    public boolean isAllowRemove() {
         return mAllowRemove;
     }
 
     /**
-     * Returns a LiveData which tells the collaboration rules on the item.
-     * @return  LiveData which tells the collaboration rules on the item
+     * Returns collaboration information on the item.
+     * @return collaboration information on the item
      */
-    public LiveData<BoxCollaboration> getCollaboration() {
+    public BoxCollaboration getCollaboration() {
         return mCollaboration;
     }
 
     /**
-     * Updates list of valid roles
-     * @param roles the new list of valid roles
+     * Set a new value for selected role.
+     * @param selectedRole the new selected role.
      */
-    public void updateRoles(List<BoxCollaboration.Role> roles) {
-        this.mRoles.postValue(roles);
-    }
-
-    /**
-     * Updates whether owner role is allowed or not
-     * @param allowOwnerRole the new permission level for owner role
-     */
-    public void updateAllowOwnerRole(Boolean allowOwnerRole) {
-        this.mAllowOwnerRole.postValue(allowOwnerRole);
-    }
-
-    /**
-     * Updates the currently selected role
-     * @param mSelectedRole the new selected role
-     */
-    public void updateSelectedRole(BoxCollaboration.Role mSelectedRole) {
-        this.mSelectedRole.postValue(mSelectedRole);
-    }
-
-    /**
-     * Updates whether the collaborator can be removed or not
-     * @param mAllowRemove the new permission level for removing
-     */
-    public void updateAllowRemove(Boolean mAllowRemove) {
-        this.mAllowRemove.postValue(mAllowRemove);
-    }
-
-    /**
-     * Updates collaborating settings on the item
-     * @param collaboration the new collaboration setting
-     */
-    public void updateCollaboration(BoxCollaboration collaboration) {
-        this.mCollaboration.postValue(collaboration);
+    public void setSelectedRole(BoxCollaboration.Role selectedRole) {
+        this.mSelectedRole = selectedRole;
     }
 }
