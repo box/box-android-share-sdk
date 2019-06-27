@@ -71,7 +71,7 @@ class ShareRepoTest {
     @Test
     fun `test fetch roles update LiveData values correctly`() {
         assertNull(shareRepo.getFetchRoleItem().value) //initially the LiveData should not have any value
-        shareRepo.fetchRolesApi(mockmShareItem) //get a value and update as needed
+        shareRepo.fetchRolesFromBackend(mockmShareItem) //get a value and update as needed
         assertEquals(mockFetchRolesResponse, shareRepo.getFetchRoleItem().value)
     }
 
@@ -79,14 +79,14 @@ class ShareRepoTest {
     @Test
     fun `test get invitees update LiveData values correctly`() {
         assertNull(shareRepo.getInvitees().value) //initially the LiveData should not have any value
-        shareRepo.getInviteesApi(mockmShareItem, mockFilter) //get a value and update as needed
+        shareRepo.fetchInviteesFromBackend(mockmShareItem, mockFilter) //get a value and update as needed
         assertEquals(mockGetInviteeResponse, shareRepo.getInvitees().value)
     }
 
     @Test
     fun `test add collabs update LiveData values correctly` () {
         assertNull(shareRepo.getInviteCollabsBatch().value) //initially the LiveData should not have any value
-        shareRepo.inviteCollabsApi(mockmShareItem, mockSelectedRole, mockEmailList) //get a value and update as needed
+        shareRepo.inviteCollabs(mockmShareItem, mockSelectedRole, mockEmailList) //get a value and update as needed
         assertEquals(mockAddCollabsResponse, shareRepo.getInviteCollabsBatch().value)
     }
 

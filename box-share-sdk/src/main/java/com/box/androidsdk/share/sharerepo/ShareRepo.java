@@ -32,7 +32,7 @@ public class ShareRepo  {
      * @param boxCollaborationItem the item to get invitees on
      * @param filter the filter term
      */
-    public void getInviteesApi(BoxCollaborationItem boxCollaborationItem, String filter) {
+    public void fetchInviteesFromBackend(BoxCollaborationItem boxCollaborationItem, String filter) {
         handleTaskAndPostValue(mController.getInvitees(boxCollaborationItem,filter), mInvitees);
     }
 
@@ -49,7 +49,7 @@ public class ShareRepo  {
      * Get an item with allowed roles for the invitees and update the corresponding LiveData.
      * @param boxCollaborationItem the item to fetch roles on
      */
-    public void fetchRolesApi(BoxCollaborationItem boxCollaborationItem) {
+    public void fetchRolesFromBackend(BoxCollaborationItem boxCollaborationItem) {
         handleTaskAndPostValue(mController.fetchRoles(boxCollaborationItem), mFetchRoleItem);
     }
 
@@ -59,7 +59,7 @@ public class ShareRepo  {
      * @param selectedRole the role for the new collaborators
      * @param emails the list of collaborators to invite
      */
-    public void inviteCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
+    public void inviteCollabs(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
         handleTaskAndPostValue(mController.addCollaborations(boxCollaborationItem, selectedRole, emails), mInviteCollabsBatch);
     }
 

@@ -42,7 +42,7 @@ public class SelectRoleShareVM extends ViewModel {
      * Returns true if the collaborator can be given owner permission.
      * @return true if the collaborator can be given owner permission
      */
-    public boolean isAllowOwnerRole() {
+    public boolean isOwnerRoleAllowed() {
         return mAllowOwnerRole;
     }
 
@@ -58,7 +58,7 @@ public class SelectRoleShareVM extends ViewModel {
      * Returns true if the collaborator can be removed.
      * @return true if the collaborator can be removed
      */
-    public boolean isAllowRemove() {
+    public boolean isRemoveAllowed() {
         return mAllowRemove;
     }
 

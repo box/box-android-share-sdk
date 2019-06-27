@@ -48,7 +48,7 @@ public class InviteCollabsTransformer {
     }
 
     /**
-     * Helper method for transforming BoxResponse to UI Model for getInviteesApi.
+     * Helper method for transforming BoxResponse to UI Model for fetchInviteesFromBackend.
      * @param response the response to transform
      * @return the transformed model
      */
@@ -72,7 +72,7 @@ public class InviteCollabsTransformer {
     }
 
     /**
-     * Helper method for transforming BoxResponse to UI Model for inviteCollabsApi.
+     * Helper method for transforming BoxResponse to UI Model for inviteCollabs.
      * @param response the response to transform
      * @return the transformed model
      */

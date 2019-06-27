@@ -42,8 +42,8 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
      * Makes a backend call through share repo for fetching roles.
      * @param item the item to fetch roles on
      */
-    public void fetchRolesApi(BoxCollaborationItem item) {
-        mShareRepo.fetchRolesApi(item);
+    public void fetchRolesFromBackend(BoxCollaborationItem item) {
+        mShareRepo.fetchRolesFromBackend(item);
     }
 
     /**
@@ -52,8 +52,8 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
      * @param selectedRole the role for the new collaborators
      * @param emails a list of collaborators represented in emails
      */
-    public void inviteCollabsApi(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
-        mShareRepo.inviteCollabsApi(boxCollaborationItem, selectedRole, emails);
+    public void inviteCollabs(BoxCollaborationItem boxCollaborationItem, BoxCollaboration.Role selectedRole, String[] emails) {
+        mShareRepo.inviteCollabs(boxCollaborationItem, selectedRole, emails);
     }
 
     /**
@@ -61,8 +61,8 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
      * @param boxCollaborationItem the item to get invitees on
      * @param filter the term used for filtering invitees
      */
-    public void getInviteesApi(BoxCollaborationItem boxCollaborationItem, String filter) {
-        mShareRepo.getInviteesApi(boxCollaborationItem, filter);
+    public void fetchInviteesFromBackend(BoxCollaborationItem boxCollaborationItem, String filter) {
+        mShareRepo.fetchInviteesFromBackend(boxCollaborationItem, filter);
     }
 
     /**

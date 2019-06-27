@@ -21,8 +21,8 @@ public class BaseShareVM extends ViewModel {
     }
 
     /**
-     * Returns a LiveData which holds the item the user is currently doing share operation on.
-     * @return a LiveData which holds the item the user is currently doing share operation on
+     * Returns the iem the user is currently doing share operation on.
+     * @return the item the user is currently doing share operation on
      */
     public BoxCollaborationItem getShareItem() {
         return mShareItem;

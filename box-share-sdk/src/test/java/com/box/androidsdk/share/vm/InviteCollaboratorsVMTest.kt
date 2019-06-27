@@ -56,17 +56,17 @@ class InviteCollaboratorsVMTest {
         whenever(mockShareRepo.inviteCollabsBatch).thenReturn(MutableLiveData())
         whenever(mockShareRepo.invitees).thenReturn(MutableLiveData())
 
-        whenever(mockShareRepo.fetchRolesApi(mockShareItem)).then {
+        whenever(mockShareRepo.fetchRolesFromBackend(mockShareItem)).then {
             val data = mockShareRepo.fetchRoleItem as MutableLiveData
             data.postValue(mockFetchRolesResponse)
         }
 
-        whenever(mockShareRepo.inviteCollabsApi(mockShareItem, mockSelectedRole, mockEmailList)).then {
+        whenever(mockShareRepo.inviteCollabs(mockShareItem, mockSelectedRole, mockEmailList)).then {
             val data = mockShareRepo.inviteCollabsBatch as MutableLiveData
             data.postValue(mockInviteCollabsResponse)
         }
 
-        whenever(mockShareRepo.getInviteesApi(mockShareItem, mockFilter)).then {
+        whenever(mockShareRepo.fetchInviteesFromBackend(mockShareItem, mockFilter)).then {
             val data = mockShareRepo.invitees as MutableLiveData
             data.postValue(mockGetInviteeResponse)
         }
@@ -88,7 +88,7 @@ class InviteCollaboratorsVMTest {
         assertNull(inviteCollabVM.fetchRoleItem.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.fetchRolesApi(mockShareItem)
+        mockShareRepo.fetchRolesFromBackend(mockShareItem)
 
         assertEquals(inviteCollabVM.fetchRoleItem.value, mockFetchRolesTransformedResponse)
     }
@@ -98,7 +98,7 @@ class InviteCollaboratorsVMTest {
         assertNull(inviteCollabVM.inviteCollabs.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.inviteCollabsApi(mockShareItem, mockSelectedRole,mockEmailList)
+        mockShareRepo.inviteCollabs(mockShareItem, mockSelectedRole,mockEmailList)
 
         assertEquals(inviteCollabVM.inviteCollabs.value, mockInviteCollabsTransformedResponse)
     }
@@ -108,7 +108,7 @@ class InviteCollaboratorsVMTest {
         assertNull(inviteCollabVM.invitees.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.getInviteesApi(mockShareItem, mockFilter)
+        mockShareRepo.fetchInviteesFromBackend(mockShareItem, mockFilter)
 
         assertEquals(inviteCollabVM.invitees.value, mockGetInviteeTransformedResponse)
     }
