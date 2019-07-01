@@ -1,5 +1,6 @@
 package com.box.androidsdk.share.vm;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
@@ -14,16 +15,11 @@ import java.util.List;
 public class SelectRoleShareVM extends ViewModel {
 
 
-    private List<BoxCollaboration.Role> mRoles = new ArrayList<>();
+    private List<BoxCollaboration.Role> mRoles;
     private boolean mAllowOwnerRole = false;
-    private BoxCollaboration.Role mSelectedRole;
+    private MutableLiveData<BoxCollaboration.Role> mSelectedRole = new MutableLiveData<>();
     private boolean mAllowRemove = false;
-    private BoxCollaboration mCollaboration = new BoxCollaboration();
-
-    public SelectRoleShareVM() {
-
-    }
-
+    private BoxCollaboration mCollaboration;
 
     /**
      * Returns a list of valid roles for collaborator.
@@ -42,10 +38,10 @@ public class SelectRoleShareVM extends ViewModel {
     }
 
     /**
-     * Returns the selected collaboration role.
-     * @return the selected collaboration role
+     * Returns a Live Data that holds the selected collaboration role.
+     * @return a Live Data that holds the selected collaboration role
      */
-    public BoxCollaboration.Role getSelectedRole() {
+    public MutableLiveData<BoxCollaboration.Role> getSelectedRole() {
         return mSelectedRole;
     }
 
@@ -70,7 +66,7 @@ public class SelectRoleShareVM extends ViewModel {
      * @param selectedRole the new selected role.
      */
     public void setSelectedRole(BoxCollaboration.Role selectedRole) {
-        this.mSelectedRole = selectedRole;
+        this.mSelectedRole.postValue(selectedRole);
     }
 
     /**

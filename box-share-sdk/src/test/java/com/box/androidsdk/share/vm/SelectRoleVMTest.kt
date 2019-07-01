@@ -34,49 +34,42 @@ class SelectRoleVMTest {
 
     @Test
     fun `test set selectedRole update the variable correctly`() {
-        assertEquals(mockRole, selectRoleVM.selectedRole)
-        val role = BoxCollaboration.Role.OWNER
-        selectRoleVM.selectedRole = role
+        assertNull(selectRoleVM.selectedRole)
+        selectRoleVM.selectedRole = mockRole
 
-        assertEquals(role, selectRoleVM.selectedRole)
+        assertEquals(mockRole, selectRoleVM.selectedRole)
     }
 
-//    @Test
-//    fun `test update selected role update live data correctly`() {
-//        assertNull(selectRoleVM.selectedRole.value)
-//
-//        selectRoleVM.updateSelectedRole(mockRole)
-//
-//        assertEquals(mockRole, selectRoleVM.selectedRole.value)
-//    }
-//
-//    @Test
-//    fun `test update allow owner role update live data correctly`() {
-//        assertNull(selectRoleVM.allowOwnerRole.value)
-//
-//        selectRoleVM.updateAllowOwnerRole(mockAllowOwnerRole)
-//
-//        assertEquals(mockAllowOwnerRole, selectRoleVM.allowOwnerRole.value)
-//    }
-//
-//    @Test
-//    fun `test update allow remove update live data correctly`() {
-//        assertNull(selectRoleVM.allowRemove.value)
-//
-//        selectRoleVM.updateAllowRemove(mockAllowRemove)
-//
-//        assertEquals(mockAllowRemove, selectRoleVM.allowRemove.value)
-//    }
-//
-//    @Test
-//    fun `test update collaboration live data correctly`() {
-//        assertNull(selectRoleVM.collaboration.value)
-//
-//        selectRoleVM.updateCollaboration(mockCollaboration)
-//
-//        assertEquals(mockCollaboration, selectRoleVM.collaboration.value)
-//    }
+    @Test
+    fun `test set allow owner role update the variable correctly`() {
+        assertEquals(false, selectRoleVM.isOwnerRoleAllowed)
+        selectRoleVM.setAllowOwnerRole(mockAllowOwnerRole)
 
+        assertEquals(mockAllowOwnerRole, selectRoleVM.isOwnerRoleAllowed)
+    }
 
+    @Test
+    fun `test set allow remove update the variable correctly`() {
+        assertEquals(false, selectRoleVM.isRemoveAllowed)
+        selectRoleVM.setAllowRemove(mockAllowRemove)
+
+        assertEquals(mockAllowRemove, selectRoleVM.isRemoveAllowed)
+    }
+
+    @Test
+    fun `test set roles update the variable correctly`() {
+        assertNull(selectRoleVM.roles)
+        selectRoleVM.roles = mockRolesList
+
+        assertEquals(mockRolesList, selectRoleVM.roles)
+    }
+
+    @Test
+    fun `test set collaboration he variable correctly`() {
+        assertNull(selectRoleVM.collaboration)
+        selectRoleVM.collaboration = mockCollaboration
+
+        assertEquals(mockCollaboration, selectRoleVM.collaboration)
+    }
 
 }
