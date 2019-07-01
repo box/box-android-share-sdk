@@ -29,7 +29,7 @@ class SelectRoleVMTest {
 
     @Before
     fun setup() {
-        selectRoleVM = SelectRoleShareVM(mockRolesList, mockAllowOwnerRole, mockRole, mockAllowRemove, mockCollaboration)
+        selectRoleVM = SelectRoleShareVM()
     }
 
     @Test
