@@ -21,6 +21,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    configurations.all {
+        exclude group: 'com.android.support'
+    }
+
     lintOptions {
         abortOnError false
     }
@@ -28,6 +32,9 @@ android {
     dexOptions {
         jumboMode = true
         javaMaxHeapSize = "4g"
+    }
+    dataBinding {
+        enabled = true
     }
 }
 

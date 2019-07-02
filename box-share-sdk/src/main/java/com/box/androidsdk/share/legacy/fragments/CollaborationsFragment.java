@@ -28,7 +28,7 @@ import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.adapters.CollaboratorsAdapter;
+import com.box.androidsdk.share.legacy.adapters.CollaboratorsAdapter;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;

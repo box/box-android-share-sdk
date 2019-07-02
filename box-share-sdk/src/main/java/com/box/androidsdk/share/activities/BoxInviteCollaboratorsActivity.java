@@ -4,8 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.view.View;
-import android.widget.Toast;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
@@ -13,10 +14,12 @@ import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.fragments.CollaboratorsRolesFragment;
 import com.box.androidsdk.share.fragments.InviteCollaboratorsFragment;
-
-import java.util.ArrayList;
+import com.box.androidsdk.share.sharerepo.ShareRepo;
+import com.box.androidsdk.share.vm.SelectRoleShareVM;
+import com.box.androidsdk.share.vm.ShareVMFactory;
 
 /**
  * Activity used to allow users to invite additional collaborators to the folder. Email addresses will auto complete from the phones address book
@@ -47,36 +50,31 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
             mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) mShareItem);
-            ft.add(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
+            ft.replace(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
             ft.commit();
         }
         mFragment.setController(mController);
+
         ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
+        mFragment.setVMFactory(new ShareVMFactory(new ShareRepo(new BoxShareController(mSession)), (BoxCollaborationItem) mShareItem));
     }
 
     @Override
     public void onClick(View v) {
-        Bundle data = ((InviteCollaboratorsFragment)mFragment).getData();
-        String collaboratorName = data.getString(CollaboratorsRolesFragment.ARGS_NAME);
-        ArrayList<BoxCollaboration.Role> roles = (ArrayList<BoxCollaboration.Role>) data.getSerializable(CollaboratorsRolesFragment.ARGS_ROLES);
-        BoxCollaboration.Role selectedRole = (BoxCollaboration.Role) data.getSerializable(CollaboratorsRolesFragment.ARGS_SELECTED_ROLE);
-        boolean allowRemove = data.getBoolean(CollaboratorsRolesFragment.ARGS_ALLOW_REMOVE);
-        boolean allowOwnerRole = data.getBoolean(CollaboratorsRolesFragment.ARGS_ALLOW_OWNER_ROLE);
-        BoxCollaboration collaboration = (BoxCollaboration)data.getSerializable(CollaboratorsRolesFragment.ARGS_SERIALIZABLE_EXTRA);
-        if (roles == null || roles.size() == 0) {
-            SdkUtils.toastSafely(getApplicationContext(), R.string.box_sharesdk_cannot_get_collaborators, Toast.LENGTH_SHORT);
-            return;
-        }
-        Intent intent = BoxCollaborationRolesActivity.getLaunchIntent(this, mShareItem, mSession, roles, selectedRole, collaboratorName,allowRemove, allowOwnerRole, collaboration);
-        startActivity(intent);
+        ((InviteCollaboratorsFragment)mFragment).updateSelectRoleViewModelForInvitingNewCollabs();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+        CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance((BoxCollaborationItem) mShareItem);
+        ft.replace(R.id.fragmentContainer, rolesFragment).addToBackStack("asd");
+        ft.commit();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SHOW_COLLABORATORS && resultCode == RESULT_OK) {
-            InviteCollaboratorsFragment fragment = (InviteCollaboratorsFragment) getSupportFragmentManager().findFragmentByTag(InviteCollaboratorsFragment.TAG);
-            fragment.refreshUi();
-        }
+    public void onBackPressed() {
+        super.onBackPressed();
+        getSupportFragmentManager().popBackStack();
+        BoxCollaboration.Role role = ViewModelProviders.of(this).get(SelectRoleShareVM.class).getSelectedRole();
+        ((InviteCollaboratorsFragment)mFragment).setRole(role);
     }
 
     /**

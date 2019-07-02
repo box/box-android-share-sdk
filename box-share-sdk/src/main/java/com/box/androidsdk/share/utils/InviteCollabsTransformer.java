@@ -42,7 +42,7 @@ public class InviteCollabsTransformer {
             BoxCollaborationItem collaborationItem = response.getResult();
             data.success(collaborationItem);
         } else {
-            data.failure(R.string.box_sharesdk_network_error);
+            data.failure(R.string.box_sharesdk_network_error, (BoxException) response.getException());
         }
         return data;
     }
@@ -58,15 +58,18 @@ public class InviteCollabsTransformer {
             final BoxIteratorInvitees invitees = response.getResult();
             data.success(invitees);
         } else {
-            BoxException boxException = (BoxException) response.getException();
-            int responseCode = boxException.getResponseCode();
             int errorStrCode = R.string.box_sharesdk_generic_error;
-            if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
-                errorStrCode = R.string.box_sharesdk_insufficient_permissions;
-            } else if (boxException.getErrorType() == BoxException.ErrorType.NETWORK_ERROR) {
-                errorStrCode = R.string.box_sharesdk_network_error;
+            if (response.getException() instanceof BoxException) {
+                BoxException boxException = (BoxException) response.getException();
+                int responseCode = boxException.getResponseCode();
+
+                if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                    errorStrCode = R.string.box_sharesdk_insufficient_permissions;
+                } else if (boxException.getErrorType() == BoxException.ErrorType.NETWORK_ERROR) {
+                    errorStrCode = R.string.box_sharesdk_network_error; //TODO: need response code here
+                }
             }
-            data.failure(errorStrCode);
+            data.failure(errorStrCode, (BoxException) response.getException());
         }
         return data;
     }

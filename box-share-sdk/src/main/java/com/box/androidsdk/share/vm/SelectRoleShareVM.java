@@ -17,9 +17,10 @@ public class SelectRoleShareVM extends ViewModel {
 
     private List<BoxCollaboration.Role> mRoles;
     private boolean mAllowOwnerRole = false;
-    private MutableLiveData<BoxCollaboration.Role> mSelectedRole = new MutableLiveData<>();
+    private BoxCollaboration.Role mSelectedRole;
     private boolean mAllowRemove = false;
     private BoxCollaboration mCollaboration;
+
 
     /**
      * Returns a list of valid roles for collaborator.
@@ -41,7 +42,7 @@ public class SelectRoleShareVM extends ViewModel {
      * Returns a Live Data that holds the selected collaboration role.
      * @return a Live Data that holds the selected collaboration role
      */
-    public MutableLiveData<BoxCollaboration.Role> getSelectedRole() {
+    public BoxCollaboration.Role getSelectedRole() {
         return mSelectedRole;
     }
 
@@ -66,7 +67,7 @@ public class SelectRoleShareVM extends ViewModel {
      * @param selectedRole the new selected role.
      */
     public void setSelectedRole(BoxCollaboration.Role selectedRole) {
-        this.mSelectedRole.postValue(selectedRole);
+        this.mSelectedRole = selectedRole;
     }
 
     /**

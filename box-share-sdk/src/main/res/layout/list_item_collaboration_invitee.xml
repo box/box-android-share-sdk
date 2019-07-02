@@ -1,36 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/collaborator_initials"
-        android:layout_width="@dimen/box_sharesdk_collaboration_thumb_size"
-        android:layout_height="@dimen/box_sharesdk_collaboration_thumb_size"
-        android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin"
-        android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:layout_gravity="center"
-        />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="inviteeName"
+            type="String" />
+        <variable
+            name="inviteeEmail"
+            type="String" />
+    </data>
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/abc_control_padding_material">
+        android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/collaboration_invitee_name"
+            android:id="@+id/collaborator_initials"
+            android:layout_width="@dimen/box_sharesdk_collaboration_thumb_size"
+            android:layout_height="@dimen/box_sharesdk_collaboration_thumb_size"
+            android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@color/box_sharesdk_primary_text"
+            android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin"
+            android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin"
+            android:textAlignment="center"
+            android:gravity="center"
+            app:setInviteeInitial="@{inviteeName}"
+            android:layout_gravity="center"
+            />
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/collaboration_invitee_email"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@color/box_sharesdk_hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/abc_control_padding_material">
+            <TextView
+                android:id="@+id/collaboration_invitee_name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/box_sharesdk_primary_text"
+                android:layout_width="match_parent"
+                android:text="@{inviteeName}"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/collaboration_invitee_email"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/box_sharesdk_hint"
+                android:layout_width="match_parent"
+                android:text="@{inviteeEmail}"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>

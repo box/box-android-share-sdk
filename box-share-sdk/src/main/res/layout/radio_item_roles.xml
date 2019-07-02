@@ -1,53 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:background="@color/box_sharesdk_components_background"
-    android:id="@+id/roles_text_layout"
-    android:layout_height="@dimen/box_sharesdk_radio_height">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="roleName"
+            type="String" />
+        <variable
+            name="roleDescription"
+            type="String" />
+        <variable
+            name="roleTag"
+            type="com.box.androidsdk.content.models.BoxCollaboration.Role" />
+        <variable
+            name="listener"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="isLastDivider"
+            type="boolean" />
+        <variable
+            name="roleOptions"
+            type="java.util.HashSet" />
+        <variable
+            name="checkRole"
+            type="boolean" />
 
-    <RadioButton
-        android:id="@+id/roles_radio"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/box_sharesdk_radio_button_size"
-        android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_left"
-        android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin"
-        android:translationX="@dimen/box_sharesdk_radio_horizontal_offset"
-        android:paddingRight="@dimen/box_sharesdk_radio_horizontal_offset"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <import type="android.view.View" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/box_sharesdk_components_background"
+        android:id="@+id/roles_text_layout"
+        android:tag="@{roleTag}"
+        android:onClickListener="@{listener}"
+        android:layout_height="@dimen/box_sharesdk_radio_height">
 
-    <TextView
-        style="@style/BoxCellSubHeader"
-        android:id="@+id/roles_name"
-        android:text="Placeholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin"
-        android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_components"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/roles_radio"/>
+        <RadioButton
+            android:id="@+id/roles_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/box_sharesdk_radio_button_size"
+            android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_left"
+            android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin"
+            android:translationX="@dimen/box_sharesdk_radio_horizontal_offset"
+            android:paddingRight="@dimen/box_sharesdk_radio_horizontal_offset"
+            android:tag="@{roleTag}"
+            android:checked="@{checkRole}"
+            app:roleOptions="@{roleOptions}"
+            android:onClickListener="@{listener}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        style="@style/BoxCellText"
-        android:id="@+id/roles_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_components"
-        android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin_components"
-        android:layout_marginRight="@dimen/box_sharesdk_radio_horizontal_margin_right"
-        android:layout_marginBottom="@dimen/box_sharesdk_radio_vertical_margin"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/roles_radio"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/roles_name" />
+        <TextView
+            style="@style/BoxCellSubHeader"
+            android:id="@+id/roles_name"
+            android:text="@{roleName, default=Placeholder}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin"
+            android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_components"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/roles_radio"/>
 
-    <View
-        style="@style/BoxInsetDivider"
-        android:id="@+id/divider"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_left"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        <TextView
+            style="@style/BoxCellText"
+            android:id="@+id/roles_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_components"
+            android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin_components"
+            android:layout_marginRight="@dimen/box_sharesdk_radio_horizontal_margin_right"
+            android:layout_marginBottom="@dimen/box_sharesdk_radio_vertical_margin"
+            android:text='@{roleDescription, default="Lorem ipsum dolor sit amet, consectetur adipiscing elit"}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/roles_radio"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/roles_name" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            style="@style/BoxInsetDivider"
+            android:id="@+id/divider"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_left"
+            android:visibility="@{isLastDivider ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

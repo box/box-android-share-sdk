@@ -6,9 +6,12 @@ import androidx.lifecycle.Transformations;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
+import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
 import com.box.androidsdk.share.utils.InviteCollabsTransformer;
+
+import java.util.HashSet;
 
 
 /**
@@ -19,6 +22,8 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
     private LiveData<PresenterData<BoxCollaborationItem>> mRoleItem;
     private LiveData<InviteCollaboratorsPresenterData> mInviteCollabs;
     private LiveData<PresenterData<BoxIteratorInvitees>> mInvitees;
+
+    HashSet<BoxInvitee> mInvitedSet = new HashSet<>();
 
     public InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
@@ -88,5 +93,18 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
     public LiveData<PresenterData<BoxIteratorInvitees>> getInvitees() {
         return mInvitees;
     }
+
+
+
+    public void addInvitee(BoxInvitee invitee) {
+        this.mInvitedSet.add(invitee);
+    }
+
+    public void removeInvitee(BoxInvitee invitee) {this.mInvitedSet.remove(invitee);}
+
+    public HashSet<BoxInvitee> getInvitedSet() {
+        return mInvitedSet;
+    }
+
 
 }

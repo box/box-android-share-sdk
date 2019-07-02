@@ -34,10 +34,10 @@ class SelectRoleVMTest {
 
     @Test
     fun `test set selectedRole update the live data correctly`() {
-        assertNull(selectRoleVM.selectedRole.value)
-        selectRoleVM.selectedRole.postValue(mockRole)
+        assertNull(selectRoleVM.selectedRole)
+        selectRoleVM.selectedRole = mockRole
 
-        assertEquals(mockRole, selectRoleVM.selectedRole.value)
+        assertEquals(mockRole, selectRoleVM.selectedRole)
     }
 
     @Test

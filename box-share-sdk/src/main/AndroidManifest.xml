@@ -43,11 +43,6 @@
             android:label="@string/box_sharesdk_title_link_access"
             android:theme="@style/ShareThemeNew" >
         </activity>
-        <activity
-            android:name=".activities.BoxCollaborationRolesActivity"
-            android:label="@string/box_sharesdk_title_link_access"
-            android:theme="@style/ShareThemeNew" >
-        </activity>
     </application>
 
 </manifest>

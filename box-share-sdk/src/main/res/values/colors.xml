@@ -27,6 +27,8 @@
 
     <color name="box_sharesdk_action_bar_background">#ffffff</color>
     <color name="box_sharesdk_personal_message_button_color">#0061d5</color>
+    <color name="box_sharesdk_personal_message_button_color_mask">#0252B3</color>
     <color name="box_sharesdk_send_invitation_bg">#26c281</color>
+    <color name="box_sharesdk_ripple_color">#C9E4F6</color>
 
 </resources>

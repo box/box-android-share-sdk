@@ -2,6 +2,9 @@ package com.box.androidsdk.share.vm;
 
 import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
+
+import com.box.androidsdk.content.BoxException;
+
 /**
  * A data wrapper that can also take an accompanying string resource to display message to users.
  * @param <T> the data type of the item in the response that will be returned
@@ -10,6 +13,7 @@ public class PresenterData<T> {
     private T mData;
     private int mStrRes;
     public static final int SUCCESS = -1;
+    BoxException mException;
 
     public PresenterData() {
 
@@ -20,6 +24,11 @@ public class PresenterData<T> {
         this.mStrRes = strRes;
     }
 
+    public PresenterData(T data, @StringRes @PluralsRes int strRes, BoxException exception) {
+        this.mData = data;
+        this.mStrRes = strRes;
+        this.mException = exception;
+    }
 
     /**
      * Updates the item with the data passed in. Use this if the request was successful.
@@ -38,15 +47,17 @@ public class PresenterData<T> {
     public void success(T data, @StringRes @PluralsRes int strRes) {
         this.mData = data;
         this.mStrRes = strRes;
+        this.mException = null;
     }
 
     /**
      * Updates the item with the stringCode passed in. Use this if request was unsuccessful
      * @param strRes the String resource for the error message
      */
-    public void failure(@StringRes @PluralsRes int strRes) {
+    public void failure(@StringRes @PluralsRes int strRes, BoxException exception) {
         this.mData = null;
         this.mStrRes = strRes;
+        this.mException = exception;
     }
 
     /**
@@ -54,7 +65,7 @@ public class PresenterData<T> {
      * @return true if the request was successful
      */
     public boolean isSuccess() {
-        return mData != null;
+        return mException == null;
     }
 
     /**
@@ -73,4 +84,7 @@ public class PresenterData<T> {
         return mStrRes;
     }
 
+    public BoxException getException() {
+        return mException;
+    }
 }
