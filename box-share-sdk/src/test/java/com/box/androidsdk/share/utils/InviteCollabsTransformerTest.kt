@@ -82,7 +82,8 @@ class InviteCollabsTransformerTest {
     fun `test fetch role failure`() {
         //configs
         whenever(mockFetchRolesResponse.isSuccess).thenReturn(false)
-
+        val exception: BoxException = mock()
+        whenever(mockFetchRolesResponse.exception).thenReturn(exception)
         //make a network call to fetch roles
         val result = inviteCollabsTransformer.getFetchRolesItemPresenterData(mockFetchRolesResponse)
 
@@ -162,7 +163,7 @@ class InviteCollabsTransformerTest {
 
 
         //compare values
-        assertEquals(R.string.box_sharesdk_collaborators_invited, result.strCode)
+        assertEquals(R.string.box_sharesdk_a_collaborator_invited, result.strCode)
         assertEquals(null, result.data)
         assertEquals(true, result.isSuccess)
         assertEquals(false, result.isSnackBarMessage)

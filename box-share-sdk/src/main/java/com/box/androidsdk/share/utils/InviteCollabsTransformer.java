@@ -127,7 +127,7 @@ public class InviteCollabsTransformer {
         if (responses.getResponses().size() == 1) {
             BoxCollaboration collaboration = (BoxCollaboration) responses.getResponses().get(0).getResult();
             if (collaboration.getAccessibleBy() == null) {
-                return new InviteCollaboratorsPresenterData(null, R.string.box_sharesdk_collaborators_invited);
+                return new InviteCollaboratorsPresenterData(null, R.string.box_sharesdk_a_collaborator_invited);
             } else {
                 String name = ((BoxUser)(collaboration).getAccessibleBy()).getLogin();
                 return new InviteCollaboratorsPresenterData(name, R.string.box_sharesdk_collaborator_invited);
