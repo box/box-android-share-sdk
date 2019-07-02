@@ -30,7 +30,7 @@
         </activity>
         <activity
             android:name=".activities.BoxInviteCollaboratorsActivity"
-            android:label="@string/box_sharesdk_invite_collaborators"
+            android:label="@string/box_sharesdk_invite_collaborators_activity_title"
             android:theme="@style/ShareThemeNew" >
         </activity>
         <activity

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity;
 import com.box.androidsdk.share.databinding.FragmentInviteCollaboratorsBinding;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.vm.InviteCollaboratorsPresenterData;
@@ -74,6 +75,8 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_invite_collaborators, container,false);
         View view = binding.getRoot();
+
+        ((BoxInviteCollaboratorsActivity)getActivity()).setActionBarTitle(getString(R.string.box_sharesdk_invite_collaborators_activity_title));
 
         mFilterTerm = "";
         inviteCollaboratorsShareVM = ViewModelProviders.of(this, mInviteCollabVMFactory).get(InviteCollaboratorsShareVM.class);
@@ -253,12 +256,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     public void setOnEditAccessListener(View.OnClickListener listener) {
         mOnEditAccessListener = listener;
     }
-    public void updateSelectRoleViewModelForInvitingNewCollabs() {
-        selectRoleShareVM.setAllowOwnerRole(false);
-        selectRoleShareVM.setAllowRemove(false);
-        selectRoleShareVM.setCollaboration(null);
-    }
-
     /**
      * Executes the request to retrieve the available roles for the item
      */

@@ -3,6 +3,9 @@ package com.box.androidsdk.share.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -39,21 +42,31 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
 
     @Override
     protected void initToolbar() {
-        super.initToolbar();
-        //to get blackText on status bar. will be moved to BoxActivity after all screens are updated.
+        Toolbar actionBar = (Toolbar) findViewById(R.id.box_action_bar);
+        setSupportActionBar(actionBar);
+        actionBar.setTitle(getTitle());
+        actionBar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        actionBar.setNavigationOnClickListener(v -> onBackPressed());
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
+
+    public void setActionBarTitle(String title) {
+        setTitle(title);
+        getSupportActionBar().setTitle(getTitle());
+    }
+
 
     @Override
     protected void initializeUi() {
-        mFragment = (InviteCollaboratorsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        mFragment = (InviteCollaboratorsFragment) getSupportFragmentManager().findFragmentByTag(InviteCollaboratorsFragment.TAG);
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
             mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) mShareItem);
-            ft.replace(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
+            ft.add(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
             ft.commit();
         }
-        mFragment.setController(mController);
+        mFragment.setController(mController); //to prevent NOE since BoxFragment still uses this. (will be removed after all screens are implemented)
 
         ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
         mFragment.setVMFactory(new ShareVMFactory(new ShareRepo(new BoxShareController(mSession)), (BoxCollaborationItem) mShareItem));
@@ -61,11 +74,15 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
 
     @Override
     public void onClick(View v) {
-        ((InviteCollaboratorsFragment)mFragment).updateSelectRoleViewModelForInvitingNewCollabs();
+        SelectRoleShareVM selectRoleShareVM = ViewModelProviders.of(this).get(SelectRoleShareVM.class);
+        selectRoleShareVM.setAllowOwnerRole(false);
+        selectRoleShareVM.setAllowRemove(false);
+        selectRoleShareVM.setCollaboration(null);
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-        CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance((BoxCollaborationItem) mShareItem);
-        ft.replace(R.id.fragmentContainer, rolesFragment).addToBackStack("asd");
+        CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance();
+        ft.replace(R.id.fragmentContainer, rolesFragment, CollaboratorsRolesFragment.TAG).addToBackStack(null);
         ft.commit();
     }
 

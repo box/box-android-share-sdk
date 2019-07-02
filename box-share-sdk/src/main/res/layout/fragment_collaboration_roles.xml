@@ -10,12 +10,12 @@
     </data>
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:background="@color/box_sharesdk_screen_background"
+            android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:background="@color/box_sharesdk_screen_background"
                 android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin">
                 <TextView
                     style="@style/BoxCellText"
@@ -35,7 +35,7 @@
                     app:allowRemove="@{viewModel.removeAllowed}"
                     app:removeButton="@{removeBtn}"
                     app:roleUpdateNotifier="@{roleUpdateNotifier}"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content" />
 
                 <Button
                     android:id="@+id/remove_btn"
