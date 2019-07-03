@@ -1,6 +1,6 @@
 package com.box.androidsdk.share.fragments;
 
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity;
 import com.box.androidsdk.share.databinding.FragmentCollaborationRolesBinding;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
 

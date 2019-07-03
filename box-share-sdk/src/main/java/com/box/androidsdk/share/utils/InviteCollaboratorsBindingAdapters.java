@@ -1,7 +1,6 @@
 package com.box.androidsdk.share.utils;
 
-import android.databinding.BindingAdapter;
-import android.view.KeyEvent;
+import androidx.databinding.BindingAdapter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;

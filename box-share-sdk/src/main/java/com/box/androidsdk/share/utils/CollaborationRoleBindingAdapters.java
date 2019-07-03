@@ -2,15 +2,14 @@ package com.box.androidsdk.share.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.databinding.BindingAdapter;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.DataBindingUtil;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.share.CollaborationUtils;
