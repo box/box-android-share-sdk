@@ -88,7 +88,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_invite_collaborators, container,false);
         View view = binding.getRoot();
 
-        ((BoxInviteCollaboratorsActivity)getActivity()).setActionBarTitle(getString(R.string.box_sharesdk_invite_collaborators_activity_title));
+        mActionBarTitleChanger.setTitle(getString(R.string.box_sharesdk_invite_collaborators_activity_title));
 
         mFilterTerm = "";
         mInviteCollaboratorsShareVM = ViewModelProviders.of(this, mInviteCollabVMFactory).get(InviteCollaboratorsShareVM.class);

@@ -41,6 +41,7 @@ public abstract class BoxFragment extends Fragment {
 
     protected ShareController mController;
     protected ViewModelProvider.Factory mInviteCollabVMFactory;
+    protected ActionBarTitleChanger mActionBarTitleChanger;
     private Lock mSpinnerLock;
 
     @Override
@@ -222,5 +223,17 @@ public abstract class BoxFragment extends Fragment {
 
     protected void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+    public void setActionBarTitleChanger(ActionBarTitleChanger changer) {
+        this.mActionBarTitleChanger = changer;
+    }
+
+
+
+    /**
+     * A helper interface to let fragment change the parent's activity
+     */
+    public interface ActionBarTitleChanger {
+        void setTitle(String title);
     }
 }

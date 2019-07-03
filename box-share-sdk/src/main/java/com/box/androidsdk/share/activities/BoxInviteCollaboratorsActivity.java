@@ -19,6 +19,7 @@ import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
+import com.box.androidsdk.share.fragments.BoxFragment;
 import com.box.androidsdk.share.fragments.CollaboratorsRolesFragment;
 import com.box.androidsdk.share.fragments.InviteCollaboratorsFragment;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
@@ -33,6 +34,11 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
 
     private static int REQUEST_SHOW_COLLABORATORS = 32;
     boolean mSendEnabled = false;
+
+    private BoxFragment.ActionBarTitleChanger changer = title -> {
+        setTitle(title);
+        getSupportActionBar().setTitle(getTitle());
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +58,6 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
-    public void setActionBarTitle(String title) {
-        setTitle(title);
-        getSupportActionBar().setTitle(getTitle());
-    }
-
-
     @Override
     protected void initializeUi() {
         mFragment = (InviteCollaboratorsFragment) getSupportFragmentManager().findFragmentByTag(InviteCollaboratorsFragment.TAG);
@@ -69,7 +69,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
             ft.commit();
         }
         mFragment.setController(mController); //to prevent NOE since BoxFragment still uses this. (will be removed after all screens are implemented)
-
+        mFragment.setActionBarTitleChanger(changer);
         ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
         ((InviteCollaboratorsFragment)mFragment).setCollaboratorsStateListener(this);
         mFragment.setVMFactory(new ShareVMFactory(new ShareRepo(new BoxShareController(mSession)), (BoxCollaborationItem) mShareItem));
@@ -85,6 +85,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
         CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance();
+        rolesFragment.setActionBarTitleChanger(changer);
         ft.replace(R.id.fragmentContainer, rolesFragment, CollaboratorsRolesFragment.TAG).addToBackStack(null);
         ft.commit();
     }
