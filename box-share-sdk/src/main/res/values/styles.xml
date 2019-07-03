@@ -168,7 +168,7 @@
     <style name="BoxAddPersonalMessageButton" parent="BoxTextButton">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textColor">@drawable/add_personal_message_color</item>
+        <item name="android:textColor">@drawable/box_add_personal_message_text_color</item>
 
         <item name="android:textAllCaps">true</item>
     </style>
