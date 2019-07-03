@@ -26,10 +26,10 @@ import java.util.List;
 
 public class CollaborationRoleBindingAdapters {
 
-    @BindingAdapter(value = {"roles", "allowOwnerRole", "allowRemove", "selectedRole", "removeButton"})
+    @BindingAdapter(value = {"roles", "allowOwnerRole", "allowRemove", "selectedRole", "removeButton", "notifier"})
     public static void populateRadioGroup(RadioGroup radioGroup, List roles,
                                           boolean allowOwnerRole, boolean allowRemove,
-                                          LiveData<BoxCollaboration.Role> selectedRole, Button removeButton) {
+                                          LiveData<BoxCollaboration.Role> selectedRole, Button removeButton, CollaboratorsRolesFragment.RoleUpdateNotifier notifier) {
 
         Context context = radioGroup.getContext();
         LinearLayout rolesLayout = new LinearLayout(context);
@@ -41,6 +41,8 @@ public class CollaborationRoleBindingAdapters {
         HashSet<RadioButton> roleOptions = new HashSet<>();
         View.OnClickListener listener = v ->  {
             BoxCollaboration.Role clickedRole = (BoxCollaboration.Role) v.getTag();
+            notifier.setRole(clickedRole);
+
             ((MutableLiveData<BoxCollaboration.Role>)selectedRole).postValue(clickedRole);
             for (RadioButton radio : roleOptions) {
                 BoxCollaboration.Role role = (BoxCollaboration.Role) radio.getTag();

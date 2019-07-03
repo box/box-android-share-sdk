@@ -18,7 +18,9 @@ import com.box.androidsdk.share.vm.SelectRoleShareVM;
 
 public class CollaboratorsRolesFragment extends Fragment {
 
-
+    public interface RoleUpdateNotifier {
+        void setRole(BoxCollaboration.Role role);
+    }
     public static final String TAG = CollaboratorsRolesFragment.class.getName();
     SelectRoleShareVM vm;
     private BoxFragment.ActionBarTitleChanger mActionBarTitleChanger;
@@ -32,6 +34,7 @@ public class CollaboratorsRolesFragment extends Fragment {
 
         vm = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
         binding.setViewModel(vm);
+        binding.setRoleUpdateNotifier(vm::setSelectedRole);
         return view;
     }
 
