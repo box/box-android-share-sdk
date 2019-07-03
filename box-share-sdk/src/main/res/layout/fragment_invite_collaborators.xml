@@ -17,7 +17,7 @@
             type="android.view.View.OnClickListener" />
         <variable
             name="role"
-            type="com.box.androidsdk.content.models.BoxCollaboration.Role" />
+            type="androidx.lifecycle.MutableLiveData&lt;com.box.androidsdk.content.models.BoxCollaboration.Role&gt;" />
         <variable
             name="tokenListener"
             type="com.tokenautocomplete.TokenCompleteTextView.TokenListener" />

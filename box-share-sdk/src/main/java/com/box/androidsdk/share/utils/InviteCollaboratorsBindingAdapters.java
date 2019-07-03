@@ -40,12 +40,12 @@ public class InviteCollaboratorsBindingAdapters {
 
     @BindingAdapter(value = {"roleName"})
     public static void setRoleName(TextView roleName, BoxCollaboration.Role role) {
-        roleName.setText(CollaborationUtils.getRoleName(roleName.getContext(), role));
+        if (role != null) roleName.setText(CollaborationUtils.getRoleName(roleName.getContext(), role));
     }
 
     @BindingAdapter(value = {"roleDescription"})
     public static void setRoleDescription(TextView roleDescription, BoxCollaboration.Role role) {
-        roleDescription.setText(CollaborationUtils.getRoleDescription(roleDescription.getContext(), role));
+        if (role != null) roleDescription.setText(CollaborationUtils.getRoleDescription(roleDescription.getContext(), role));
     }
 
     @BindingAdapter(value = {"setInviteeInitial"})

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.MutableLiveData;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,10 +24,10 @@ import java.util.List;
 
 public class CollaborationRoleBindingAdapters {
 
-    @BindingAdapter(value = {"roles", "allowOwnerRole", "allowRemove", "selectedRole", "removeButton", "roleUpdateNotifier"})
+    @BindingAdapter(value = {"roles", "allowOwnerRole", "allowRemove", "selectedRole", "removeButton"})
     public static void populateRadioGroup(RadioGroup radioGroup, List roles,
-                                      boolean allowOwnerRole, boolean allowRemove,
-                                      BoxCollaboration.Role selectedRole, Button removeButton, CollaboratorsRolesFragment.RoleUpdateNotifier notifier) {
+                                          boolean allowOwnerRole, boolean allowRemove,
+                                          MutableLiveData<BoxCollaboration.Role> selectedRole, Button removeButton) {
 
         Context context = radioGroup.getContext();
         LinearLayout rolesLayout = new LinearLayout(context);
@@ -37,11 +39,13 @@ public class CollaborationRoleBindingAdapters {
         HashSet<RadioButton> roleOptions = new HashSet<>();
         View.OnClickListener listener = v ->  {
             BoxCollaboration.Role clickedRole = (BoxCollaboration.Role) v.getTag();
+            selectedRole.postValue(clickedRole);
+
             for (RadioButton radio : roleOptions) {
                 BoxCollaboration.Role role = (BoxCollaboration.Role) radio.getTag();
                 boolean shouldCheck = clickedRole == role;
                 radio.setChecked(shouldCheck);
-                notifier.setRole(clickedRole);
+
             }
         };
         RadioItemRolesBinding binding = null;
@@ -63,7 +67,7 @@ public class CollaborationRoleBindingAdapters {
             binding.setRoleTag(role);
             binding.setListener(listener);
             binding.setRoleOptions(roleOptions);
-            binding.setCheckRole(role == selectedRole);
+            binding.setCheckRole(role == selectedRole.getValue());
 
             rolesLayout.addView(radioView);
             binding.setIsLastDivider(false);

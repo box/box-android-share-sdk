@@ -32,7 +32,6 @@ public class CollaboratorsRolesFragment extends Fragment {
 
         vm = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
         binding.setViewModel(vm);
-        binding.setRoleUpdateNotifier(vm::setSelectedRole);
         return view;
     }
 
@@ -43,8 +42,4 @@ public class CollaboratorsRolesFragment extends Fragment {
     public void setActionBarTitleChanger(BoxFragment.ActionBarTitleChanger changer) {
         this.mActionBarTitleChanger = changer;
     }
-    public interface RoleUpdateNotifier {
-        void setRole(BoxCollaboration.Role role);
-    }
-
 }

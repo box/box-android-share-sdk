@@ -4,9 +4,6 @@
         <variable
             name="viewModel"
             type="com.box.androidsdk.share.vm.SelectRoleShareVM" />
-        <variable
-            name="roleUpdateNotifier"
-            type="com.box.androidsdk.share.fragments.CollaboratorsRolesFragment.RoleUpdateNotifier" />
     </data>
         <ScrollView
             android:layout_width="match_parent"
@@ -34,7 +31,6 @@
                     app:allowOwnerRole="@{viewModel.ownerRoleAllowed}"
                     app:allowRemove="@{viewModel.removeAllowed}"
                     app:removeButton="@{removeBtn}"
-                    app:roleUpdateNotifier="@{roleUpdateNotifier}"
                     android:layout_height="wrap_content" />
 
                 <Button

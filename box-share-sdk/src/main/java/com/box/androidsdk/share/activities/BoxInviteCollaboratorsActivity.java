@@ -94,8 +94,6 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
     public void onBackPressed() {
         super.onBackPressed();
         getSupportFragmentManager().popBackStack();
-        BoxCollaboration.Role role = ViewModelProviders.of(this).get(SelectRoleShareVM.class).getSelectedRole();
-        ((InviteCollaboratorsFragment)mFragment).setRole(role);
     }
 
     /**
