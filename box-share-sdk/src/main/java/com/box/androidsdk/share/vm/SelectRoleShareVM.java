@@ -1,5 +1,7 @@
 package com.box.androidsdk.share.vm;
 
+import androidx.databinding.Bindable;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -21,6 +23,11 @@ public class SelectRoleShareVM extends ViewModel {
     private boolean mAllowRemove = false;
     private BoxCollaboration mCollaboration;
 
+    private MutableLiveData<Boolean> mSendInvitationEnabled = new MutableLiveData<>();
+
+    public SelectRoleShareVM() {
+        mSendInvitationEnabled.postValue(false);
+    }
 
 
     /**
@@ -43,7 +50,7 @@ public class SelectRoleShareVM extends ViewModel {
      * Returns a Live Data that holds the selected collaboration role.
      * @return a Live Data that holds the selected collaboration role
      */
-    public MutableLiveData<BoxCollaboration.Role> getSelectedRole() {
+    public LiveData<BoxCollaboration.Role> getSelectedRole() {
         return mSelectedRole;
     }
 
@@ -101,5 +108,13 @@ public class SelectRoleShareVM extends ViewModel {
      */
     public void setCollaboration(BoxCollaboration collaboration) {
         this.mCollaboration = collaboration;
+    }
+
+    public LiveData<Boolean> isSendInvitationEnabled() {
+        return mSendInvitationEnabled;
+    }
+
+    public void setSendInvitationEnabled(boolean enabled) {
+        this.mSendInvitationEnabled.postValue(enabled);
     }
 }

@@ -17,13 +17,13 @@
             type="android.view.View.OnClickListener" />
         <variable
             name="role"
-            type="androidx.lifecycle.MutableLiveData&lt;com.box.androidsdk.content.models.BoxCollaboration.Role&gt;" />
+            type="androidx.lifecycle.LiveData&lt;com.box.androidsdk.content.models.BoxCollaboration.Role&gt;" />
         <variable
             name="tokenListener"
             type="com.tokenautocomplete.TokenCompleteTextView.TokenListener" />
         <variable
             name="collaboratorsPresent"
-            type="boolean" />
+            type="androidx.lifecycle.LiveData&lt;Boolean&gt;" />
         <import type="com.box.androidsdk.share.CollaborationUtils" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -169,7 +169,7 @@
             android:text="@string/box_sharesdk_send_invitation"
             android:onClickListener="@{onSendInvitationClickedListener}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:enabled="@{collaboratorsPresent}"
+            app:enabled="@{collaboratorsPresent ?? false}"
             app:layout_constraintLeft_toLeftOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

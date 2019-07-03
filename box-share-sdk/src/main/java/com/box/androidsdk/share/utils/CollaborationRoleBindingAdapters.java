@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.InverseBindingAdapter;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import android.view.View;
@@ -27,7 +29,7 @@ public class CollaborationRoleBindingAdapters {
     @BindingAdapter(value = {"roles", "allowOwnerRole", "allowRemove", "selectedRole", "removeButton"})
     public static void populateRadioGroup(RadioGroup radioGroup, List roles,
                                           boolean allowOwnerRole, boolean allowRemove,
-                                          MutableLiveData<BoxCollaboration.Role> selectedRole, Button removeButton) {
+                                          LiveData<BoxCollaboration.Role> selectedRole, Button removeButton) {
 
         Context context = radioGroup.getContext();
         LinearLayout rolesLayout = new LinearLayout(context);
@@ -39,13 +41,11 @@ public class CollaborationRoleBindingAdapters {
         HashSet<RadioButton> roleOptions = new HashSet<>();
         View.OnClickListener listener = v ->  {
             BoxCollaboration.Role clickedRole = (BoxCollaboration.Role) v.getTag();
-            selectedRole.postValue(clickedRole);
-
+            ((MutableLiveData<BoxCollaboration.Role>)selectedRole).postValue(clickedRole);
             for (RadioButton radio : roleOptions) {
                 BoxCollaboration.Role role = (BoxCollaboration.Role) radio.getTag();
                 boolean shouldCheck = clickedRole == role;
                 radio.setChecked(shouldCheck);
-
             }
         };
         RadioItemRolesBinding binding = null;

@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
@@ -30,11 +29,10 @@ import com.box.androidsdk.share.vm.ShareVMFactory;
  * Activity used to allow users to invite additional collaborators to the folder. Email addresses will auto complete from the phones address book
  * as well as Box's internal invitee endpoint. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
-public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.OnClickListener, InviteCollaboratorsFragment.InviteCollaboratorsListener {
+public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.OnClickListener {
 
     private static int REQUEST_SHOW_COLLABORATORS = 32;
-    boolean mSendEnabled = false;
-
+    SelectRoleShareVM selectRoleShareVM;
     private BoxFragment.ActionBarTitleChanger changer = title -> {
         setTitle(title);
         getSupportActionBar().setTitle(getTitle());
@@ -45,7 +43,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_collaborators);
         initToolbar();
-
+        selectRoleShareVM = ViewModelProviders.of(this).get(SelectRoleShareVM.class);
     }
 
     @Override
@@ -71,13 +69,11 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         mFragment.setController(mController); //to prevent NOE since BoxFragment still uses this. (will be removed after all screens are implemented)
         mFragment.setActionBarTitleChanger(changer);
         ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
-        ((InviteCollaboratorsFragment)mFragment).setCollaboratorsStateListener(this);
         mFragment.setVMFactory(new ShareVMFactory(new ShareRepo(new BoxShareController(mSession)), (BoxCollaborationItem) mShareItem));
     }
 
     @Override
     public void onClick(View v) {
-        SelectRoleShareVM selectRoleShareVM = ViewModelProviders.of(this).get(SelectRoleShareVM.class);
         selectRoleShareVM.setAllowOwnerRole(false);
         selectRoleShareVM.setAllowRemove(false);
         selectRoleShareVM.setCollaboration(null);
@@ -126,13 +122,15 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem sendMenuItem = menu.findItem(R.id.box_sharesdk_action_send);
-        if (mSendEnabled) {
-            sendMenuItem.setEnabled(true);
-            sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_black_24dp);
-        } else {
-            sendMenuItem.setEnabled(false);
-            sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_light_24dp);
-        }
+        selectRoleShareVM.isSendInvitationEnabled().observe(this, enabled -> {
+            if (enabled) {
+                sendMenuItem.setEnabled(true);
+                sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_black_24dp);
+            } else {
+                sendMenuItem.setEnabled(false);
+                sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_light_24dp);
+            }
+        });
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -150,24 +148,4 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
-    @Override
-    public void onCollaboratorsPresent() {
-        if (!mSendEnabled) {
-            mSendEnabled = true;
-            invalidateOptionsMenu();
-        }
-    }
-
-    @Override
-    public void onCollaboratorsAbsent() {
-        if (mSendEnabled) {
-            mSendEnabled = false;
-            invalidateOptionsMenu();
-        }
-    }
-
-
 }
