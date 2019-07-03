@@ -22,7 +22,7 @@
             name="tokenListener"
             type="com.tokenautocomplete.TokenCompleteTextView.TokenListener" />
         <variable
-            name="noCollaborators"
+            name="collaboratorsPresent"
             type="boolean" />
         <import type="com.box.androidsdk.share.CollaborationUtils" />
     </data>
@@ -169,7 +169,7 @@
             android:text="@string/box_sharesdk_send_invitation"
             android:onClickListener="@{onSendInvitationClickedListener}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:enabled="@{!noCollaborators}"
+            app:enabled="@{collaboratorsPresent}"
             app:layout_constraintLeft_toLeftOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

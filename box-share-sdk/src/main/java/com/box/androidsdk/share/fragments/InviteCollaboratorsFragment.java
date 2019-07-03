@@ -17,14 +17,19 @@ import com.box.androidsdk.share.vm.InviteCollaboratorsShareVM;
 import com.box.androidsdk.share.vm.PresenterData;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
@@ -39,7 +44,6 @@ import com.box.androidsdk.share.adapters.InviteeAdapter;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 import com.tokenautocomplete.TokenCompleteTextView;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -54,6 +58,14 @@ import java.util.List;
 public class InviteCollaboratorsFragment extends BoxFragment implements TokenCompleteTextView.TokenListener<BoxInvitee> {
 
 
+
+    // Should be implemented by the parent Fragment or Activity
+    public interface InviteCollaboratorsListener {
+        void onCollaboratorsPresent();
+        void onCollaboratorsAbsent();
+    }
+
+
     private static final Integer MY_PERMISSIONS_REQUEST_READ_CONTACTS = 32;
     public static final String TAG = InviteCollaboratorsFragment.class.getName();
     public static final String EXTRA_USE_CONTACTS_PROVIDER = "InviteCollaboratorsFragment.ExtraUseContactsProvider";
@@ -65,8 +77,8 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     FragmentInviteCollaboratorsBinding binding;
 
     private View.OnClickListener mOnEditAccessListener;
-
-    InviteCollaboratorsShareVM inviteCollaboratorsShareVM;
+    private InviteCollaboratorsListener mInviteCollaboratorsListener;
+    InviteCollaboratorsShareVM mInviteCollaboratorsShareVM;
     SelectRoleShareVM selectRoleShareVM;
 
 
@@ -79,12 +91,12 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         ((BoxInviteCollaboratorsActivity)getActivity()).setActionBarTitle(getString(R.string.box_sharesdk_invite_collaborators_activity_title));
 
         mFilterTerm = "";
-        inviteCollaboratorsShareVM = ViewModelProviders.of(this, mInviteCollabVMFactory).get(InviteCollaboratorsShareVM.class);
+        mInviteCollaboratorsShareVM = ViewModelProviders.of(this, mInviteCollabVMFactory).get(InviteCollaboratorsShareVM.class);
         selectRoleShareVM = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
 
-        inviteCollaboratorsShareVM.getRoleItem().observe(this, onRoleItemChange);
-        inviteCollaboratorsShareVM.getInvitees().observe(this, onInviteesChanged);
-        inviteCollaboratorsShareVM.getInviteCollabs().observe(this, onInviteCollabs);
+        mInviteCollaboratorsShareVM.getRoleItem().observe(this, onRoleItemChange);
+        mInviteCollaboratorsShareVM.getInvitees().observe(this, onInviteesChanged);
+        mInviteCollaboratorsShareVM.getInviteCollabs().observe(this, onInviteCollabs);
 
 
         if (savedInstanceState != null) {
@@ -125,7 +137,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         binding.setOnSendInvitationClickedListener(v -> addCollaborations());
         binding.setRole(selectRoleShareVM.getSelectedRole());
         binding.setTokenListener(this);
-        binding.setNoCollaborators(true);
+        binding.setCollaboratorsPresent(false);
         return view;
     }
 
@@ -180,12 +192,22 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
             message = getString(presenter.getStrCode());
         }
         if (presenter.isSnackBarMessage()) {
-            Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE).show();
+            showSnackBar(message);
+            //Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE).show();
         } else {
             showToast(message);
             getActivity().finish();
         }
     };
+
+    public void showSnackBar(String message) {
+        Snackbar snackbar = Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE);
+        View snackbarLayout = snackbar.getView();
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) snackbarLayout.getLayoutParams();
+        int height = (int)getResources().getDimension(R.dimen.box_sharesdk_small_cell_height);
+        lp.setMargins(lp.leftMargin, lp.topMargin, lp.rightMargin, height);
+        snackbar.show();
+    }
 
 
 
@@ -265,7 +287,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         }
 
         showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
-        inviteCollaboratorsShareVM.fetchRolesFromRemote(getCollaborationItem());
+        mInviteCollaboratorsShareVM.fetchRolesFromRemote(getCollaborationItem());
     }
     /**
      * Executes the request to retrieve the invitees that can be auto-completed
@@ -273,7 +295,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     private void fetchInvitees() {
         if (getCollaborationItem() instanceof BoxFolder) {
             // Currently this request is only supported for folders.
-            inviteCollaboratorsShareVM.fetchInviteesFromRemote(getCollaborationItem(), mFilterTerm);
+            mInviteCollaboratorsShareVM.fetchInviteesFromRemote(getCollaborationItem(), mFilterTerm);
         }
     }
 
@@ -281,7 +303,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
      * Executes the request to add collaborations to the item
      */
     public void addCollaborations() {
-        HashSet<BoxInvitee> invitees = inviteCollaboratorsShareVM.getInvitedSet();
+        HashSet<BoxInvitee> invitees = mInviteCollaboratorsShareVM.getInvitedSet();
         String[] emailParts = new String[invitees.size()];
         int i = 0;
         for (BoxInvitee invitee: invitees) {
@@ -289,7 +311,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         }
 
         showSpinner(R.string.box_sharesdk_adding_collaborators, R.string.boxsdk_Please_wait);
-        inviteCollaboratorsShareVM.inviteCollabs(getCollaborationItem(), selectRoleShareVM.getSelectedRole(), emailParts);
+        mInviteCollaboratorsShareVM.inviteCollabs(getCollaborationItem(), selectRoleShareVM.getSelectedRole(), emailParts);
     }
 
 
@@ -341,22 +363,28 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     }
 
     private void notifyInviteCollaboratorsListener() {
-        if (inviteCollaboratorsShareVM.getInvitedSet().size() == 0) {
-            binding.setNoCollaborators(true);
+        if (mInviteCollaboratorsShareVM.getInvitedSet().size() == 0) {
+            binding.setCollaboratorsPresent(false);
+            mInviteCollaboratorsListener.onCollaboratorsAbsent();
         } else {
-            binding.setNoCollaborators(false);
+            binding.setCollaboratorsPresent(true);
+            mInviteCollaboratorsListener.onCollaboratorsPresent();
         }
     }
 
     @Override
     public void onTokenAdded(BoxInvitee token) {
-        inviteCollaboratorsShareVM.addInvitee(token);
+        mInviteCollaboratorsShareVM.addInvitee(token);
         notifyInviteCollaboratorsListener();
     }
 
     @Override
     public void onTokenRemoved(BoxInvitee token) {
-        inviteCollaboratorsShareVM.removeInvitee(token);
+        mInviteCollaboratorsShareVM.removeInvitee(token);
         notifyInviteCollaboratorsListener();
+    }
+
+    public void setCollaboratorsStateListener(BoxInviteCollaboratorsActivity inviteCollaboratorsListener) {
+        this.mInviteCollaboratorsListener = inviteCollaboratorsListener;
     }
 }

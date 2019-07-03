@@ -22,6 +22,7 @@ public class SelectRoleShareVM extends ViewModel {
     private BoxCollaboration mCollaboration;
 
 
+
     /**
      * Returns a list of valid roles for collaborator.
      * @return a list of valid roles for collaborator

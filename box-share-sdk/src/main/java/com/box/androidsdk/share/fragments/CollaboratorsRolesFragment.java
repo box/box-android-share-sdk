@@ -11,14 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
-import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity;
 import com.box.androidsdk.share.databinding.FragmentCollaborationRolesBinding;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class CollaboratorsRolesFragment extends Fragment {

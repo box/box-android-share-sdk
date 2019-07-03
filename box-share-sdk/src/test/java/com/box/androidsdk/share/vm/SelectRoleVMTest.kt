@@ -19,7 +19,7 @@ class SelectRoleVMTest {
 
     private val mockRepo: ShareRepo = mock()
     private val mockShareItem: BoxCollaborationItem = mock()
-    private lateinit var selectRoleVM: SelectRoleShareVM
+    private lateinit var selectRoleShareVM: SelectRoleShareVM
 
     private val mockRolesList: List<BoxCollaboration.Role> = mock()
     private val mockAllowOwnerRole = true
@@ -29,47 +29,47 @@ class SelectRoleVMTest {
 
     @Before
     fun setup() {
-        selectRoleVM = SelectRoleShareVM()
+        selectRoleShareVM = SelectRoleShareVM()
     }
 
     @Test
     fun `test set selectedRole update the live data correctly`() {
-        assertNull(selectRoleVM.selectedRole)
-        selectRoleVM.selectedRole = mockRole
+        assertNull(selectRoleShareVM.selectedRole)
+        selectRoleShareVM.selectedRole = mockRole
 
-        assertEquals(mockRole, selectRoleVM.selectedRole)
+        assertEquals(mockRole, selectRoleShareVM.selectedRole)
     }
 
     @Test
     fun `test set allow owner role update the variable correctly`() {
-        assertEquals(false, selectRoleVM.isOwnerRoleAllowed)
-        selectRoleVM.setAllowOwnerRole(mockAllowOwnerRole)
+        assertEquals(false, selectRoleShareVM.isOwnerRoleAllowed)
+        selectRoleShareVM.setAllowOwnerRole(mockAllowOwnerRole)
 
-        assertEquals(mockAllowOwnerRole, selectRoleVM.isOwnerRoleAllowed)
+        assertEquals(mockAllowOwnerRole, selectRoleShareVM.isOwnerRoleAllowed)
     }
 
     @Test
     fun `test set allow remove update the variable correctly`() {
-        assertEquals(false, selectRoleVM.isRemoveAllowed)
-        selectRoleVM.setAllowRemove(mockAllowRemove)
+        assertEquals(false, selectRoleShareVM.isRemoveAllowed)
+        selectRoleShareVM.setAllowRemove(mockAllowRemove)
 
-        assertEquals(mockAllowRemove, selectRoleVM.isRemoveAllowed)
+        assertEquals(mockAllowRemove, selectRoleShareVM.isRemoveAllowed)
     }
 
     @Test
     fun `test set roles update the variable correctly`() {
-        assertNull(selectRoleVM.roles)
-        selectRoleVM.roles = mockRolesList
+        assertNull(selectRoleShareVM.roles)
+        selectRoleShareVM.roles = mockRolesList
 
-        assertEquals(mockRolesList, selectRoleVM.roles)
+        assertEquals(mockRolesList, selectRoleShareVM.roles)
     }
 
     @Test
     fun `test set collaboration he variable correctly`() {
-        assertNull(selectRoleVM.collaboration)
-        selectRoleVM.collaboration = mockCollaboration
+        assertNull(selectRoleShareVM.collaboration)
+        selectRoleShareVM.collaboration = mockCollaboration
 
-        assertEquals(mockCollaboration, selectRoleVM.collaboration)
+        assertEquals(mockCollaboration, selectRoleShareVM.collaboration)
     }
 
 }

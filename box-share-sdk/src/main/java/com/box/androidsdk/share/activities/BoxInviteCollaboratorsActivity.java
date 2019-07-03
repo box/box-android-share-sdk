@@ -5,10 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
@@ -28,9 +29,10 @@ import com.box.androidsdk.share.vm.ShareVMFactory;
  * Activity used to allow users to invite additional collaborators to the folder. Email addresses will auto complete from the phones address book
  * as well as Box's internal invitee endpoint. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
-public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.OnClickListener{
+public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.OnClickListener, InviteCollaboratorsFragment.InviteCollaboratorsListener {
 
     private static int REQUEST_SHOW_COLLABORATORS = 32;
+    boolean mSendEnabled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         mFragment.setController(mController); //to prevent NOE since BoxFragment still uses this. (will be removed after all screens are implemented)
 
         ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
+        ((InviteCollaboratorsFragment)mFragment).setCollaboratorsStateListener(this);
         mFragment.setVMFactory(new ShareVMFactory(new ShareRepo(new BoxShareController(mSession)), (BoxCollaborationItem) mShareItem));
     }
 
@@ -113,4 +116,59 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         inviteIntent.putExtra(CollaborationUtils.EXTRA_USER_ID, session.getUser().getId());
         return inviteIntent;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_invite_collaborators, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem sendMenuItem = menu.findItem(R.id.box_sharesdk_action_send);
+        if (mSendEnabled) {
+            sendMenuItem.setEnabled(true);
+            sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_black_24dp);
+        } else {
+            sendMenuItem.setEnabled(false);
+            sendMenuItem.setIcon(R.drawable.ic_box_sharesdk_send_light_24dp);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.box_sharesdk_action_send) {
+            ((InviteCollaboratorsFragment)mFragment).addCollaborations();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+    @Override
+    public void onCollaboratorsPresent() {
+        if (!mSendEnabled) {
+            mSendEnabled = true;
+            invalidateOptionsMenu();
+        }
+    }
+
+    @Override
+    public void onCollaboratorsAbsent() {
+        if (mSendEnabled) {
+            mSendEnabled = false;
+            invalidateOptionsMenu();
+        }
+    }
+
+
 }
