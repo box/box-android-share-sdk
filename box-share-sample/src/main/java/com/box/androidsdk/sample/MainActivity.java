@@ -25,9 +25,9 @@ import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxIteratorItems;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxSharedLink;
-import com.box.androidsdk.share.activities.BoxActivity;
-import com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity;
-import com.box.androidsdk.share.activities.BoxSharedLinkActivity;
+import com.box.androidsdk.share.usx.activities.BoxActivity;
+import com.box.androidsdk.share.usx.activities.BoxInviteCollaboratorsActivity;
+import com.box.androidsdk.share.usx.activities.BoxSharedLinkActivity;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onShareLinkButtonClick(final View view){
         if (mSampleItem != null)
-            startActivityForResult(com.box.androidsdk.share.legacy.activities.BoxSharedLinkActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_SHARE_LINK);
+            startActivityForResult(com.box.androidsdk.share.activities.BoxSharedLinkActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_SHARE_LINK);
     }
 
     /**
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onInvitePeopleButtonClick(final View view){
         if (mSampleItem != null) {
-           startActivityForResult(com.box.androidsdk.share.legacy.activities.BoxInviteCollaboratorsActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_INVITE_PEOPLE);
+           startActivityForResult(com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_INVITE_PEOPLE);
 
         }
     }

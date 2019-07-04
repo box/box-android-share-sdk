@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.legacy.fragments;
+package com.box.androidsdk.share.usx.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

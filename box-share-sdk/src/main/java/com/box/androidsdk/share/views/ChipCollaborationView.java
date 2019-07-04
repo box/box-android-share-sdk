@@ -38,7 +38,7 @@ public class ChipCollaborationView extends TokenCompleteTextView<BoxInvitee> {
     protected View getViewForObject(BoxInvitee person) {
 
         LayoutInflater layoutInflater = (LayoutInflater)getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        RelativeLayout view = (RelativeLayout)layoutInflater.inflate(R.layout.view_chip_collaboration, (ViewGroup) ChipCollaborationView.this.getParent(), false);
+        RelativeLayout view = (RelativeLayout)layoutInflater.inflate(R.layout.legacy_view_chip_collaboration, (ViewGroup) ChipCollaborationView.this.getParent(), false);
 
         TextView tvName = ((TextView) view.findViewById(R.id.name));
         tvName.setText(person.getName());

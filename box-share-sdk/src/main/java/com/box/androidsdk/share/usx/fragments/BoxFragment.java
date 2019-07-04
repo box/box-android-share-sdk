@@ -1,21 +1,25 @@
-package com.box.androidsdk.share.legacy.fragments;
+package com.box.androidsdk.share.usx.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.TextAppearanceSpan;
 import android.view.View;
+import android.widget.Toast;
 
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.ShareController;
+import com.box.androidsdk.share.vm.ShareVMFactory;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -35,7 +39,8 @@ public abstract class BoxFragment extends Fragment {
     private LastRunnableHandler mDialogHandler;
 
     protected ShareController mController;
-
+    protected ViewModelProvider.Factory mInviteCollabVMFactory;
+    protected ActionBarTitleChanger mActionBarTitleChanger;
     private Lock mSpinnerLock;
 
     @Override
@@ -57,6 +62,10 @@ public abstract class BoxFragment extends Fragment {
             getActivity().finish();
             return;
         }
+    }
+
+    public void setVMFactory(ShareVMFactory factory) {
+        this.mInviteCollabVMFactory = factory;
     }
 
     @Override
@@ -91,7 +100,7 @@ public abstract class BoxFragment extends Fragment {
                         try {
                             mDialog.dismiss();
                         } catch (IllegalStateException e){
-                            BoxLogUtils.e("com.box.androidsdk.share.legacy.fragments.dismissSpinner " , e);
+                            BoxLogUtils.e("com.box.androidsdk.share.usx.fragments.dismissSpinner " , e);
                         }
                         mDialog = null;
                     }
@@ -209,5 +218,21 @@ public abstract class BoxFragment extends Fragment {
         accessSpannable.setSpan(new TextAppearanceSpan(getActivity(), R.style.Base_TextAppearance_AppCompat_Body1), title.length(),combined.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         accessSpannable.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.box_sharesdk_accent)), title.length(),combined.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return accessSpannable;
+    }
+
+    protected void showToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+    public void setActionBarTitleChanger(ActionBarTitleChanger changer) {
+        this.mActionBarTitleChanger = changer;
+    }
+
+
+
+    /**
+     * A helper interface to let fragment change the parent's activity
+     */
+    public interface ActionBarTitleChanger {
+        void setTitle(String title);
     }
 }

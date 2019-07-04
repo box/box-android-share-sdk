@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
-import com.box.androidsdk.share.adapters.InviteeAdapter;
-import com.box.androidsdk.share.views.ChipCollaborationView;
+import com.box.androidsdk.share.usx.adapters.InviteeAdapter;
+import com.box.androidsdk.share.usx.views.ChipCollaborationView;
 import com.tokenautocomplete.TokenCompleteTextView;
 
 public class InviteCollaboratorsBindingAdapters {

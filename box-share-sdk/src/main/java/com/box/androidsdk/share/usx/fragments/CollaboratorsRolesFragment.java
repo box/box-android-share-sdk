@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.fragments;
+package com.box.androidsdk.share.usx.fragments;
 
 import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;

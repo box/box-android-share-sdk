@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.legacy.fragments;
+package com.box.androidsdk.share.usx.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,7 +28,7 @@ import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.legacy.adapters.CollaboratorsAdapter;
+import com.box.androidsdk.share.adapters.CollaboratorsAdapter;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.legacy_fragment_collaborations, container, false);
+        View view = inflater.inflate(R.layout.fragment_collaborations, container, false);
 
         mCollaboratorsListView = (ListView) view.findViewById(R.id.collaboratorsList);
         mCollaboratorsListView.setDivider(null);

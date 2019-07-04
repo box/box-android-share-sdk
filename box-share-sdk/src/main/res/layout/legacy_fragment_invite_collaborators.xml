@@ -18,7 +18,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/box_sharesdk_hint"
             android:text="@string/box_sharesdk_to" />
-        <com.box.androidsdk.share.legacy.views.ChipCollaborationView
+        <com.box.androidsdk.share.views.ChipCollaborationView
             android:id="@+id/invite_collaborator_autocomplete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             android:layout_height="@dimen/box_sharesdk_collaboration_cell_height"
             android:layout_marginTop="20dp"
             />
-        <com.box.androidsdk.share.legacy.views.CollaboratorsInitialsView
+        <com.box.androidsdk.share.views.CollaboratorsInitialsView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/collaboratorsInitialsView"/>

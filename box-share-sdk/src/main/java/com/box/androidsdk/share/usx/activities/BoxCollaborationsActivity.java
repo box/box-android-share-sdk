@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.legacy.activities;
+package com.box.androidsdk.share.usx.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.legacy.fragments.CollaborationsFragment;
+import com.box.androidsdk.share.usx.fragments.CollaborationsFragment;
 
 /**
  * Activity used to show and modify the collaborations of an item. The intent to launch this activity can be retrieved via the static getLaunchIntent method
@@ -23,7 +23,7 @@ public class BoxCollaborationsActivity extends BoxActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.legacy_activity_collaborations);
+        setContentView(R.layout.activity_collaborations);
         initToolbar();
 
         if (mShareItem == null || mShareItem.getType() == null || !(mShareItem instanceof BoxCollaborationItem)) {

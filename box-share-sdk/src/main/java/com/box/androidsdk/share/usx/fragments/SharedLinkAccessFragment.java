@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.legacy.fragments;
+package com.box.androidsdk.share.usx.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -79,7 +79,7 @@ public class SharedLinkAccessFragment extends BoxFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.legacy_fragment_shared_link_access, container, false);
+        View view = inflater.inflate(R.layout.fragment_shared_link_access, container, false);
 
         mAccessLayout = view.findViewById(R.id.shared_link_access_layout);
         mAccessLayout.setOnClickListener(new View.OnClickListener() {

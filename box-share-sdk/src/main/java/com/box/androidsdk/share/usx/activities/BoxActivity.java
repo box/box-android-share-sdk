@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.legacy.activities;
+package com.box.androidsdk.share.usx.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,7 +21,7 @@ import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
-import com.box.androidsdk.share.legacy.fragments.BoxFragment;
+import com.box.androidsdk.share.usx.fragments.BoxFragment;
 
 /**
  * Base class for all activities that make API requests through the Box Content SDK. This class is responsible for
@@ -84,7 +84,7 @@ public abstract class BoxActivity extends AppCompatActivity {
 
             @Override
             public void onLoggedOut(BoxAuthentication.BoxAuthenticationInfo info, Exception ex) {
-                
+
             }
         });
         mSession.authenticate();
@@ -138,8 +138,8 @@ public abstract class BoxActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-       outState.putSerializable(CollaborationUtils.EXTRA_ITEM,mShareItem);
-       outState.putString(CollaborationUtils.EXTRA_USER_ID, mSession.getUser().getId());
+        outState.putSerializable(CollaborationUtils.EXTRA_ITEM,mShareItem);
+        outState.putString(CollaborationUtils.EXTRA_USER_ID, mSession.getUser().getId());
         super.onSaveInstanceState(outState);
     }
 
@@ -152,13 +152,14 @@ public abstract class BoxActivity extends AppCompatActivity {
         Toolbar actionBar = (Toolbar) findViewById(R.id.box_action_bar);
         setSupportActionBar(actionBar);
         actionBar.setTitle(getTitle());
-        actionBar.setNavigationIcon(R.drawable.ic_box_sharesdk_arrow_back_grey_24dp);
+        actionBar.setNavigationIcon(R.drawable.ic_box_sharesdk_arrow_back_black_24dp);
         actionBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
     // Class to interpret result from share SDK activities

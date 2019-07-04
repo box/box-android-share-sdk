@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.legacy.adapters;
+package com.box.androidsdk.share.usx.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

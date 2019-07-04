@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import androidx.databinding.DataBindingUtil;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.databinding.ListItemCollaborationInviteeBinding;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 import com.eclipsesource.json.JsonObject;
@@ -128,15 +126,22 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-
+        ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_collaboration_invitee, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.legacy_list_item_collaboration_invitee, null);
+            TextView nameView = (TextView)convertView.findViewById(R.id.collaboration_invitee_name);
+            TextView emailView = (TextView)convertView.findViewById(R.id.collaboration_invitee_email);
+            TextView initialsView = (TextView) convertView.findViewById(R.id.collaborator_initials);
+            holder = new ViewHolder(nameView, emailView, initialsView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
         BoxInvitee invitee = mItems.get(position);
-        ListItemCollaborationInviteeBinding binding = DataBindingUtil.bind(convertView);
-        binding.setInviteeEmail(invitee.getEmail());
-        binding.setInviteeName(invitee.getName());
+        holder.getNameView().setText(invitee.getName());
+        holder.getEmailView().setText(invitee.getEmail());
+        SdkUtils.setInitialsThumb(mContext, holder.getInitialsView(), invitee.getName());
         return convertView;
     }
 
@@ -154,6 +159,28 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
         mInviteeFilter.onInviteesChanged();
     }
 
+
+    public static class ViewHolder {
+        private TextView mNameView;
+        private TextView mEmailView;
+        private TextView mInitials;
+
+        public ViewHolder(TextView name, TextView email, TextView initials) {
+            mNameView = name;
+            mEmailView = email;
+            mInitials = initials;
+        }
+
+        public TextView getNameView() {
+            return mNameView;
+        }
+
+        public TextView getEmailView() {
+            return mEmailView;
+        }
+
+        public TextView getInitialsView() { return mInitials; }
+    }
 
 
     protected boolean isReadContactsPermissionAvailable() {

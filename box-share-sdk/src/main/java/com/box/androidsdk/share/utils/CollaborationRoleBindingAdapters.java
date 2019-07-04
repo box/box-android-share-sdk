@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.InverseBindingAdapter;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -19,7 +18,7 @@ import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.databinding.RadioItemRolesBinding;
-import com.box.androidsdk.share.fragments.CollaboratorsRolesFragment;
+import com.box.androidsdk.share.usx.fragments.CollaboratorsRolesFragment;
 
 import java.util.HashSet;
 import java.util.List;

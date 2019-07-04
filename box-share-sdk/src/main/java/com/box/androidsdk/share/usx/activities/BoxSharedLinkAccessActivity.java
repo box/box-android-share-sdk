@@ -1,4 +1,4 @@
-package com.box.androidsdk.share.legacy.activities;
+package com.box.androidsdk.share.usx.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.legacy.fragments.SharedLinkAccessFragment;
+import com.box.androidsdk.share.usx.fragments.SharedLinkAccessFragment;
 
 
 /**
@@ -20,7 +20,7 @@ public class BoxSharedLinkAccessActivity extends BoxActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.legacy_activity_shared_link_access);
+        setContentView(R.layout.activity_shared_link_access);
         initToolbar();
 
     }
