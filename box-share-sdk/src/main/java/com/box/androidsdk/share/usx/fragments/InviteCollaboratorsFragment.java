@@ -149,6 +149,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
                     BoxCollaboration.Role selectedRole = roles != null && roles.size() > 0 ? getBestDefaultRole(collaborationItem.getDefaultInviteeRole(), roles) : null;
                     setSelectedRole(selectedRole);
                 }
+                mInviteCollaboratorsShareVM.setShareItem(collaborationItem);
             } else {
                 showNoPermissionToast();
                 getActivity().finish();
@@ -336,7 +337,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     }
 
     protected BoxCollaborationItem getCollaborationItem() {
-        return (BoxCollaborationItem)mShareItem;
+        return mInviteCollaboratorsShareVM.getShareItem();
     }
 
     public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem) {
