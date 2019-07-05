@@ -17,7 +17,7 @@ import android.widget.RadioGroup;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.databinding.RadioItemRolesBinding;
+import com.box.androidsdk.share.databinding.UsxRadioItemRolesBinding;
 import com.box.androidsdk.share.usx.fragments.CollaboratorsRolesFragment;
 
 import java.util.HashSet;
@@ -49,7 +49,7 @@ public class CollaborationRoleBindingAdapters {
                 radio.setChecked(shouldCheck);
             }
         };
-        RadioItemRolesBinding binding = null;
+        UsxRadioItemRolesBinding binding = null;
         for (BoxCollaboration.Role role : BoxCollaboration.Role.values()) {
 
             if (role == BoxCollaboration.Role.OWNER) {
@@ -61,7 +61,7 @@ public class CollaborationRoleBindingAdapters {
                     continue;
                 }
             }
-            View radioView = ((Activity)context).getLayoutInflater().inflate(R.layout.radio_item_roles, null);
+            View radioView = ((Activity)context).getLayoutInflater().inflate(R.layout.usx_radio_item_roles, null);
             binding = DataBindingUtil.bind(radioView);
             binding.setRoleName(CollaborationUtils.getRoleName(context, role));
             binding.setRoleDescription(CollaborationUtils.getRoleDescription(context, role));

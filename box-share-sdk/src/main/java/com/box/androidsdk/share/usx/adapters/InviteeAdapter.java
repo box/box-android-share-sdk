@@ -14,7 +14,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.databinding.ListItemCollaborationInviteeBinding;
+import com.box.androidsdk.share.databinding.UsxListItemCollaborationInviteeBinding;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 import com.eclipsesource.json.JsonObject;
@@ -128,11 +128,11 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
 
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_collaboration_invitee, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.usx_list_item_collaboration_invitee, null);
         }
 
         BoxInvitee invitee = mItems.get(position);
-        ListItemCollaborationInviteeBinding binding = DataBindingUtil.bind(convertView);
+        UsxListItemCollaborationInviteeBinding binding = DataBindingUtil.bind(convertView);
         binding.setInviteeEmail(invitee.getEmail());
         binding.setInviteeName(invitee.getName());
         return convertView;

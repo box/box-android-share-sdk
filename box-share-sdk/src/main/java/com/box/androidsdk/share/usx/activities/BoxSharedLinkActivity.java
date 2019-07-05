@@ -22,7 +22,7 @@ public class BoxSharedLinkActivity extends BoxActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shared_link);
+        setContentView(R.layout.usx_activity_shared_link);
         initToolbar();
     }
 

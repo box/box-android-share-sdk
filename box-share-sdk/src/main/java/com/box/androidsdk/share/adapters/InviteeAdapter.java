@@ -128,7 +128,7 @@ public class InviteeAdapter extends BaseAdapter implements Filterable {
 
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.legacy_list_item_collaboration_invitee, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_collaboration_invitee, null);
             TextView nameView = (TextView)convertView.findViewById(R.id.collaboration_invitee_name);
             TextView emailView = (TextView)convertView.findViewById(R.id.collaboration_invitee_email);
             TextView initialsView = (TextView) convertView.findViewById(R.id.collaborator_initials);

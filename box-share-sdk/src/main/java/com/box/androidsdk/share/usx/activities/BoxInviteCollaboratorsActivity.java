@@ -41,7 +41,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_invite_collaborators);
+        setContentView(R.layout.usx_activity_invite_collaborators);
         initToolbar();
         selectRoleShareVM = ViewModelProviders.of(this).get(SelectRoleShareVM.class);
     }

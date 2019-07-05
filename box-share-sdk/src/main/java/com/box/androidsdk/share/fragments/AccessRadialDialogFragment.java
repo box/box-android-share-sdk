@@ -29,7 +29,7 @@ public class AccessRadialDialogFragment extends PositiveNegativeDialogFragment{
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        RadioGroup accessRadioGroup = (RadioGroup)getActivity().getLayoutInflater().inflate(R.layout.legacy_access_radio_group, null);
+        RadioGroup accessRadioGroup = (RadioGroup)getActivity().getLayoutInflater().inflate(R.layout.access_radio_group, null);
         BoxItem boxItem = (BoxItem)getArguments().getSerializable(EXTRA_BOX_ITEM);
         if (boxItem == null){
             throw new RuntimeException("No box item provided");

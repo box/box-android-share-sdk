@@ -79,7 +79,7 @@ public class SharedLinkAccessFragment extends BoxFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_shared_link_access, container, false);
+        View view = inflater.inflate(R.layout.usx_fragment_shared_link_access, container, false);
 
         mAccessLayout = view.findViewById(R.id.shared_link_access_layout);
         mAccessLayout.setOnClickListener(new View.OnClickListener() {

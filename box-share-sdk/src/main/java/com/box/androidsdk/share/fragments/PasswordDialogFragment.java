@@ -26,7 +26,7 @@ public class PasswordDialogFragment extends PositiveNegativeDialogFragment{
         int positive = getArguments().getInt(ARGUMENT_POSITIVE_ID);
         int negative = getArguments().getInt(ARGUMENT_NEGATIVE_ID);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.ShareDialogTheme);
-        LinearLayout passwordContainer = (LinearLayout)getActivity().getLayoutInflater().inflate(R.layout.legacy_password_edit_text, null);
+        LinearLayout passwordContainer = (LinearLayout)getActivity().getLayoutInflater().inflate(R.layout.password_edit_text, null);
         mPasswordEditText = (EditText)passwordContainer.findViewById(R.id.box_password_edit_text);
         mPasswordEditText.setHint(message);
         mPasswordEditText.setText(prevPassword);

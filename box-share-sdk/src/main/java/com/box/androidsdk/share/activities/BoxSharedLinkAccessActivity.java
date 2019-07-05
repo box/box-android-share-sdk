@@ -20,7 +20,7 @@ public class BoxSharedLinkAccessActivity extends BoxActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.legacy_activity_shared_link_access);
+        setContentView(R.layout.activity_shared_link_access);
         initToolbar();
 
     }

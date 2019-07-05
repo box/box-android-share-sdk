@@ -87,7 +87,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
      * Sets up the child views
      */
     private void init() {
-        inflate(getContext(), R.layout.legacy_view_collaborators_initial, this);
+        inflate(getContext(), R.layout.view_collaborators_initial, this);
         mProgressBar = (ProgressBar) findViewById(R.id.box_sharesdk_activity_progress_bar);
         mInitialsListView = (LinearLayout) findViewById(R.id.invite_collaborator_initials_list);
         mInitialsListViewSection = (LinearLayout) findViewById(R.id.collaborator_initials_list_section);
@@ -238,7 +238,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
     }
 
     private View addInitialsToList(BoxCollaborator collaborator) {
-        View layoutContainer =  LayoutInflater.from((Activity)getContext()).inflate(R.layout.legacy_view_initials, null);
+        View layoutContainer =  LayoutInflater.from((Activity)getContext()).inflate(R.layout.view_initials, null);
         BoxAvatarView initialsView = (BoxAvatarView) layoutContainer.findViewById(R.id.collaborator_initials);
 
         if (collaborator == null) {

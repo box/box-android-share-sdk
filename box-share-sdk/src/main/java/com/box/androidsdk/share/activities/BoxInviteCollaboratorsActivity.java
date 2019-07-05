@@ -27,7 +27,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements Invit
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.legacy_activity_invite_collaborators);
+        setContentView(R.layout.activity_invite_collaborators);
         initToolbar();
 
     }

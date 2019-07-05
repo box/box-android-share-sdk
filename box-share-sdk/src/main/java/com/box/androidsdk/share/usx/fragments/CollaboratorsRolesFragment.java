@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.databinding.FragmentCollaborationRolesBinding;
+import com.box.androidsdk.share.databinding.UsxFragmentCollaborationRolesBinding;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
 
 
@@ -28,7 +28,7 @@ public class CollaboratorsRolesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        FragmentCollaborationRolesBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_collaboration_roles, container, false);
+        UsxFragmentCollaborationRolesBinding binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_collaboration_roles, container, false);
         View view = binding.getRoot();
         mActionBarTitleChanger.setTitle(getString(R.string.box_sharesdk_title_access_level));
 

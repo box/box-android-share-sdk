@@ -23,7 +23,7 @@ public class BoxCollaborationsActivity extends BoxActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_collaborations);
+        setContentView(R.layout.usx_activity_collaborations);
         initToolbar();
 
         if (mShareItem == null || mShareItem.getType() == null || !(mShareItem instanceof BoxCollaborationItem)) {

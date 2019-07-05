@@ -78,7 +78,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.legacy_list_item_collaboration, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_collaboration, parent, false);
             holder = new ViewHolder();
             holder.nameView = (TextView) convertView.findViewById(R.id.collaborator_role_title);
             holder.roleView = (TextView) convertView.findViewById(R.id.collaborator_role);

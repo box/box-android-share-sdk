@@ -9,7 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.box.androidsdk.share.databinding.FragmentInviteCollaboratorsBinding;
+import com.box.androidsdk.share.databinding.UsxFragmentInviteCollaboratorsBinding;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.vm.InviteCollaboratorsPresenterData;
 import com.box.androidsdk.share.vm.InviteCollaboratorsShareVM;
@@ -63,7 +63,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     private InviteeAdapter mAdapter;
     private String mFilterTerm;
     private boolean mInvitationFailed = false;
-    FragmentInviteCollaboratorsBinding binding;
+    UsxFragmentInviteCollaboratorsBinding binding;
 
     private View.OnClickListener mOnEditAccessListener;
     InviteCollaboratorsShareVM mInviteCollaboratorsShareVM;
@@ -73,7 +73,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_invite_collaborators, container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_invite_collaborators, container,false);
         View view = binding.getRoot();
         binding.setLifecycleOwner(getViewLifecycleOwner());
 

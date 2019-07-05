@@ -58,7 +58,7 @@ public class SharedLinkFragment extends BoxFragment implements PositiveNegativeD
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.legacy_fragment_shared_link, container, false);
+        View view = inflater.inflate(R.layout.fragment_shared_link, container, false);
 
         mSharedLinkUrlText = (TextView)view.findViewById(R.id.shared_link_url_text);
         mSharedLinkUrlSwitch = (Switch)view.findViewById(R.id.shared_link_url_switch);
