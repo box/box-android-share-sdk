@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.share.databinding.UsxFragmentInviteCollaboratorsBinding;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.vm.InviteCollaboratorsPresenterData;
@@ -168,7 +169,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
             } else {
                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "get invitees request failed",
                         presenter.getException());
-                showToast(getString(presenter.getStrCode()) + presenter.getException().getResponseCode()); //need response code
+                showToast(getString(presenter.getStrCode()) + ((BoxException)presenter.getException()).getResponseCode()); //need response code
             }
     };
 
