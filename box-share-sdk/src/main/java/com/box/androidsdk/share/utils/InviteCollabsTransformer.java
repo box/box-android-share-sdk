@@ -42,7 +42,7 @@ public class InviteCollabsTransformer {
             BoxCollaborationItem collaborationItem = response.getResult();
             data.success(collaborationItem);
         } else {
-            data.failure(R.string.box_sharesdk_network_error, (BoxException) response.getException());
+            data.failure(R.string.box_sharesdk_network_error, response.getException());
         }
         return data;
     }
@@ -69,7 +69,7 @@ public class InviteCollabsTransformer {
                     errorStrCode = R.string.box_sharesdk_network_error; //TODO: need response code here
                 }
             }
-            data.failure(errorStrCode, (BoxException) response.getException());
+            data.failure(errorStrCode, response.getException());
         }
         return data;
     }

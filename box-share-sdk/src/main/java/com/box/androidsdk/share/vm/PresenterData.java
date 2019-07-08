@@ -13,7 +13,7 @@ public class PresenterData<T> {
     private T mData;
     private int mStrRes;
     public static final int SUCCESS = -1;
-    BoxException mException;
+    Exception mException;
 
     public PresenterData() {
 
@@ -54,7 +54,7 @@ public class PresenterData<T> {
      * Updates the item with the stringCode passed in. Use this if request was unsuccessful
      * @param strRes the String resource for the error message
      */
-    public void failure(@StringRes @PluralsRes int strRes, BoxException exception) {
+    public void failure(@StringRes @PluralsRes int strRes, Exception exception) {
         this.mData = null;
         this.mStrRes = strRes;
         this.mException = exception;
@@ -84,7 +84,7 @@ public class PresenterData<T> {
         return mStrRes;
     }
 
-    public BoxException getException() {
+    public Exception getException() {
         return mException;
     }
 }
