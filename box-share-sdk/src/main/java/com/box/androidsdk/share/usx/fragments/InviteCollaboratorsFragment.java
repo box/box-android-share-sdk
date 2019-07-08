@@ -175,10 +175,12 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     private Observer<InviteCollaboratorsPresenterData> onInviteCollabs = presenter -> {
         dismissSpinner();
         String message;
-
+        int alreadyAddedCount = presenter.getAlreadyAdddedCount();
         if (presenter.isNonNullData()) {
-            if (presenter.getAlreadyAdddedCount() >= 1) {
-                message = getResources().getQuantityString(presenter.getStrCode(), presenter.getAlreadyAdddedCount(), presenter.getData());
+            if (alreadyAddedCount == 1) {
+                message = getResources().getQuantityString(presenter.getStrCode(), alreadyAddedCount, presenter.getData());
+            } else if (alreadyAddedCount > 1) {
+                message = getResources().getQuantityString(presenter.getStrCode(), alreadyAddedCount, String.valueOf(alreadyAddedCount));
             } else {
                 message = getString(presenter.getStrCode(), presenter.getData());
             }
