@@ -95,7 +95,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         mActionBarTitleChanger.setTitle(getString(R.string.box_sharesdk_invite_collaborators_activity_title));
 
         mFilterTerm = "";
-        mInviteCollaboratorsShareVM = ViewModelProviders.of(this, mInviteCollabVMFactory).get(InviteCollaboratorsShareVM.class);
+        mInviteCollaboratorsShareVM = ViewModelProviders.of(this, mShareVMFactory).get(InviteCollaboratorsShareVM.class);
 
 
         mInviteCollaboratorsShareVM.getRoleItem().observe(this, onRoleItemChange);

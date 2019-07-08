@@ -39,7 +39,7 @@ public abstract class BoxFragment extends Fragment {
     private LastRunnableHandler mDialogHandler;
 
     protected ShareController mController;
-    protected ViewModelProvider.Factory mInviteCollabVMFactory;
+    protected ViewModelProvider.Factory mShareVMFactory;
     protected ActionBarTitleChanger mActionBarTitleChanger;
     private Lock mSpinnerLock;
 
@@ -65,7 +65,7 @@ public abstract class BoxFragment extends Fragment {
     }
 
     public void setVMFactory(ShareVMFactory factory) {
-        this.mInviteCollabVMFactory = factory;
+        this.mShareVMFactory = factory;
     }
 
     @Override
