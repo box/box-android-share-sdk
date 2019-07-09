@@ -6,4 +6,14 @@
             <solid android:color="?attr/colorAccent" />
         </shape>
     </item>
+    <item>
+        <selector>
+            <item android:state_enabled="false">
+                <color android:color="@android:color/white"/>
+            </item>
+            <item android:state_enabled="true">
+                <color android:color="@color/box_sharesdk_send_invitation_bg"/>
+            </item>
+        </selector>
+    </item>
 </ripple>

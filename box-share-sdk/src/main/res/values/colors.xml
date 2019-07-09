@@ -31,4 +31,6 @@
     <color name="box_sharesdk_send_invitation_bg">#26c281</color>
     <color name="box_sharesdk_ripple_color">#C9E4F6</color>
 
+    <color name="box_sharesdk_disabled_state_text_color">#72848E</color>
+
 </resources>
