@@ -1,8 +1,12 @@
 package com.box.androidsdk.share.vm;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.box.androidsdk.content.models.BoxCollaborationItem;
+import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
 
 
@@ -13,18 +17,28 @@ import com.box.androidsdk.share.sharerepo.ShareRepo;
 public class BaseShareVM extends ViewModel {
 
     protected final ShareRepo mShareRepo;
-    protected BoxCollaborationItem mShareItem;
+    protected BoxItem mShareItem;
+    private final LiveData<PresenterData<BoxItem>> mItemInfo;
 
     public BaseShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         this.mShareRepo = shareRepo;
         this.mShareItem = shareItem;
+        mItemInfo = Transformations.map(mShareRepo.getItemInfo(), response -> {
+            PresenterData<BoxItem> data = new PresenterData<>();
+            if (response.isSuccess()) {
+                data.success(response.getResult());
+            } else {
+                data.setException(response.getException());
+            }
+            return data;
+        });
     }
 
     /**
      * Returns the iem the user is currently doing share operation on.
      * @return the item the user is currently doing share operation on
      */
-    public BoxCollaborationItem getShareItem() {
+    public BoxItem getShareItem() {
         return mShareItem;
     }
 
@@ -32,7 +46,24 @@ public class BaseShareVM extends ViewModel {
      * Update the share item with a new share item.
      * @param shareItem the new share item.
      */
-    public void setShareItem(BoxCollaborationItem shareItem) {
+    public void setShareItem(BoxItem shareItem) {
         this.mShareItem = shareItem;
+    }
+
+
+    /**
+     * Makes a backend call through share repo to get information about the item.
+     * @param item the item to get information on
+     */
+    public void fetchItemInfoFromRemote(BoxItem item) {
+        mShareRepo.fetchItemInfo(item);
+    }
+
+    /**
+     * Returns a LiveData which holds info about the share item.
+     * @return the share item
+     */
+    public LiveData<PresenterData<BoxItem>> getItemInfo() {
+        return mItemInfo;
     }
 }

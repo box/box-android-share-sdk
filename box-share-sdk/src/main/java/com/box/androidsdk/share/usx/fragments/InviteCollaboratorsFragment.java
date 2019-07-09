@@ -157,9 +157,9 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
             }
         } else {
             //need to log Exception
-            BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch roles request failed",
+            BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "Fetch roles request failed",
                     presenter.getException());
-            showToast(getString(presenter.getStrCode()));
+            showToast(getString(presenter.getStrCode())); //was just collaborationfragment
         }
     };
 
@@ -167,7 +167,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
             if (presenter.isSuccess()) {
                 mAdapter.setInvitees(presenter.getData());
             } else {
-                BoxLogUtils.e(CollaborationsFragment.class.getName(), "get invitees request failed",
+                BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",
                         presenter.getException());
                 showToast(getString(presenter.getStrCode()) + ((BoxException)presenter.getException()).getResponseCode()); //need response code
             }
@@ -327,7 +327,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     }
 
     private void showNoPermissionToast() {
-        mController.showToast(getActivity(), R.string.box_sharesdk_insufficient_permissions);
+        showToast(R.string.box_sharesdk_insufficient_permissions);
     }
 
     /**
@@ -340,7 +340,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     }
 
     protected BoxCollaborationItem getCollaborationItem() {
-        return mInviteCollaboratorsShareVM.getShareItem();
+        return (BoxCollaborationItem) mInviteCollaboratorsShareVM.getShareItem();
     }
 
     public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem) {

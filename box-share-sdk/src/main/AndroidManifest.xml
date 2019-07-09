@@ -24,23 +24,8 @@
             android:theme="@style/ShareTheme" >
         </activity>
         <activity
-            android:name=".usx.activities.BoxCollaborationsActivity"
-            android:label="@string/box_sharesdk_shared_with"
-            android:theme="@style/ShareThemeNew" >
-        </activity>
-        <activity
             android:name=".usx.activities.BoxInviteCollaboratorsActivity"
             android:label="@string/box_sharesdk_invite_collaborators_activity_title"
-            android:theme="@style/ShareThemeNew" >
-        </activity>
-        <activity
-            android:name=".usx.activities.BoxSharedLinkActivity"
-            android:label="@string/box_sharesdk_title_share_link"
-            android:theme="@style/ShareThemeNew" >
-        </activity>
-        <activity
-            android:name=".usx.activities.BoxSharedLinkAccessActivity"
-            android:label="@string/box_sharesdk_title_link_access"
             android:theme="@style/ShareThemeNew" >
         </activity>
     </application>

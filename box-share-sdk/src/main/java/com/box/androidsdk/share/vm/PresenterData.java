@@ -87,4 +87,8 @@ public class PresenterData<T> {
     public Exception getException() {
         return mException;
     }
+
+    public void setException(Exception exception) {
+        this.mException = exception;
+    }
 }

@@ -38,7 +38,6 @@ public abstract class BoxFragment extends Fragment {
     private SpinnerDialogFragment mDialog;
     private LastRunnableHandler mDialogHandler;
 
-    protected ShareController mController;
     protected ViewModelProvider.Factory mShareVMFactory;
     protected ActionBarTitleChanger mActionBarTitleChanger;
     private Lock mSpinnerLock;
@@ -58,7 +57,7 @@ public abstract class BoxFragment extends Fragment {
         }
 
         if (mShareItem == null){
-            mController.showToast(getActivity(), R.string.box_sharesdk_no_item_selected);
+            showToast(R.string.box_sharesdk_no_item_selected);
             getActivity().finish();
             return;
         }
@@ -82,9 +81,6 @@ public abstract class BoxFragment extends Fragment {
         return Activity.RESULT_OK;
     }
 
-    public void setController(ShareController controller) {
-        mController = controller;
-    }
 
     /**
      * Dismisses the spinner if it is currently showing
@@ -222,6 +218,9 @@ public abstract class BoxFragment extends Fragment {
 
     protected void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+    protected void showToast(int strRes) {
+        Toast.makeText(getContext(), getString(strRes), Toast.LENGTH_SHORT).show();
     }
     public void setActionBarTitleChanger(ActionBarTitleChanger changer) {
         this.mActionBarTitleChanger = changer;

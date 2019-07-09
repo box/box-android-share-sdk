@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
+import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.share.api.ShareController;
@@ -22,6 +23,8 @@ public class ShareRepo  {
     private final MutableLiveData<BoxResponse<BoxIteratorInvitees>> mInvitees = new MutableLiveData<>();
     private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mRoleItem = new MutableLiveData<>();
     private final MutableLiveData<BoxResponse<BoxResponseBatch>> mInviteCollabsBatchResponse = new MutableLiveData<>();
+
+    private final MutableLiveData<BoxResponse<BoxItem>> mItemInfo = new MutableLiveData<>();
 
     public ShareRepo(ShareController controller) {
         this.mController = controller;
@@ -51,6 +54,14 @@ public class ShareRepo  {
      */
     public void fetchRolesFromRemote(BoxCollaborationItem boxCollaborationItem) {
         handleTaskAndPostValue(mController.fetchRoles(boxCollaborationItem), mRoleItem);
+    }
+
+    /**
+     * Fetch information about an item
+     * @param boxCollaborationItem the item to fetch information on
+     */
+    public void fetchItemInfo(BoxItem boxCollaborationItem) {
+        handleTaskAndPostValue(mController.fetchItemInfo(boxCollaborationItem), mItemInfo);
     }
 
     /**
@@ -85,5 +96,13 @@ public class ShareRepo  {
      */
     public LiveData<BoxResponse<BoxResponseBatch>> getInviteCollabsBatchResponse() {
         return mInviteCollabsBatchResponse;
+    }
+
+    /**
+     * Returns a LiveData which holds information about the item.
+     * @return a LiveData which holds information about the item
+     */
+    public LiveData<BoxResponse<BoxItem>> getItemInfo() {
+        return mItemInfo;
     }
 }

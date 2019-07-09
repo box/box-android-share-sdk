@@ -62,14 +62,13 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         if (mFragment == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-            mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) mShareItem);
+            mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) baseShareVM.getShareItem());
             ft.add(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
             ft.commit();
         }
-        mFragment.setController(mController); //to prevent NOE since BoxFragment still uses this. (will be removed after all screens are implemented)
         mFragment.setActionBarTitleChanger(changer);
         ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
-        mFragment.setVMFactory(new ShareVMFactory(new ShareRepo(new BoxShareController(mSession)), (BoxCollaborationItem) mShareItem));
+        mFragment.setVMFactory(new ShareVMFactory(new ShareRepo(new BoxShareController(mSession)), (BoxCollaborationItem) baseShareVM.getShareItem()));
     }
 
     @Override

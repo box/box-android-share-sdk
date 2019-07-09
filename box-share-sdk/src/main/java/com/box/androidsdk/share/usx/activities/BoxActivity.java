@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 import com.box.androidsdk.content.BoxConfig;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.auth.BoxAuthentication;
+import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
@@ -21,7 +24,10 @@ import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
+import com.box.androidsdk.share.sharerepo.ShareRepo;
 import com.box.androidsdk.share.usx.fragments.BoxFragment;
+import com.box.androidsdk.share.vm.BaseShareVM;
+import com.box.androidsdk.share.vm.ShareVMFactory;
 
 /**
  * Base class for all activities that make API requests through the Box Content SDK. This class is responsible for
@@ -32,14 +38,14 @@ import com.box.androidsdk.share.usx.fragments.BoxFragment;
 public abstract class BoxActivity extends AppCompatActivity {
 
     protected BoxSession mSession;
-    protected BoxItem mShareItem;
     protected BoxFragment mFragment;
-    protected ShareController mController;
     protected ProgressDialog mProgress;
 
+    protected BaseShareVM baseShareVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        BoxItem mShareItem = null;
         super.onCreate(savedInstanceState);
         if (BoxConfig.IS_FLAG_SECURE){
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
@@ -65,6 +71,7 @@ public abstract class BoxActivity extends AppCompatActivity {
             return;
         }
         mSession = new BoxSession(this, userId);
+        ShareController mController = new BoxShareController(mSession);
         mSession.setSessionAuthListener(new BoxAuthentication.AuthListener() {
             @Override
             public void onRefreshed(BoxAuthentication.BoxAuthenticationInfo info) {
@@ -88,24 +95,17 @@ public abstract class BoxActivity extends AppCompatActivity {
             }
         });
         mSession.authenticate();
-        mController = new BoxShareController(mSession);
+        baseShareVM = ViewModelProviders.of(this, new ShareVMFactory(new ShareRepo(mController), (BoxCollaborationItem) mShareItem)).get(BaseShareVM.class);
         if (!isSharedItemSufficient()){
             mProgress = ProgressDialog.show(this, getText(R.string.boxsdk_Please_wait), getText(R.string.boxsdk_Please_wait), true, false);
-            mController.fetchItemInfo(mShareItem).addOnCompletedListener(new BoxFutureTask.OnCompletedListener<BoxItem>() {
-                @Override
-                public void onCompleted(BoxResponse<BoxItem> response) {
-                    if (response.isSuccess()){
-                        mShareItem = response.getResult();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (mProgress != null && mProgress.isShowing()) {
-                                    mProgress.dismiss();
-                                }
-                                initializeUi();
-                            }
-                        });
+            baseShareVM.fetchItemInfoFromRemote(mShareItem);
+            baseShareVM.getItemInfo().observe(this, response -> {
+                if (response.isSuccess()) {
+                    baseShareVM.setShareItem(response.getData());
+                    if (mProgress != null && mProgress.isShowing()) {
+                        mProgress.dismiss();
                     }
+                    initializeUi();
                 }
             });
         } else {
@@ -122,7 +122,7 @@ public abstract class BoxActivity extends AppCompatActivity {
     }
 
     protected boolean isSharedItemSufficient(){
-        return !SdkUtils.isBlank(mShareItem.getName()) && mShareItem.getPermissions() != null;
+        return !SdkUtils.isBlank(baseShareVM.getShareItem().getName()) && baseShareVM.getShareItem().getPermissions() != null;
     }
 
     protected abstract void initializeUi();
@@ -138,7 +138,7 @@ public abstract class BoxActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(CollaborationUtils.EXTRA_ITEM,mShareItem);
+        outState.putSerializable(CollaborationUtils.EXTRA_ITEM,baseShareVM.getShareItem());
         outState.putString(CollaborationUtils.EXTRA_USER_ID, mSession.getUser().getId());
         super.onSaveInstanceState(outState);
     }
