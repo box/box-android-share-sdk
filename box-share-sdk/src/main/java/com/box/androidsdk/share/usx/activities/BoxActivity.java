@@ -86,7 +86,7 @@ public abstract class BoxActivity extends AppCompatActivity {
             @Override
             public void onAuthFailure(BoxAuthentication.BoxAuthenticationInfo info, Exception ex) {
                 finish();
-                mController.showToast(BoxActivity.this, R.string.box_sharesdk_session_is_not_authenticated);
+                Toast.makeText(BoxActivity.this, R.string.box_sharesdk_session_is_not_authenticated, Toast.LENGTH_SHORT).show();
             }
 
             @Override

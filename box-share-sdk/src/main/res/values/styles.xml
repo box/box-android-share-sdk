@@ -9,7 +9,7 @@
     <style name="ShareThemeNew" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/box_sharesdk_action_bar_background</item>
         <item name="colorPrimaryDark">@color/box_sharesdk_action_bar_background</item>
-        <item name="colorAccent">@color/box_sharesdk_accent</item>
+        <item name="colorAccent">@color/box_logo_background</item>
         <item name="android:buttonStyle">@style/ButtonAppTheme</item>
     </style>
 
