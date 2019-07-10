@@ -24,9 +24,11 @@ public class SelectRoleShareVM extends ViewModel {
     private BoxCollaboration mCollaboration;
 
     private MutableLiveData<Boolean> mSendInvitationEnabled = new MutableLiveData<>();
+    private MutableLiveData<Boolean> mShowSend = new MutableLiveData<>();
 
     public SelectRoleShareVM() {
         mSendInvitationEnabled.postValue(false);
+        mShowSend.postValue(true);
     }
 
 
@@ -116,5 +118,13 @@ public class SelectRoleShareVM extends ViewModel {
 
     public void setSendInvitationEnabled(boolean enabled) {
         this.mSendInvitationEnabled.postValue(enabled);
+    }
+
+    public LiveData<Boolean> isShowSend() {
+        return mShowSend;
+    }
+
+    public void setShowSend(boolean enabled) {
+        this.mShowSend.postValue(enabled);
     }
 }

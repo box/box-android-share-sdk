@@ -82,12 +82,14 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance();
         rolesFragment.setActionBarTitleChanger(changer);
         ft.replace(R.id.fragmentContainer, rolesFragment, CollaboratorsRolesFragment.TAG).addToBackStack(null);
+        selectRoleShareVM.setShowSend(false);
         ft.commit();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        selectRoleShareVM.setShowSend(true);
         getSupportFragmentManager().popBackStack();
     }
 
@@ -121,6 +123,10 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem sendMenuItem = menu.findItem(R.id.box_sharesdk_action_send);
+        selectRoleShareVM.isShowSend().observe(this, showSend -> {
+            sendMenuItem.setVisible(showSend);
+            //sendMenuItem.setEnabled(showSend);
+        });
         selectRoleShareVM.isSendInvitationEnabled().observe(this, enabled -> {
             if (enabled) {
                 sendMenuItem.setEnabled(true);
