@@ -3,7 +3,7 @@
     <color name="box_sharesdk_primary_text">#de000000</color>
     <color name="box_sharesdk_hint">#80000000</color>
     <color name="box_sharesdk_accent">#00adef</color>
-    <color name="box_sharesdk_background">#FFFFFF</color>
+    <color name="box_sharesdk_background">#ffffff</color>
 
     <!-- Custom colors -->
     <color name="box_sharesdk_primary">#ffffffff</color>
