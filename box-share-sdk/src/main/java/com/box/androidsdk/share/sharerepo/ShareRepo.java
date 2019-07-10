@@ -39,7 +39,7 @@ public class ShareRepo  {
     private final MutableLiveData<BoxResponse<BoxItem>> mSharedLinkedItem = new MutableLiveData<>(); //this item will be used for doing any shared link related operations
 
     private final MutableLiveData<BoxResponse<BoxIteratorCollaborations>> mCollaborations = new MutableLiveData<>();
-    private MutableLiveData<BoxResponse<BoxFeatures>> mSupportedFeature = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxFeatures>> mSupportedFeature = new MutableLiveData<>();
 
     public ShareRepo(ShareController controller) {
         this.mController = controller;
@@ -149,7 +149,7 @@ public class ShareRepo  {
         else if (boxCollaborationItem instanceof BoxFolder) {
             handleTaskAndPostValue(mController.executeRequest(BoxItem.class, ((BoxRequestsFolder.UpdateSharedFolder) mController.getCreatedSharedLinkRequest(boxCollaborationItem)).setCanDownload(canDownload)), mSharedLinkedItem);
         } else {
-            //an invalid request
+            throw new IllegalArgumentException();
         }
     }
 
@@ -208,6 +208,22 @@ public class ShareRepo  {
         return mSupportedFeature;
     }
 
+
+    /**
+     * Returns a LiveData which holds information related to sharing about the item.
+     * @return a LiveData which holds information related to sharing about the item
+     */
+    public LiveData<BoxResponse<BoxItem>> getShareLinkedItem() {
+        return mSharedLinkedItem;
+    }
+
+    /**
+     * Returns a LiveData which holds collaborations information about the item.
+     * @returns a LiveData which holds collaborations information about the item
+     */
+    public LiveData<BoxResponse<BoxIteratorCollaborations>> getCollaborations() {
+        return mCollaborations;
+    }
 
     /**
      * Returns a controller for avatar.
