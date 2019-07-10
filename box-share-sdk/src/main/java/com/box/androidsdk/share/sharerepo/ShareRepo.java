@@ -14,7 +14,9 @@ import com.box.androidsdk.content.requests.BoxRequestsFile;
 import com.box.androidsdk.content.requests.BoxRequestsFolder;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
+import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.share.api.ShareController;
+import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
 import java.util.Date;
@@ -34,6 +36,9 @@ public class ShareRepo  {
     private final MutableLiveData<BoxResponse<BoxItem>> mItemInfo = new MutableLiveData<>();
 
     private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mSharedLinkedItem = new MutableLiveData<>(); //this item will be used for doing any shared link related operations
+
+    private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mCollaborationsItem = new MutableLiveData<>();
+    private MutableLiveData<BoxResponse<BoxFeatures>> mSupportedFeature = new MutableLiveData<>();
 
     public ShareRepo(ShareController controller) {
         this.mController = controller;
@@ -177,6 +182,42 @@ public class ShareRepo  {
      */
     public void changePassword(BoxCollaborationItem boxCollaborationItem, String password) {
         handleTaskAndPostValue(mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(boxCollaborationItem).setPassword(password)), mSharedLinkedItem);
+    }
+
+    /**
+     * Fetch collaborators for a box collaboration item.
+     * @param boxCollaborationItem the item to fetch collaborations for
+     */
+    public void fetchCollaborations(BoxCollaborationItem boxCollaborationItem) {
+        handleTaskAndPostValue(mController.fetchCollaborations(boxCollaborationItem), mCollaborationsItem);
+    }
+
+    /**
+     * Fetch supported features.
+     */
+    public void fetchSupportedFeatures() {
+        handleTaskAndPostValue(mController.getSupportedFeatures(), mSupportedFeature);
+    }
+
+    /**
+     * Returns a LiveData which holds supported features.
+     * @return a LiveData which holds supported features
+     */
+    public LiveData<BoxResponse<BoxFeatures>> getSupportFeatures() {
+        return mSupportedFeature;
+    }
+
+
+    /**
+     * Returns a controller for avatar.
+     * @return a controller for avatar
+     */
+    public BoxAvatarView.AvatarController getAvatarController() {
+        return mController.getAvatarController();
+    }
+
+    public String getUserId() {
+        return mController.getCurrentUserId();
     }
 
 
