@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -58,8 +59,10 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
 
     @Override
     protected void initializeUi() {
-        mFragment = (InviteCollaboratorsFragment) getSupportFragmentManager().findFragmentByTag(InviteCollaboratorsFragment.TAG);
-        if (mFragment == null) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (fragment instanceof InviteCollaboratorsFragment) {
+            mFragment = (InviteCollaboratorsFragment)fragment;
+        } else {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_NONE);
             mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) baseShareVM.getShareItem());
