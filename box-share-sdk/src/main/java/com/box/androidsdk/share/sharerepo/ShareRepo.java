@@ -9,6 +9,7 @@ import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxFile;
 import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.content.requests.BoxRequestsFile;
 import com.box.androidsdk.content.requests.BoxRequestsFolder;
@@ -35,9 +36,9 @@ public class ShareRepo  {
 
     private final MutableLiveData<BoxResponse<BoxItem>> mItemInfo = new MutableLiveData<>();
 
-    private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mSharedLinkedItem = new MutableLiveData<>(); //this item will be used for doing any shared link related operations
+    private final MutableLiveData<BoxResponse<BoxItem>> mSharedLinkedItem = new MutableLiveData<>(); //this item will be used for doing any shared link related operations
 
-    private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mCollaborationsItem = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxIteratorCollaborations>> mCollaborations = new MutableLiveData<>();
     private MutableLiveData<BoxResponse<BoxFeatures>> mSupportedFeature = new MutableLiveData<>();
 
     public ShareRepo(ShareController controller) {
@@ -189,7 +190,7 @@ public class ShareRepo  {
      * @param boxCollaborationItem the item to fetch collaborations for
      */
     public void fetchCollaborations(BoxCollaborationItem boxCollaborationItem) {
-        handleTaskAndPostValue(mController.fetchCollaborations(boxCollaborationItem), mCollaborationsItem);
+        handleTaskAndPostValue(mController.fetchCollaborations(boxCollaborationItem), mCollaborations);
     }
 
     /**
