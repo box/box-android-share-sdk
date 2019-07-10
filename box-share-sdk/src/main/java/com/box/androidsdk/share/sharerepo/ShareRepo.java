@@ -11,6 +11,7 @@ import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSharedLink;
+import com.box.androidsdk.content.models.BoxVoid;
 import com.box.androidsdk.content.requests.BoxRequestsFile;
 import com.box.androidsdk.content.requests.BoxRequestsFolder;
 import com.box.androidsdk.content.requests.BoxResponse;
@@ -40,6 +41,10 @@ public class ShareRepo  {
 
     private final MutableLiveData<BoxResponse<BoxIteratorCollaborations>> mCollaborations = new MutableLiveData<>();
     private final MutableLiveData<BoxResponse<BoxFeatures>> mSupportedFeature = new MutableLiveData<>();
+
+    private final MutableLiveData<BoxResponse<BoxVoid>> mDeleteCollaboration = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxVoid>> mUpdateOwnerCollaboration = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxVoid>> mUpdateCollaboration = new MutableLiveData<>();
 
     public ShareRepo(ShareController controller) {
         this.mController = controller;
@@ -233,6 +238,57 @@ public class ShareRepo  {
         return mController.getAvatarController();
     }
 
+    /**
+     * Returns a LiveData which holds information about a deleted collaboration.
+     * @return a LiveData which holds information about a deleted collaboration
+     */
+    public LiveData<BoxResponse<BoxVoid>> getDeleteCollaboration() {
+        return mDeleteCollaboration;
+    }
+
+    /**
+     * Returns a LiveData which holds information about a updated collaboration.
+     * @return a LiveData which holds information about a updated collaboration
+     */
+    public LiveData<BoxResponse<BoxVoid>> getUpdateCollaboration() {
+        return mUpdateCollaboration;
+    }
+
+    /**
+     * Returns a LiveData which holds information about a updated owner collaboration.
+     * @return a LiveData which holds information about a updated owner collaboration
+     */
+    public LiveData<BoxResponse<BoxVoid>> getUpdateOwnerCollaboration() {
+        return mUpdateOwnerCollaboration;
+    }
+
+    /**
+     * Delete a collaboration from a box collaboration item.
+     * @param collaboration the box collaboration item which will be modified
+     */
+    public void deleteCollaboration(BoxCollaboration collaboration) {
+        handleTaskAndPostValue(mController.deleteCollaboration(collaboration), mDeleteCollaboration);
+    }
+    /**
+     * Update a collaboration from a box collaboration item.
+     * @param collaboration the box collaboration item which will be modified
+     */
+    public void updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role role) {
+        handleTaskAndPostValue(mController.updateCollaboration(collaboration, role), mUpdateCollaboration);
+    }
+    /**
+     * Update the owner of a box collaboration item.
+     * @param collaboration the box collaboration item which will be modified
+     */
+    public void updateOwnerCollaboration(BoxCollaboration collaboration) {
+        handleTaskAndPostValue(mController.updateOwner(collaboration), mUpdateOwnerCollaboration);
+    }
+
+
+    /**
+     * Returns current user's id.
+     * @return current user's id
+     */
     public String getUserId() {
         return mController.getCurrentUserId();
     }
