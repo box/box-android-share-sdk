@@ -3,8 +3,10 @@ package com.box.androidsdk.share.usx.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.View;
@@ -12,13 +14,11 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxConfig;
-import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.auth.BoxAuthentication;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
-import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
@@ -26,6 +26,7 @@ import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
 import com.box.androidsdk.share.usx.fragments.BoxFragment;
+import com.box.androidsdk.share.utils.FragmentTitle;
 import com.box.androidsdk.share.vm.BaseShareVM;
 import com.box.androidsdk.share.vm.ShareVMFactory;
 
@@ -40,9 +41,9 @@ public abstract class BoxActivity extends AppCompatActivity {
     protected BoxSession mSession;
     protected BoxFragment mFragment;
     protected ProgressDialog mProgress;
-
+    protected ShareVMFactory mVmfactory;
     protected BaseShareVM baseShareVM;
-
+    private int mSubtitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         BoxItem mShareItem = null;
@@ -178,5 +179,29 @@ public abstract class BoxActivity extends AppCompatActivity {
         public BoxIteratorCollaborations getCollaborations() {
             return (BoxIteratorCollaborations) mData.getSerializableExtra(CollaborationUtils.EXTRA_COLLABORATIONS);
         }
+    }
+
+    public void setSubtitle(int subtitle) {
+        this.mSubtitle = subtitle;
+    }
+
+    public int getSubtitle() {
+        return mSubtitle;
+    }
+
+    protected void notifyActionBarChanged() {
+        Toolbar actionBar = (Toolbar) findViewById(R.id.box_action_bar);
+        actionBar.setTitle(getTitle());
+        if (getSubtitle() != -1) {
+            actionBar.setSubtitle(getSubtitle());
+        }
+    }
+
+    protected void setTitles(Fragment fragment) {
+        if (fragment != null) {
+            setTitle(((FragmentTitle)fragment).getFragmentTitle());
+            setSubtitle(((FragmentTitle)fragment).getFragmentSubtitle());
+        }
+
     }
 }

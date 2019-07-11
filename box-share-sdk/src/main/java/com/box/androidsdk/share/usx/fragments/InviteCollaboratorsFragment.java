@@ -79,7 +79,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
         mSelectRoleShareVM = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
-        System.out.println("SEEE" + mSelectRoleShareVM);
 
 
         mAdapter = createInviteeAdapter(getActivity());
@@ -93,8 +92,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         binding.setTokenListener(this);
         binding.setCollaboratorsPresent(mSelectRoleShareVM.isSendInvitationEnabled());
 
-
-        mActionBarTitleChanger.setTitle(getString(R.string.box_sharesdk_invite_collaborators_activity_title));
 
         mFilterTerm = "";
         mInviteCollaboratorsShareVM = ViewModelProviders.of(this, mShareVMFactory).get(InviteCollaboratorsShareVM.class);
@@ -366,5 +363,15 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     public void onTokenRemoved(BoxInvitee token) {
         mInviteCollaboratorsShareVM.removeInvitee(token);
         if (mInviteCollaboratorsShareVM.getInvitedSet().isEmpty()) mSelectRoleShareVM.setSendInvitationEnabled(false);
+    }
+
+    @Override
+    public int getFragmentTitle() {
+        return R.string.box_sharesdk_invite_collaborators_activity_title;
+    }
+
+    @Override
+    public int getFragmentSubtitle() {
+        return -1;
     }
 }

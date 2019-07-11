@@ -23,6 +23,7 @@ import com.box.androidsdk.share.usx.fragments.BoxFragment;
 import com.box.androidsdk.share.usx.fragments.CollaboratorsRolesFragment;
 import com.box.androidsdk.share.usx.fragments.InviteCollaboratorsFragment;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
+import com.box.androidsdk.share.utils.FragmentTitle;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
 import com.box.androidsdk.share.vm.ShareVMFactory;
 
@@ -32,12 +33,7 @@ import com.box.androidsdk.share.vm.ShareVMFactory;
  */
 public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.OnClickListener {
 
-    private static int REQUEST_SHOW_COLLABORATORS = 32;
     SelectRoleShareVM selectRoleShareVM;
-    private BoxFragment.ActionBarTitleChanger changer = title -> {
-        setTitle(title);
-        getSupportActionBar().setTitle(getTitle());
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,27 +56,35 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
     @Override
     protected void initializeUi() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (fragment instanceof CollaboratorsRolesFragment) {
-            ((CollaboratorsRolesFragment) fragment).setActionBarTitleChanger(changer);
-        } else {
-            if (fragment == null) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-                mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) baseShareVM.getShareItem());
-                ft.add(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
-                ft.commit();
-            } else {
-                mFragment = (InviteCollaboratorsFragment)fragment;
+        if (!(fragment instanceof CollaboratorsRolesFragment)){
+            mFragment = (InviteCollaboratorsFragment)fragment;
+            if (mFragment == null) {
+                setupInviteCollabFragment();
             }
-
-            mFragment.setActionBarTitleChanger(changer);
-            ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
-            mFragment.setVMFactory(new ShareVMFactory(
-                    new ShareRepo(new BoxShareController(mSession)),
-                    (BoxCollaborationItem) baseShareVM.getShareItem()));
+            attachAttributesToInviteCollabFragment();
+            setTitles(mFragment);
+        } else {
+            setTitles(fragment);
         }
 
+
     }
+
+    private void attachAttributesToInviteCollabFragment() {
+        ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
+        mFragment.setVMFactory(new ShareVMFactory(
+                new ShareRepo(new BoxShareController(mSession)),
+                (BoxCollaborationItem) baseShareVM.getShareItem()));
+    }
+
+    private void setupInviteCollabFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+        mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) baseShareVM.getShareItem());
+        ft.replace(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
+        ft.commit();
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -91,17 +95,26 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
         CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance();
-        rolesFragment.setActionBarTitleChanger(changer);
+        setTitles(rolesFragment);
         ft.replace(R.id.fragmentContainer, rolesFragment, CollaboratorsRolesFragment.TAG).addToBackStack(null);
         selectRoleShareVM.setShowSend(false);
         ft.commit();
+        notifyActionBarChanged();
     }
+
+
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         selectRoleShareVM.setShowSend(true);
         getSupportFragmentManager().popBackStack();
+        if (mFragment == null) {
+            setupInviteCollabFragment();
+            attachAttributesToInviteCollabFragment();
+        }
+        setTitles(mFragment);
+        notifyActionBarChanged();
     }
 
     /**
