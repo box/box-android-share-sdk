@@ -79,6 +79,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
         mSelectRoleShareVM = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
+        System.out.println("SEEE" + mSelectRoleShareVM);
 
 
         mAdapter = createInviteeAdapter(getActivity());
@@ -104,7 +105,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         mInviteCollaboratorsShareVM.getInviteCollabs().observe(this, onInviteCollabs);
 
 
-        if (savedInstanceState != null) {
+        if (mSelectRoleShareVM.getSelectedRole() == null && savedInstanceState != null) {
             String selected_role_enum = savedInstanceState.getString(EXTRA_COLLAB_SELECTED_ROLE);
             if (selected_role_enum != null){
                 setSelectedRole(BoxCollaboration.Role.fromString(selected_role_enum));
@@ -222,7 +223,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (mSelectRoleShareVM.getSelectedRole() != null) {
-            outState.putString(EXTRA_COLLAB_SELECTED_ROLE, mSelectRoleShareVM.getSelectedRole().toString());
+            outState.putString(EXTRA_COLLAB_SELECTED_ROLE, mSelectRoleShareVM.getSelectedRole().getValue().toString());
         }
         super.onSaveInstanceState(outState);
     }

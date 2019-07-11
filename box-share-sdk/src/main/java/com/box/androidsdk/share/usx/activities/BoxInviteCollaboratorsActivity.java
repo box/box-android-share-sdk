@@ -60,18 +60,26 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
     @Override
     protected void initializeUi() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (fragment instanceof InviteCollaboratorsFragment) {
-            mFragment = (InviteCollaboratorsFragment)fragment;
+        if (fragment instanceof CollaboratorsRolesFragment) {
+            ((CollaboratorsRolesFragment) fragment).setActionBarTitleChanger(changer);
         } else {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-            mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) baseShareVM.getShareItem());
-            ft.add(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
-            ft.commit();
+            if (fragment == null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+                mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) baseShareVM.getShareItem());
+                ft.add(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
+                ft.commit();
+            } else {
+                mFragment = (InviteCollaboratorsFragment)fragment;
+            }
+
+            mFragment.setActionBarTitleChanger(changer);
+            ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
+            mFragment.setVMFactory(new ShareVMFactory(
+                    new ShareRepo(new BoxShareController(mSession)),
+                    (BoxCollaborationItem) baseShareVM.getShareItem()));
         }
-        mFragment.setActionBarTitleChanger(changer);
-        ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
-        mFragment.setVMFactory(new ShareVMFactory(new ShareRepo(new BoxShareController(mSession)), (BoxCollaborationItem) baseShareVM.getShareItem()));
+
     }
 
     @Override
