@@ -12,7 +12,6 @@ import com.box.androidsdk.share.sharerepo.ShareRepo;
 import com.box.androidsdk.share.utils.InviteCollabsTransformer;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -25,9 +24,8 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
     private LiveData<InviteCollaboratorsPresenterData> mInviteCollabs;
     private LiveData<PresenterData<BoxIteratorInvitees>> mInvitees;
 
-    private boolean mInitialSetup = true;
-
     List<BoxInvitee> mInviteesList;
+    private boolean mInvitationSuccess = true;
 
     public InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
@@ -107,14 +105,10 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
         this.mInviteesList = list;
     }
 
-
-    public void setInitialSetup(boolean setup) {
-        this.mInitialSetup = false;
+    public void setInvitationSucceded(boolean failed) {
+        this.mInvitationSuccess = failed;
     }
-
-    public boolean isInitialSetup() {
-        return mInitialSetup;
+    public boolean isInvitationSucceded() {
+        return mInvitationSuccess;
     }
-
-
 }

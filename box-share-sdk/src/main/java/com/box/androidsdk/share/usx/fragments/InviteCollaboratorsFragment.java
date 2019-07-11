@@ -1,6 +1,7 @@
 package com.box.androidsdk.share.usx.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import androidx.databinding.DataBindingUtil;
@@ -90,7 +91,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
         mFilterTerm = "";
         mInviteCollaboratorsShareVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(InviteCollaboratorsShareVM.class);
-        mInviteCollaboratorsShareVM.setInitialSetup(true);
+        mInviteCollaboratorsShareVM.setInvitationSucceded(true);
 
         mInviteCollaboratorsShareVM.getRoleItem().observe(this, onRoleItemChange);
         mInviteCollaboratorsShareVM.getInvitees().observe(this, onInviteesChanged);
@@ -130,7 +131,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         }
 
         binding.setRole(mSelectRoleShareVM.getSelectedRole());
-        mInviteCollaboratorsShareVM.setInitialSetup(false);
         return view;
     }
 
@@ -194,7 +194,18 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
             showToast(message);
             getActivity().finish();
         }
+        mInviteCollaboratorsShareVM.setInvitationSucceded(presenter.isSuccess());
     };
+
+    @Override
+    public int getActivityResultCode() {
+        if (mInviteCollaboratorsShareVM.isInvitationSucceded()) {
+            return Activity.RESULT_OK;
+
+        }
+        return Activity.RESULT_CANCELED;
+    }
+
 
     public void showSnackBar(String message) {
         Snackbar snackbar = Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE);
