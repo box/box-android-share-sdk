@@ -8,6 +8,10 @@
             name="roleUpdateNotifier"
             type="com.box.androidsdk.share.usx.fragments.CollaboratorsRolesFragment.RoleUpdateNotifier" />
     </data>
+    <FrameLayout
+        android:filterTouchesWhenObscured="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <ScrollView
             android:layout_width="match_parent"
             android:background="@color/box_sharesdk_screen_background"
@@ -49,4 +53,5 @@
                     android:layout_height="@dimen/box_sharesdk_small_cell_height" />
             </LinearLayout>
         </ScrollView>
+    </FrameLayout>
 </layout>
