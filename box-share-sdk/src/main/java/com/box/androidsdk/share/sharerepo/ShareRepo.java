@@ -40,10 +40,10 @@ public class ShareRepo  {
     private final MutableLiveData<BoxResponse<BoxItem>> mSharedLinkedItem = new MutableLiveData<>(); //this item will be used for doing any shared link related operations
 
     private final MutableLiveData<BoxResponse<BoxIteratorCollaborations>> mCollaborations = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxFeatures>> mSupportedFeature = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxFeatures>> mSupportedFeatures = new MutableLiveData<>();
 
     private final MutableLiveData<BoxResponse<BoxVoid>> mDeleteCollaboration = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxVoid>> mUpdateOwnerCollaboration = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxVoid>> mUpdateOwner = new MutableLiveData<>();
     private final MutableLiveData<BoxResponse<BoxVoid>> mUpdateCollaboration = new MutableLiveData<>();
 
     public ShareRepo(ShareController controller) {
@@ -165,11 +165,7 @@ public class ShareRepo  {
      * @throws Exception
      */
     public void setExpiryDate(BoxCollaborationItem boxCollaborationItem, Date date) throws Exception {
-        try {
-            handleTaskAndPostValue(mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(boxCollaborationItem).setUnsharedAt(date)), mSharedLinkedItem);
-        } catch (Exception e){
-            throw e;
-        }
+        handleTaskAndPostValue(mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(boxCollaborationItem).setUnsharedAt(date)), mSharedLinkedItem);
     }
 
     /**
@@ -202,7 +198,7 @@ public class ShareRepo  {
      * Fetch supported features.
      */
     public void fetchSupportedFeatures() {
-        handleTaskAndPostValue(mController.getSupportedFeatures(), mSupportedFeature);
+        handleTaskAndPostValue(mController.getSupportedFeatures(), mSupportedFeatures);
     }
 
     /**
@@ -210,7 +206,7 @@ public class ShareRepo  {
      * @return a LiveData which holds supported features
      */
     public LiveData<BoxResponse<BoxFeatures>> getSupportFeatures() {
-        return mSupportedFeature;
+        return mSupportedFeatures;
     }
 
 
@@ -258,8 +254,8 @@ public class ShareRepo  {
      * Returns a LiveData which holds information about a updated owner collaboration.
      * @return a LiveData which holds information about a updated owner collaboration
      */
-    public LiveData<BoxResponse<BoxVoid>> getUpdateOwnerCollaboration() {
-        return mUpdateOwnerCollaboration;
+    public LiveData<BoxResponse<BoxVoid>> getUpdateOwner() {
+        return mUpdateOwner;
     }
 
     /**
@@ -280,8 +276,8 @@ public class ShareRepo  {
      * Update the owner of a box collaboration item.
      * @param collaboration the box collaboration item which will be modified
      */
-    public void updateOwnerCollaboration(BoxCollaboration collaboration) {
-        handleTaskAndPostValue(mController.updateOwner(collaboration), mUpdateOwnerCollaboration);
+    public void updateOwner(BoxCollaboration collaboration) {
+        handleTaskAndPostValue(mController.updateOwner(collaboration), mUpdateOwner);
     }
 
 

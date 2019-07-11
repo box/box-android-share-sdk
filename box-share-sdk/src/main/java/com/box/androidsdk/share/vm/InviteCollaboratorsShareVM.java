@@ -9,7 +9,7 @@ import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
-import com.box.androidsdk.share.utils.InviteCollabsTransformer;
+import com.box.androidsdk.share.utils.ShareSDKTransformer;
 
 import java.util.HashSet;
 
@@ -27,7 +27,7 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
 
     public InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
-        InviteCollabsTransformer transformer = new InviteCollabsTransformer();
+        ShareSDKTransformer transformer = new ShareSDKTransformer();
         mRoleItem = Transformations.map(shareRepo.getRoleItem(), response -> transformer.getFetchRolesItemPresenterData(response));
         mInviteCollabs = Transformations.map(shareRepo.getInviteCollabsBatchResponse(), response -> transformer.getInviteCollabsPresenterDataFromBoxResponse(response));
         mInvitees = Transformations.map(shareRepo.getInvitees(), response -> transformer.getInviteesPresenterData(response));
@@ -36,7 +36,7 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
 
     //used for mocking the transformer since it's not VM job.
     @VisibleForTesting
-    InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem, InviteCollabsTransformer transformer) {
+    InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem, ShareSDKTransformer transformer) {
         super(shareRepo, shareItem);
         mRoleItem = Transformations.map(shareRepo.getRoleItem(), response -> transformer.getFetchRolesItemPresenterData(response));
         mInviteCollabs = Transformations.map(shareRepo.getInviteCollabsBatchResponse(), response -> transformer.getInviteCollabsPresenterDataFromBoxResponse(response));

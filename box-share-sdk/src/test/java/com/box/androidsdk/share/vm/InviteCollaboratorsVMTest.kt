@@ -7,7 +7,7 @@ import com.box.androidsdk.content.requests.BoxResponse
 import com.box.androidsdk.content.requests.BoxResponseBatch
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees
 import com.box.androidsdk.share.sharerepo.ShareRepo
-import com.box.androidsdk.share.utils.InviteCollabsTransformer
+import com.box.androidsdk.share.utils.ShareSDKTransformer
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.Assert.assertEquals
@@ -38,7 +38,7 @@ class InviteCollaboratorsVMTest {
     private val mockShareRepo: ShareRepo = mock()
 
     private lateinit var inviteCollabVM: InviteCollaboratorsShareVM
-    private val mockTransformer: InviteCollabsTransformer = mock()
+    private val mockTransformer: ShareSDKTransformer = mock()
 
 
     @Before

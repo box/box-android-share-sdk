@@ -22,7 +22,7 @@ import org.junit.Test;
 import org.junit.rules.TestRule
 import javax.net.ssl.HttpsURLConnection
 
-class InviteCollabsTransformerTest {
+class ShareSDKTransformerTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
@@ -40,7 +40,7 @@ class InviteCollabsTransformerTest {
     private val mockFetchRoleItemResult: BoxCollaborationItem = mock()
     private lateinit var mockInviteCollabsResult: BoxResponseBatch
     
-    private val inviteCollabsTransformer = InviteCollabsTransformer()
+    private val inviteCollabsTransformer = ShareSDKTransformer()
 
 
     @Before

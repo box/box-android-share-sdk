@@ -5,7 +5,10 @@ import androidx.annotation.VisibleForTesting;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
+import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxUser;
+import com.box.androidsdk.content.requests.BoxRequestItem;
+import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
 import com.box.androidsdk.content.requests.BoxRequestsShare;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
@@ -23,7 +26,7 @@ import java.util.List;
 /**
  * A utility class for transforming BoxResponses into PresenterData for InviteCollaboratorsShareVM.
  */
-public class InviteCollabsTransformer {
+public class ShareSDKTransformer {
 
     private static HashSet<Integer> failureCodes;
     private static char divider = ' ';
@@ -181,5 +184,41 @@ public class InviteCollabsTransformer {
         failureCodes.add(HttpURLConnection.HTTP_FORBIDDEN);
 
         return failureCodes;
+    }
+
+    /**
+     * Helper method for transforming BoxResponse to UI Model for shared link operations.
+     * @param response
+     * @return
+     */
+    public PresenterData<BoxItem> getSharedLinkItem(BoxResponse<BoxItem> response, BoxItem item) {
+        final PresenterData<BoxItem> data = new PresenterData<>();
+        if (response.isSuccess()) {
+            if (response.getRequest() instanceof BoxRequestItem) {
+                data.success(response.getResult()); //no data will be given even if success if not BoxRequestItem.
+            }
+        } else {
+            if (response.getException() instanceof BoxException) {
+                BoxException boxException = (BoxException) response.getException();
+                int responseCode = boxException.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
+                    data.setException(response.getException());
+                } else if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                    data.failure(R.string.box_sharesdk_insufficient_permissions, boxException);
+                }
+                return data;
+            }
+
+            if (response.getRequest() instanceof BoxRequestItem && item.getId().equals(((BoxRequestItem) response.getRequest()).getId())) {
+                if (response.getRequest() instanceof BoxRequestUpdateSharedItem) {
+                    data.failure(R.string.box_sharesdk_unable_to_modify_toast, response.getException());
+                } else {
+                    data.failure(R.string.box_sharesdk_problem_accessing_this_shared_link, response.getException());
+                }
+            } else {
+                data.setException(response.getException());
+            }
+        }
+        return data;
     }
 }
