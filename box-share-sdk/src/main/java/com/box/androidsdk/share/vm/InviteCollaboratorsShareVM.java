@@ -25,6 +25,8 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
     private LiveData<InviteCollaboratorsPresenterData> mInviteCollabs;
     private LiveData<PresenterData<BoxIteratorInvitees>> mInvitees;
 
+    private boolean mInitialSetup = true;
+
     List<BoxInvitee> mInviteesList;
 
     public InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
@@ -97,16 +99,21 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
         return mInvitees;
     }
 
-
-
-    public void addInvitee(BoxInvitee invitee) {
-        this.mInviteesList.add(invitee);
-    }
-
-    public void removeInvitee(BoxInvitee invitee) {this.mInviteesList.remove(invitee);}
-
     public List<BoxInvitee> getInviteesList() {
         return mInviteesList;
+    }
+
+    public void setInviteesList(List<BoxInvitee> list) {
+        this.mInviteesList = list;
+    }
+
+
+    public void setInitialSetup(boolean setup) {
+        this.mInitialSetup = false;
+    }
+
+    public boolean isInitialSetup() {
+        return mInitialSetup;
     }
 
 

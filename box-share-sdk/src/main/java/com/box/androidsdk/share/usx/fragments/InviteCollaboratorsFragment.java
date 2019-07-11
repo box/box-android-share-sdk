@@ -1,7 +1,6 @@
 package com.box.androidsdk.share.usx.fragments;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import androidx.databinding.DataBindingUtil;
@@ -41,7 +40,6 @@ import com.box.androidsdk.share.usx.adapters.InviteeAdapter;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 import com.tokenautocomplete.TokenCompleteTextView;
 
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -62,7 +60,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     public static final String EXTRA_COLLAB_SELECTED_ROLE = "collabSelectedRole";
 
     private String mFilterTerm;
-    private boolean mSetUpFlag = true;
     UsxFragmentInviteCollaboratorsBinding binding;
 
     private View.OnClickListener mOnEditAccessListener;
@@ -79,7 +76,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
         mSelectRoleShareVM = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
 
-
         InviteeAdapter adapter = createInviteeAdapter(getActivity());
         MultiAutoCompleteTextView.CommaTokenizer tokenizer = new MultiAutoCompleteTextView.CommaTokenizer();
         adapter.setInviteeAdapterListener(createInviteeAdapterListener());
@@ -94,7 +90,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
         mFilterTerm = "";
         mInviteCollaboratorsShareVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(InviteCollaboratorsShareVM.class);
-
+        mInviteCollaboratorsShareVM.setInitialSetup(true);
 
         mInviteCollaboratorsShareVM.getRoleItem().observe(this, onRoleItemChange);
         mInviteCollaboratorsShareVM.getInvitees().observe(this, onInviteesChanged);
@@ -128,12 +124,13 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         if (getArguments().getBoolean(EXTRA_USE_CONTACTS_PROVIDER)){
             requestPermissionsIfNecessary();
         }
+
         for (BoxInvitee invitee: mInviteCollaboratorsShareVM.getInviteesList()) {
             binding.inviteCollaboratorAutocomplete.addObject(invitee);
         }
 
         binding.setRole(mSelectRoleShareVM.getSelectedRole());
-        mSetUpFlag = false;
+        mInviteCollaboratorsShareVM.setInitialSetup(false);
         return view;
     }
 
@@ -348,13 +345,13 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
     @Override
     public void onTokenAdded(BoxInvitee token) {
-        if (!mSetUpFlag) mInviteCollaboratorsShareVM.addInvitee(token);
+        mInviteCollaboratorsShareVM.setInviteesList(binding.inviteCollaboratorAutocomplete.getObjects());
         mSelectRoleShareVM.setSendInvitationEnabled(true);
     }
 
     @Override
     public void onTokenRemoved(BoxInvitee token) {
-        mInviteCollaboratorsShareVM.removeInvitee(token);
+        mInviteCollaboratorsShareVM.setInviteesList(binding.inviteCollaboratorAutocomplete.getObjects());
         if (mInviteCollaboratorsShareVM.getInviteesList().isEmpty()) mSelectRoleShareVM.setSendInvitationEnabled(false);
     }
 
