@@ -59,8 +59,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (fragment == null || fragment instanceof InviteCollaboratorsFragment) {
             setupInviteCollabFragment();
-            attachAttributesToInviteCollabFragment((InviteCollaboratorsFragment) mFragment);
-            setTitles(mFragment);
+            attachAttributesToInviteCollabFragment();
         } else {
             setTitles(fragment);
         }
@@ -68,9 +67,9 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
 
     }
 
-    private void attachAttributesToInviteCollabFragment(InviteCollaboratorsFragment fragment) {
-        fragment.setOnEditAccessListener(this);
-        fragment.setVMFactory(new ShareVMFactory(
+    private void attachAttributesToInviteCollabFragment() {
+        ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
+        mFragment.setVMFactory(new ShareVMFactory(
                 new ShareRepo(new BoxShareController(mSession)),
                 (BoxCollaborationItem) baseShareVM.getShareItem()));
     }
@@ -81,6 +80,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) baseShareVM.getShareItem());
         ft.replace(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
         ft.commit();
+        setTitles(mFragment);
     }
 
 
@@ -91,15 +91,12 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         selectRoleShareVM.setCollaboration(null);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Log.d("XXX", "onClick: Fragment transaction started from activity");
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
         CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance();
-        Log.d("XXX", "onClick: New fragment created from activity");
         setTitles(rolesFragment);
         ft.replace(R.id.fragmentContainer, rolesFragment, CollaboratorsRolesFragment.TAG).addToBackStack(null);
         selectRoleShareVM.setShowSend(false);
         ft.commit();
-        Log.d("XXX", "onClick: Fragment transaction committed from activity");
         notifyActionBarChanged();
     }
 
@@ -108,8 +105,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         super.onBackPressed();
         selectRoleShareVM.setShowSend(true);
         setupInviteCollabFragment();
-        attachAttributesToInviteCollabFragment((InviteCollaboratorsFragment)mFragment);
-        initializeUi();
+        attachAttributesToInviteCollabFragment();
     }
 
     /**
