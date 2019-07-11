@@ -61,9 +61,8 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     public static final String EXTRA_USE_CONTACTS_PROVIDER = "InviteCollaboratorsFragment.ExtraUseContactsProvider";
     public static final String EXTRA_COLLAB_SELECTED_ROLE = "collabSelectedRole";
 
-    private InviteeAdapter mAdapter;
     private String mFilterTerm;
-    private boolean mInvitationFailed = false;
+    private boolean mSetUpFlag = true;
     UsxFragmentInviteCollaboratorsBinding binding;
 
     private View.OnClickListener mOnEditAccessListener;
@@ -81,11 +80,11 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         mSelectRoleShareVM = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
 
 
-        mAdapter = createInviteeAdapter(getActivity());
+        InviteeAdapter adapter = createInviteeAdapter(getActivity());
         MultiAutoCompleteTextView.CommaTokenizer tokenizer = new MultiAutoCompleteTextView.CommaTokenizer();
-        mAdapter.setInviteeAdapterListener(createInviteeAdapterListener());
+        adapter.setInviteeAdapterListener(createInviteeAdapterListener());
 
-        binding.setAdapter(mAdapter);
+        binding.setAdapter(adapter);
         binding.setTokenizer(tokenizer);
         binding.setOnRoleClickedListener(mOnEditAccessListener);
         binding.setOnSendInvitationClickedListener(v -> addCollaborations());
@@ -94,7 +93,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
 
         mFilterTerm = "";
-        mInviteCollaboratorsShareVM = ViewModelProviders.of(this, mShareVMFactory).get(InviteCollaboratorsShareVM.class);
+        mInviteCollaboratorsShareVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(InviteCollaboratorsShareVM.class);
 
 
         mInviteCollaboratorsShareVM.getRoleItem().observe(this, onRoleItemChange);
@@ -129,8 +128,12 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         if (getArguments().getBoolean(EXTRA_USE_CONTACTS_PROVIDER)){
             requestPermissionsIfNecessary();
         }
+        for (BoxInvitee invitee: mInviteCollaboratorsShareVM.getInviteesList()) {
+            binding.inviteCollaboratorAutocomplete.addObject(invitee);
+        }
 
         binding.setRole(mSelectRoleShareVM.getSelectedRole());
+        mSetUpFlag = false;
         return view;
     }
 
@@ -163,7 +166,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
     private Observer<PresenterData<BoxIteratorInvitees>> onInviteesChanged = presenter -> {
             if (presenter.isSuccess()) {
-                mAdapter.setInvitees(presenter.getData());
+                binding.getAdapter().setInvitees(presenter.getData());
             } else {
                 BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",
                         presenter.getException());
@@ -247,16 +250,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
 
     @Override
-    public int getActivityResultCode() {
-        if (mInvitationFailed) {
-            return Activity.RESULT_CANCELED;
-        }
-
-        return Activity.RESULT_OK;
-    }
-
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // Attach the listener to view once createView is complete
@@ -299,7 +292,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
      * Executes the request to add collaborations to the item
      */
     public void addCollaborations() {
-        HashSet<BoxInvitee> invitees = mInviteCollaboratorsShareVM.getInvitedSet();
+        List<BoxInvitee> invitees = mInviteCollaboratorsShareVM.getInviteesList();
         String[] emailParts = new String[invitees.size()];
         int i = 0;
         for (BoxInvitee invitee: invitees) {
@@ -355,14 +348,14 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
     @Override
     public void onTokenAdded(BoxInvitee token) {
-        mInviteCollaboratorsShareVM.addInvitee(token);
+        if (!mSetUpFlag) mInviteCollaboratorsShareVM.addInvitee(token);
         mSelectRoleShareVM.setSendInvitationEnabled(true);
     }
 
     @Override
     public void onTokenRemoved(BoxInvitee token) {
         mInviteCollaboratorsShareVM.removeInvitee(token);
-        if (mInviteCollaboratorsShareVM.getInvitedSet().isEmpty()) mSelectRoleShareVM.setSendInvitationEnabled(false);
+        if (mInviteCollaboratorsShareVM.getInviteesList().isEmpty()) mSelectRoleShareVM.setSendInvitationEnabled(false);
     }
 
     @Override

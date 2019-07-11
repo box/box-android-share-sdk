@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -120,6 +121,7 @@ public abstract class BoxActivity extends AppCompatActivity {
             mProgress.dismiss();
         }
         super.onDestroy();
+        Log.d("XXX", "onDestroy: Activity destroyed");
     }
 
     protected boolean isSharedItemSufficient(){
@@ -142,6 +144,7 @@ public abstract class BoxActivity extends AppCompatActivity {
         outState.putSerializable(CollaborationUtils.EXTRA_ITEM,baseShareVM.getShareItem());
         outState.putString(CollaborationUtils.EXTRA_USER_ID, mSession.getUser().getId());
         super.onSaveInstanceState(outState);
+        Log.d("XXX", "Activity onSaveInstanceState: Complete");
     }
 
 

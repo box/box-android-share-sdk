@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,12 +57,9 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
     @Override
     protected void initializeUi() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (!(fragment instanceof CollaboratorsRolesFragment)){
-            mFragment = (InviteCollaboratorsFragment)fragment;
-            if (mFragment == null) {
-                setupInviteCollabFragment();
-            }
-            attachAttributesToInviteCollabFragment();
+        if (fragment == null || fragment instanceof InviteCollaboratorsFragment) {
+            setupInviteCollabFragment();
+            attachAttributesToInviteCollabFragment((InviteCollaboratorsFragment) mFragment);
             setTitles(mFragment);
         } else {
             setTitles(fragment);
@@ -70,9 +68,9 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
 
     }
 
-    private void attachAttributesToInviteCollabFragment() {
-        ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
-        mFragment.setVMFactory(new ShareVMFactory(
+    private void attachAttributesToInviteCollabFragment(InviteCollaboratorsFragment fragment) {
+        fragment.setOnEditAccessListener(this);
+        fragment.setVMFactory(new ShareVMFactory(
                 new ShareRepo(new BoxShareController(mSession)),
                 (BoxCollaborationItem) baseShareVM.getShareItem()));
     }
@@ -93,28 +91,25 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         selectRoleShareVM.setCollaboration(null);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Log.d("XXX", "onClick: Fragment transaction started from activity");
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
         CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance();
+        Log.d("XXX", "onClick: New fragment created from activity");
         setTitles(rolesFragment);
         ft.replace(R.id.fragmentContainer, rolesFragment, CollaboratorsRolesFragment.TAG).addToBackStack(null);
         selectRoleShareVM.setShowSend(false);
         ft.commit();
+        Log.d("XXX", "onClick: Fragment transaction committed from activity");
         notifyActionBarChanged();
     }
-
-
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         selectRoleShareVM.setShowSend(true);
-        getSupportFragmentManager().popBackStack();
-        if (mFragment == null) {
-            setupInviteCollabFragment();
-            attachAttributesToInviteCollabFragment();
-        }
-        setTitles(mFragment);
-        notifyActionBarChanged();
+        setupInviteCollabFragment();
+        attachAttributesToInviteCollabFragment((InviteCollaboratorsFragment)mFragment);
+        initializeUi();
     }
 
     /**

@@ -1,7 +1,9 @@
 package com.box.androidsdk.share.usx.fragments;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ public class CollaboratorsRolesFragment extends Fragment implements FragmentTitl
     public interface RoleUpdateNotifier {
         void setRole(BoxCollaboration.Role role);
     }
+
     public static final String TAG = CollaboratorsRolesFragment.class.getName();
     SelectRoleShareVM vm;
 
@@ -35,12 +38,32 @@ public class CollaboratorsRolesFragment extends Fragment implements FragmentTitl
         vm = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
         binding.setViewModel(vm);
         binding.setRoleUpdateNotifier(vm::setSelectedRole);
+        Log.d("XXX", "onCreateView: Fragment view created");
         return view;
     }
 
     @Override
     public int getFragmentTitle() {
         return R.string.box_sharesdk_title_access_level;
+    }
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("XXX", "onSaveInstanceState: Fragment onSaveInstanceState complete");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d("XXX", "onDestroyView: Fragment view destroyed");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("XXX", "onDestroy: Fragment fully destroyed");
     }
 
     @Override
@@ -51,5 +74,4 @@ public class CollaboratorsRolesFragment extends Fragment implements FragmentTitl
     public static CollaboratorsRolesFragment newInstance() {
         return new CollaboratorsRolesFragment();
     }
-
 }
