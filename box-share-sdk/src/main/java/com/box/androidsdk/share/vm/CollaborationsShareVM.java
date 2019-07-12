@@ -31,19 +31,19 @@ public class CollaborationsShareVM extends BaseShareVM{
      * Make a backend call through share repo to delete a collaboration.
      * @param collaboration the collaboration that will be deleted
      */
-    public void deleteCollaborationRemote(BoxCollaboration collaboration) {
+    public void deleteCollaboration(BoxCollaboration collaboration) {
         mShareRepo.deleteCollaboration(collaboration);
     }
 
-    public void updateCollaborationRemote(BoxCollaboration collaboration, BoxCollaboration.Role role) {
+    public void updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role role) {
         mShareRepo.updateCollaboration(collaboration, role);
     }
 
-    public void updateOwnerRemote(BoxCollaboration collaboration) {
+    public void updateOwner(BoxCollaboration collaboration) {
         mShareRepo.updateOwner(collaboration);
     }
 
-    public void fetchCollaborationsRemote(BoxCollaborationItem item) {
+    public void fetchCollaborations(BoxCollaborationItem item) {
         mShareRepo.fetchCollaborations(item);
     }
 
