@@ -2,17 +2,12 @@ package com.box.androidsdk.share.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
-
-import java.text.ParseException;
 
 
 public class PasswordDialogFragment extends PositiveNegativeDialogFragment{

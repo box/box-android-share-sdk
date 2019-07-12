@@ -6,4 +6,6 @@
     <string name="box_sharesdk_sample_name">Share sample</string>
     <string name="box_sharesdk_sample_choose_action">Choose</string>
 
+    <string name="box_sharesdk_share_link_legacy">Share Link Legacy</string>
+    <string name="box_sharesdk_invite_people_legacy">Invite People Legacy</string>
 </resources>

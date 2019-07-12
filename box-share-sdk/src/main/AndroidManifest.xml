@@ -23,6 +23,11 @@
             android:label="@string/box_sharesdk_title_link_access"
             android:theme="@style/ShareTheme" >
         </activity>
+        <activity
+            android:name=".usx.activities.BoxInviteCollaboratorsActivity"
+            android:label="@string/box_sharesdk_invite_collaborators_activity_title"
+            android:theme="@style/ShareThemeNew" >
+        </activity>
     </application>
 
 </manifest>

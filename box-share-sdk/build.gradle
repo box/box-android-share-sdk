@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -40,6 +41,10 @@ android {
         jumboMode = true
         javaMaxHeapSize = "4g"
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 repositories {
@@ -51,11 +56,20 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.google.android.material:material:1.0.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.0.0"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     // If using local dependency instead of maven, use the path pointing to the content sdk to replace
     // the maven dependency. e.g.:compile project(':box-android-content-sdk:box-content-sdk')
 
     api 'com.box:box-android-sdk:5.0.0'
     implementation "com.splitwise:tokenautocomplete:2.0.8@aar"
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.robolectric:robolectric:3.8'
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    testImplementation 'androidx.arch.core:core-testing:2.0.1'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 }
 
 apply from: '../maven_push.gradle'
