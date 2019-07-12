@@ -29,7 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * A utility class for transforming BoxResponses into PresenterData for InviteCollaboratorsShareVM.
+ * A utility class for transforming BoxResponses into PresenterData for all the VMs inside ShareSDK.
  */
 public class ShareSDKTransformer {
 

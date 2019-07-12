@@ -195,15 +195,15 @@ public class ShareRepo  {
     }
 
     /**
-     * Fetch supported features.
+     * Fetch supported features for the shared link.
      */
     public void fetchSupportedFeatures() {
         handleTaskAndPostValue(mController.getSupportedFeatures(), mSupportedFeatures); //this api might not be working as intended.
     }
 
     /**
-     * Returns a LiveData which holds supported features.
-     * @return a LiveData which holds supported features
+     * Returns a LiveData which holds supported features for the shared link.
+     * @return a LiveData which holds supported features for the shared link
      */
     public LiveData<BoxResponse<BoxFeatures>> getSupportFeatures() {
         return mSupportedFeatures;
