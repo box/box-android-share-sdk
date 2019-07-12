@@ -44,7 +44,7 @@ public class ShareRepo  {
 
     private final MutableLiveData<BoxResponse<BoxVoid>> mDeleteCollaboration = new MutableLiveData<>();
     private final MutableLiveData<BoxResponse<BoxVoid>> mUpdateOwner = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxVoid>> mUpdateCollaboration = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxCollaboration>> mUpdateCollaboration = new MutableLiveData<>();
 
     public ShareRepo(ShareController controller) {
         this.mController = controller;
@@ -246,7 +246,7 @@ public class ShareRepo  {
      * Returns a LiveData which holds information about a updated collaboration.
      * @return a LiveData which holds information about a updated collaboration
      */
-    public LiveData<BoxResponse<BoxVoid>> getUpdateCollaboration() {
+    public LiveData<BoxResponse<BoxCollaboration>> getUpdateCollaboration() {
         return mUpdateCollaboration;
     }
 

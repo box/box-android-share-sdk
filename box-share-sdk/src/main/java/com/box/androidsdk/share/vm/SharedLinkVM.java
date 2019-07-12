@@ -33,8 +33,6 @@ public class SharedLinkVM extends BaseShareVM {
 
     }
 
-
-
     public void createDefaultSharedLinkRemote(BoxCollaborationItem item) {
         mShareRepo.createDefaultSharedLink(item);
     }
@@ -59,9 +57,15 @@ public class SharedLinkVM extends BaseShareVM {
         mShareRepo.changePassword(item, password);
     }
 
-
-
     public void fetchSupportedFeaturesRemote() {
         mShareRepo.fetchSupportedFeatures();
+    }
+
+    public LiveData<PresenterData<BoxItem>> getSharedLinkedItem() {
+        return mShareLinkedItem;
+    }
+
+    public LiveData<PresenterData<BoxFeatures>> getSupportedFeatures() {
+        return mSupportedFeatures;
     }
 }

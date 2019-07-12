@@ -1,12 +1,16 @@
 package com.box.androidsdk.share.utils;
 
 import androidx.annotation.VisibleForTesting;
+import androidx.lifecycle.LiveData;
 
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxUser;
+import com.box.androidsdk.content.models.BoxVoid;
+import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestItem;
 import com.box.androidsdk.content.requests.BoxRequestUpdateSharedItem;
 import com.box.androidsdk.content.requests.BoxRequestsShare;
@@ -214,6 +218,91 @@ public class ShareSDKTransformer {
                     data.failure(R.string.box_sharesdk_unable_to_modify_toast, response.getException());
                 } else {
                     data.failure(R.string.box_sharesdk_problem_accessing_this_shared_link, response.getException());
+                }
+            } else {
+                data.setException(response.getException());
+            }
+        }
+        return data;
+    }
+
+    public PresenterData<BoxRequest> getDeleteCollaborationPresenterData(BoxResponse<BoxVoid> response) {
+        PresenterData<BoxRequest> data = new PresenterData<>();
+        if (response.isSuccess()) {
+            data.success(response.getRequest());
+        } else {
+            data.failure(R.string.box_sharesdk_network_error, response.getException());
+        }
+        return null;
+    }
+
+    public PresenterData<BoxVoid> getUpdateOwnerPresenterData(BoxResponse<BoxVoid> response) {
+        PresenterData<BoxVoid> data = new PresenterData<>();
+        if (response.isSuccess()) {
+            data.success(null); //the activity will just exit. checking for failure through checking for exception now.
+        } else {
+            if (response.getException() instanceof BoxException) {
+                BoxException boxException = (BoxException)response.getException();
+                switch (boxException.getErrorType()) {
+                    case NEW_OWNER_NOT_COLLABORATOR:
+                        data.failure(R.string.box_sharedsdk_new_owner_not_collaborator, boxException);
+                        break;
+                    case NETWORK_ERROR:
+                        data.failure(R.string.box_sharesdk_network_error, boxException);
+                        break;
+                    default:
+                        data.failure(R.string.box_sharedsdk_unable_to_update_owner, boxException);
+                        break;
+                }
+            } else {
+                data.setException(response.getException());
+            }
+        }
+        return data;
+    }
+
+    public PresenterData<BoxCollaboration> getUpdateCollaborationPresenterData(BoxResponse<BoxCollaboration> response) {
+        PresenterData<BoxCollaboration> data = new PresenterData<>();
+        if (response.isSuccess()) {
+            data.success(response.getResult());
+        } else {
+            if (response.getException() instanceof BoxException) {
+                BoxException boxException = (BoxException) response.getException();
+                if (boxException.getResponseCode() == HttpURLConnection.HTTP_FORBIDDEN) {
+                    data.failure(R.string.box_sharesdk_insufficient_permissions, boxException);
+                } else {
+                    switch (boxException.getErrorType()) {
+                        case NETWORK_ERROR:
+                            data.failure(R.string.box_sharesdk_network_error, boxException);
+                            break;
+                        default:
+                            data.failure(R.string.box_sharesdk_cannot_get_collaborators, boxException);
+                    }
+                }
+            } else {
+                data.setException(response.getException());
+            }
+        }
+        return data;
+    }
+
+    public PresenterData<BoxIteratorCollaborations> getCollaborationsPresenterData(BoxResponse<BoxIteratorCollaborations> response) {
+        PresenterData<BoxIteratorCollaborations> data = new PresenterData<>();
+        if (response.isSuccess()) {
+            data.success(response.getResult());
+        } else {
+            if (response.getException() instanceof BoxException) {
+                BoxException boxException = (BoxException) response.getException();
+                if (boxException.getResponseCode() == HttpURLConnection.HTTP_FORBIDDEN) {
+                    data.failure(R.string.box_sharesdk_insufficient_permissions, boxException);
+                } else {
+                    switch (boxException.getErrorType()) {
+                        case NETWORK_ERROR:
+                            data.failure(R.string.box_sharesdk_network_error, boxException);
+                            break;
+                        default:
+                            data.failure(R.string.box_sharesdk_cannot_get_collaborators, boxException);
+                    }
                 }
             } else {
                 data.setException(response.getException());

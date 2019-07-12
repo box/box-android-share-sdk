@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
 
 
@@ -65,5 +66,22 @@ public class BaseShareVM extends ViewModel {
      */
     public LiveData<PresenterData<BoxItem>> getItemInfo() {
         return mItemInfo;
+    }
+
+
+    /**
+     * Returns user id of the current user.
+     * @return user id of the current user
+     */
+    public String getUserId() {
+        return mShareRepo.getUserId();
+    }
+
+    /**
+     * Returns the avatar controller for displaying collaborators' avatars.
+     * @return the avatar controller for displaying collaborators' avatars
+     */
+    public BoxAvatarView.AvatarController getAvatarController() {
+        return mShareRepo.getAvatarController();
     }
 }
