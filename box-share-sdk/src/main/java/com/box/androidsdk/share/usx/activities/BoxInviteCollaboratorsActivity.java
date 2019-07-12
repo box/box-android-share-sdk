@@ -20,7 +20,6 @@ import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.BoxShareController;
-import com.box.androidsdk.share.usx.fragments.BoxFragment;
 import com.box.androidsdk.share.usx.fragments.CollaboratorsRolesFragment;
 import com.box.androidsdk.share.usx.fragments.InviteCollaboratorsFragment;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
@@ -49,19 +48,9 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (fragment == null || fragment instanceof InviteCollaboratorsFragment) {
             setupInviteCollabFragment();
-            attachAttributesToInviteCollabFragment();
         } else {
             setTitles(fragment);
         }
-
-
-    }
-
-    private void attachAttributesToInviteCollabFragment() {
-        ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
-        mFragment.setVMFactory(new ShareVMFactory(
-                new ShareRepo(new BoxShareController(mSession)),
-                (BoxCollaborationItem) baseShareVM.getShareItem()));
     }
 
     private void setupInviteCollabFragment() {
@@ -70,6 +59,10 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) baseShareVM.getShareItem());
         ft.replace(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
         ft.commit();
+        ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
+        mFragment.setVMFactory(new ShareVMFactory(
+                new ShareRepo(new BoxShareController(mSession)),
+                (BoxCollaborationItem) baseShareVM.getShareItem()));
         setTitles(mFragment);
     }
 
@@ -83,10 +76,10 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
         CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance();
-        setTitles(rolesFragment);
         ft.replace(R.id.fragmentContainer, rolesFragment, CollaboratorsRolesFragment.TAG);
         selectRoleShareVM.setShowSend(false);
         ft.commit();
+        setTitles(rolesFragment);
         notifyActionBarChanged();
     }
 
@@ -95,7 +88,6 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (fragment instanceof CollaboratorsRolesFragment) { //currently displayed fragment was CollaboratorRoles
             setupInviteCollabFragment();
-            attachAttributesToInviteCollabFragment(); //switch to InviteCollabFragment
             selectRoleShareVM.setShowSend(true);
         } else {
             super.onBackPressed();
