@@ -2,6 +2,8 @@ package com.box.androidsdk.share.usx.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +49,11 @@ public abstract class BoxActivity extends AppCompatActivity {
     private int mSubtitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= 23)
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        else {
+            setTheme(R.style.ShareTheme);
+        }
         BoxItem mShareItem = null;
         super.onCreate(savedInstanceState);
         if (BoxConfig.IS_FLAG_SECURE){
@@ -157,13 +164,7 @@ public abstract class BoxActivity extends AppCompatActivity {
         setSupportActionBar(actionBar);
         actionBar.setTitle(getTitle());
         actionBar.setNavigationIcon(R.drawable.ic_box_sharesdk_arrow_back_black_24dp);
-        actionBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        actionBar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     // Class to interpret result from share SDK activities
