@@ -84,7 +84,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
         CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance();
         setTitles(rolesFragment);
-        ft.replace(R.id.fragmentContainer, rolesFragment, CollaboratorsRolesFragment.TAG).addToBackStack(null);
+        ft.replace(R.id.fragmentContainer, rolesFragment, CollaboratorsRolesFragment.TAG);
         selectRoleShareVM.setShowSend(false);
         ft.commit();
         notifyActionBarChanged();
@@ -92,10 +92,14 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        selectRoleShareVM.setShowSend(true);
-        setupInviteCollabFragment();
-        attachAttributesToInviteCollabFragment();
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (fragment instanceof CollaboratorsRolesFragment) { //currently displayed fragment was CollaboratorRoles
+            setupInviteCollabFragment();
+            attachAttributesToInviteCollabFragment(); //switch to InviteCollabFragment
+            selectRoleShareVM.setShowSend(true);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     /**
