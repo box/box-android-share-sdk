@@ -198,7 +198,7 @@ public class ShareRepo  {
      * Fetch supported features.
      */
     public void fetchSupportedFeatures() {
-        handleTaskAndPostValue(mController.getSupportedFeatures(), mSupportedFeatures);
+        handleTaskAndPostValue(mController.getSupportedFeatures(), mSupportedFeatures); //this api might not be working as intended.
     }
 
     /**

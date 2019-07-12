@@ -1,16 +1,11 @@
 package com.box.androidsdk.share.vm;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxItem;
-import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSharedLink;
-import com.box.androidsdk.content.models.BoxVoid;
-import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
 import com.box.androidsdk.share.utils.ShareSDKTransformer;
@@ -27,9 +22,9 @@ public class SharedLinkVM extends BaseShareVM {
         super(shareRepo, shareItem);
         ShareSDKTransformer transformer = new ShareSDKTransformer();
         mShareLinkedItem = Transformations.map(shareRepo.getShareLinkedItem(),
-                response -> transformer.getSharedLinkItem(response, getShareItem()));
+                response -> transformer.getSharedLinkItemPresenterData(response, getShareItem()));
 
-        mSupportedFeatures = new MutableLiveData<>();
+        mSupportedFeatures = Transformations.map(shareRepo.getSupportFeatures(), transformer::getSupportedFeaturePresenterData);
 
     }
 

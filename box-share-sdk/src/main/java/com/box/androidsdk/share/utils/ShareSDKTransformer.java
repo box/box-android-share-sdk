@@ -18,6 +18,7 @@ import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 import com.box.androidsdk.share.vm.InviteCollaboratorsPresenterData;
 import com.box.androidsdk.share.vm.PresenterData;
@@ -195,7 +196,7 @@ public class ShareSDKTransformer {
      * @param response
      * @return
      */
-    public PresenterData<BoxItem> getSharedLinkItem(BoxResponse<BoxItem> response, BoxItem item) {
+    public PresenterData<BoxItem> getSharedLinkItemPresenterData(BoxResponse<BoxItem> response, BoxItem item) {
         final PresenterData<BoxItem> data = new PresenterData<>();
         if (response.isSuccess()) {
             if (response.getRequest() instanceof BoxRequestItem) {
@@ -307,6 +308,16 @@ public class ShareSDKTransformer {
             } else {
                 data.setException(response.getException());
             }
+        }
+        return data;
+    }
+
+    public PresenterData<BoxFeatures> getSupportedFeaturePresenterData(BoxResponse<BoxFeatures> response) {
+        PresenterData<BoxFeatures> data = new PresenterData<>();
+        if (response.isSuccess()) {
+            data.success(response.getResult());
+        } else {
+            data.setException(response.getException()); //no message need to be shown since it will be true by default.
         }
         return data;
     }
