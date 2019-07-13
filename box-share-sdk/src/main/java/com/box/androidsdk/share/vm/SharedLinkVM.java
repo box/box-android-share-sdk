@@ -28,31 +28,31 @@ public class SharedLinkVM extends BaseShareVM {
 
     }
 
-    public void createDefaultSharedLinkRemote(BoxCollaborationItem item) {
+    public void createDefaultSharedLink(BoxCollaborationItem item) {
         mShareRepo.createDefaultSharedLink(item);
     }
 
-    public void disableSharedLinkRemote(BoxCollaborationItem item) {
+    public void disableSharedLink(BoxCollaborationItem item) {
         mShareRepo.disableSharedLink(item);
     }
 
-    public void changeDownloadPermissionRemote(BoxCollaborationItem item, boolean canDownload) {
+    public void changeDownloadPermission(BoxCollaborationItem item, boolean canDownload) {
         mShareRepo.changeDownloadPermission(item, canDownload);
     }
 
-    public void setExpiryDateRemote(BoxCollaborationItem item, Date date) throws Exception {
+    public void setExpiryDate(BoxCollaborationItem item, Date date) throws Exception {
         mShareRepo.setExpiryDate(item, date);
     }
 
-    public void changeAccessLevelRemote(BoxCollaborationItem item, BoxSharedLink.Access access) {
+    public void changeAccessLevel(BoxCollaborationItem item, BoxSharedLink.Access access) {
         mShareRepo.changeAccessLevel(item, access);
     }
 
-    public void changePasswordRemote(BoxCollaborationItem item, String password) {
+    public void changePassword(BoxCollaborationItem item, String password) {
         mShareRepo.changePassword(item, password);
     }
 
-    public void fetchSupportedFeaturesRemote() {
+    public void fetchSupportedFeatures() {
         mShareRepo.fetchSupportedFeatures();
     }
 
