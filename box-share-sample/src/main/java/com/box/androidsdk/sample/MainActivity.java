@@ -25,9 +25,8 @@ import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxIteratorItems;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxSharedLink;
-import com.box.androidsdk.share.activities.BoxActivity;
-import com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity;
-import com.box.androidsdk.share.activities.BoxSharedLinkActivity;
+import com.box.androidsdk.share.usx.activities.BoxActivity;
+import com.box.androidsdk.share.usx.activities.BoxInviteCollaboratorsActivity;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -61,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.box_sharesdk_sample_name);
 
         BoxConfig.IS_LOG_ENABLED = true;
-        BoxConfig.CLIENT_ID = "your_client_id";
-        BoxConfig.CLIENT_SECRET = "your_client_secret";
+        BoxConfig.CLIENT_ID = "CLIENT_ID";
+        BoxConfig.CLIENT_SECRET = "CLIENT_SECRET";
 
         if (savedInstanceState != null) {
             mSampleItem = (BoxFolder) savedInstanceState.getSerializable(EXTRA_SAMPLE_FOLDER);
@@ -167,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onShareLinkButtonClick(final View view){
         if (mSampleItem != null)
-            startActivityForResult(BoxSharedLinkActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_SHARE_LINK);
+            startActivityForResult(com.box.androidsdk.share.activities.BoxSharedLinkActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_SHARE_LINK);
     }
 
     /**
@@ -176,7 +175,27 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onInvitePeopleButtonClick(final View view){
         if (mSampleItem != null) {
-           startActivityForResult(BoxInviteCollaboratorsActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_INVITE_PEOPLE);
+           startActivityForResult(com.box.androidsdk.share.activities.BoxInviteCollaboratorsActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_INVITE_PEOPLE);
+
+        }
+    }
+
+    /**
+     * The logic required to launch the shared link creation/modification ui.
+     * @param view
+     */
+    public void onShareLinkButtonClickNew(final View view){
+        if (mSampleItem != null) Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
+            //startActivityForResult(BoxSharedLinkActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_SHARE_LINK);
+    }
+
+    /**
+     * The logic required to launch the collaborator creation/modification ui.
+     * @param view
+     */
+    public void onInvitePeopleButtonClickNew(final View view){
+        if (mSampleItem != null) {
+            startActivityForResult(BoxInviteCollaboratorsActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_INVITE_PEOPLE);
 
         }
     }

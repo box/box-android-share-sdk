@@ -3,7 +3,7 @@
     <color name="box_sharesdk_primary_text">#de000000</color>
     <color name="box_sharesdk_hint">#80000000</color>
     <color name="box_sharesdk_accent">#00adef</color>
-    <color name="box_sharesdk_background">#ffffffff</color>
+    <color name="box_sharesdk_background">#ffffff</color>
 
     <!-- Custom colors -->
     <color name="box_sharesdk_primary">#ffffffff</color>
@@ -11,10 +11,26 @@
     <color name="box_sharesdk_togglebar_background">#ffffffff</color>
     <color name="box_sharesdk_button_back">#ffffffff</color>
     <color name="box_sharesdk_divider">#ffd6d6d6</color>
-    <color name="box_sharesdk_warning_color">#ffb71c1c</color>
-    <color name="box_sharesdk_chip_text_color">#e0000000</color>
+    <color name="box_sharesdk_warning_color">#e23e52</color>
+    <color name="box_sharesdk_chip_text_color">#2d2d2d</color>
     <color name="box_sharesdk_initials_count_color">#e0d4d4d4</color>
     <color name="box_sharesdk_accent_transparent">#3f1992D4</color>
     <color name="box_sharesdk_no_collaborators_msg">#757575</color>
     <color name="box_sharesdk_collaborators_label">#404040</color>
+
+    <color name="box_sharesdk_cell_text">#72848e</color>
+    <color name="box_sharesdK_cell_title">#72848e</color>
+
+    <color name="box_sharesdk_screen_background">#eaeef3</color>
+    <color name="box_sharesdk_components_background">#ffffff</color>
+
+
+    <color name="box_sharesdk_action_bar_background">#ffffff</color>
+    <color name="box_sharesdk_personal_message_button_color">#0061d5</color>
+    <color name="box_sharesdk_personal_message_button_color_mask">#0252B3</color>
+    <color name="box_sharesdk_send_invitation_bg">#26c281</color>
+    <color name="box_sharesdk_ripple_color">#C9E4F6</color>
+
+    <color name="box_sharesdk_disabled_state_text_color">#72848E</color>
+
 </resources>

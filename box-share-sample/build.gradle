@@ -29,6 +29,9 @@ android {
         jumboMode = true
         javaMaxHeapSize = "4g"
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 
