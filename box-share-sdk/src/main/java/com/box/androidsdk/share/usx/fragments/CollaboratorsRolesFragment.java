@@ -38,7 +38,6 @@ public class CollaboratorsRolesFragment extends Fragment implements FragmentTitl
         vm = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
         binding.setViewModel(vm);
         binding.setRoleUpdateNotifier(vm::setSelectedRole);
-        Log.d("XXX", "onCreateView: Fragment view created");
         return view;
     }
 
@@ -51,20 +50,8 @@ public class CollaboratorsRolesFragment extends Fragment implements FragmentTitl
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d("XXX", "onSaveInstanceState: Fragment onSaveInstanceState complete");
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d("XXX", "onDestroyView: Fragment view destroyed");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("XXX", "onDestroy: Fragment fully destroyed");
-    }
 
     @Override
     public int getFragmentSubtitle() {
