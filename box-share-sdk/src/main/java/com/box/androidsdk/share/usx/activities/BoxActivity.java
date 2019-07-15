@@ -128,8 +128,7 @@ public abstract class BoxActivity extends AppCompatActivity {
             mProgress.dismiss();
         }
         super.onDestroy();
-        Log.d("XXX", "onDestroy: Activity destroyed");
-    }
+      }
 
     protected boolean isSharedItemSufficient(){
         return !SdkUtils.isBlank(baseShareVM.getShareItem().getName()) && baseShareVM.getShareItem().getPermissions() != null;
@@ -151,7 +150,6 @@ public abstract class BoxActivity extends AppCompatActivity {
         outState.putSerializable(CollaborationUtils.EXTRA_ITEM,baseShareVM.getShareItem());
         outState.putString(CollaborationUtils.EXTRA_USER_ID, mSession.getUser().getId());
         super.onSaveInstanceState(outState);
-        Log.d("XXX", "Activity onSaveInstanceState: Complete");
     }
 
 
