@@ -98,7 +98,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_new"
                     android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin_cell_component"
-                    android:text="subtext"
                     app:roleDescription="@{role}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent" />
@@ -154,6 +153,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_new"
             android:layout_marginTop="@dimen/box_sharesdk_remove_button_margin"
+            android:visibility="gone"
             app:personalMessageEditText="@{personalMessageEditText}"
             app:personalMessageTextView="@{personalMessageTextView}"
             app:bottomDivider="@{bottomDivider}"

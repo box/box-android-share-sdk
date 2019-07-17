@@ -34,10 +34,9 @@ class SelectRoleVMTest {
 
     @Test
     fun `test set selectedRole update the live data correctly`() {
-        assertNull(selectRoleShareVM.selectedRole)
-        selectRoleShareVM.selectedRole = mockRole
-
-        assertEquals(mockRole, selectRoleShareVM.selectedRole)
+        assertNull(selectRoleShareVM.selectedRole.value)
+        selectRoleShareVM.setSelectedRole(mockRole)
+        assertEquals(mockRole, selectRoleShareVM.selectedRole.value)
     }
 
     @Test
