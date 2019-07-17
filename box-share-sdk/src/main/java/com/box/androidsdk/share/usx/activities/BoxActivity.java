@@ -12,13 +12,11 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.box.androidsdk.content.BoxConfig;
-import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.auth.BoxAuthentication;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxSession;
-import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
@@ -26,8 +24,6 @@ import com.box.androidsdk.share.api.BoxShareController;
 import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
 import com.box.androidsdk.share.usx.fragments.BoxFragment;
-import com.box.androidsdk.share.vm.BaseShareVM;
-import com.box.androidsdk.share.vm.ShareVMFactory;
 
 /**
  * Base class for all activities that make API requests through the Box Content SDK. This class is responsible for

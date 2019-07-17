@@ -3,11 +3,6 @@ package com.box.androidsdk.share.vm;
 import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
 
-import com.box.androidsdk.share.internal.models.BoxInvitee;
-
-import java.util.HashSet;
-import java.util.List;
-
 /**
  * A special extension of PresenterData to hold data for inviting a new Collaborator
  */

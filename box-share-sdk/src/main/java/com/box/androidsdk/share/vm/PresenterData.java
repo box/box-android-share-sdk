@@ -10,9 +10,11 @@ import com.box.androidsdk.content.BoxException;
  * @param <T> the data type of the item in the response that will be returned
  */
 public class PresenterData<T> {
+
+
+    public static final int NO_MESSAGE = -1;
+    private int mStrRes = NO_MESSAGE;
     private T mData;
-    private int mStrRes;
-    public static final int SUCCESS = -1;
     Exception mException;
 
     public PresenterData() {
@@ -36,7 +38,7 @@ public class PresenterData<T> {
      */
     public void success(T data) {
         this.mData = data;
-        this.mStrRes = SUCCESS;
+        this.mStrRes = NO_MESSAGE;
     }
 
     /**

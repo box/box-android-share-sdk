@@ -1,14 +1,11 @@
 package com.box.androidsdk.share.vm;
 
-import androidx.databinding.Bindable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,12 +18,16 @@ public class SelectRoleShareVM extends ViewModel {
     private boolean mAllowOwnerRole = false;
     private MutableLiveData<BoxCollaboration.Role> mSelectedRole = new MutableLiveData<>();
     private boolean mAllowRemove = false;
+    private boolean mRemoveSelected = false;
     private BoxCollaboration mCollaboration;
 
     private MutableLiveData<Boolean> mSendInvitationEnabled = new MutableLiveData<>();
+    private MutableLiveData<Boolean> mShowSend = new MutableLiveData<>();
+    String mName = "";
 
     public SelectRoleShareVM() {
         mSendInvitationEnabled.postValue(false);
+        mShowSend.postValue(true);
     }
 
 
@@ -116,5 +117,30 @@ public class SelectRoleShareVM extends ViewModel {
 
     public void setSendInvitationEnabled(boolean enabled) {
         this.mSendInvitationEnabled.postValue(enabled);
+    }
+
+    public LiveData<Boolean> isShowSend() {
+        return mShowSend;
+    }
+
+    public void setShowSend(boolean enabled) {
+        this.mShowSend.postValue(enabled);
+    }
+
+
+    public boolean isRemoveSeleted() {
+        return mRemoveSelected;
+    }
+
+    public void setRemoveSelected(boolean removeSelected) {
+        this.mRemoveSelected = removeSelected;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String name) {
+        this.mName = name;
     }
 }

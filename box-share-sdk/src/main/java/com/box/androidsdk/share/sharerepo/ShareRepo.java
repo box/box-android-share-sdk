@@ -21,6 +21,7 @@ import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -147,7 +148,7 @@ public class ShareRepo  {
      * @param boxCollaborationItem the item to change download permission on
      * @param canDownload the new download permission
      */
-    public void changeDownloadPermission(BoxCollaborationItem boxCollaborationItem, boolean canDownload) {
+    public void changeDownloadPermission(BoxCollaborationItem boxCollaborationItem, boolean canDownload) throws IllegalArgumentException {
         if (boxCollaborationItem instanceof BoxFile) {
             handleTaskAndPostValue(mController.executeRequest(BoxItem.class, ((BoxRequestsFile.UpdatedSharedFile) mController.getCreatedSharedLinkRequest(boxCollaborationItem)).setCanDownload(canDownload)), mSharedLinkedItem);
         }
@@ -159,13 +160,22 @@ public class ShareRepo  {
     }
 
     /**
-     * Change expiry date of a box collaboration item.
+     * Change expiry date of a shared link of box collaboration item.
      * @param boxCollaborationItem the item to change expiry date on
      * @param date the expiry date
      * @throws Exception
      */
     public void setExpiryDate(BoxCollaborationItem boxCollaborationItem, Date date) throws Exception {
         handleTaskAndPostValue(mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(boxCollaborationItem).setUnsharedAt(date)), mSharedLinkedItem);
+    }
+
+    /**
+     * Remove expiry date of a shared link of box collaboration item.
+     * @param boxCollaborationItem the item to remove expiry date on
+     * @throws Exception
+     */
+    public void removeExpiryDate(BoxCollaborationItem boxCollaborationItem) throws Exception {
+        handleTaskAndPostValue(mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(boxCollaborationItem).setRemoveUnsharedAtDate()), mSharedLinkedItem);
     }
 
     /**
@@ -230,7 +240,7 @@ public class ShareRepo  {
      * Returns a controller for avatar.
      * @return a controller for avatar
      */
-    public BoxAvatarView.AvatarController getAvatarController() {
+    public  <E extends BoxAvatarView.AvatarController & Serializable> E getAvatarController() {
         return mController.getAvatarController();
     }
 

@@ -1,7 +1,6 @@
 package com.box.androidsdk.share.utils;
 
 import androidx.annotation.VisibleForTesting;
-import androidx.lifecycle.LiveData;
 
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.models.BoxCollaboration;
@@ -20,8 +19,6 @@ import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
-import com.box.androidsdk.share.vm.InviteCollaboratorsPresenterData;
-import com.box.androidsdk.share.vm.PresenterData;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;

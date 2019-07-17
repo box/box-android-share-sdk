@@ -1,7 +1,6 @@
 package com.box.androidsdk.share.vm;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
@@ -16,7 +15,9 @@ public class CollaborationsShareVM extends BaseShareVM{
     private final LiveData<PresenterData<BoxRequest>> mDeleteCollaboration;
     private final LiveData<PresenterData<BoxVoid>> mUpdateOwner;
     private final LiveData<PresenterData<BoxCollaboration>> mUpdateCollaboration;
+    private final LiveData<PresenterData<BoxCollaborationItem>> mRoleItem;
     private final LiveData<PresenterData<BoxIteratorCollaborations>> mCollaborations;
+    private boolean mOwnerUpdated;
 
     public CollaborationsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
@@ -25,6 +26,8 @@ public class CollaborationsShareVM extends BaseShareVM{
         mDeleteCollaboration = Transformations.map(shareRepo.getDeleteCollaboration(), transformer::getDeleteCollaborationPresenterData);
         mUpdateOwner = Transformations.map(shareRepo.getUpdateOwner(), transformer::getUpdateOwnerPresenterData);
         mUpdateCollaboration = Transformations.map(shareRepo.getUpdateCollaboration(), transformer::getUpdateCollaborationPresenterData);
+        mRoleItem = Transformations.map(shareRepo.getRoleItem(),  transformer::getFetchRolesItemPresenterData);
+        mOwnerUpdated = false;
     }
 
     /**
@@ -62,4 +65,31 @@ public class CollaborationsShareVM extends BaseShareVM{
     public LiveData<PresenterData<BoxIteratorCollaborations>> getCollaborations() {
         return mCollaborations;
     }
+
+    public boolean isOwnerUpdated() {
+        return mOwnerUpdated;
+    }
+
+    public void setOwnerUpdated(boolean ownerUpdated) {
+        this.mOwnerUpdated = ownerUpdated;
+    }
+
+    /**
+     * Makes a backend call through share repo for fetching roles.
+     * @param item the item to fetch roles on
+     */
+    public void fetchRoles(BoxCollaborationItem item) {
+        mShareRepo.fetchRolesFromRemote(item);
+    }
+
+    /**
+     * Returns a LiveData which holds a data wrapper that contains a box item that has allowed roles for invitees and a string resource code.
+     * @return a LiveData which holds a data wrapper that contains box item that has allowed roles for invitees and a string resource code
+     */
+    public LiveData<PresenterData<BoxCollaborationItem>> getRoleItem() {
+        return mRoleItem;
+    }
+
+
+
 }

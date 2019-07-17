@@ -12,10 +12,6 @@ import androidx.annotation.Nullable;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.share.databinding.UsxFragmentInviteCollaboratorsBinding;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
-import com.box.androidsdk.share.vm.InviteCollaboratorsPresenterData;
-import com.box.androidsdk.share.vm.InviteCollaboratorsShareVM;
-import com.box.androidsdk.share.vm.PresenterData;
-import com.box.androidsdk.share.vm.SelectRoleShareVM;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.core.app.ActivityCompat;

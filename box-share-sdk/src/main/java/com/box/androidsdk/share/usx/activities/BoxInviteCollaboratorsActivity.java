@@ -22,8 +22,6 @@ import com.box.androidsdk.share.usx.fragments.BoxFragment;
 import com.box.androidsdk.share.usx.fragments.CollaboratorsRolesFragment;
 import com.box.androidsdk.share.usx.fragments.InviteCollaboratorsFragment;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
-import com.box.androidsdk.share.vm.SelectRoleShareVM;
-import com.box.androidsdk.share.vm.ShareVMFactory;
 
 /**
  * Activity used to allow users to invite additional collaborators to the folder. Email addresses will auto complete from the phones address book

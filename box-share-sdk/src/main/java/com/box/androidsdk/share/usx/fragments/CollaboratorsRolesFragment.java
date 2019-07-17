@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.databinding.UsxFragmentCollaborationRolesBinding;
-import com.box.androidsdk.share.vm.SelectRoleShareVM;
 
 
 public class CollaboratorsRolesFragment extends Fragment {
