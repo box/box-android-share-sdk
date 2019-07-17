@@ -1,6 +1,7 @@
 package com.box.androidsdk.share.utils;
 
 import androidx.annotation.VisibleForTesting;
+import androidx.lifecycle.LiveData;
 
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.models.BoxCollaboration;
@@ -19,6 +20,8 @@ import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
+import com.box.androidsdk.share.vm.InviteCollaboratorsPresenterData;
+import com.box.androidsdk.share.vm.PresenterData;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -231,7 +234,7 @@ public class ShareSDKTransformer {
         } else {
             data.failure(R.string.box_sharesdk_network_error, response.getException());
         }
-        return null;
+        return data;
     }
 
     public PresenterData<BoxVoid> getUpdateOwnerPresenterData(BoxResponse<BoxVoid> response) {
@@ -305,6 +308,19 @@ public class ShareSDKTransformer {
             } else {
                 data.setException(response.getException());
             }
+        }
+        return data;
+    }
+
+    public PresenterData<BoxIteratorCollaborations> getIntialsViewCollabsPresenterData(BoxResponse<BoxIteratorCollaborations> response) {
+        PresenterData<BoxIteratorCollaborations> data = new PresenterData<>();
+        if (response.isSuccess()) {
+            data.success(response.getResult());
+        } else if (((BoxException)response.getException()).getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND) {
+            // The user is not a collaborator anymore
+            data.failure(R.string.box_sharesdk_item_unavailable, response.getException());
+        } else {
+            data.failure(R.string.box_sharesdk_network_error, response.getException());
         }
         return data;
     }
