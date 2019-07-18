@@ -172,7 +172,6 @@ public class CollaboratorsInitialsView extends LinearLayout {
             }
         }
         if (addedViewCount < totalCollaborators) {
-            //if the number of known collabs is more than the number of collabs shown
             int remaining = totalCollaborators - addedViewCount;
             if (addedViewCount < viewsCount) {
                 viewAdded = addInitialsToList(null); //create a view to not replace the current collab.
