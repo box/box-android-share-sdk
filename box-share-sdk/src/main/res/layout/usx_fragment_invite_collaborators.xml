@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="tokenizer"
@@ -79,16 +80,18 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:onClickListener="@{onRoleClickedListener}"
-                android:layout_height="@dimen/box_sharesdk_medium_cell_height"
+                android:layout_height="wrap_content"
                 android:background="@drawable/box_ripple_btn_blue">
 
                 <TextView
+                    android:id="@+id/role_name"
                     style="@style/BoxCellSubHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_new"
                     android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_cell_component"
                     app:roleName="@{role}"
+                    tools:text="Placeholder"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -96,9 +99,12 @@
                     style="@style/BoxCellText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_new_small"
                     android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_new"
                     android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin_cell_component"
+                    app:layout_constraintTop_toBottomOf="@id/role_name"
                     app:roleDescription="@{role}"
+                    tools:text="@string/lorem_placeholder"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent" />
 
