@@ -167,7 +167,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
         for (int i = 0; i < totalCollaborators && addedViewCount < viewsCount; i++) {
             BoxCollaborator collaborator = collaborations.get(i).getAccessibleBy();
             if (collaborator != null) {
-                if (addedViewCount < viewsCount) viewAdded = addInitialsToList(collaborator);
+                viewAdded = addInitialsToList(collaborator);
                 addedViewCount++;
             }
         }
