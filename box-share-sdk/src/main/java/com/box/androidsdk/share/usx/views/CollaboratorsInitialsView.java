@@ -161,7 +161,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
 
 
         clearInitialsView();
-        int viewsCount = 3;
+        int viewsCount = 6;
         int knownCollabs = 0;
         View viewAdded = null;
         for (int i = 0; i < totalCollaborators; i++) {
