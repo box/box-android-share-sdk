@@ -230,7 +230,7 @@ public class ShareRepo  {
 
     /**
      * Returns a LiveData which holds collaborations information about the item.
-     * @returns a LiveData which holds collaborations information about the item
+     * @return a LiveData which holds collaborations information about the item
      */
     public LiveData<BoxResponse<BoxIteratorCollaborations>> getCollaborations() {
         return mCollaborations;

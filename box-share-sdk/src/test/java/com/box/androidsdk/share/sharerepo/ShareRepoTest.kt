@@ -53,6 +53,8 @@ class ShareRepoTest {
         whenever(shareController.addCollaborations(mockShareItem, mockSelectedRole, mockEmailList)).thenReturn(mockAddCollabsResponseTask)
         whenever(shareController.createDefaultSharedLink(mockShareItem)).thenReturn(mockSharedLinksOperationResponseTask)
         whenever(shareController.disableShareLink(mockShareItem)).thenReturn(mockSharedLinksOperationResponseTask)
+
+        shareRepo = ShareRepo(shareController)
         createStubs()
     }
 
