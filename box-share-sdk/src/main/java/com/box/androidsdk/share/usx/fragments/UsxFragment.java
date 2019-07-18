@@ -3,6 +3,7 @@ package com.box.androidsdk.share.usx.fragments;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,9 +97,21 @@ public class UsxFragment extends BoxFragment {
         binding.setOnEditAccessClickListener(mOnEditAccessClickListener);
         binding.setOnCollabsListener(mOnCollabsClickListener);
         binding.setOnCopyLinkListener(v -> copyLink());
+        binding.setOnShareListener(v -> showShareVia());
         CollaboratorsInitialsVM vm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaboratorsInitialsVM.class);
         binding.initialViews.setArguments(vm);
     }
+
+
+    private void showShareVia() {
+        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, String.format(getString(R.string.box_sharesdk_I_have_shared_x_with_you), mShareItem.getName()));
+        emailIntent.putExtra(Intent.EXTRA_TEXT, mShareItem.getSharedLink().getURL());
+        emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(Intent.createChooser(emailIntent, getString(R.string.box_sharesdk_send_with)));
+    }
+
 
     public void refreshItemInfo() {
         showSpinner();

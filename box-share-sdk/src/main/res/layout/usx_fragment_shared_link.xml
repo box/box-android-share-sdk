@@ -23,6 +23,9 @@
         <variable
             name="shareItem"
             type="com.box.androidsdk.content.models.BoxItem" />
+        <variable
+            name="onShareListener"
+            type="android.view.View.OnClickListener" />
     </data>
     <FrameLayout
         android:orientation="vertical"
@@ -186,6 +189,7 @@
                         style="@style/BoxCellSubHeader"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/box_sharesdk_small_cell_height"
+                        android:onClickListener="@{onShareListener}"
                         android:background="@drawable/box_ripple_btn_blue"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/box_sharesdk_horizontal_margin_new"

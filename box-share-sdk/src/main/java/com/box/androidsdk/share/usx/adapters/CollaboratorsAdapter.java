@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.databinding.DataBindingUtil;
+
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxCollaborator;
@@ -17,8 +19,11 @@ import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.ShareController;
+import com.box.androidsdk.share.databinding.UsxListItemCollaborationBinding;
+import com.box.androidsdk.share.vm.BaseShareVM;
 import com.eclipsesource.json.JsonObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class CollaboratorsAdapter extends BaseAdapter {
@@ -26,15 +31,17 @@ public class CollaboratorsAdapter extends BaseAdapter {
     private ArrayList<BoxCollaboration> mItems = new ArrayList<BoxCollaboration>();
     private Context mContext;
     private BoxCollaborationItem mFolder;
-    private ShareController mController;
     private final BoxCollaborator mAnotherPersonCollaborator;
 
+    String userId;
 
-    public CollaboratorsAdapter(Context context, BoxCollaborationItem collaborationItem, ShareController controller) {
+    private BaseShareVM mBaseShareVM;
+
+    public CollaboratorsAdapter(Context context, BoxCollaborationItem collaborationItem, BaseShareVM baseShareVM) {
         super();
         mContext = context;
         mFolder = collaborationItem;
-        mController = controller;
+        mBaseShareVM = baseShareVM;
         // This item is used for displaying users that do not have a box account have been invited as a collaborator
         JsonObject jsonObject = new JsonObject();
         jsonObject.add(BoxCollaborator.FIELD_NAME, mContext.getString(R.string.box_sharesdk_another_person));
@@ -66,7 +73,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
         // In absence of permission, user can change permission only for self
         BoxCollaboration collaboration = mItems.get(position);
         if (collaboration != null && collaboration.getAccessibleBy() != null &&
-                collaboration.getAccessibleBy().getId().equals(mController.getCurrentUserId())) {
+                collaboration.getAccessibleBy().getId().equals(mBaseShareVM.getUserId())) {
             return true;
         }
 
@@ -76,34 +83,27 @@ public class CollaboratorsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_collaboration, parent, false);
-            holder = new ViewHolder();
-            holder.nameView = (TextView) convertView.findViewById(R.id.collaborator_role_title);
-            holder.roleView = (TextView) convertView.findViewById(R.id.collaborator_role);
-            holder.initialsView = (BoxAvatarView) convertView.findViewById(R.id.collaborator_initials);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.usx_list_item_collaboration, parent, false);
         }
         BoxCollaboration collaboration = mItems.get(position);
+        UsxListItemCollaborationBinding binding = DataBindingUtil.bind(convertView);
         if (collaboration != null) {
             BoxCollaborator collaborator = collaboration.getAccessibleBy();
             String name;
             if (collaborator == null) {
                 name = mContext.getString(R.string.box_sharesdk_another_person);
-                holder.initialsView.loadUser(mAnotherPersonCollaborator, mController.getAvatarController());
+                binding.collaboratorInitials.loadUser(mAnotherPersonCollaborator, mBaseShareVM.getAvatarController());
             } else {
                 name = collaborator.getName();
-                holder.initialsView.loadUser(collaborator, mController.getAvatarController());
+                binding.collaboratorInitials.loadUser(collaborator, mBaseShareVM.getAvatarController());
             }
             String description = collaboration.getStatus() == BoxCollaboration.Status.ACCEPTED ?
                     CollaborationUtils.getRoleName(mContext, collaboration.getRole()) :
                     CollaborationUtils.getCollaborationStatusText(mContext, collaboration.getStatus());
-            holder.nameView.setText(name);
-            holder.collaboration = collaboration;
-            holder.roleView.setText(description);
+            binding.collaboratorRoleTitle.setText(name);
+            convertView.setTag(collaboration);
+            binding.collaboratorRole.setText(description);
         }
 
         if (isEnabled(position)){
@@ -148,12 +148,5 @@ public class CollaboratorsAdapter extends BaseAdapter {
             }
         }
         return position;
-    }
-
-    public static class ViewHolder {
-        public TextView nameView;
-        public TextView roleView;
-        public BoxAvatarView initialsView;
-        public BoxCollaboration collaboration;
     }
 }

@@ -12,7 +12,7 @@ import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.activities.BoxCollaborationsActivity;
+import com.box.androidsdk.share.usx.activities.BoxCollaborationsActivity;
 import com.box.androidsdk.share.usx.fragments.SharedLinkAccessFragment;
 import com.box.androidsdk.share.usx.fragments.UsxFragment;
 

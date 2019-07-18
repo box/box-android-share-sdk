@@ -1,6 +1,7 @@
 package com.box.androidsdk.share.usx.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,8 +119,8 @@ public class SharedLinkAccessFragment extends BoxFragment {
         binding.setOnDateListener(v -> showDatePicker(new Date()));
         binding.setShareItem(mShareLinkVM.getShareItem());
 
-    }
 
+    }
 
 
     /**
