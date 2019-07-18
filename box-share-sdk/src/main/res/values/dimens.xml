@@ -23,6 +23,7 @@
 
     <dimen name="box_sharesdk_horizontal_margin_new">24dp</dimen>
     <dimen name="box_sharesdk_vertical_margin_new">24dp</dimen>
+
     <dimen name="box_sharesdk_vertical_margin_new_small">8dp</dimen>
 
 
@@ -32,10 +33,16 @@
     <dimen name="box_sharesdk_radio_horizontal_margin_components">26dp</dimen>
     <dimen name="box_sharesdk_radio_vertical_margin_components">8dp</dimen>
     <dimen name="box_sharesdk_radio_height">96dp</dimen>
+    <dimen name="box_sharesdk_radio_height_large">112dp</dimen>
     <dimen name="box_sharesdk_radio_button_size">20dp</dimen>
     <dimen name="box_sharesdk_radio_horizontal_offset">-6dp</dimen>
     <dimen name="box_sharesdk_remove_button_margin">16dp</dimen>
 
     <dimen name="box_sharesdk_chip_size">28dp</dimen>
     <dimen name="box_sharesdk_chip_margin">10dp</dimen>
+
+    <dimen name="box_sharesdk_initials_size">24dp</dimen>
+    <dimen name="box_sharesdk_initials_offset">-7dp</dimen>
+
+    <dimen name="box_sharesdk_calendar_icon_margin">12dp</dimen>
 </resources>
