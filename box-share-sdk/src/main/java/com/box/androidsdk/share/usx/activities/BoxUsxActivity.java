@@ -13,8 +13,7 @@ import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.activities.BoxCollaborationsActivity;
-import com.box.androidsdk.share.usx.activities.BoxActivity;
-import com.box.androidsdk.share.usx.activities.BoxInviteCollaboratorsActivity;
+import com.box.androidsdk.share.usx.fragments.SharedLinkAccessFragment;
 import com.box.androidsdk.share.usx.fragments.UsxFragment;
 
 /**
@@ -36,6 +35,8 @@ public class BoxUsxActivity extends BoxActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (fragment == null || fragment instanceof UsxFragment) {
             setupUsxFragment();
+        } else {
+            setupSharedLinkAccessFragment();
         }
     }
 
@@ -46,7 +47,7 @@ public class BoxUsxActivity extends BoxActivity {
         ft.replace(R.id.fragmentContainer, mFragment);
         ft.commit();
         mFragment.setVMFactory(mShareVMFactory);
-        ((UsxFragment)mFragment).setOnEditLinkAccessButtonClickListener(v -> {});
+        ((UsxFragment)mFragment).setOnEditLinkAccessButtonClickListener(v -> setupSharedLinkAccessFragment());
         ((UsxFragment)mFragment).setOnInviteCollabsClickListener(v ->
                 startActivityForResult(BoxInviteCollaboratorsActivity.getLaunchIntent(BoxUsxActivity.this,
                         (BoxCollaborationItem) baseShareVM.getShareItem(), mSession), REQUEST_COLLABORATORS));
@@ -54,6 +55,26 @@ public class BoxUsxActivity extends BoxActivity {
                 startActivityForResult(BoxCollaborationsActivity.getLaunchIntent(BoxUsxActivity.this,
                         (BoxCollaborationItem) baseShareVM.getShareItem(), mSession), REQUEST_COLLABORATORS));
     }
+
+    private void setupSharedLinkAccessFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+        SharedLinkAccessFragment fragment = SharedLinkAccessFragment.newInstance(baseShareVM.getShareItem());
+        fragment.setVMFactory(mShareVMFactory);
+        ft.replace(R.id.fragmentContainer, fragment);
+        ft.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (fragment instanceof SharedLinkAccessFragment) {
+            setupUsxFragment();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
 
     //
