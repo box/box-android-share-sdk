@@ -118,14 +118,13 @@ public class UsxFragment extends BoxFragment {
         mSharedLinkVm.fetchItemInfo(mSharedLinkVm.getShareItem());
     }
 
-    private Observer<PresenterData<BoxItem>> onBoxItemComplete = boxItemPresenterData -> {
+    private Observer<PresenterData<BoxItem>> onBoxItemComplete = presenterData -> {
         dismissSpinner();
-        if (boxItemPresenterData.isSuccess() && boxItemPresenterData.getData() != null) {
-            //data might still be null if the original request was not BoxRequestItem
-            setShareItem(boxItemPresenterData.getData());
+        if (presenterData.isSuccess() && presenterData.getData() != null) {
+            setShareItem(presenterData.getData());
         } else {
-            if(boxItemPresenterData.getStrCode() != PresenterData.NO_MESSAGE) {
-                showToast(boxItemPresenterData.getStrCode());
+            if(presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
+                showToast(presenterData.getStrCode());
             }
         }
     };
