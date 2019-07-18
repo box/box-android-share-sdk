@@ -251,8 +251,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
     private Observer<PresenterData<BoxItem>> onBoxItemComplete = presenterData -> {
         dismissSpinner();
-        if (presenterData.isSuccess() && presenterData.getData() != null) {
-            //data might still be null if the original request was not BoxRequestItem
+        if (presenterData.isSuccess()) {
             mCollaborationsShareVM.setShareItem(presenterData.getData());
             fetchCollaborations();
         } else {
@@ -311,6 +310,10 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         if (presenterData.isSuccess()) {
             BoxRequestsShare.DeleteCollaboration req = (BoxRequestsShare.DeleteCollaboration) presenterData.getData();
             mCollaboratorsAdapter.delete(req.getId());
+
+            if (mCollaboratorsAdapter.getCount() == 0) {
+                fetchCollaborations(); //this will force the view to refresh
+            }
             //fetchCollaborations(); //refresh collaborations
         } else {
             BoxLogUtils.e(CollaborationsFragment.class.getName(), "Delete Collaborator request failed",
