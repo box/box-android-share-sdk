@@ -162,25 +162,31 @@ public class CollaboratorsInitialsView extends LinearLayout {
 
         clearInitialsView();
         int viewsCount = 6;
-        int knownCollabs = 0;
+        int addedViewCount = 0;
         View viewAdded = null;
-        for (int i = 0; i < totalCollaborators; i++) {
+        for (int i = 0; i < totalCollaborators && addedViewCount < viewsCount; i++) {
             BoxCollaborator collaborator = collaborations.get(i).getAccessibleBy();
             if (collaborator != null) {
-                if (knownCollabs < viewsCount) viewAdded = addInitialsToList(collaborator);
-                knownCollabs++;
+                if (addedViewCount < viewsCount) viewAdded = addInitialsToList(collaborator);
+                addedViewCount++;
             }
         }
-        if (knownCollabs > viewsCount) { //if the number of known collabs is more than the number of collabs shown
-            int remaining = knownCollabs - viewsCount;
+        if (addedViewCount < totalCollaborators) {
+            //if the number of known collabs is more than the number of collabs shown
+            int remaining = totalCollaborators - addedViewCount;
+            if (addedViewCount < viewsCount) {
+                viewAdded = addInitialsToList(null); //create a view to not replace the current collab.
+            } else {
+                remaining++; //a known collab will be replaced so count him as remaining
+            }
             BoxAvatarView initials = (BoxAvatarView) viewAdded.findViewById(R.id.collaborator_initials);
             JsonObject jsonObject = new JsonObject();
-            jsonObject.set(BoxCollaborator.FIELD_NAME, Integer.toString(remaining + 1));
+            jsonObject.set(BoxCollaborator.FIELD_NAME, Integer.toString(remaining));
             jsonObject.set(BoxCollaboration.FIELD_ID, "collab_initials_number_user");
             BoxUser numberUser = new BoxUser(jsonObject);
             initials.loadUser(numberUser, mCollaboratorsInitialsVM.getAvatarController());
         }
-        mCollabsCount.setText(getResources().getQuantityString(R.plurals.box_sharesdk_collaborators_count_plurals, knownCollabs, knownCollabs));
+        mCollabsCount.setText(getResources().getQuantityString(R.plurals.box_sharesdk_collaborators_count_plurals, totalCollaborators, totalCollaborators));
     }
 
 
