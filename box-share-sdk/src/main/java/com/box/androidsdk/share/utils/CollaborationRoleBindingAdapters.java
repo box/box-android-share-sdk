@@ -79,6 +79,7 @@ public class CollaborationRoleBindingAdapters {
 
         if (allowRemove) {
             removeButton.setVisibility(View.VISIBLE);
+            removeButton.setOnClickListener(v -> notifier.notifyRemove());
         }
     }
     @BindingAdapter(value = {"roleOptions"})
