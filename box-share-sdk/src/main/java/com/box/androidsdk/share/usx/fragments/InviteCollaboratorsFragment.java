@@ -75,7 +75,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_invite_collaborators, container,false);
         View view = binding.getRoot();
         binding.setLifecycleOwner(getViewLifecycleOwner());
-
+        setTitles();
         mSelectRoleShareVM = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
 
         InviteeAdapter adapter = createInviteeAdapter(getActivity());
@@ -149,6 +149,10 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
                     List<BoxCollaboration.Role> roles = mSelectRoleShareVM.getRoles();
                     BoxCollaboration.Role selectedRole = roles != null && roles.size() > 0 ? getBestDefaultRole(collaborationItem.getDefaultInviteeRole(), roles) : null;
                     setSelectedRole(selectedRole);
+                    if (selectedRole == null) { //if user cannot select any role, he does not have permission for inviting.
+                        showNoPermissionToast();
+                        getActivity().finish();
+                    }
                 }
                 mInviteCollaboratorsShareVM.setShareItem(collaborationItem);
             } else {
