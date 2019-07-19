@@ -93,8 +93,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         mInviteCollaboratorsShareVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(InviteCollaboratorsShareVM.class);
         mInviteCollaboratorsShareVM.setInvitationSucceded(true);
 
-        mInviteCollaboratorsShareVM.fetchItemInfoFromRemote(mInviteCollaboratorsShareVM.getShareItem());
-
         mInviteCollaboratorsShareVM.getRoleItem().observe(this, onRoleItemChange);
         mInviteCollaboratorsShareVM.getInvitees().observe(this, onInviteesChanged);
         mInviteCollaboratorsShareVM.getInviteCollabs().observe(this, onInviteCollabs);
