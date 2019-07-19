@@ -12,10 +12,5 @@
         android:textAlignment="center"
         android:gravity="center"
         android:layout_gravity="center"
-<<<<<<< HEAD
-
-=======
-        app:avatarTextSize="10"
->>>>>>> change another person to show email and look of initials
         />
 </LinearLayout>

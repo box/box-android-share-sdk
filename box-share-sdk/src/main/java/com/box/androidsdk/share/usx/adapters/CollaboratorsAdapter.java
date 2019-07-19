@@ -33,8 +33,6 @@ public class CollaboratorsAdapter extends BaseAdapter {
     private BoxCollaborationItem mFolder;
     private final BoxCollaborator mAnotherPersonCollaborator;
 
-    String userId;
-
     private BaseShareVM mBaseShareVM;
 
     public CollaboratorsAdapter(Context context, BoxCollaborationItem collaborationItem, BaseShareVM baseShareVM) {
@@ -92,7 +90,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
             BoxCollaborator collaborator = collaboration.getAccessibleBy();
             String name;
             if (collaborator == null) {
-                name =  name = collaboration.getInviteEmail() != null ? collaboration.getInviteEmail() : mContext.getString(R.string.box_sharesdk_another_person);
+                name =  mContext.getString(R.string.box_sharesdk_another_person);
                 binding.collaboratorInitials.loadUser(mAnotherPersonCollaborator, mBaseShareVM.getAvatarController());
             } else {
                 name = collaborator.getName();
