@@ -114,8 +114,13 @@ public class UsxFragment extends BoxFragment {
             if(boxItemPresenterData.getStrCode() != PresenterData.NO_MESSAGE) {
                 showToast(boxItemPresenterData.getStrCode());
             }
+            refreshUI();
         }
     };
+
+    private void refreshUI() {
+        binding.setShareItem(mSharedLinkVm.getShareItem());
+    }
 
     public void setOnEditLinkAccessButtonClickListener(View.OnClickListener onEditLinkAccessButtonClickListener) {
         this.mOnEditAccessClickListener = onEditLinkAccessButtonClickListener;
@@ -192,7 +197,7 @@ public class UsxFragment extends BoxFragment {
 
                     @Override
                     public void onNegativeButtonClicked(PositiveNegativeDialogFragment fragment) {
-                        binding.sharedLinkSwitch.setChecked(true);
+                        refreshUI();
                     }
                 })
                 .show(getActivity().getSupportFragmentManager(), UNSHARE_WARNING_TAG);
