@@ -120,7 +120,7 @@ public class UsxFragment extends BoxFragment {
     };
 
     private void refreshUI() {
-        binding.setShareItem(mSharedLinkVm.getShareItem());
+        binding.setShareItem(mSharedLinkVm.getShareItem()); //data binding is used to display data based on this item. This will force the UI to refresh.
     }
 
     public void setOnEditLinkAccessButtonClickListener(View.OnClickListener onEditLinkAccessButtonClickListener) {
@@ -206,7 +206,7 @@ public class UsxFragment extends BoxFragment {
 
     public void setShareItem(BoxItem item) {
         mSharedLinkVm.setShareItem(item);
-        binding.setShareItem(item);
+        refreshUI();
     }
 
 }
