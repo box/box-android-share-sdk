@@ -334,13 +334,4 @@ public class ShareSDKTransformer {
         }
         return data;
     }
-
-    public static String capitalizeFirstLetterOfEveryWord(String str) {
-        StringBuilder sb = new StringBuilder();
-        for(String curr: str.split(" ")) {
-            sb.append(Character.toUpperCase(curr.charAt(0)) + curr.substring(1) + " ");
-        }
-        sb.setLength(sb.length() - 1);
-        return sb.toString();
-    }
 }
