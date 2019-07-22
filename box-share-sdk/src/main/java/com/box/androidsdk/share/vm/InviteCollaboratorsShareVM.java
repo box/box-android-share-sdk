@@ -9,7 +9,7 @@ import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
-import com.box.androidsdk.share.utils.InviteCollabsTransformer;
+import com.box.androidsdk.share.utils.ShareSDKTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,28 +29,28 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
 
     public InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
-        InviteCollabsTransformer transformer = new InviteCollabsTransformer();
-        mRoleItem = Transformations.map(shareRepo.getRoleItem(), response -> transformer.getFetchRolesItemPresenterData(response));
-        mInviteCollabs = Transformations.map(shareRepo.getInviteCollabsBatchResponse(), response -> transformer.getInviteCollabsPresenterDataFromBoxResponse(response));
-        mInvitees = Transformations.map(shareRepo.getInvitees(), response -> transformer.getInviteesPresenterData(response));
+        ShareSDKTransformer transformer = new ShareSDKTransformer();
+        mRoleItem = Transformations.map(shareRepo.getRoleItem(),  transformer::getFetchRolesItemPresenterData);
+        mInviteCollabs = Transformations.map(shareRepo.getInviteCollabsBatchResponse(), transformer::getInviteCollabsPresenterDataFromBoxResponse);
+        mInvitees = Transformations.map(shareRepo.getInvitees(), transformer::getInviteesPresenterData);
         mInviteesList = new ArrayList<>();
     }
 
 
     //used for mocking the transformer since it's not VM job.
     @VisibleForTesting
-    InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem, InviteCollabsTransformer transformer) {
+    InviteCollaboratorsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem, ShareSDKTransformer transformer) {
         super(shareRepo, shareItem);
-        mRoleItem = Transformations.map(shareRepo.getRoleItem(), response -> transformer.getFetchRolesItemPresenterData(response));
-        mInviteCollabs = Transformations.map(shareRepo.getInviteCollabsBatchResponse(), response -> transformer.getInviteCollabsPresenterDataFromBoxResponse(response));
-        mInvitees = Transformations.map(shareRepo.getInvitees(), response -> transformer.getInviteesPresenterData(response));
+        mRoleItem = Transformations.map(shareRepo.getRoleItem(),  transformer::getFetchRolesItemPresenterData);
+        mInviteCollabs = Transformations.map(shareRepo.getInviteCollabsBatchResponse(), transformer::getInviteCollabsPresenterDataFromBoxResponse);
+        mInvitees = Transformations.map(shareRepo.getInvitees(), transformer::getInviteesPresenterData);
     }
 
     /**
      * Makes a backend call through share repo for fetching roles.
      * @param item the item to fetch roles on
      */
-    public void fetchRolesFromRemote(BoxCollaborationItem item) {
+    public void fetchRoles(BoxCollaborationItem item) {
         mShareRepo.fetchRolesFromRemote(item);
     }
 
@@ -69,7 +69,7 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
      * @param boxCollaborationItem the item to get invitees on
      * @param filter the term used for filtering invitees
      */
-    public void fetchInviteesFromRemote(BoxCollaborationItem boxCollaborationItem, String filter) {
+    public void fetchInvitees(BoxCollaborationItem boxCollaborationItem, String filter) {
         mShareRepo.fetchInviteesFromRemote(boxCollaborationItem, filter);
     }
 
@@ -108,6 +108,7 @@ public class InviteCollaboratorsShareVM extends BaseShareVM {
     public void setInvitationSucceded(boolean failed) {
         this.mInvitationSuccess = failed;
     }
+
     public boolean isInvitationSucceded() {
         return mInvitationSuccess;
     }

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -19,7 +21,6 @@ import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.api.ShareController;
-import com.box.androidsdk.share.utils.FragmentTitle;
 import com.box.androidsdk.share.vm.ShareVMFactory;
 
 import java.util.concurrent.locks.Lock;
@@ -29,10 +30,10 @@ import java.util.concurrent.locks.ReentrantLock;
  * Base class for Fragments in Share SDK
  * This fragment contains common code for all fragments
  */
-public abstract class BoxFragment extends Fragment implements FragmentTitle {
+public abstract class BoxFragment extends Fragment {
 
     protected static final String TAG = BoxFragment.class.getName();
-    protected BoxItem mShareItem;
+    private BoxItem mShareItem; //changed to private since it should only be used for checking mShareItem's validity during onCreate; throughout the fragment vm will be used instead.
 
     private static final int  DEFAULT_SPINNER_DELAY = 500;
 
@@ -48,7 +49,6 @@ public abstract class BoxFragment extends Fragment implements FragmentTitle {
         setRetainInstance(true);
         mDialogHandler = new LastRunnableHandler();
         mSpinnerLock = new ReentrantLock();
-
         if (savedInstanceState != null && savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM) != null){
             mShareItem = (BoxItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
         } else if (getArguments() != null) {
@@ -219,7 +219,13 @@ public abstract class BoxFragment extends Fragment implements FragmentTitle {
     protected void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
-    protected void showToast(int strRes) {
+    protected void showToast(@StringRes int strRes) {
         Toast.makeText(getContext(), getString(strRes), Toast.LENGTH_SHORT).show();
     }
+
+    /**
+     * Implement this and change title and subtitle through using ActionBarTitleVM.
+     */
+    protected abstract void setTitles();
+
 }

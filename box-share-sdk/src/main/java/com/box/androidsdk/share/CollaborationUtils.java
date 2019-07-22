@@ -87,4 +87,13 @@ public class CollaborationUtils {
         initialsView.setText(String.format(context.getResources().getString(R.string.box_sharedsdk_collaborators_initials_count), number));
         initialsView.setTextColor(context.getResources().getColor(R.color.box_sharesdk_initials_count_color));
     }
+
+    public static String capitalizeFirstLetterOfEveryWord(String str) {
+        StringBuilder sb = new StringBuilder();
+        for(String curr: str.split(" ")) {
+            sb.append(Character.toUpperCase(curr.charAt(0)) + curr.substring(1) + " ");
+        }
+        sb.setLength(sb.length() - 1);
+        return sb.toString();
+    }
 }

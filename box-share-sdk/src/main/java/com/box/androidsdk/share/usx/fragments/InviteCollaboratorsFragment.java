@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.share.databinding.UsxFragmentInviteCollaboratorsBinding;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
+import com.box.androidsdk.share.vm.ActionbarTitleVM;
 import com.box.androidsdk.share.vm.InviteCollaboratorsPresenterData;
 import com.box.androidsdk.share.vm.InviteCollaboratorsShareVM;
 import com.box.androidsdk.share.vm.PresenterData;
@@ -88,6 +89,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         binding.setTokenListener(this);
         binding.setCollaboratorsPresent(mSelectRoleShareVM.isSendInvitationEnabled());
 
+        binding.inviteCollaboratorAutocomplete.requestFocus();
 
         mFilterTerm = "";
         mInviteCollaboratorsShareVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(InviteCollaboratorsShareVM.class);
@@ -134,11 +136,11 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         return view;
     }
 
-    private Observer<PresenterData<BoxCollaborationItem>> onRoleItemChange = presenter -> {
+    private Observer<PresenterData<BoxCollaborationItem>> onRoleItemChange = presenterData -> {
         dismissSpinner();
-        if (presenter.isSuccess() && getCollaborationItem() != null) {
+        if (presenterData.isSuccess() && getCollaborationItem() != null) {
             if (getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
-                BoxCollaborationItem collaborationItem = presenter.getData();
+                BoxCollaborationItem collaborationItem = presenterData.getData();
                 mSelectRoleShareVM.setRoles(collaborationItem.getAllowedInviteeRoles());
                 BoxCollaboration.Role role = mSelectRoleShareVM.getSelectedRole().getValue();
                 if (role != null) {
@@ -156,45 +158,45 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         } else {
             //need to log Exception
             BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "Fetch roles request failed",
-                    presenter.getException());
-            showToast(getString(presenter.getStrCode())); //was just collaborationfragment
+                    presenterData.getException());
+            showToast(getString(presenterData.getStrCode()));
         }
     };
 
-    private Observer<PresenterData<BoxIteratorInvitees>> onInviteesChanged = presenter -> {
-            if (presenter.isSuccess()) {
-                binding.getAdapter().setInvitees(presenter.getData());
-            } else {
-                BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",
-                        presenter.getException());
-                showToast(getString(presenter.getStrCode()) + ((BoxException)presenter.getException()).getResponseCode()); //need response code
-            }
+    private Observer<PresenterData<BoxIteratorInvitees>> onInviteesChanged = presenterData -> {
+        if (presenterData.isSuccess()) {
+            binding.getAdapter().setInvitees(presenterData.getData());
+        } else {
+            BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",
+                    presenterData.getException());
+            showToast(getString(presenterData.getStrCode()) + ((BoxException)presenterData.getException()).getResponseCode()); //need response code
+        }
     };
 
-    private Observer<InviteCollaboratorsPresenterData> onInviteCollabs = presenter -> {
+    private Observer<InviteCollaboratorsPresenterData> onInviteCollabs = presenterData -> {
         dismissSpinner();
         String message;
-        int alreadyAddedCount = presenter.getAlreadyAdddedCount();
-        if (presenter.isNonNullData()) {
+        int alreadyAddedCount = presenterData.getAlreadyAdddedCount();
+        if (presenterData.isNonNullData()) {
             if (alreadyAddedCount == 1) {
-                message = getResources().getQuantityString(presenter.getStrCode(), alreadyAddedCount, presenter.getData());
+                message = getResources().getQuantityString(presenterData.getStrCode(), alreadyAddedCount, presenterData.getData());
             } else if (alreadyAddedCount > 1) {
-                message = getResources().getQuantityString(presenter.getStrCode(), alreadyAddedCount, String.valueOf(alreadyAddedCount));
+                message = getResources().getQuantityString(presenterData.getStrCode(), alreadyAddedCount, String.valueOf(alreadyAddedCount));
             } else {
-                message = getString(presenter.getStrCode(), presenter.getData());
+                message = getString(presenterData.getStrCode(), presenterData.getData());
             }
 
         } else {
-            message = getString(presenter.getStrCode());
+            message = getString(presenterData.getStrCode());
         }
-        if (presenter.isSnackBarMessage()) {
+        if (presenterData.isSnackBarMessage()) {
             showSnackBar(message);
             //Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE).show();
         } else {
             showToast(message);
             getActivity().finish();
         }
-        mInviteCollaboratorsShareVM.setInvitationSucceded(presenter.isSuccess());
+        mInviteCollaboratorsShareVM.setInvitationSucceded(presenterData.isSuccess());
     };
 
     @Override
@@ -204,6 +206,13 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
         }
         return Activity.RESULT_CANCELED;
+    }
+
+    @Override
+    protected void setTitles() {
+        ActionbarTitleVM actionbarTitleVM = ViewModelProviders.of(getActivity()).get(ActionbarTitleVM.class);
+        actionbarTitleVM.setTitle(getString(R.string.box_sharesdk_invite_collaborators_activity_title));
+        actionbarTitleVM.setSubtitle(null);
     }
 
 
@@ -246,13 +255,13 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     }
     private InviteeAdapter.InviteeAdapterListener createInviteeAdapterListener() {
         return constraint -> {
-                if (constraint.length() >= 3) {
-                    String firstThreeChars = constraint.subSequence(0, 3).toString();
-                    if (!firstThreeChars.equals(mFilterTerm)) {
-                        mFilterTerm = firstThreeChars;
-                        fetchInvitees();
-                    }
+            if (constraint.length() >= 3) {
+                String firstThreeChars = constraint.subSequence(0, 3).toString();
+                if (!firstThreeChars.equals(mFilterTerm)) {
+                    mFilterTerm = firstThreeChars;
+                    fetchInvitees();
                 }
+            }
         };
     }
 
@@ -284,7 +293,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         }
 
         showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
-        mInviteCollaboratorsShareVM.fetchRolesFromRemote(getCollaborationItem());
+        mInviteCollaboratorsShareVM.fetchRoles(getCollaborationItem());
     }
     /**
      * Executes the request to retrieve the invitees that can be auto-completed
@@ -292,7 +301,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     private void fetchInvitees() {
         if (getCollaborationItem() instanceof BoxFolder) {
             // Currently this request is only supported for folders.
-            mInviteCollaboratorsShareVM.fetchInviteesFromRemote(getCollaborationItem(), mFilterTerm);
+            mInviteCollaboratorsShareVM.fetchInvitees(getCollaborationItem(), mFilterTerm);
         }
     }
 
@@ -366,13 +375,4 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         if (mInviteCollaboratorsShareVM.getInviteesList().isEmpty()) mSelectRoleShareVM.setSendInvitationEnabled(false);
     }
 
-    @Override
-    public int getFragmentTitle() {
-        return R.string.box_sharesdk_invite_collaborators_activity_title;
-    }
-
-    @Override
-    public int getFragmentSubtitle() {
-        return -1;
-    }
 }
