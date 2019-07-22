@@ -136,11 +136,11 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         return view;
     }
 
-    private Observer<PresenterData<BoxCollaborationItem>> onRoleItemChange = presenter -> {
+    private Observer<PresenterData<BoxCollaborationItem>> onRoleItemChange = presenterData -> {
         dismissSpinner();
-        if (presenter.isSuccess() && getCollaborationItem() != null) {
+        if (presenterData.isSuccess() && getCollaborationItem() != null) {
             if (getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
-                BoxCollaborationItem collaborationItem = presenter.getData();
+                BoxCollaborationItem collaborationItem = presenterData.getData();
                 mSelectRoleShareVM.setRoles(collaborationItem.getAllowedInviteeRoles());
                 BoxCollaboration.Role role = mSelectRoleShareVM.getSelectedRole().getValue();
                 if (role != null) {
@@ -158,45 +158,45 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         } else {
             //need to log Exception
             BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "Fetch roles request failed",
-                    presenter.getException());
-            showToast(getString(presenter.getStrCode()));
+                    presenterData.getException());
+            showToast(getString(presenterData.getStrCode()));
         }
     };
 
-    private Observer<PresenterData<BoxIteratorInvitees>> onInviteesChanged = presenter -> {
-        if (presenter.isSuccess()) {
-            binding.getAdapter().setInvitees(presenter.getData());
+    private Observer<PresenterData<BoxIteratorInvitees>> onInviteesChanged = presenterData -> {
+        if (presenterData.isSuccess()) {
+            binding.getAdapter().setInvitees(presenterData.getData());
         } else {
             BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",
-                    presenter.getException());
-            showToast(getString(presenter.getStrCode()) + ((BoxException)presenter.getException()).getResponseCode()); //need response code
+                    presenterData.getException());
+            showToast(getString(presenterData.getStrCode()) + ((BoxException)presenterData.getException()).getResponseCode()); //need response code
         }
     };
 
-    private Observer<InviteCollaboratorsPresenterData> onInviteCollabs = presenter -> {
+    private Observer<InviteCollaboratorsPresenterData> onInviteCollabs = presenterData -> {
         dismissSpinner();
         String message;
-        int alreadyAddedCount = presenter.getAlreadyAdddedCount();
-        if (presenter.isNonNullData()) {
+        int alreadyAddedCount = presenterData.getAlreadyAdddedCount();
+        if (presenterData.isNonNullData()) {
             if (alreadyAddedCount == 1) {
-                message = getResources().getQuantityString(presenter.getStrCode(), alreadyAddedCount, presenter.getData());
+                message = getResources().getQuantityString(presenterData.getStrCode(), alreadyAddedCount, presenterData.getData());
             } else if (alreadyAddedCount > 1) {
-                message = getResources().getQuantityString(presenter.getStrCode(), alreadyAddedCount, String.valueOf(alreadyAddedCount));
+                message = getResources().getQuantityString(presenterData.getStrCode(), alreadyAddedCount, String.valueOf(alreadyAddedCount));
             } else {
-                message = getString(presenter.getStrCode(), presenter.getData());
+                message = getString(presenterData.getStrCode(), presenterData.getData());
             }
 
         } else {
-            message = getString(presenter.getStrCode());
+            message = getString(presenterData.getStrCode());
         }
-        if (presenter.isSnackBarMessage()) {
+        if (presenterData.isSnackBarMessage()) {
             showSnackBar(message);
             //Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE).show();
         } else {
             showToast(message);
             getActivity().finish();
         }
-        mInviteCollaboratorsShareVM.setInvitationSucceded(presenter.isSuccess());
+        mInviteCollaboratorsShareVM.setInvitationSucceded(presenterData.isSuccess());
     };
 
     @Override
