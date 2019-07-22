@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxSharedLink;
+import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.databinding.UsxFragmentSharedLinkBinding;
 import com.box.androidsdk.share.vm.ActionbarTitleVM;
@@ -32,7 +33,7 @@ public class UsxFragment extends BoxFragment {
     protected void setTitles() {
         ActionbarTitleVM actionbarTitleVM = ViewModelProviders.of(getActivity()).get(ActionbarTitleVM.class);
         actionbarTitleVM.setTitle(mSharedLinkVm.getShareItem().getName());
-        actionbarTitleVM.setSubtitle(capitalizeFirstLetterOfEveryWord(mSharedLinkVm.getShareItem().getType()));
+        actionbarTitleVM.setSubtitle(CollaborationUtils.capitalizeFirstLetterOfEveryWord(mSharedLinkVm.getShareItem().getType()));
     }
 
     public interface UsxNotifiers {
@@ -167,7 +168,7 @@ public class UsxFragment extends BoxFragment {
     private void copyLink() {
         if (mSharedLinkVm.getShareItem().getSharedLink() != null) {
             ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Activity.CLIPBOARD_SERVICE);
-            BoxSharedLink sharedLink = mShareItem.getSharedLink();
+            BoxSharedLink sharedLink = mSharedLinkVm.getShareItem().getSharedLink();
             ClipData clipData = ClipData.newPlainText("", sharedLink.getURL());
             clipboard.setPrimaryClip(clipData);
             showToast(R.string.box_sharesdk_link_copied_to_clipboard);
