@@ -1,5 +1,6 @@
 package com.box.androidsdk.share.vm;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -7,7 +8,7 @@ public class ActionbarTitleVM extends ViewModel {
     MutableLiveData<String> mTitle = new MutableLiveData<>();
     MutableLiveData<String> mSubtitle = new MutableLiveData<>();
 
-    public MutableLiveData<String> getTitle() {
+    public LiveData<String> getTitle() {
         return mTitle;
     }
 
@@ -15,7 +16,7 @@ public class ActionbarTitleVM extends ViewModel {
         this.mTitle.postValue(title);
     }
 
-    public MutableLiveData<String> getSubtitle() {
+    public LiveData<String> getSubtitle() {
         return mSubtitle;
     }
 

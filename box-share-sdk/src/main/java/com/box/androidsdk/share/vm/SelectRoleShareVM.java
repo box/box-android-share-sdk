@@ -23,7 +23,7 @@ public class SelectRoleShareVM extends ViewModel {
 
     private MutableLiveData<Boolean> mSendInvitationEnabled = new MutableLiveData<>();
     private MutableLiveData<Boolean> mShowSend = new MutableLiveData<>();
-    String mName = "";
+    private String mName = "";
 
     public SelectRoleShareVM() {
         mSendInvitationEnabled.postValue(false);

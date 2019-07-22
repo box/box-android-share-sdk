@@ -22,6 +22,7 @@ import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Date;
 
 
@@ -32,23 +33,34 @@ public class ShareRepo  {
 
     private ShareController mController;
 
-    private final MutableLiveData<BoxResponse<BoxIteratorInvitees>> mInvitees = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mRoleItem = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxResponseBatch>> mInviteCollabsBatchResponse = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxIteratorInvitees>> mInvitees;
+    private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mRoleItem;
+    private final MutableLiveData<BoxResponse<BoxResponseBatch>> mInviteCollabsBatchResponse;
 
-    private final MutableLiveData<BoxResponse<BoxItem>> mItemInfo = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxItem>> mItemInfo;
 
-    private final MutableLiveData<BoxResponse<BoxItem>> mSharedLinkedItem = new MutableLiveData<>(); //this item will be used for doing any shared link related operations
+    private final MutableLiveData<BoxResponse<BoxItem>> mSharedLinkedItem; //this item will be used for doing any shared link related operations
 
-    private final MutableLiveData<BoxResponse<BoxIteratorCollaborations>> mCollaborations = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxFeatures>> mSupportedFeatures = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxIteratorCollaborations>> mCollaborations;
+    private final MutableLiveData<BoxResponse<BoxFeatures>> mSupportedFeatures;
 
-    private final MutableLiveData<BoxResponse<BoxVoid>> mDeleteCollaboration = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxVoid>> mUpdateOwner = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxCollaboration>> mUpdateCollaboration = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxVoid>> mDeleteCollaboration;
+    private final MutableLiveData<BoxResponse<BoxVoid>> mUpdateOwner;
+    private final MutableLiveData<BoxResponse<BoxCollaboration>> mUpdateCollaboration;
 
     public ShareRepo(ShareController controller) {
         this.mController = controller;
+        mInvitees = new MutableLiveData<>();
+        mRoleItem = new MutableLiveData<>();
+        mInviteCollabsBatchResponse = new MutableLiveData<>();
+        mItemInfo = new MutableLiveData<>();
+        mSharedLinkedItem = new MutableLiveData<>();
+        mCollaborations = new MutableLiveData<>();
+        mSupportedFeatures = new MutableLiveData<>();
+        mDeleteCollaboration = new MutableLiveData<>();
+        mUpdateOwner = new MutableLiveData<>();
+        mUpdateCollaboration = new MutableLiveData<>();
+
     }
 
     /**
@@ -163,18 +175,18 @@ public class ShareRepo  {
      * Change expiry date of a shared link of box collaboration item.
      * @param boxCollaborationItem the item to change expiry date on
      * @param date the expiry date
-     * @throws Exception
+     * @throws ParseException
      */
-    public void setExpiryDate(BoxCollaborationItem boxCollaborationItem, Date date) throws Exception {
+    public void setExpiryDate(BoxCollaborationItem boxCollaborationItem, Date date) throws ParseException {
         handleTaskAndPostValue(mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(boxCollaborationItem).setUnsharedAt(date)), mSharedLinkedItem);
     }
 
     /**
      * Remove expiry date of a shared link of box collaboration item.
      * @param boxCollaborationItem the item to remove expiry date on
-     * @throws Exception
+     * @throws ParseException
      */
-    public void removeExpiryDate(BoxCollaborationItem boxCollaborationItem) throws Exception {
+    public void removeExpiryDate(BoxCollaborationItem boxCollaborationItem) throws ParseException {
         handleTaskAndPostValue(mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(boxCollaborationItem).setRemoveUnsharedAtDate()), mSharedLinkedItem);
     }
 

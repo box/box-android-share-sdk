@@ -33,7 +33,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public abstract class BoxFragment extends Fragment {
 
     protected static final String TAG = BoxFragment.class.getName();
-    protected BoxItem mShareItem; //changed to private since it should only be used for checking mShareItem's validity during onCreate; throughout the fragment vm will be used instead.
+    private BoxItem mShareItem; //changed to private since it should only be used for checking mShareItem's validity during onCreate; throughout the fragment vm will be used instead.
 
     private static final int  DEFAULT_SPINNER_DELAY = 500;
 
@@ -223,17 +223,8 @@ public abstract class BoxFragment extends Fragment {
         Toast.makeText(getContext(), getString(strRes), Toast.LENGTH_SHORT).show();
     }
 
-    protected String capitalizeFirstLetterOfEveryWord(String str) {
-        StringBuilder sb = new StringBuilder();
-        for(String curr: str.split(" ")) {
-            sb.append(Character.toUpperCase(curr.charAt(0)) + curr.substring(1) + " ");
-        }
-        sb.setLength(sb.length() - 1);
-        return sb.toString();
-    }
-
     /**
-     * Implement this and change title through using ActionBarTitleVM.
+     * Implement this and change title and subtitle through using ActionBarTitleVM.
      */
     protected abstract void setTitles();
 
