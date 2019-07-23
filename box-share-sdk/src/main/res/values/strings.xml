@@ -108,9 +108,5 @@
     <string name="box_sharesdk_add_a_personal_message" description="text for a button that can be clicked to add a personal message when inviting a new collaborator for a file or folder">Add a personal message</string>
     <string name="box_sharesdk_personal_message" description="title for a textfield to add a personal message when inviting a new collaborator for a file or folder">Personal Message</string>
     <string name="box_sharesdk_send_invitation" description="text for a button for inviting a new collaborator for a file or folder">Send Invitation</string>
-    <plurals name="box_sharesdk_already_been_invited">
-        <item quantity="one">@string/box_sharesdk_has_already_been_invited</item>
-        <item quantity="other">@string/box_sharesdk_num_has_already_been_invited</item>
-    </plurals>
 
 </resources>
