@@ -25,7 +25,7 @@ import com.box.androidsdk.share.vm.SelectRoleShareVM;
  * Activity used to allow users to invite additional collaborators to the folder. Email addresses will auto complete from the phones address book
  * as well as Box's internal invitee endpoint. The intent to launch this activity can be retrieved via the static getLaunchIntent method
  */
-public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.OnClickListener {
+public class BoxInviteCollaboratorsActivity extends BoxActivity {
 
     SelectRoleShareVM selectRoleShareVM;
 
@@ -48,25 +48,22 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity implements View.
     private void setupInviteCollabFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-        mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) baseShareVM.getShareItem());
+        mFragment = InviteCollaboratorsFragment.newInstance((BoxCollaborationItem) baseShareVM.getShareItem(), new InviteCollaboratorsFragment.ClickListener() {
+            @Override
+            public void editAccessClicked() {
+                selectRoleShareVM.setAllowOwnerRole(false);
+                selectRoleShareVM.setAllowRemove(false);
+                selectRoleShareVM.setCollaboration(null);
+
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+                CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance();
+                ft.replace(R.id.fragmentContainer, rolesFragment, CollaboratorsRolesFragment.TAG);
+                selectRoleShareVM.setShowSend(false);
+                ft.commit();
+            }
+        }, mShareVMFactory);
         ft.replace(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
-        ft.commit();
-        ((InviteCollaboratorsFragment)mFragment).setOnEditAccessListener(this);
-        mFragment.setVMFactory(mShareVMFactory);
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        selectRoleShareVM.setAllowOwnerRole(false);
-        selectRoleShareVM.setAllowRemove(false);
-        selectRoleShareVM.setCollaboration(null);
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-        CollaboratorsRolesFragment rolesFragment = CollaboratorsRolesFragment.newInstance();
-        ft.replace(R.id.fragmentContainer, rolesFragment, CollaboratorsRolesFragment.TAG);
-        selectRoleShareVM.setShowSend(false);
         ft.commit();
     }
 

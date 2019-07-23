@@ -17,10 +17,12 @@ import com.box.androidsdk.share.vm.InviteCollaboratorsPresenterData;
 import com.box.androidsdk.share.vm.InviteCollaboratorsShareVM;
 import com.box.androidsdk.share.vm.PresenterData;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
+import com.box.androidsdk.share.vm.ShareVMFactory;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -48,8 +50,8 @@ import java.util.List;
  * Fragment to let users invite collaborators on an item.
  *
  * There are two listeners used here:
- * 1. InviteCollaboratorsListener is used to set up a listener by the parent Activity or Fragment on this Fragment.
- * 2. ShowCollaboratorsListener is used to set up a listener by this fragment on the child custom view called CollaboratorsInitialsView.
+ * 1. InviteCollaboratorsListener is used to set up a mListener by the parent Activity or Fragment on this Fragment.
+ * 2. ShowCollaboratorsListener is used to set up a mListener by this fragment on the child custom view called CollaboratorsInitialsView.
  */
 
 public class InviteCollaboratorsFragment extends BoxFragment implements TokenCompleteTextView.TokenListener<BoxInvitee> {
@@ -64,11 +66,13 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     private String mFilterTerm;
     UsxFragmentInviteCollaboratorsBinding binding;
 
-    private View.OnClickListener mOnEditAccessListener;
     InviteCollaboratorsShareVM mInviteCollaboratorsShareVM;
     SelectRoleShareVM mSelectRoleShareVM;
+    ClickListener mListener;
 
-
+    public interface ClickListener {
+        void editAccessClicked();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,7 +88,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
         binding.setAdapter(adapter);
         binding.setTokenizer(tokenizer);
-        binding.setOnRoleClickedListener(mOnEditAccessListener);
+        binding.setOnRoleClickedListener(v -> mListener.editAccessClicked());
         binding.setOnSendInvitationClickedListener(v -> addCollaborations());
         binding.setTokenListener(this);
         binding.setCollaboratorsPresent(mSelectRoleShareVM.isSendInvitationEnabled());
@@ -273,7 +277,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // Attach the listener to view once createView is complete
+        // Attach the mListener to view once createView is complete
     }
 
 
@@ -285,9 +289,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         }
     }
 
-    public void setOnEditAccessListener(View.OnClickListener listener) {
-        mOnEditAccessListener = listener;
-    }
     /**
      * Executes the request to retrieve the available roles for the item
      */
@@ -355,15 +356,18 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         return (BoxCollaborationItem) mInviteCollaboratorsShareVM.getShareItem();
     }
 
-    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem) {
-        return newInstance(collaborationItem, true);
+    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem
+    , ClickListener listener, ShareVMFactory factory) {
+        return newInstance(collaborationItem, listener, factory, true);
     }
 
-    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem, boolean useContactsProvider) {
+    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem, ClickListener listener, ShareVMFactory factory, boolean useContactsProvider) {
         Bundle args = BoxFragment.getBundle(collaborationItem);
         InviteCollaboratorsFragment fragment = new InviteCollaboratorsFragment();
         args.putBoolean(EXTRA_USE_CONTACTS_PROVIDER, useContactsProvider);
         fragment.setArguments(args);
+        fragment.mListener = listener;
+        fragment.mShareVMFactory = factory;
         return fragment;
     }
 

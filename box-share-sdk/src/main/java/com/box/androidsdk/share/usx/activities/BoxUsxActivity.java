@@ -42,17 +42,26 @@ public class BoxUsxActivity extends BoxActivity {
     private void setupUsxFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-        mFragment = UsxFragment.newInstance(baseShareVM.getShareItem());
+        mFragment = UsxFragment.newInstance(baseShareVM.getShareItem(), new UsxFragment.ClickListener() {
+            @Override
+            public void editAccessClicked() {
+
+            }
+
+            @Override
+            public void inviteCollabsClicked() {
+                startActivityForResult(BoxInviteCollaboratorsActivity.getLaunchIntent(BoxUsxActivity.this,
+                        (BoxCollaborationItem) baseShareVM.getShareItem(), mSession), REQUEST_COLLABORATORS);
+            }
+
+            @Override
+            public void collabsClicked() {
+                startActivityForResult(BoxCollaborationsActivity.getLaunchIntent(BoxUsxActivity.this,
+                        (BoxCollaborationItem) baseShareVM.getShareItem(), mSession), REQUEST_COLLABORATORS);
+            }
+        }, mShareVMFactory);
         ft.replace(R.id.fragmentContainer, mFragment);
         ft.commit();
-        mFragment.setVMFactory(mShareVMFactory);
-        ((UsxFragment)mFragment).setOnEditLinkAccessButtonClickListener(v -> {});
-        ((UsxFragment)mFragment).setOnInviteCollabsClickListener(v ->
-                startActivityForResult(BoxInviteCollaboratorsActivity.getLaunchIntent(BoxUsxActivity.this,
-                        (BoxCollaborationItem) baseShareVM.getShareItem(), mSession), REQUEST_COLLABORATORS));
-        ((UsxFragment)mFragment).setOnCollabsListener(v ->
-                startActivityForResult(BoxCollaborationsActivity.getLaunchIntent(BoxUsxActivity.this,
-                        (BoxCollaborationItem) baseShareVM.getShareItem(), mSession), REQUEST_COLLABORATORS));
     }
 
 

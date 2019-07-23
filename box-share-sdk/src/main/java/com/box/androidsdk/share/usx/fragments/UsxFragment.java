@@ -22,12 +22,15 @@ import com.box.androidsdk.share.databinding.UsxFragmentSharedLinkBinding;
 import com.box.androidsdk.share.vm.ActionbarTitleVM;
 import com.box.androidsdk.share.vm.CollaboratorsInitialsVM;
 import com.box.androidsdk.share.vm.PresenterData;
+import com.box.androidsdk.share.vm.ShareVMFactory;
 import com.box.androidsdk.share.vm.SharedLinkVM;
 
 /**
  * Created by varungupta on 3/5/2016.
  */
 public class UsxFragment extends BoxFragment {
+
+    private ClickListener mListener;
 
     @Override
     protected void setTitles() {
@@ -44,13 +47,15 @@ public class UsxFragment extends BoxFragment {
         void linkClicked();
     }
 
-    private static final String UNSHARE_WARNING_TAG = "com.box.sharesdk.unshare_warning";
+    public interface ClickListener {
+        void editAccessClicked();
+        void inviteCollabsClicked();
+        void collabsClicked();
+    }
 
-    private View.OnClickListener mOnEditAccessClickListener;
-    private View.OnClickListener mOnInviteCollabsClickListener;
-    private View.OnClickListener mOnCollabsClickListener;
+    private static final String UNSHARE_WARNING_TAG = "com.box.sharesdk.unshare_warning";
     UsxFragmentSharedLinkBinding binding;
-    SharedLinkVM mSharedLinkVm;
+    private SharedLinkVM mSharedLinkVm;
 
 
     @Nullable
@@ -93,9 +98,10 @@ public class UsxFragment extends BoxFragment {
     }
 
     private void setupListeners() {
-        binding.setOnInviteCollabsClickListener(mOnInviteCollabsClickListener);
-        binding.setOnEditAccessClickListener(mOnEditAccessClickListener);
-        binding.setOnCollabsListener(mOnCollabsClickListener);
+        binding.setOnInviteCollabsClickListener(v -> mListener.inviteCollabsClicked());
+        binding.setOnEditAccessClickListener(v -> mListener.editAccessClicked());
+        binding.setOnCollabsListener(v -> mListener.collabsClicked());
+
         binding.setOnCopyLinkListener(v -> copyLink());
         CollaboratorsInitialsVM vm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaboratorsInitialsVM.class);
         binding.initialViews.setArguments(vm);
@@ -123,18 +129,6 @@ public class UsxFragment extends BoxFragment {
         binding.setShareItem(mSharedLinkVm.getShareItem()); //data binding is used to display data based on this item. This will force the UI to refresh.
     }
 
-    public void setOnEditLinkAccessButtonClickListener(View.OnClickListener onEditLinkAccessButtonClickListener) {
-        this.mOnEditAccessClickListener = onEditLinkAccessButtonClickListener;
-    }
-
-    public void setOnInviteCollabsClickListener(View.OnClickListener onInviteCollabsClickListener) {
-        this.mOnInviteCollabsClickListener = onInviteCollabsClickListener;
-    }
-
-    public void setOnCollabsListener(View.OnClickListener onInviteCollabsClickListener) {
-        this.mOnCollabsClickListener = onInviteCollabsClickListener;
-    }
-
     public void refreshInitialsViews() {
         if (binding !=  null && binding.initialViews != null) {
             binding.initialViews.refreshView();
@@ -142,10 +136,12 @@ public class UsxFragment extends BoxFragment {
 
     }
 
-    public static UsxFragment newInstance(BoxItem item) {
+    public static UsxFragment newInstance(BoxItem item, ClickListener listener, ShareVMFactory factory) {
         Bundle args = BoxFragment.getBundle(item);
         UsxFragment fragment = new UsxFragment();
         fragment.setArguments(args);
+        fragment.mListener = listener;
+        fragment.mShareVMFactory = factory;
         return fragment;
     }
 
