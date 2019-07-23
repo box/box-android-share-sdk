@@ -49,8 +49,6 @@ import java.util.List;
 
 public class InviteCollaboratorsFragment extends BoxFragment implements TokenCompleteTextView.TokenListener<BoxInvitee> {
 
-
-
     private static final Integer MY_PERMISSIONS_REQUEST_READ_CONTACTS = 32;
     public static final String TAG = InviteCollaboratorsFragment.class.getName();
     public static final String EXTRA_USE_CONTACTS_PROVIDER = "InviteCollaboratorsFragment.ExtraUseContactsProvider";
@@ -95,7 +93,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         mInviteCollaboratorsShareVM.getRoleItem().observe(this, onRoleItemChange);
         mInviteCollaboratorsShareVM.getInvitees().observe(this, onInviteesChanged);
         mInviteCollaboratorsShareVM.getInviteCollabs().observe(this, onInviteCollabs);
-
 
         if (mSelectRoleShareVM.getSelectedRole() == null && savedInstanceState != null) {
             String selected_role_enum = savedInstanceState.getString(EXTRA_COLLAB_SELECTED_ROLE);
