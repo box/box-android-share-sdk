@@ -33,6 +33,8 @@ public class CollaboratorsAdapter extends BaseAdapter {
     private BoxCollaborationItem mFolder;
     private final BoxCollaborator mAnotherPersonCollaborator;
 
+    String userId;
+
     private BaseShareVM mBaseShareVM;
 
     public CollaboratorsAdapter(Context context, BoxCollaborationItem collaborationItem, BaseShareVM baseShareVM) {
@@ -64,7 +66,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
     @Override
     public boolean isEnabled(int position) {
         // User is allowed to change permissions if he has invite collaborator permissions
-        if (mFolder.getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
+        if (getItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
             return true;
         }
 
@@ -90,7 +92,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
             BoxCollaborator collaborator = collaboration.getAccessibleBy();
             String name;
             if (collaborator == null) {
-                name =  mContext.getString(R.string.box_sharesdk_another_person);
+                name = mContext.getString(R.string.box_sharesdk_another_person);
                 binding.collaboratorInitials.loadUser(mAnotherPersonCollaborator, mBaseShareVM.getAvatarController());
             } else {
                 name = collaborator.getName();
