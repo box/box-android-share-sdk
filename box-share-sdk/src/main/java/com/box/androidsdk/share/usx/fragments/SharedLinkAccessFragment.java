@@ -182,7 +182,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
 
                     @Override
                     public void onNegativeButtonClicked(PositiveNegativeDialogFragment fragment) {
-                        refreshUi();
+                        refreshUI();
                     }
                 });
         fragment.show(getActivity().getSupportFragmentManager(), PASSWORD_FRAGMENT_TAG);
@@ -227,7 +227,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
 
             @Override
             public void onNegativeButtonClicked(PositiveNegativeDialogFragment fragment) {
-                refreshUi();
+                refreshUI();
             }
         });
         fragment.show(getActivity().getSupportFragmentManager(), DATE_FRAGMENT_TAG);
@@ -250,17 +250,17 @@ public class SharedLinkAccessFragment extends BoxFragment {
             if(boxItemPresenterData.getStrCode() != PresenterData.NO_MESSAGE) {
                 showToast(boxItemPresenterData.getStrCode());
             }
-            refreshUi();
+            refreshUI();
         }
     };
 
-    public void refreshUi() {
+    public void refreshUI() {
         setShareItem(mShareLinkVM.getShareItem());
     }
 
     public void setShareItem(BoxItem item) {
         mShareLinkVM.setShareItem(item);
-        binding.setShareItem(mShareLinkVM.getShareItem());
+        refreshUI();
        // binding.accessRadioGroup.setShareItem(mShareLinkVM.getShareItem());
     }
 }
