@@ -30,22 +30,24 @@ public class CollaboratorsAdapter extends BaseAdapter {
 
     private ArrayList<BoxCollaboration> mItems = new ArrayList<BoxCollaboration>();
     private Context mContext;
-    private BoxCollaborationItem mFolder;
     private final BoxCollaborator mAnotherPersonCollaborator;
 
     String userId;
 
     private BaseShareVM mBaseShareVM;
 
-    public CollaboratorsAdapter(Context context, BoxCollaborationItem collaborationItem, BaseShareVM baseShareVM) {
+    public CollaboratorsAdapter(Context context, BaseShareVM baseShareVM) {
         super();
         mContext = context;
-        mFolder = collaborationItem;
         mBaseShareVM = baseShareVM;
         // This item is used for displaying users that do not have a box account have been invited as a collaborator
         JsonObject jsonObject = new JsonObject();
         jsonObject.add(BoxCollaborator.FIELD_NAME, mContext.getString(R.string.box_sharesdk_another_person));
         mAnotherPersonCollaborator = new BoxUser(jsonObject);
+    }
+
+    public BoxItem getItem() {
+        return mBaseShareVM.getShareItem();
     }
 
     @Override
@@ -66,7 +68,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
     @Override
     public boolean isEnabled(int position) {
         // User is allowed to change permissions if he has invite collaborator permissions
-        if (mFolder.getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
+        if (getItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
             return true;
         }
 
@@ -92,7 +94,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
             BoxCollaborator collaborator = collaboration.getAccessibleBy();
             String name;
             if (collaborator == null) {
-                name =  name = collaboration.getInviteEmail() != null ? collaboration.getInviteEmail() : mContext.getString(R.string.box_sharesdk_another_person);
+                name = mContext.getString(R.string.box_sharesdk_another_person);
                 binding.collaboratorInitials.loadUser(mAnotherPersonCollaborator, mBaseShareVM.getAvatarController());
             } else {
                 name = collaborator.getName();

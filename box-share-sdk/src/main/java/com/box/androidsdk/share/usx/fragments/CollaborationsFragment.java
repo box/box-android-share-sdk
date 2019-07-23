@@ -76,7 +76,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         binding.setLifecycleOwner(this);
         View view = binding.getRoot();
         binding.collaboratorsList.setDivider(null);
-        mCollaboratorsAdapter = new CollaboratorsAdapter(getActivity(), getItem(), mCollaborationsShareVM);
+        mCollaboratorsAdapter = new CollaboratorsAdapter(getActivity(), mCollaborationsShareVM);
         binding.collaboratorsList.setAdapter(mCollaboratorsAdapter);
         binding.collaboratorsList.setOnItemClickListener(this);
 
@@ -130,7 +130,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         }
 
         if (mCollaborationsShareVM.getCollaborations().getValue() == null) {
-            mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem()); //refresh item and fetch collabs
+            mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
         }
 
 
@@ -160,9 +160,9 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         BoxCollaboration collaboration = (BoxCollaboration) view.getTag();
         if (collaboration != null) {
             ArrayList<BoxCollaboration.Role> rolesArr = getRoles();
-
-            if (rolesArr == null || rolesArr.size() == 0) {
-                SdkUtils.toastSafely(getContext(), R.string.box_sharesdk_cannot_get_collaborators, Toast.LENGTH_SHORT);
+            String collabId = collaboration.getAccessibleBy().getId();
+            if ((rolesArr == null || rolesArr.size() == 0) && !collabId.equals(mCollaborationsShareVM.getUserId())) {
+                showToast(R.string.box_sharesdk_cannot_get_collaborators);
                 return;
             }
             BoxCollaborator collaborator = collaboration.getAccessibleBy();
@@ -230,6 +230,10 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     private Observer<PresenterData<BoxCollaboration>> onUpdateCollaboration = presenterData -> {
         dismissSpinner();
         if (presenterData.isSuccess()) {
+            String collabId = presenterData.getData().getAccessibleBy().getId();
+            if (collabId.equals(mCollaborationsShareVM.getUserId())) { //updated permission of yourself so the list look might need to be updated to match the new permission
+                mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
+            }
             mCollaboratorsAdapter.update(presenterData.getData());
         } else {
             BoxLogUtils.e(com.box.androidsdk.share.fragments.CollaborationsFragment.class.getName(), "Update Collaborator request failed",

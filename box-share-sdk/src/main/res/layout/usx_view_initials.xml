@@ -13,6 +13,5 @@
         android:textAlignment="center"
         android:gravity="center"
         android:layout_gravity="center"
-        app:avatarTextSize="10"
         />
 </LinearLayout>
