@@ -487,6 +487,11 @@ public class InviteCollaboratorsFragment extends BoxFragment implements View.OnC
      * @param role the collaboration role to select
      */
     private void setSelectedRole(BoxCollaboration.Role role) {
+        if (role == null) {
+            showNoPermissionToast();
+            getActivity().finish();
+            return;
+        }
         mSelectedRole = role;
         mRoleButton.setText(createTitledSpannable(getString(R.string.box_sharesdk_access), CollaborationUtils.getRoleName(getActivity(), role)));
     }
