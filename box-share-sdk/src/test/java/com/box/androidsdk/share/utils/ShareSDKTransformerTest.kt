@@ -2,17 +2,16 @@ package com.box.androidsdk.share.utils;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.box.androidsdk.content.BoxException
-import com.box.androidsdk.content.models.BoxCollaboration
-import com.box.androidsdk.content.models.BoxCollaborationItem
-import com.box.androidsdk.content.models.BoxError
-import com.box.androidsdk.content.requests.BoxRequestsShare
-import com.box.androidsdk.content.requests.BoxResponse
-import com.box.androidsdk.content.requests.BoxResponseBatch
+import com.box.androidsdk.content.models.*
+import com.box.androidsdk.content.requests.*
 import com.box.androidsdk.share.R
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees
-import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createBoxResponseBatch
-import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createFailureResponse
-import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createSuccessResponse
+import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createBoxCollaborationResponseBatch
+import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createFailedBoxCollaborationResponse
+import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createFailedBoxItemResponse
+import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createSuccessfulBoxItemResponse
+import com.box.androidsdk.share.utils.ResponsesCreator.Companion.createSuccessfulBoxCollaborationResponse
+import com.box.androidsdk.share.vm.PresenterData
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.Assert.assertEquals
@@ -27,6 +26,7 @@ class ShareSDKTransformerTest {
     var rule: TestRule = InstantTaskExecutorRule()
 
     private val mockFailedToAddException: BoxException = mock()
+    private val mockHttpNotModifiedException: BoxException = mock()
     private val mockHttpForbiddenException: BoxException = mock()
     private val mockBoxNetworkErrorException: BoxException = mock()
     private val mockAlreadyCollabException: BoxException = mock()
@@ -39,8 +39,10 @@ class ShareSDKTransformerTest {
     private val mockGetInviteesResult: BoxIteratorInvitees = mock()
     private val mockFetchRoleItemResult: BoxCollaborationItem = mock()
     private lateinit var mockInviteCollabsResult: BoxResponseBatch
+
+    private val mockGenericException: Exception = mock()
     
-    private val inviteCollabsTransformer = ShareSDKTransformer()
+    private val shareSDKTransformer = ShareSDKTransformer()
 
 
     @Before
@@ -63,6 +65,8 @@ class ShareSDKTransformerTest {
         whenever(mockFailedToAddException.asBoxError).thenReturn(boxErrorFailedToAdd)
         whenever(mockFailedToAddException.responseCode).thenReturn(HttpsURLConnection.HTTP_BAD_REQUEST)
         whenever(mockBadRequestException.responseCode).thenReturn(HttpsURLConnection.HTTP_BAD_REQUEST)
+
+        whenever(mockHttpNotModifiedException.responseCode).thenReturn(HttpsURLConnection.HTTP_NOT_MODIFIED)
     }
 
     @Test
@@ -72,7 +76,7 @@ class ShareSDKTransformerTest {
         whenever(mockFetchRolesResponse.result).thenReturn(mockFetchRoleItemResult)
 
         //make a network call to fetch roles
-        val result = inviteCollabsTransformer.getFetchRolesItemPresenterData(mockFetchRolesResponse)
+        val result = shareSDKTransformer.getFetchRolesItemPresenterData(mockFetchRolesResponse)
 
         assertEquals(true, result?.isSuccess)
         assertEquals(mockFetchRoleItemResult, result?.data)
@@ -85,7 +89,7 @@ class ShareSDKTransformerTest {
         val exception: BoxException = mock()
         whenever(mockFetchRolesResponse.exception).thenReturn(exception)
         //make a network call to fetch roles
-        val result = inviteCollabsTransformer.getFetchRolesItemPresenterData(mockFetchRolesResponse)
+        val result = shareSDKTransformer.getFetchRolesItemPresenterData(mockFetchRolesResponse)
 
         assertEquals(false, result?.isSuccess)
         assertEquals(R.string.box_sharesdk_network_error, result?.strCode)
@@ -98,7 +102,7 @@ class ShareSDKTransformerTest {
         whenever(mockGetInviteeResponse.result).thenReturn(mockGetInviteesResult)
 
         //make a network call to fetch roles
-        val result = inviteCollabsTransformer.getInviteesPresenterData(mockGetInviteeResponse)
+        val result = shareSDKTransformer.getInviteesPresenterData(mockGetInviteeResponse)
 
         assertEquals(true, result?.isSuccess)
         assertEquals(mockGetInviteesResult, result?.data)
@@ -111,7 +115,7 @@ class ShareSDKTransformerTest {
         whenever(mockGetInviteeResponse.exception).thenReturn(mockHttpForbiddenException)
 
         //make a network call to fetch roles
-        val result = inviteCollabsTransformer.getInviteesPresenterData(mockGetInviteeResponse)
+        val result = shareSDKTransformer.getInviteesPresenterData(mockGetInviteeResponse)
 
         assertEquals(false, result?.isSuccess)
         assertEquals(R.string.box_sharesdk_insufficient_permissions, result?.strCode)
@@ -124,7 +128,7 @@ class ShareSDKTransformerTest {
         whenever(mockGetInviteeResponse.exception).thenReturn(mockBoxNetworkErrorException)
 
         //make a network call to fetch roles
-        val result = inviteCollabsTransformer.getInviteesPresenterData(mockGetInviteeResponse)
+        val result = shareSDKTransformer.getInviteesPresenterData(mockGetInviteeResponse)
 
         assertEquals(false, result?.isSuccess)
         assertEquals(R.string.box_sharesdk_network_error, result?.strCode)
@@ -135,12 +139,12 @@ class ShareSDKTransformerTest {
     fun `test get invite collabs presenter data for successful request where response size is 1 and accessible by is not null`() {
         //configs
         val dummyName = "Box User"
-        val boxResponse = createSuccessResponse(dummyName)
+        val boxResponse = createSuccessfulBoxCollaborationResponse(dummyName)
 
-        val boxResponses = createBoxResponseBatch(boxResponse)
+        val boxResponses = createBoxCollaborationResponseBatch(boxResponse)
 
         //process request
-        val result = inviteCollabsTransformer.getPresenterDataForSuccessfulRequest(boxResponses)
+        val result = shareSDKTransformer.getPresenterDataForSuccessfulRequest(boxResponses)
 
         //compare values
         assertEquals(R.string.box_sharesdk_collaborator_invited, result.strCode)
@@ -154,12 +158,12 @@ class ShareSDKTransformerTest {
     fun `test get invite collabs presenter data for successful request where response size is 1 and accessible by is null`() {
         //configs
         val dummyName = null
-        val boxResponse = createSuccessResponse(dummyName)
+        val boxResponse = createSuccessfulBoxCollaborationResponse(dummyName)
 
-        val boxResponses = createBoxResponseBatch(boxResponse)
+        val boxResponses = createBoxCollaborationResponseBatch(boxResponse)
 
         //process request
-        val result = inviteCollabsTransformer.getPresenterDataForSuccessfulRequest(boxResponses)
+        val result = shareSDKTransformer.getPresenterDataForSuccessfulRequest(boxResponses)
 
 
         //compare values
@@ -174,12 +178,12 @@ class ShareSDKTransformerTest {
     fun `test get invite collabs presenter data for successful request where response size is greater than 1`() {
         //configs
         val dummyName = "Box User"
-        val boxResponse: BoxResponse<BoxCollaboration> = createSuccessResponse(dummyName)
-        val boxResponse2: BoxResponse<BoxCollaboration> = createSuccessResponse(dummyName+"2")
-        val boxResponses = createBoxResponseBatch(boxResponse, boxResponse2)
+        val boxResponse: BoxResponse<BoxCollaboration> = createSuccessfulBoxCollaborationResponse(dummyName)
+        val boxResponse2: BoxResponse<BoxCollaboration> = createSuccessfulBoxCollaborationResponse(dummyName+"2")
+        val boxResponses = createBoxCollaborationResponseBatch(boxResponse, boxResponse2)
 
         //process request
-        val result = inviteCollabsTransformer.getPresenterDataForSuccessfulRequest(boxResponses)
+        val result = shareSDKTransformer.getPresenterDataForSuccessfulRequest(boxResponses)
 
         //compare values
         assertEquals(R.string.box_sharesdk_collaborators_invited, result.strCode)
@@ -201,7 +205,7 @@ class ShareSDKTransformerTest {
 
 
         //process request
-        val result = inviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
+        val result = shareSDKTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
         assertEquals(R.string.box_sharesdk_following_collaborators_error, result.strCode)
@@ -220,10 +224,10 @@ class ShareSDKTransformerTest {
         val failedCollabs = arrayListOf<String>()
 
         //process request
-        val result = inviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
+        val result = shareSDKTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
-        assertEquals(R.string.box_sharesdk_has_already_been_invited, result.strCode)
+        assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
         assertEquals(dummyName, result.data)
         assertEquals(true, result.isSuccess) //request failing only due to adding already added collabs is still considered a success
         assertEquals(false, result.isSnackBarMessage)
@@ -239,11 +243,11 @@ class ShareSDKTransformerTest {
         val failedCollabs = arrayListOf<String>()
 
         //process request
-        val result = inviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
+        val result = shareSDKTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
-        assertEquals(R.string.box_sharesdk_num_has_already_been_invited, result.strCode)
-        assertEquals("2", result.data)
+        assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
+        assertEquals(dummyName, result.data)
         assertEquals(true, result.isSuccess) //request failing only due to adding already added collabs is still considered a success
         assertEquals(false, result.isSnackBarMessage)
         assertEquals(2, result.alreadyAdddedCount)
@@ -258,7 +262,7 @@ class ShareSDKTransformerTest {
         val failedCollabs = arrayListOf<String>()
 
         //process request
-        val result = inviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
+        val result = shareSDKTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
         assertEquals(R.string.box_sharesdk_unable_to_invite, result.strCode)
@@ -272,14 +276,14 @@ class ShareSDKTransformerTest {
     @Test
     fun `test get invite presenter data where all requests succeed`() {
         //configs
-        val boxResponse = createSuccessResponse("user1")
-        val boxResponse2 = createSuccessResponse("user2")
-        val boxResponse3 = createSuccessResponse("user3")
-        mockInviteCollabsResult = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        val boxResponse = createSuccessfulBoxCollaborationResponse("user1")
+        val boxResponse2 = createSuccessfulBoxCollaborationResponse("user2")
+        val boxResponse3 = createSuccessfulBoxCollaborationResponse("user3")
+        mockInviteCollabsResult = createBoxCollaborationResponseBatch(boxResponse, boxResponse2, boxResponse3)
         whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
 
         //process request
-        val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+        val result = shareSDKTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
         assertEquals(R.string.box_sharesdk_collaborators_invited, result.strCode)
         assertEquals(null, result.data)
@@ -292,12 +296,12 @@ class ShareSDKTransformerTest {
     fun `test add collab 1 succeed no failure`() {
         //configs
         val dummyName = "Box User"
-        val boxResponse = createSuccessResponse(dummyName)
-        mockInviteCollabsResult = createBoxResponseBatch(boxResponse)
+        val boxResponse = createSuccessfulBoxCollaborationResponse(dummyName)
+        mockInviteCollabsResult = createBoxCollaborationResponseBatch(boxResponse)
         whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
 
         //process request
-        val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+        val result = shareSDKTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
         assertEquals(R.string.box_sharesdk_collaborator_invited, result.strCode)
         assertEquals(dummyName, result.data)
@@ -310,15 +314,15 @@ class ShareSDKTransformerTest {
     fun `test add collab succeed 1 already added 1`() {
         //configs
         val dummyName = "user2"
-        val boxResponse = createSuccessResponse("user1")
-        val boxResponse2 = createFailureResponse(dummyName, mockAlreadyCollabException)
-        mockInviteCollabsResult = createBoxResponseBatch(boxResponse, boxResponse2)
+        val boxResponse = createSuccessfulBoxCollaborationResponse("user1")
+        val boxResponse2 = createFailedBoxCollaborationResponse(dummyName, mockAlreadyCollabException)
+        mockInviteCollabsResult = createBoxCollaborationResponseBatch(boxResponse, boxResponse2)
         whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
 
         //process request
-        val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+        val result = shareSDKTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
-        assertEquals(R.string.box_sharesdk_has_already_been_invited, result.strCode)
+        assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
         assertEquals(dummyName, result.data)
         assertEquals(true, result.isSuccess)
         assertEquals(false, result.isSnackBarMessage)
@@ -328,17 +332,17 @@ class ShareSDKTransformerTest {
     @Test
     fun `test add collab succeed 1 already add 2`() {
         //configs
-        val boxResponse = createSuccessResponse("user1")
-        val boxResponse2 = createFailureResponse("user2", mockAlreadyCollabException)
-        val boxResponse3 = createFailureResponse("user3", mockAlreadyCollabException)
-        mockInviteCollabsResult= createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        val boxResponse = createSuccessfulBoxCollaborationResponse("user1")
+        val boxResponse2 = createFailedBoxCollaborationResponse("user2", mockAlreadyCollabException)
+        val boxResponse3 = createFailedBoxCollaborationResponse("user3", mockAlreadyCollabException)
+        mockInviteCollabsResult= createBoxCollaborationResponseBatch(boxResponse, boxResponse2, boxResponse3)
         whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
 
         //process request
-        val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+        val result = shareSDKTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
-        assertEquals(R.string.box_sharesdk_num_has_already_been_invited, result.strCode)
-        assertEquals("2", result.data)
+        assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
+        assertEquals("user3", result.data)
         assertEquals(true, result.isSuccess)
         assertEquals(false, result.isSnackBarMessage)
         assertEquals(2, result.alreadyAdddedCount)
@@ -348,14 +352,14 @@ class ShareSDKTransformerTest {
     fun `test add collab succeed 1 failed to add 1 already added 1`() {
         //configs
         val failedName = "user2"
-        val boxResponse = createSuccessResponse("user1")
-        val boxResponse2 = createFailureResponse(failedName, mockFailedToAddException)
-        val boxResponse3 = createFailureResponse("user3", mockAlreadyCollabException)
-        mockInviteCollabsResult = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        val boxResponse = createSuccessfulBoxCollaborationResponse("user1")
+        val boxResponse2 = createFailedBoxCollaborationResponse(failedName, mockFailedToAddException)
+        val boxResponse3 = createFailedBoxCollaborationResponse("user3", mockAlreadyCollabException)
+        mockInviteCollabsResult = createBoxCollaborationResponseBatch(boxResponse, boxResponse2, boxResponse3)
         whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
 
         //process request
-        val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+        val result = shareSDKTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
         assertEquals(R.string.box_sharesdk_following_collaborators_error, result.strCode)
         assertEquals(failedName, result.data)
@@ -369,14 +373,14 @@ class ShareSDKTransformerTest {
         //configs
         val failedName1 = "user2"
         val failedName2 = "user3"
-        val boxResponse = createSuccessResponse("user1")
-        val boxResponse2 = createFailureResponse(failedName1, mockFailedToAddException)
-        val boxResponse3 = createFailureResponse(failedName2, mockFailedToAddException)
-        mockInviteCollabsResult = createBoxResponseBatch(boxResponse, boxResponse2, boxResponse3)
+        val boxResponse = createSuccessfulBoxCollaborationResponse("user1")
+        val boxResponse2 = createFailedBoxCollaborationResponse(failedName1, mockFailedToAddException)
+        val boxResponse3 = createFailedBoxCollaborationResponse(failedName2, mockFailedToAddException)
+        mockInviteCollabsResult = createBoxCollaborationResponseBatch(boxResponse, boxResponse2, boxResponse3)
         whenever(mockInviteCollabsResponse.result).thenReturn(mockInviteCollabsResult)
 
         //process request
-        val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
+        val result = shareSDKTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
 
         assertEquals(R.string.box_sharesdk_following_collaborators_error, result.strCode)
@@ -385,5 +389,93 @@ class ShareSDKTransformerTest {
         assertEquals(true, result.isSnackBarMessage)
         assertEquals(0, result.alreadyAdddedCount)
     }
+
+    @Test
+    fun `test shared link transformer success not instance of BoxRequestItem`() {
+        //configs
+        val boxResponse = createSuccessfulBoxItemResponse()
+        val result = shareSDKTransformer.getSharedLinkItemPresenterData(boxResponse, mock())
+
+        assertEquals(true, result.isSuccess)
+        assertEquals(null, result.data)
+    }
+
+//    @Test
+//    fun `test shared link transformer success instance of BoxRequestItem`() {
+//        //configs
+//        val boxResponse = createSuccessfulBoxItemResponse()
+//        val result = shareSDKTransformer.getSharedLinkItemPresenterData(boxResponse, mock())
+//        val boxRequestItem: BoxRequestItem<E, R> = mock()
+//        assertEquals(true, result.isSuccess)
+//        assertEquals(null, result.data)
+//    }
+
+    @Test
+    fun `test shared link transformer failed http not modified`() {
+        //configs
+        val boxResponse = createFailedBoxItemResponse(mockHttpNotModifiedException)
+        val result = shareSDKTransformer.getSharedLinkItemPresenterData(boxResponse, mock())
+
+        assertEquals(false, result.isSuccess)
+        assertEquals(null, result.data)
+        assertEquals(PresenterData.NO_MESSAGE, result.strCode)
+    }
+
+    @Test
+    fun `test shared link transformer failed http forbidden`() {
+        //configs
+        val boxResponse = createFailedBoxItemResponse(mockHttpForbiddenException)
+        val result = shareSDKTransformer.getSharedLinkItemPresenterData(boxResponse, mock())
+
+        assertEquals(false, result.isSuccess)
+        assertEquals(null, result.data)
+        assertEquals(R.string.box_sharesdk_insufficient_permissions, result.strCode)
+    }
+
+    @Test
+    fun `test shared link transformer failed generic exception`() {
+        //configs
+        val boxResponse = createFailedBoxItemResponse(mockGenericException)
+        val result = shareSDKTransformer.getSharedLinkItemPresenterData(boxResponse, mock())
+
+        assertEquals(false, result.isSuccess)
+        assertEquals(null, result.data)
+        assertEquals(PresenterData.NO_MESSAGE, result.strCode)
+    }
+
+//    @Test
+//    fun `test shared link transformer failed generic exception instance of BoxRequestItem`() {
+//        //configs
+//        val boxItem: BoxItem = mock()
+//        val id = "mockID"
+//        whenever(boxItem.id).thenReturn(id)
+//        val boxResponse = createFailedBoxItemResponse(mockGenericException)
+//        val boxRequestItem: BoxRequestItem<E, R> = mock()
+//        whenever(boxRequestItem.getId()).thenReturn(id)
+//        whenever(boxResponse.request).thenReturn(boxRequestItem)
+//        val result = shareSDKTransformer.getSharedLinkItemPresenterData(boxResponse, boxItem)
+//
+//        assertEquals(false, result.isSuccess)
+//        assertEquals(null, result.data)
+//        assertEquals(R.string.box_sharesdk_problem_accessing_this_shared_link, result.strCode)
+//    }
+//
+//    @Test
+//    fun `test shared link transformer failed generic exception instance of BoxRequestUpdateShareItem`() {
+//        //configs
+//        val boxItem: BoxItem = mock()
+//        val id = "mockID"
+//        whenever(boxItem.id).thenReturn(id)
+//        val boxResponse = createFailedBoxItemResponse(mockGenericException)
+//        val boxRequestItem: BoxRequestUpdateSharedItem<BoxItem, BoxRequestsFolder.UpdateFolder<BoxItem, BoxItem>> = mock()
+//        whenever(boxRequestItem.getId()).thenReturn(id)
+//        whenever(boxResponse.request).thenReturn(boxRequestItem)
+//        val result = shareSDKTransformer.getSharedLinkItemPresenterData(boxResponse, boxItem)
+//
+//        assertEquals(false, result.isSuccess)
+//        assertEquals(null, result.data)
+//        assertEquals(R.string.box_sharesdk_unable_to_modify_toast, result.strCode)
+//    }
+
 
 }

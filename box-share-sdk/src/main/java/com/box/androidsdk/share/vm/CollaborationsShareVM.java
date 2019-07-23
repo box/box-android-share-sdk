@@ -1,5 +1,6 @@
 package com.box.androidsdk.share.vm;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
@@ -25,6 +26,17 @@ public class CollaborationsShareVM extends BaseShareVM{
     public CollaborationsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
         ShareSDKTransformer transformer = new ShareSDKTransformer();
+        mCollaborations = Transformations.map(shareRepo.getCollaborations(), transformer::getCollaborationsPresenterData);
+        mDeleteCollaboration = Transformations.map(shareRepo.getDeleteCollaboration(), transformer::getDeleteCollaborationPresenterData);
+        mUpdateOwner = Transformations.map(shareRepo.getUpdateOwner(), transformer::getUpdateOwnerPresenterData);
+        mUpdateCollaboration = Transformations.map(shareRepo.getUpdateCollaboration(), transformer::getUpdateCollaborationPresenterData);
+        mRoleItem = Transformations.map(shareRepo.getRoleItem(),  transformer::getFetchRolesItemPresenterData);
+        mOwnerUpdated = false;
+    }
+
+    @VisibleForTesting
+    CollaborationsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem, ShareSDKTransformer transformer) {
+        super(shareRepo, shareItem);
         mCollaborations = Transformations.map(shareRepo.getCollaborations(), transformer::getCollaborationsPresenterData);
         mDeleteCollaboration = Transformations.map(shareRepo.getDeleteCollaboration(), transformer::getDeleteCollaborationPresenterData);
         mUpdateOwner = Transformations.map(shareRepo.getUpdateOwner(), transformer::getUpdateOwnerPresenterData);
