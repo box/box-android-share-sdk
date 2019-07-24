@@ -85,11 +85,14 @@ public class CollaboratorsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        UsxListItemCollaborationBinding binding;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.usx_list_item_collaboration, parent, false);
+            binding = DataBindingUtil.bind(convertView);
+        } else {
+            binding = (UsxListItemCollaborationBinding) convertView.getTag();
         }
         BoxCollaboration collaboration = mItems.get(position);
-        UsxListItemCollaborationBinding binding = DataBindingUtil.bind(convertView);
         if (collaboration != null) {
             BoxCollaborator collaborator = collaboration.getAccessibleBy();
             String name;
@@ -104,7 +107,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
                     CollaborationUtils.getRoleName(mContext, collaboration.getRole()) :
                     CollaborationUtils.getCollaborationStatusText(mContext, collaboration.getStatus());
             binding.collaboratorRoleTitle.setText(name);
-            convertView.setTag(collaboration);
+            convertView.setTag(binding);
             binding.collaboratorRole.setText(description);
         }
 

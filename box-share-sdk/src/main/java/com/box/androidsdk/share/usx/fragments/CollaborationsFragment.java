@@ -150,7 +150,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        BoxCollaboration collaboration = (BoxCollaboration) view.getTag();
+        BoxCollaboration collaboration = (BoxCollaboration) mCollaboratorsAdapter.getItem(position);
         if (collaboration != null) {
             ArrayList<BoxCollaboration.Role> rolesArr = getRoles();
             String collabId = collaboration.getAccessibleBy().getId();
