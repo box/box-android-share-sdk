@@ -12,5 +12,6 @@
         android:textAlignment="center"
         android:gravity="center"
         android:layout_gravity="center"
+
         />
 </LinearLayout>
