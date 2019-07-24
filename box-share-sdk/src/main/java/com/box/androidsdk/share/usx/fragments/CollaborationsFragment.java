@@ -47,12 +47,11 @@ import java.util.ArrayList;
 public class CollaborationsFragment extends BoxFragment implements AdapterView.OnItemClickListener {
 
     protected static final String TAG = CollaborationsFragment.class.getName();
-    protected CollaboratorsAdapter mCollaboratorsAdapter;
-    protected BoxIteratorCollaborations mCollaborations;
+    private CollaboratorsAdapter mCollaboratorsAdapter;
     private CollaborationsFragmentCallback mCallback;
-    UsxFragmentCollaborationsBinding binding;
-    CollaborationsShareVM mCollaborationsShareVM;
-    SelectRoleShareVM mSelectRoleShareVM;
+    private UsxFragmentCollaborationsBinding binding;
+    private CollaborationsShareVM mCollaborationsShareVM;
+    private SelectRoleShareVM mSelectRoleShareVM;
 
     public interface CollaborationsFragmentCallback {
         void notifySwitchToAccessRoleFragment();
@@ -89,12 +88,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
         mCollaborationsShareVM.getItemInfo().observe(this, onBoxItemComplete);
 
-        if (getArguments() != null){
-            Bundle args = getArguments();
-            mCollaborations = (BoxIteratorCollaborations)args.getSerializable(CollaborationUtils.EXTRA_COLLABORATIONS);
-        }
-
-        // Get serialized roles or fetch them if they are not available
+         // Get serialized roles or fetch them if they are not available
         if (getItem().getAllowedInviteeRoles() == null) {
             fetchRoles();
         }
@@ -220,9 +214,8 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
 
-    public static CollaborationsFragment newInstance(BoxCollaborationItem collaborationItem, BoxIteratorCollaborations collaborations) {
+    public static CollaborationsFragment newInstance(BoxCollaborationItem collaborationItem) {
         Bundle args = BoxFragment.getBundle(collaborationItem);
-        args.putSerializable(CollaborationUtils.EXTRA_COLLABORATIONS, collaborations);
         CollaborationsFragment fragment = new CollaborationsFragment();
         fragment.setArguments(args);
         return fragment;
