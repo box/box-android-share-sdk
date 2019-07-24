@@ -2,10 +2,7 @@ package com.box.androidsdk.share.vm
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import com.box.androidsdk.content.models.BoxCollaboration
-import com.box.androidsdk.content.models.BoxCollaborationItem
-import com.box.androidsdk.content.models.BoxIteratorCollaborations
-import com.box.androidsdk.content.models.BoxVoid
+import com.box.androidsdk.content.models.*
 import com.box.androidsdk.content.requests.BoxRequest
 import com.box.androidsdk.content.requests.BoxResponse
 import com.box.androidsdk.share.sharerepo.ShareRepo
@@ -44,7 +41,8 @@ class CollaborationsVMTest {
     private val mockUpdateCollaborationsPresenterData: PresenterData<BoxCollaboration> = mock()
     private val mockUpdateOwnerPresenterData: PresenterData<BoxVoid> = mock()
     private val mockRolePresenterData: PresenterData<BoxCollaborationItem> = mock()
-    private val mockDeleteCollaborationPresenterData: PresenterData<BoxVoid> = mock() //need to be changed
+    private var mockDeleteCollaborationPresenterData: PresenterData<BoxRequest<*,*>> = mock() //need to be changed
+
 
     @Before
     fun setup() {
@@ -62,7 +60,9 @@ class CollaborationsVMTest {
         whenever(mockTransformer.getUpdateCollaborationPresenterData(mockUpdateCollaborationResponse)).thenReturn(mockUpdateCollaborationsPresenterData)
         whenever(mockTransformer.getUpdateOwnerPresenterData(mockUpdateOwnerResponse)).thenReturn(mockUpdateOwnerPresenterData)
         whenever(mockTransformer.getFetchRolesItemPresenterData(mockFetchRoleResponse)).thenReturn(mockRolePresenterData)
-       // whenever(mockTransformer.getDeleteCollaborationPresenterData(mockDeleteCollaborationsResponse)).thenReturn(mockDeleteCollaborationPresenterData)
+
+
+        whenever(mockTransformer.getDeleteCollaborationPresenterData(mockDeleteCollaborationsResponse)).thenReturn(mockDeleteCollaborationPresenterData)
 
         whenever(mockTransformer.getIntialsViewCollabsPresenterData(mockFetchCollaborationResponse)).thenReturn(mockCollaborationsPresenterData)
 

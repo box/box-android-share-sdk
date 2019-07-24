@@ -17,8 +17,6 @@ class SelectRoleVMTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-    private val mockRepo: ShareRepo = mock()
-    private val mockShareItem: BoxCollaborationItem = mock()
     private lateinit var selectRoleShareVM: SelectRoleShareVM
 
     private val mockRolesList: List<BoxCollaboration.Role> = mock()
