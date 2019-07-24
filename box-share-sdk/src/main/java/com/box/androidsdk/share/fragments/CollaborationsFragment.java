@@ -103,12 +103,16 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         if (holder != null && holder.collaboration != null) {
             ArrayList<BoxCollaboration.Role> rolesArr = getRoles();
 
-            if (rolesArr == null || rolesArr.size() == 0) {
+            BoxCollaborator collaborator = holder.collaboration.getAccessibleBy();
+
+            String userId = mController.getCurrentUserId();
+            boolean isCollaboratorCurrentUser = collaborator != null && collaborator.getId().equals(userId);
+
+            if ((rolesArr == null || rolesArr.size() == 0) && !isCollaboratorCurrentUser) {
                 SdkUtils.toastSafely(getContext(), R.string.box_sharesdk_cannot_get_collaborators, Toast.LENGTH_SHORT);
                 return;
             }
 
-            BoxCollaborator collaborator = holder.collaboration.getAccessibleBy();
             BoxCollaboration.Role role = holder.collaboration.getRole();
             String name = collaborator == null ? getString(R.string.box_sharesdk_another_person) : collaborator.getName();
             boolean allowOwner = getItem().getOwnedBy().getId().equals(mController.getCurrentUserId());
