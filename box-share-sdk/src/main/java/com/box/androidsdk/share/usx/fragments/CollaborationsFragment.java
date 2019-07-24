@@ -87,8 +87,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         mCollaborationsShareVM.getDeleteCollaboration().observe(this, onDeleteCollaboration);
 
         mCollaborationsShareVM.getItemInfo().observe(this, onBoxItemComplete);
-
-         // Get serialized roles or fetch them if they are not available
+        // Get serialized roles or fetch them if they are not available
         if (getItem().getAllowedInviteeRoles() == null) {
             fetchRoles();
         }

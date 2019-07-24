@@ -59,13 +59,9 @@ public class BoxCollaborationsActivity extends BoxActivity {
     }
 
     private void setupCollaborationsFragment() {
-        BoxIteratorCollaborations collaborations = null;
-        if (getIntent() != null) {
-            collaborations = (BoxIteratorCollaborations)getIntent().getSerializableExtra(CollaborationUtils.EXTRA_COLLABORATIONS);
-        }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-        mFragment = CollaborationsFragment.newInstance( (BoxCollaborationItem) baseShareVM.getShareItem(), collaborations);
+        mFragment = CollaborationsFragment.newInstance( (BoxCollaborationItem) baseShareVM.getShareItem());
         mFragment.setVMFactory(mShareVMFactory);
         ((CollaborationsFragment)mFragment).setCallback(this::switchToRolesFragment);
         ft.replace(R.id.fragmentContainer, mFragment);
@@ -94,20 +90,6 @@ public class BoxCollaborationsActivity extends BoxActivity {
 
         collabIntent.putExtra(CollaborationUtils.EXTRA_ITEM, collaborationItem);
         collabIntent.putExtra(CollaborationUtils.EXTRA_USER_ID, session.getUser().getId());
-        return collabIntent;
-    }
-
-    /**
-     * Gets a fully formed intent that can be used to start the activity with
-     *
-     * @param context context to launch the intent with
-     * @param boxCollaborationItem item to retrieve collaborations for
-     * @param session the session to view the items collaborations with
-     * @return the intent to launch the activity
-     */
-    public static Intent getLaunchIntent(Context context, BoxCollaborationItem boxCollaborationItem, BoxSession session, BoxIteratorCollaborations collaborations) {
-        Intent collabIntent = getLaunchIntent(context, boxCollaborationItem, session);
-        collabIntent.putExtra(CollaborationUtils.EXTRA_COLLABORATIONS, collaborations);
         return collabIntent;
     }
 }
