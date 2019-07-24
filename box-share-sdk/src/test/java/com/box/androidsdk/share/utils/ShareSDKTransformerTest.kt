@@ -35,6 +35,7 @@ class ShareSDKTransformerTest {
     private val mockBoxNetworkErrorException: BoxException = mock()
     private val mockAlreadyCollabException: BoxException = mock()
     private val mockBadRequestException: BoxException = mock()
+    private val mockBoxGenericException: BoxException = mock()
 
     private val mockGetInviteeResponse: BoxResponse<BoxIteratorInvitees> = mock()
     private val mockFetchRolesResponse: BoxResponse<BoxCollaborationItem> = mock()
@@ -71,6 +72,8 @@ class ShareSDKTransformerTest {
         whenever(mockBadRequestException.responseCode).thenReturn(HttpsURLConnection.HTTP_BAD_REQUEST)
 
         whenever(mockHttpNotModifiedException.responseCode).thenReturn(HttpsURLConnection.HTTP_NOT_MODIFIED)
+
+        whenever(mockBoxGenericException.errorType).thenReturn(BoxException.ErrorType.OTHER)
     }
 
     @Test
@@ -504,7 +507,7 @@ class ShareSDKTransformerTest {
         //configs
         val boxResponse: BoxResponse<BoxVoid> = mock()
         whenever(boxResponse.isSuccess).thenReturn(false)
-        whenever(boxResponse.exception).thenReturn(mock())
+        whenever(boxResponse.exception).thenReturn(mockGenericException)
         val result = shareSDKTransformer.getDeleteCollaborationPresenterData(boxResponse)
 
         assertEquals(false, result.isSuccess)
@@ -529,7 +532,7 @@ class ShareSDKTransformerTest {
         //configs
         val boxResponse: BoxResponse<BoxVoid> = mock()
         whenever(boxResponse.isSuccess).thenReturn(false)
-        whenever(boxResponse.exception).thenReturn(mock())
+        whenever(boxResponse.exception).thenReturn(mockGenericException)
         val result = shareSDKTransformer.getUpdateOwnerPresenterData(boxResponse)
 
         assertEquals(false, result.isSuccess)
@@ -542,9 +545,7 @@ class ShareSDKTransformerTest {
         //configs
         val boxResponse: BoxResponse<BoxVoid> = mock()
         whenever(boxResponse.isSuccess).thenReturn(false)
-        val exception: BoxException = mock()
-        whenever(exception.errorType).thenReturn(BoxException.ErrorType.NETWORK_ERROR)
-        whenever(boxResponse.exception).thenReturn(exception)
+        whenever(boxResponse.exception).thenReturn(mockBoxNetworkErrorException)
         val result = shareSDKTransformer.getUpdateOwnerPresenterData(boxResponse)
 
         assertEquals(false, result.isSuccess)
@@ -572,9 +573,7 @@ class ShareSDKTransformerTest {
         //configs
         val boxResponse: BoxResponse<BoxVoid> = mock()
         whenever(boxResponse.isSuccess).thenReturn(false)
-        val exception: BoxException = mock()
-        whenever(boxResponse.exception).thenReturn(exception)
-        whenever(exception.errorType).thenReturn(BoxException.ErrorType.OTHER)
+        whenever(boxResponse.exception).thenReturn(mockBoxGenericException)
         val result = shareSDKTransformer.getUpdateOwnerPresenterData(boxResponse)
 
         assertEquals(false, result.isSuccess)
@@ -602,7 +601,7 @@ class ShareSDKTransformerTest {
     fun `test update collaboration transformer failure generic`() {
         //configs
         val boxResponse: BoxResponse<BoxCollaboration> = mock()
-        whenever(boxResponse.exception).thenReturn(mock())
+        whenever(boxResponse.exception).thenReturn(mockGenericException)
         whenever(boxResponse.isSuccess).thenReturn(false)
         val result = shareSDKTransformer.getUpdateCollaborationPresenterData(boxResponse)
 
@@ -613,11 +612,7 @@ class ShareSDKTransformerTest {
 
     @Test
     fun `test update collaboration transformer failure network error`() {
-        //configs
-        val exception: BoxException = mock()
-        whenever(exception.errorType).thenReturn(BoxException.ErrorType.NETWORK_ERROR)
-
-        val boxResponse = createFailedBoxCollaborationResponse("", exception)
+        val boxResponse = createFailedBoxCollaborationResponse("", mockBoxNetworkErrorException)
         whenever(boxResponse.isSuccess).thenReturn(false)
         val result = shareSDKTransformer.getUpdateCollaborationPresenterData(boxResponse)
 
@@ -628,11 +623,7 @@ class ShareSDKTransformerTest {
 
     @Test
     fun `test update collaboration transformer failure http forbidden`() {
-        //configs
-        val exception: BoxException = mock()
-        whenever(exception.responseCode).thenReturn(HTTP_FORBIDDEN)
-
-        val boxResponse = createFailedBoxCollaborationResponse("", exception)
+        val boxResponse = createFailedBoxCollaborationResponse("", mockHttpForbiddenException)
         whenever(boxResponse.isSuccess).thenReturn(false)
         val result = shareSDKTransformer.getUpdateCollaborationPresenterData(boxResponse)
 
@@ -644,10 +635,9 @@ class ShareSDKTransformerTest {
     @Test
     fun `test update collaboration transformer failure default`() {
         //configs
-        val exception: BoxException = mock()
-        whenever(exception.errorType).thenReturn(BoxException.ErrorType.OTHER)
 
-        val boxResponse = createFailedBoxCollaborationResponse("", exception)
+
+        val boxResponse = createFailedBoxCollaborationResponse("", mockBoxGenericException)
         whenever(boxResponse.isSuccess).thenReturn(false)
         val result = shareSDKTransformer.getUpdateCollaborationPresenterData(boxResponse)
 
@@ -676,9 +666,7 @@ class ShareSDKTransformerTest {
     @Test
     fun `test get collaboration transformer failure generic`() {
         //configs
-        val boxResponse: BoxResponse<BoxIteratorCollaborations> = mock()
-        whenever(boxResponse.exception).thenReturn(mock())
-        whenever(boxResponse.isSuccess).thenReturn(false)
+        val boxResponse: BoxResponse<BoxIteratorCollaborations> = createFailedBoxIterCollaborationResponse(mockBoxGenericException)
         val result = shareSDKTransformer.getCollaborationsPresenterData(boxResponse)
 
         assertEquals(false, result.isSuccess)
@@ -689,10 +677,7 @@ class ShareSDKTransformerTest {
     @Test
     fun `test get collaboration transformer failure network error`() {
         //configs
-        val exception: BoxException = mock()
-        whenever(exception.errorType).thenReturn(BoxException.ErrorType.NETWORK_ERROR)
-
-        val boxResponse = createFailedBoxIterCollaborationResponse(exception)
+        val boxResponse = createFailedBoxIterCollaborationResponse(mockBoxNetworkErrorException)
         whenever(boxResponse.isSuccess).thenReturn(false)
         val result = shareSDKTransformer.getCollaborationsPresenterData(boxResponse)
 
@@ -703,11 +688,7 @@ class ShareSDKTransformerTest {
 
     @Test
     fun `test get collaboration transformer failure http forbidden`() {
-        //configs
-        val exception: BoxException = mock()
-        whenever(exception.responseCode).thenReturn(HTTP_FORBIDDEN)
-
-        val boxResponse = createFailedBoxIterCollaborationResponse(exception)
+        val boxResponse = createFailedBoxIterCollaborationResponse(mockHttpForbiddenException)
         whenever(boxResponse.isSuccess).thenReturn(false)
         val result = shareSDKTransformer.getCollaborationsPresenterData(boxResponse)
 
@@ -719,10 +700,7 @@ class ShareSDKTransformerTest {
     @Test
     fun `test get collaboration transformer failure default`() {
         //configs
-        val exception: BoxException = mock()
-        whenever(exception.errorType).thenReturn(BoxException.ErrorType.OTHER)
-
-        val boxResponse = createFailedBoxIterCollaborationResponse(exception)
+        val boxResponse = createFailedBoxIterCollaborationResponse(mockBoxGenericException)
         whenever(boxResponse.isSuccess).thenReturn(false)
         val result = shareSDKTransformer.getCollaborationsPresenterData(boxResponse)
 
@@ -758,9 +736,8 @@ class ShareSDKTransformerTest {
 
 
     @Test
-    fun `test get initials collab transformer failure default` () {
-        val exception: Exception = mock()
-        val boxResponse = createFailedBoxIterCollaborationResponse(exception)
+    fun `test get initials collab transformer failure generic` () {
+        val boxResponse = createFailedBoxIterCollaborationResponse(mockGenericException)
         val result = shareSDKTransformer.getIntialsViewCollabsPresenterData(boxResponse)
 
         assertEquals(false, result.isSuccess)

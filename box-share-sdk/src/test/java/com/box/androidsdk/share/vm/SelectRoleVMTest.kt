@@ -62,7 +62,7 @@ class SelectRoleVMTest {
     }
 
     @Test
-    fun `test set collaboration he variable correctly`() {
+    fun `test set collaboration update the variable correctly`() {
         assertNull(selectRoleShareVM.collaboration)
         selectRoleShareVM.collaboration = mockCollaboration
 
