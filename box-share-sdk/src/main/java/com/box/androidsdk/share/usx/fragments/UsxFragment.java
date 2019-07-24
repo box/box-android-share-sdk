@@ -3,6 +3,7 @@ package com.box.androidsdk.share.usx.fragments;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +91,7 @@ public class UsxFragment extends BoxFragment {
         View view = binding.getRoot();
 
         binding.setLifecycleOwner(getViewLifecycleOwner());
+        binding.setOnShareViaListener(v -> showShareVia());
         return view;
     }
 
@@ -199,6 +201,15 @@ public class UsxFragment extends BoxFragment {
     public void setShareItem(BoxItem item) {
         mSharedLinkVm.setShareItem(item);
         refreshUI();
+    }
+
+    private void showShareVia() {
+        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, String.format(getString(R.string.box_sharesdk_I_have_shared_x_with_you), mSharedLinkVm.getShareItem().getName()));
+        emailIntent.putExtra(Intent.EXTRA_TEXT, mSharedLinkVm.getShareItem().getSharedLink().getURL());
+        emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(Intent.createChooser(emailIntent, getString(R.string.box_sharesdk_send_with)));
     }
 
 }

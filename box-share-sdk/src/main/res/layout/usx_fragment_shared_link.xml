@@ -11,6 +11,8 @@
             type="android.view.View.OnClickListener"/>
         <variable name="onCollabsListener"
             type="android.view.View.OnClickListener"/>
+        <variable name="onShareViaListener"
+            type="android.view.View.OnClickListener"/>
         <variable
             name="onCopyLinkListener"
             type="android.view.View.OnClickListener" />
@@ -186,6 +188,7 @@
                         style="@style/BoxCellSubHeader"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/box_sharesdk_small_cell_height"
+                        android:onClickListener="@{onShareViaListener}"
                         android:background="@drawable/box_ripple_btn_blue"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/box_sharesdk_horizontal_margin_new"
