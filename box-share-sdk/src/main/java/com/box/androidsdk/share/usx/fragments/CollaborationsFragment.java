@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -96,8 +97,8 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         if (mSelectRoleShareVM.isRemoveSeleted()) {
             showSpinner();
             mCollaborationsShareVM.deleteCollaboration(mSelectRoleShareVM.getCollaboration());
@@ -126,8 +127,6 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         if (mCollaborationsShareVM.getCollaborations().getValue() == null) {
             mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
         }
-
-
     }
 
     public void setCallback(CollaborationsFragmentCallback callback) {
