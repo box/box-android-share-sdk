@@ -115,7 +115,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
         binding.setSharedLinkAccessNotifier(notifier);
        // binding.accessRadioGroup.setSharedLinkAccessNotifier(notifier);
         binding.setOnPasswordListener(v -> showPasswordChooserDialog());
-        binding.setOnDateListener(v -> showDatePicker(new Date()));
+        binding.setOnDateListener(v -> showDatePicker(mShareLinkVM.getShareItem().getSharedLink().getUnsharedDate()));
         refreshUI();
 
     }
