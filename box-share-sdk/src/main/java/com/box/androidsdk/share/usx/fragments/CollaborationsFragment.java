@@ -1,17 +1,12 @@
 package com.box.androidsdk.share.usx.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +15,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.box.androidsdk.content.BoxException;
-import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxCollaborator;
@@ -30,7 +24,6 @@ import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxVoid;
 import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.content.requests.BoxRequestsShare;
-import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
@@ -43,7 +36,6 @@ import com.box.androidsdk.share.vm.PresenterData;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
 import com.box.androidsdk.share.vm.ShareVMFactory;
 
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 public class CollaborationsFragment extends BoxFragment implements AdapterView.OnItemClickListener {
@@ -99,7 +91,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (mSelectRoleShareVM.isRemoveSeleted()) {
+        if (mSelectRoleShareVM.isRemoveSelected()) {
             showSpinner();
             mCollaborationsShareVM.deleteCollaboration(mSelectRoleShareVM.getCollaboration());
             mSelectRoleShareVM.setRemoveSelected(false); //reset remove selected

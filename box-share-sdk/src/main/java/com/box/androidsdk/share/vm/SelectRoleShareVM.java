@@ -128,7 +128,7 @@ public class SelectRoleShareVM extends ViewModel {
     }
 
 
-    public boolean isRemoveSeleted() {
+    public boolean isRemoveSelected() {
         return mRemoveSelected;
     }
 
