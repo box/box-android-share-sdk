@@ -1,6 +1,5 @@
 package com.box.androidsdk.share.usx.fragments;
 
-import androidx.annotation.StringRes;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.AlertDialog;
@@ -9,29 +8,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.models.BoxCollaboration;
-import com.box.androidsdk.content.models.BoxCollaborationItem;
-import com.box.androidsdk.content.models.BoxItem;
-import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.databinding.UsxFragmentCollaborationRolesBinding;
-import com.box.androidsdk.share.fragments.CollaborationsFragment;
 import com.box.androidsdk.share.vm.ActionbarTitleVM;
-import com.box.androidsdk.share.vm.CollaborationsShareVM;
-import com.box.androidsdk.share.vm.PresenterData;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
-import com.box.androidsdk.share.vm.ShareVMFactory;
-
 
 public class CollaboratorsRolesFragment extends Fragment {
 
