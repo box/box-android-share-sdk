@@ -40,6 +40,7 @@ import com.box.androidsdk.share.vm.ActionbarTitleVM;
 import com.box.androidsdk.share.vm.CollaborationsShareVM;
 import com.box.androidsdk.share.vm.PresenterData;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
+import com.box.androidsdk.share.vm.ShareVMFactory;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -213,10 +214,11 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
 
-    public static CollaborationsFragment newInstance(BoxCollaborationItem collaborationItem) {
+    public static CollaborationsFragment newInstance(BoxCollaborationItem collaborationItem, ShareVMFactory factory) {
         Bundle args = BoxFragment.getBundle(collaborationItem);
         CollaborationsFragment fragment = new CollaborationsFragment();
         fragment.setArguments(args);
+        fragment.mShareVMFactory = factory;
         return fragment;
     }
     private Observer<PresenterData<BoxCollaboration>> onUpdateCollaboration = presenterData -> {
