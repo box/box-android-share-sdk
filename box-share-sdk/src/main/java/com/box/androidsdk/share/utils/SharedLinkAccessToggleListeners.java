@@ -5,6 +5,9 @@ import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.share.usx.fragments.SharedLinkAccessFragment;
 
+/**
+ * This class is used by data binding for reacting to users' inputs.
+ */
 public class SharedLinkAccessToggleListeners {
 
     public static void onAccessLevelCheckChanged(boolean checked, BoxSharedLink.Access access, SharedLinkAccessFragment.SharedLinkAccessNotifiers notifiers) {

@@ -13,11 +13,10 @@ import java.util.Date;
 
 
 public class DatePickerFragment extends PositiveNegativeDialogFragment
-        implements DatePickerDialog.OnDateSetListener, DialogInterface.OnDismissListener {
+        implements DatePickerDialog.OnDateSetListener {
 
-    DatePickerDialog mDialog;
+    private DatePickerDialog mDialog;
     private DatePickerDialog.OnDateSetListener mOnDateSetListener;
-    private DialogInterface.OnDismissListener onDismissListener;
 
     private static final String EXTRA_START_DATE = "extraStartDate";
     private final String EXTRA_KEY_YEAR = "extraYear";

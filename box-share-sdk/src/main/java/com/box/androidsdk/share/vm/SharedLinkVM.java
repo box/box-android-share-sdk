@@ -22,8 +22,8 @@ public class SharedLinkVM extends BaseShareVM {
 
     private final LiveData<PresenterData<BoxItem>> mShareLinkedItem;
 
-    MutableLiveData<BoxSharedLink.Access> mSelectedAccess = new MutableLiveData<>();
-    HashSet<BoxSharedLink.Access> mActiveRadioButtons = new HashSet<>();
+    private final MutableLiveData<BoxSharedLink.Access> mSelectedAccess = new MutableLiveData<>();
+    private HashSet<BoxSharedLink.Access> mActiveRadioButtons = new HashSet<>();
     private final LiveData<PresenterData<BoxFeatures>> mSupportedFeatures;
 
     public SharedLinkVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {

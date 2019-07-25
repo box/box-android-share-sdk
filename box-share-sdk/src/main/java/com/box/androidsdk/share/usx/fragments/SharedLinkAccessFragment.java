@@ -37,9 +37,9 @@ public class SharedLinkAccessFragment extends BoxFragment {
 
     private SharedLinkAccessNotifiers notifier = new SharedLinkAccessNotifiers() {
         @Override
-        public void notifyAccessLevelChange(BoxSharedLink.Access access) {
-            if (access != null && access != mShareLinkVM.getShareItem().getSharedLink().getEffectiveAccess()) {
-                changeAccess(access);
+        public void notifyAccessLevelChange(BoxSharedLink.Access newAccess) {
+            if (newAccess != null && newAccess != mShareLinkVM.getShareItem().getSharedLink().getEffectiveAccess()) {
+                changeAccess(newAccess);
             }
 
         }
