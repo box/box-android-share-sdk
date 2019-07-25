@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.box.androidsdk.share.utils.SharedLinkBindingAdapters" />
+        <variable name="onInviteCollabsClickListener"
+            type="android.view.View.OnClickListener"/>
+        <variable name="onEditAccessClickListener"
+            type="android.view.View.OnClickListener"/>
+        <variable name="onCollabsListener"
+            type="android.view.View.OnClickListener"/>
+        <variable name="onShareViaListener"
+            type="android.view.View.OnClickListener"/>
+        <variable
+            name="onCopyLinkListener"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="shareLinkVm"
+            type="com.box.androidsdk.share.vm.SharedLinkVM" />
+        <variable
+            name="usxNotifier"
+            type="com.box.androidsdk.share.usx.fragments.UsxFragment.UsxNotifiers" />
+        <variable
+            name="shareItem"
+            type="com.box.androidsdk.content.models.BoxItem" />
+    </data>
+    <FrameLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:background="@color/box_sharesdk_screen_background"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    style="@style/BoxCellTitle"
+                    android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_usx"
+                    android:text="@string/box_sharesdk_invite_collaborators"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
+                    android:background="@color/box_sharesdk_components_background"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:textAppearance="@style/BoxCellTitle"
+                        android:id="@+id/inviteCollabs"
+                        android:layout_width="match_parent"
+                        android:focusable="false"
+                        android:layout_height="@dimen/box_sharesdk_small_cell_height"
+                        android:paddingLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                        android:paddingRight="@dimen/box_sharesdk_horizontal_margin_usx"
+                        android:longClickable="false"
+                        android:hint="@string/box_sharesdk_invite_collab_hint"
+                        android:onClickListener="@{onInviteCollabsClickListener}"
+                        android:background="@drawable/box_ripple_btn_blue" />
+                    <View style="@style/BoxInsetDivider" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:clickable="true"
+                        android:onClickListener="@{onCollabsListener}"
+                        android:background="@drawable/box_ripple_btn_blue"
+                        android:layout_height="@dimen/box_sharesdk_small_cell_height">
+                        <com.box.androidsdk.share.usx.views.CollaboratorsInitialsView
+                            android:id="@+id/initialViews"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    style="@style/BoxCellTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_usx"
+                    android:text="@string/box_sharesdk_title_share_link" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:background="@color/box_sharesdk_components_background"
+                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
+                    android:layout_height="wrap_content">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <Switch
+                            android:id="@+id/shared_link_switch"
+                            style="@style/BoxSwitchUSX"
+                            android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_cell_component"
+                            android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                            android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin_usx"
+                            android:background="@color/box_sharesdk_togglebar_background"
+                            android:checked="@{shareItem.sharedLink != null}"
+                            app:layout_constraintVertical_weight="1"
+                            tools:text="@string/box_sharesdk_share_link_enabled"
+                            android:onCheckedChanged="@{(view, checked) -> SharedLinkBindingAdapters.onSharedLinkToggle(checked, shareItem.sharedLink, usxNotifier)}"
+                            android:text="@{sharedLinkSwitch.checked ? @string/box_sharesdk_share_link_enabled: @string/box_sharesdk_enable_share_link}"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/temp"
+                            style="@style/BoxCellText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_usx_small"
+                            android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin_usx"
+                            android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                            android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin_cell_component"
+                            android:onClick="@{() -> SharedLinkBindingAdapters.onLinkClick(sharedLinkSwitch.isChecked(), usxNotifier)}"
+                            android:text="@{sharedLinkSwitch.checked ? shareItem.sharedLink.URL: @string/box_sharesdk_no_shared_link_instructions}"
+                            app:layout_constraintTop_toBottomOf="@id/shared_link_switch"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            tools:text="@string/lorem_placeholder"
+                            app:layout_constraintLeft_toLeftOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <View style="@style/BoxInsetDivider" android:visibility="@{sharedLinkSwitch.checked ? View.VISIBLE : View.GONE}"/>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:clickable="true"
+                        android:onClickListener="@{onEditAccessClickListener}"
+                        android:visibility="@{sharedLinkSwitch.checked ? View.VISIBLE : View.GONE}"
+                        android:background="@drawable/box_ripple_btn_blue"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_cell_component"
+                            android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                            android:text="@string/box_sharesdk_access"
+                            style="@style/BoxCellSubHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:visibility="@{sharedLinkSwitch.checked ? View.VISIBLE : View.GONE}"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_usx_small"
+                            android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                            android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin_cell_component"
+                            style="@style/BoxCellText"
+                            app:linkAccess="@{shareItem.sharedLink}"
+                            android:layout_width="wrap_content"
+                            android:visibility="@{sharedLinkSwitch.checked ? View.VISIBLE : View.GONE}"
+                            android:layout_marginRight="@dimen/box_sharesdk_vertical_margin_usx"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView
+                    style="@style/BoxCellTitle"
+                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_usx"
+                    android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                    android:text="@string/box_sharesdk_send_or_share"
+                    android:layout_width="wrap_content"
+                    android:visibility="@{sharedLinkSwitch.checked ? View.VISIBLE : View.GONE}"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:background="@color/box_sharesdk_components_background"
+                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
+                    android:layout_width="match_parent"
+                    android:visibility="@{sharedLinkSwitch.checked ? View.VISIBLE : View.GONE}"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:paddingLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                        style="@style/BoxCellSubHeader"
+                        android:gravity="center_vertical"
+                        android:text="@string/box_sharesdk_copy_link_usx"
+                        android:background="@drawable/box_ripple_btn_blue"
+                        android:layout_width="match_parent"
+                        android:onClickListener="@{onCopyLinkListener}"
+                        android:layout_height="@dimen/box_sharesdk_small_cell_height" />
+                    <View style="@style/BoxDivider" />
+                    <Button
+                        android:id="@+id/share_via_button"
+                        style="@style/BoxCellSubHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/box_sharesdk_small_cell_height"
+                        android:onClickListener="@{onShareViaListener}"
+                        android:background="@drawable/box_ripple_btn_blue"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                        android:text="@string/box_sharesdk_share_via" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+    </FrameLayout>
+</layout>

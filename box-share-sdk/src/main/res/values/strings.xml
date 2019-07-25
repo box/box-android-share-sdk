@@ -5,10 +5,16 @@
     <string name="box_sharesdk_session_is_not_authenticated">Session is not authenticated</string>
     <string name="box_sharesdk_no_item_selected">No item selected</string>
     <string name="box_sharesdk_copy_link" description="button to copy link to clipboard">COPY LINK</string>
+    <string name="box_sharesdk_copy_link_usx" description="button to copy link to clipboard">Copy Link to Clipboard</string>
+    <string name="box_sharesdk_share_via" description="button to share link via another app">Share via...</string>
     <string name="box_sharesdk_send_link" description="button to send link to another application">SEND LINK</string>
+    <!--<string name="box_sharesdk_share_link_function_description" description="description that is shown for what enabling share link will do">Enabling creates a sharable link that others can use to access and view this content.</string>-->
     <string name="box_sharesdk_accessible_public" description="description for public access">This content is publicly accessible to anyone with the link. No login is required.</string>
+    <string name="box_sharesdk_accessible_public_usx" description="description for public access">This content is publicly accessible to anyone with the link. No login is required.</string>
     <string name="box_sharesdk_accessible_company" description="description for company access">Accessible to people in your company</string>
+    <string name="box_sharesdk_accessible_company_usx" description="description for company access">This content is accessible to anyone in your organization and people who are collaborated into the folder</string>
     <string name="box_sharesdk_accessible_collaborator" description="description for collaborator access">Accessible to people the item is shared with</string>
+    <string name="box_sharesdk_accessible_collaborator_usx" description="description for collaborator access">This content is only accessible to people who are collaborated into this folder.h</string>
     <string name="box_sharesdk_password_protected" description="description for if a shared link is password proceted">Password protected</string>
     <string name="box_sharesdk_fetching_collaborators" description="message to show on spinner when we are fetching collaborators">Fetching collaborators</string>
     <string name="box_sharesdk_adding_collaborators" description="message to show on spinner when we are adding collaborators">Adding collaborators</string>
@@ -16,13 +22,15 @@
     <string name="box_sharesdk_disabling_share_link" description="message to show on spinner when we are disabling share link">Disabling share link</string>
     <string name="box_sharesdk_updating_link_access" description="message to show on spinner when we are updating link access">Updating link access</string>
 
-    <string name="box_sharesdk_share_link_enabled" description="shown if share link is enabled">Share link enabled</string>
+    <string name="box_sharesdk_share_link_enabled" description="shown if share link is enabled">Share Link Enabled</string>
     <string name="box_sharesdk_downloads_allowed" description="shown if user has permission to download link">Downloads allowed</string>
+    <string name="box_sharesdk_downloads_allowed_usx" description="shown if user has permission to download link">Allow downloading</string>
     <string name="box_sharesdk_downloads_disabled" description="shown if user has permission to download link">Downloads disabled</string>
     <string name="box_sharesdk_link_expires_on_x_date" description="start of the string telling when link expires">Link expires on %1$s</string>
     <string name="box_sharesdk_edit_link_access" description="button to change access properties of link">EDIT LINK ACCESS</string>
     <string name="box_sharesdk_cancel" description="button to cancel an action">CANCEL</string>
     <string name="box_sharesdk_ok" description="button to cancel an action">OK</string>
+    <string name="box_sharesdk_enable_share_link" description="title description for enabling link">Enable Link</string>
     <string name="box_sharesdk_disable_share_link" description="button to disable a shared link">DISABLE SHARE LINK</string>
     <string name="box_sharesdk_disable_title" description="shown as title of warning dialog before disabling a shared link">Disable Share Link?</string>
     <string name="box_sharesdk_disable_message" description="shown as message of warning dialog before disabling a shared link">Disabling the link permanently deletes the current share link. Reenabling the link will generate a completely new and unique share link. Do you wish to disable the share link?</string>
@@ -94,6 +102,12 @@
     <string name="box_sharesdk_has_already_been_invited" description="The string displayed when a person was already invited, %s being the email of the person">%s has already been invited to this item</string>
     <string name="box_sharesdk_num_has_already_been_invited" description="The string displayed when some number of people have already been invited, %s being number of people">%s people have already been invited to this item</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
+    <plurals name="box_sharesdk_collaborators_count_plurals">
+        <item quantity="one">@string/box_sharedsdk_collaborators_count_1</item>
+        <item quantity="other">@string/box_sharedsdk_collaborators_count</item>
+    </plurals>
+    <string name="box_sharedsdk_collaborators_count_1">%d Collaborator</string>
+    <string name="box_sharedsdk_collaborators_count">%d Collaborators</string>
     <string name="box_sharedsdk_collaborators_title">Collaborators</string>
     <string name="box_sharesdk_num_collaborators_error" description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)">%s could not be invited to this %s</string>
     <string name="box_sharesdk_following_collaborators_error" description="Error message to display when users cannot be invited to current item, for truncation purposes emails must be at the end">The following collaborators could not be invited: %s</string>
@@ -108,9 +122,11 @@
     <string name="box_sharesdk_add_a_personal_message" description="text for a button that can be clicked to add a personal message when inviting a new collaborator for a file or folder">Add a personal message</string>
     <string name="box_sharesdk_personal_message" description="title for a textfield to add a personal message when inviting a new collaborator for a file or folder">Personal Message</string>
     <string name="box_sharesdk_send_invitation" description="text for a button for inviting a new collaborator for a file or folder">Send Invitation</string>
+    <string name="box_sharesdk_send_or_share" description="text for a title that allows the user to send or share link">Send or Share</string>
+    <string name="box_sharesdk_invite_collab_hint">Type a Name or Email Address</string>
     <plurals name="box_sharesdk_already_been_invited">
         <item quantity="one">@string/box_sharesdk_has_already_been_invited</item>
         <item quantity="other">@string/box_sharesdk_num_has_already_been_invited</item>
     </plurals>
-
+    <string name="lorem_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, consectetur adipiscing elit</string>
 </resources>

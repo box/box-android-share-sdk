@@ -63,10 +63,6 @@ public abstract class BoxFragment extends Fragment {
         }
     }
 
-    public void setVMFactory(ShareVMFactory factory) {
-        this.mShareVMFactory = factory;
-    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable(CollaborationUtils.EXTRA_ITEM, mShareItem);

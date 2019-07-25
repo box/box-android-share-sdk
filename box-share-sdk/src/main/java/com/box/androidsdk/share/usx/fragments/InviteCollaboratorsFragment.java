@@ -17,10 +17,12 @@ import com.box.androidsdk.share.vm.InviteCollaboratorsPresenterData;
 import com.box.androidsdk.share.vm.InviteCollaboratorsShareVM;
 import com.box.androidsdk.share.vm.PresenterData;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
+import com.box.androidsdk.share.vm.ShareVMFactory;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -44,17 +46,8 @@ import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.util.List;
 
-/**
- * Fragment to let users invite collaborators on an item.
- *
- * There are two listeners used here:
- * 1. InviteCollaboratorsListener is used to set up a listener by the parent Activity or Fragment on this Fragment.
- * 2. ShowCollaboratorsListener is used to set up a listener by this fragment on the child custom view called CollaboratorsInitialsView.
- */
 
 public class InviteCollaboratorsFragment extends BoxFragment implements TokenCompleteTextView.TokenListener<BoxInvitee> {
-
-
 
     private static final Integer MY_PERMISSIONS_REQUEST_READ_CONTACTS = 32;
     public static final String TAG = InviteCollaboratorsFragment.class.getName();
@@ -64,18 +57,20 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     private String mFilterTerm;
     UsxFragmentInviteCollaboratorsBinding binding;
 
-    private View.OnClickListener mOnEditAccessListener;
     InviteCollaboratorsShareVM mInviteCollaboratorsShareVM;
     SelectRoleShareVM mSelectRoleShareVM;
+    ClickListener mListener;
 
-
+    public interface ClickListener {
+        void editAccessClicked();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_invite_collaborators, container,false);
         View view = binding.getRoot();
         binding.setLifecycleOwner(getViewLifecycleOwner());
-
+        setTitles();
         mSelectRoleShareVM = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
 
         InviteeAdapter adapter = createInviteeAdapter(getActivity());
@@ -84,7 +79,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
         binding.setAdapter(adapter);
         binding.setTokenizer(tokenizer);
-        binding.setOnRoleClickedListener(mOnEditAccessListener);
+        binding.setOnRoleClickedListener(v -> mListener.editAccessClicked());
         binding.setOnSendInvitationClickedListener(v -> addCollaborations());
         binding.setTokenListener(this);
         binding.setCollaboratorsPresent(mSelectRoleShareVM.isSendInvitationEnabled());
@@ -98,7 +93,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         mInviteCollaboratorsShareVM.getRoleItem().observe(this, onRoleItemChange);
         mInviteCollaboratorsShareVM.getInvitees().observe(this, onInviteesChanged);
         mInviteCollaboratorsShareVM.getInviteCollabs().observe(this, onInviteCollabs);
-
 
         if (mSelectRoleShareVM.getSelectedRole() == null && savedInstanceState != null) {
             String selected_role_enum = savedInstanceState.getString(EXTRA_COLLAB_SELECTED_ROLE);
@@ -149,6 +143,10 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
                     List<BoxCollaboration.Role> roles = mSelectRoleShareVM.getRoles();
                     BoxCollaboration.Role selectedRole = roles != null && roles.size() > 0 ? getBestDefaultRole(collaborationItem.getDefaultInviteeRole(), roles) : null;
                     setSelectedRole(selectedRole);
+                    if (selectedRole == null) { //if user cannot select any role, he does not have permission for inviting.
+                        showNoPermissionToast();
+                        getActivity().finish();
+                    }
                 }
                 mInviteCollaboratorsShareVM.setShareItem(collaborationItem);
             } else {
@@ -269,7 +267,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // Attach the listener to view once createView is complete
+        // Attach the mListener to view once createView is complete
     }
 
 
@@ -281,9 +279,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         }
     }
 
-    public void setOnEditAccessListener(View.OnClickListener listener) {
-        mOnEditAccessListener = listener;
-    }
     /**
      * Executes the request to retrieve the available roles for the item
      */
@@ -351,15 +346,18 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         return (BoxCollaborationItem) mInviteCollaboratorsShareVM.getShareItem();
     }
 
-    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem) {
-        return newInstance(collaborationItem, true);
+    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem
+    , ClickListener listener, ShareVMFactory factory) {
+        return newInstance(collaborationItem, listener, factory, true);
     }
 
-    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem, boolean useContactsProvider) {
+    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem, ClickListener listener, ShareVMFactory factory, boolean useContactsProvider) {
         Bundle args = BoxFragment.getBundle(collaborationItem);
         InviteCollaboratorsFragment fragment = new InviteCollaboratorsFragment();
         args.putBoolean(EXTRA_USE_CONTACTS_PROVIDER, useContactsProvider);
         fragment.setArguments(args);
+        fragment.mListener = listener;
+        fragment.mShareVMFactory = factory;
         return fragment;
     }
 
