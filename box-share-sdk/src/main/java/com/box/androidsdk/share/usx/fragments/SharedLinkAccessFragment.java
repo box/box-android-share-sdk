@@ -259,7 +259,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
             showToast(R.string.box_sharesdk_problem_accessing_this_shared_link);
             getActivity().finish();
         }
-        setShareItem(mShareLinkVM.getShareItem());
+        binding.setShareItem(mShareLinkVM.getShareItem());
     }
 
     public void setShareItem(BoxItem item) {
