@@ -27,11 +27,11 @@
             android:name=".usx.activities.BoxInviteCollaboratorsActivity"
             android:label="@string/box_sharesdk_invite_collaborators_activity_title"
             android:windowSoftInputMode="stateVisible"
-            android:theme="@style/ShareThemeNew" >
+            android:theme="@style/ShareThemeUSX" >
         </activity>
         <activity
             android:name=".usx.activities.BoxUsxActivity"
-            android:theme="@style/ShareThemeNew" >
+            android:theme="@style/ShareThemeUSX" >
         </activity>
     </application>
 

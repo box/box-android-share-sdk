@@ -6,7 +6,7 @@
         <item name="android:buttonStyle">@style/ButtonAppTheme</item>
     </style>
 
-    <style name="ShareThemeNew" parent="@style/Theme.AppCompat.Light.NoActionBar">
+    <style name="ShareThemeUSX" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/box_sharesdk_action_bar_background</item>
         <item name="colorPrimaryDark">@color/box_sharesdk_action_bar_background</item>
         <item name="colorAccent">@color/box_logo_background</item>
@@ -34,12 +34,12 @@
         <item name="android:buttonStyle">@style/ButtonAppTheme</item>
     </style>
 
-    <style name="ShareDialogThemeNew" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+    <style name="ShareDialogThemeUSX" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/box_sharesdk_background</item>
         <item name="colorPrimaryDark">@color/box_sharesdk_primary_dark</item>
         <item name="colorAccent">@color/box_sharesdk_accent</item>
         <item name="android:minWidth">@dimen/box_sharesdk_dialog_minWidth</item>
-        <item name="android:buttonStyle">@style/ButtonAppThemeNew</item>
+        <item name="android:buttonStyle">@style/ButtonAppThemeUSX</item>
     </style>
 
     <style name="ButtonAppTheme" parent="@android:style/Widget.Button">
@@ -55,7 +55,7 @@
         <item name="android:scrollHorizontally">false</item>
     </style>
 
-    <style name="ButtonAppThemeNew" parent="@android:style/Widget.Button">
+    <style name="ButtonAppThemeUSX" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/box_ripple_btn</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">2</item>
@@ -142,7 +142,7 @@
         <item name="android:layout_gravity">left|start|center_vertical</item>
     </style>
 
-    <style name="BoxSwitchNew"  parent="@android:style/Widget.CompoundButton">
+    <style name="BoxSwitchUSX"  parent="@android:style/Widget.CompoundButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">@style/BoxCellSubHeader</item>
@@ -156,7 +156,7 @@
     </style>
 
     <style name="BoxInsetDivider" parent="BoxDivider">
-        <item name="android:layout_marginLeft">@dimen/box_sharesdk_horizontal_margin_new</item>
+        <item name="android:layout_marginLeft">@dimen/box_sharesdk_horizontal_margin_usx</item>
     </style>
 
     <dimen name="box_sharesdk_dialog_minWidth">72dp</dimen>

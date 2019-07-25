@@ -5,16 +5,16 @@
     <string name="box_sharesdk_session_is_not_authenticated">Session is not authenticated</string>
     <string name="box_sharesdk_no_item_selected">No item selected</string>
     <string name="box_sharesdk_copy_link" description="button to copy link to clipboard">COPY LINK</string>
-    <string name="box_sharesdk_copy_link_new" description="button to copy link to clipboard">Copy Link to Clipboard</string>
+    <string name="box_sharesdk_copy_link_usx" description="button to copy link to clipboard">Copy Link to Clipboard</string>
     <string name="box_sharesdk_share_via" description="button to share link via another app">Share via...</string>
     <string name="box_sharesdk_send_link" description="button to send link to another application">SEND LINK</string>
     <!--<string name="box_sharesdk_share_link_function_description" description="description that is shown for what enabling share link will do">Enabling creates a sharable link that others can use to access and view this content.</string>-->
     <string name="box_sharesdk_accessible_public" description="description for public access">This content is publicly accessible to anyone with the link. No login is required.</string>
-    <string name="box_sharesdk_accessible_public_new" description="description for public access">This content is publicly accessible to anyone with the link. No login is required.</string>
+    <string name="box_sharesdk_accessible_public_usx" description="description for public access">This content is publicly accessible to anyone with the link. No login is required.</string>
     <string name="box_sharesdk_accessible_company" description="description for company access">Accessible to people in your company</string>
-    <string name="box_sharesdk_accessible_company_new" description="description for company access">This content is accessible to anyone in your organization and people who are collaborated into the folder</string>
+    <string name="box_sharesdk_accessible_company_usx" description="description for company access">This content is accessible to anyone in your organization and people who are collaborated into the folder</string>
     <string name="box_sharesdk_accessible_collaborator" description="description for collaborator access">Accessible to people the item is shared with</string>
-    <string name="box_sharesdk_accessible_collaborator_new" description="description for collaborator access">This content is only accessible to people who are collaborated into this folder.h</string>
+    <string name="box_sharesdk_accessible_collaborator_usx" description="description for collaborator access">This content is only accessible to people who are collaborated into this folder.h</string>
     <string name="box_sharesdk_password_protected" description="description for if a shared link is password proceted">Password protected</string>
     <string name="box_sharesdk_fetching_collaborators" description="message to show on spinner when we are fetching collaborators">Fetching collaborators</string>
     <string name="box_sharesdk_adding_collaborators" description="message to show on spinner when we are adding collaborators">Adding collaborators</string>
@@ -24,7 +24,7 @@
 
     <string name="box_sharesdk_share_link_enabled" description="shown if share link is enabled">Share Link Enabled</string>
     <string name="box_sharesdk_downloads_allowed" description="shown if user has permission to download link">Downloads allowed</string>
-    <string name="box_sharesdk_downloads_allowed_new" description="shown if user has permission to download link">Allow downloading</string>
+    <string name="box_sharesdk_downloads_allowed_usx" description="shown if user has permission to download link">Allow downloading</string>
     <string name="box_sharesdk_downloads_disabled" description="shown if user has permission to download link">Downloads disabled</string>
     <string name="box_sharesdk_link_expires_on_x_date" description="start of the string telling when link expires">Link expires on %1$s</string>
     <string name="box_sharesdk_edit_link_access" description="button to change access properties of link">EDIT LINK ACCESS</string>

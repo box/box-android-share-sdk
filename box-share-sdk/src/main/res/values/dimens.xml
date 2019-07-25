@@ -21,10 +21,10 @@
 
     <dimen name="box_sharesdk_vertical_margin_title_to_cell">12dp</dimen>
 
-    <dimen name="box_sharesdk_horizontal_margin_new">24dp</dimen>
-    <dimen name="box_sharesdk_vertical_margin_new">24dp</dimen>
+    <dimen name="box_sharesdk_horizontal_margin_usx">24dp</dimen>
+    <dimen name="box_sharesdk_vertical_margin_usx">24dp</dimen>
 
-    <dimen name="box_sharesdk_vertical_margin_new_small">8dp</dimen>
+    <dimen name="box_sharesdk_vertical_margin_usx_small">8dp</dimen>
 
 
     <dimen name="box_sharesdk_radio_horizontal_margin_left">23dp</dimen>
