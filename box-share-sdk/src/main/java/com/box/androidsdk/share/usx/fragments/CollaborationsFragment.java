@@ -153,12 +153,14 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         BoxCollaboration collaboration = (BoxCollaboration) mCollaboratorsAdapter.getItem(position);
         if (collaboration != null) {
             ArrayList<BoxCollaboration.Role> rolesArr = getRoles();
-            String collabId = collaboration.getAccessibleBy().getId();
+            BoxCollaborator collaborator = collaboration.getAccessibleBy();
+            String collabId = collaborator != null ? "" : collaborator.getId();
+
             if ((rolesArr == null || rolesArr.size() == 0) && !collabId.equals(mCollaborationsShareVM.getUserId())) {
                 showToast(R.string.box_sharesdk_cannot_get_collaborators);
                 return;
             }
-            BoxCollaborator collaborator = collaboration.getAccessibleBy();
+
             BoxCollaboration.Role role = collaboration.getRole();
             String name = collaborator == null ? getString(R.string.box_sharesdk_another_person) : collaborator.getName();
             boolean allowOwner = getItem().getOwnedBy().getId().equals(mCollaborationsShareVM.getUserId());
@@ -223,7 +225,8 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     private Observer<PresenterData<BoxCollaboration>> onUpdateCollaboration = presenterData -> {
         dismissSpinner();
         if (presenterData.isSuccess()) {
-            String collabId = presenterData.getData().getAccessibleBy().getId();
+            BoxCollaborator collaborator = presenterData.getData().getAccessibleBy();
+            String collabId = collaborator != null ? "" : collaborator.getId();
             if (collabId.equals(mCollaborationsShareVM.getUserId())) { //updated permission of yourself so the list look might need to be updated to match the new permission
                 mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
             }
