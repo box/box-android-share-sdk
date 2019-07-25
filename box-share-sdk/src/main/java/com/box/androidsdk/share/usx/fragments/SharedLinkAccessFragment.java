@@ -116,7 +116,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
        // binding.accessRadioGroup.setSharedLinkAccessNotifier(notifier);
         binding.setOnPasswordListener(v -> showPasswordChooserDialog());
         binding.setOnDateListener(v -> showDatePicker(new Date()));
-        binding.setShareItem(mShareLinkVM.getShareItem());
+        refreshUi();
 
     }
 
@@ -255,12 +255,16 @@ public class SharedLinkAccessFragment extends BoxFragment {
     };
 
     public void refreshUi() {
+        if (mShareLinkVM.getShareItem().getSharedLink() == null) {
+            showToast(R.string.box_sharesdk_problem_accessing_this_shared_link);
+            getActivity().finish();
+        }
         setShareItem(mShareLinkVM.getShareItem());
     }
 
     public void setShareItem(BoxItem item) {
         mShareLinkVM.setShareItem(item);
-        binding.setShareItem(mShareLinkVM.getShareItem());
+        refreshUi();
        // binding.accessRadioGroup.setShareItem(mShareLinkVM.getShareItem());
     }
 }
