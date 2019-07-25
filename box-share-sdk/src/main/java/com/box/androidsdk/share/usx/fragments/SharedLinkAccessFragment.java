@@ -19,6 +19,7 @@ import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.databinding.UsxFragmentSharedLinkAccessBinding;
 import com.box.androidsdk.share.vm.ActionbarTitleVM;
 import com.box.androidsdk.share.vm.PresenterData;
+import com.box.androidsdk.share.vm.ShareVMFactory;
 import com.box.androidsdk.share.vm.SharedLinkVM;
 
 import java.util.Date;
@@ -233,10 +234,11 @@ public class SharedLinkAccessFragment extends BoxFragment {
         fragment.show(getActivity().getSupportFragmentManager(), DATE_FRAGMENT_TAG);
     }
 
-    public static SharedLinkAccessFragment newInstance(BoxItem boxItem) {
+    public static SharedLinkAccessFragment newInstance(BoxItem boxItem, ShareVMFactory factory) {
         Bundle args = BoxFragment.getBundle(boxItem);
         SharedLinkAccessFragment fragment = new SharedLinkAccessFragment();
         fragment.setArguments(args);
+        fragment.mShareVMFactory = factory;
         return fragment;
     }
 
