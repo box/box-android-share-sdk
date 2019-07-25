@@ -2,8 +2,6 @@ package com.box.androidsdk.share.vm
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.box.androidsdk.content.models.BoxCollaboration
-import com.box.androidsdk.content.models.BoxCollaborationItem
-import com.box.androidsdk.share.sharerepo.ShareRepo
 import com.nhaarman.mockitokotlin2.mock
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNull
@@ -67,6 +65,39 @@ class SelectRoleVMTest {
         selectRoleShareVM.collaboration = mockCollaboration
 
         assertEquals(mockCollaboration, selectRoleShareVM.collaboration)
+    }
+
+
+    @Test
+    fun `test set send invitation enabled update the variable correctly`() {
+        assertEquals(false, selectRoleShareVM.isSendInvitationEnabled.value)
+        selectRoleShareVM.setSendInvitationEnabled(true)
+
+        assertEquals(true, selectRoleShareVM.isSendInvitationEnabled.value)
+    }
+
+    @Test
+    fun `test set show send update the variable correctly`() {
+        assertEquals(true, selectRoleShareVM.isShowSend.value)
+        selectRoleShareVM.setShowSend(false)
+
+        assertEquals(false, selectRoleShareVM.isShowSend.value)
+    }
+
+    @Test
+    fun `test set remove selected update the variable correctly`() {
+        assertEquals(false, selectRoleShareVM.isRemoveSelected)
+        selectRoleShareVM.isRemoveSelected = true
+
+        assertEquals(true, selectRoleShareVM.isRemoveSelected)
+    }
+
+    @Test
+    fun `test set name update the variable correctly`() {
+        assertEquals("", selectRoleShareVM.name)
+        selectRoleShareVM.name  = "user"
+
+        assertEquals("user", selectRoleShareVM.name)
     }
 
 }
