@@ -143,4 +143,14 @@ public class SelectRoleShareVM extends ViewModel {
     public void setName(String name) {
         this.mName = name;
     }
+
+    public void reset() {
+        this.mName = "";
+        this.mAllowRemove = false;
+        this.mRemoveSelected = false;
+        this.mSelectedRole = null;
+        this.mAllowOwnerRole = false;
+        this.mCollaboration = null;
+        this.mRoles = null;
+    }
 }

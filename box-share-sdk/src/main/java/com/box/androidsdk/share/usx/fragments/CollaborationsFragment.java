@@ -89,12 +89,12 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onResume() {
+        super.onResume();
         if (mSelectRoleShareVM.isRemoveSelected()) {
             showSpinner();
             mCollaborationsShareVM.deleteCollaboration(mSelectRoleShareVM.getCollaboration());
-            mSelectRoleShareVM.setRemoveSelected(false); //reset remove selected
+//            mSelectRoleShareVM.setRemoveSelected(false); //reset remove selected
         } else {
             if (mSelectRoleShareVM.getSelectedRole().getValue() != null && mSelectRoleShareVM.getCollaboration() != null) {
                 if (mSelectRoleShareVM.getSelectedRole().getValue() != mSelectRoleShareVM.getCollaboration().getRole()) { //this means user selected a different role.
@@ -111,7 +111,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                         mCollaborationsShareVM.updateCollaboration(mSelectRoleShareVM.getCollaboration(), mSelectRoleShareVM.getSelectedRole().getValue());
 
                     }
-                    mSelectRoleShareVM.setSelectedRole(null); //reset selected role
+//                    mSelectRoleShareVM.setSelectedRole(null); //reset selected role
                 }
             }
         }
@@ -119,6 +119,8 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         if (mCollaborationsShareVM.getCollaborations().getValue() == null) {
             mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
         }
+
+        mSelectRoleShareVM.reset();
     }
 
     public void setCallback(CollaborationsFragmentCallback callback) {
