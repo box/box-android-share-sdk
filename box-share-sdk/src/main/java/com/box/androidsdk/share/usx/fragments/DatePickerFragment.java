@@ -55,7 +55,7 @@ public class DatePickerFragment extends PositiveNegativeDialogFragment
             month = savedInstanceState.getInt(EXTRA_KEY_MONTH);
             day = savedInstanceState.getInt(EXTRA_KEY_DAY);
         }
-        mDialog = new DatePickerDialog(getActivity(), R.style.ShareDialogThemeNew, this, year, month, day);
+        mDialog = new DatePickerDialog(getActivity(), R.style.ShareDialogThemeUSX, this, year, month, day);
         mDialog.getDatePicker().setMinDate(minDateCalendar.getTimeInMillis());
         // Create a new instance of DatePickerDialog and return it
         return mDialog;

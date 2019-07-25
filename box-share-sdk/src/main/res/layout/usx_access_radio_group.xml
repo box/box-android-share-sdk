@@ -60,7 +60,7 @@
                 android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin_components"
                 android:layout_marginRight="@dimen/box_sharesdk_radio_horizontal_margin_right"
                 android:layout_marginBottom="@dimen/box_sharesdk_radio_vertical_margin"
-                android:text='@string/box_sharesdk_accessible_public_new'
+                android:text='@string/box_sharesdk_accessible_public_usx'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/link_access"
                 app:layout_constraintRight_toRightOf="parent"
@@ -115,7 +115,7 @@
                 android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin_components"
                 android:layout_marginRight="@dimen/box_sharesdk_radio_horizontal_margin_right"
                 android:layout_marginBottom="@dimen/box_sharesdk_radio_vertical_margin"
-                android:text='@string/box_sharesdk_accessible_company_new'
+                android:text='@string/box_sharesdk_accessible_company_usx'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/company_access"
                 app:layout_constraintRight_toRightOf="parent"
@@ -169,7 +169,7 @@
                 android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin_components"
                 android:layout_marginRight="@dimen/box_sharesdk_radio_horizontal_margin_right"
                 android:layout_marginBottom="@dimen/box_sharesdk_radio_vertical_margin"
-                android:text="@string/box_sharesdk_accessible_collaborator_new"
+                android:text="@string/box_sharesdk_accessible_collaborator_usx"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/folder_access"
                 app:layout_constraintRight_toRightOf="parent"
