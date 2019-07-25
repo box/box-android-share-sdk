@@ -116,7 +116,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
        // binding.accessRadioGroup.setSharedLinkAccessNotifier(notifier);
         binding.setOnPasswordListener(v -> showPasswordChooserDialog());
         binding.setOnDateListener(v -> showDatePicker(new Date()));
-        refreshUi();
+        refreshUI();
 
     }
 
@@ -182,7 +182,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
 
                     @Override
                     public void onNegativeButtonClicked(PositiveNegativeDialogFragment fragment) {
-                        refreshUi();
+                        refreshUI();
                     }
                 });
         fragment.show(getActivity().getSupportFragmentManager(), PASSWORD_FRAGMENT_TAG);
@@ -227,7 +227,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
 
             @Override
             public void onNegativeButtonClicked(PositiveNegativeDialogFragment fragment) {
-                refreshUi();
+                refreshUI();
             }
         });
         fragment.show(getActivity().getSupportFragmentManager(), DATE_FRAGMENT_TAG);
@@ -250,11 +250,11 @@ public class SharedLinkAccessFragment extends BoxFragment {
             if(boxItemPresenterData.getStrCode() != PresenterData.NO_MESSAGE) {
                 showToast(boxItemPresenterData.getStrCode());
             }
-            refreshUi();
+            refreshUI();
         }
     };
 
-    public void refreshUi() {
+    public void refreshUI() {
         if (mShareLinkVM.getShareItem().getSharedLink() == null) {
             showToast(R.string.box_sharesdk_problem_accessing_this_shared_link);
             getActivity().finish();
@@ -264,7 +264,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
 
     public void setShareItem(BoxItem item) {
         mShareLinkVM.setShareItem(item);
-        refreshUi();
+        refreshUI();
        // binding.accessRadioGroup.setShareItem(mShareLinkVM.getShareItem());
     }
 }
