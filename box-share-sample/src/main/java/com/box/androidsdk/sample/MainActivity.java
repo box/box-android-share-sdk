@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.box_sharesdk_sample_name);
 
         BoxConfig.IS_LOG_ENABLED = true;
-        BoxConfig.CLIENT_ID = "9itlbj9i8mh5qxpj5vr2pjy08t43n3yy";
-        BoxConfig.CLIENT_SECRET = "MVLrHgvscnPCpkNhiD2rrETuh2vNBftz";
+        BoxConfig.CLIENT_ID = "CLIENT_ID";
+        BoxConfig.CLIENT_SECRET = "CLIENT_SECRET";
 
         if (savedInstanceState != null) {
             mSampleItem = (BoxFolder) savedInstanceState.getSerializable(EXTRA_SAMPLE_FOLDER);
