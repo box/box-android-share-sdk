@@ -53,11 +53,11 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     public static final String EXTRA_COLLAB_SELECTED_ROLE = "collabSelectedRole";
 
     private String mFilterTerm;
-    UsxFragmentInviteCollaboratorsBinding binding;
+    private UsxFragmentInviteCollaboratorsBinding binding;
 
-    InviteCollaboratorsShareVM mInviteCollaboratorsShareVM;
-    SelectRoleShareVM mSelectRoleShareVM;
-    ClickListener mListener;
+    private InviteCollaboratorsShareVM mInviteCollaboratorsShareVM;
+    private SelectRoleShareVM mSelectRoleShareVM;
+    private ClickListener mListener;
 
     public interface ClickListener {
         void editAccessClicked();

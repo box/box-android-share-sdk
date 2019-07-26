@@ -12,6 +12,7 @@ import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
+import com.box.androidsdk.content.models.BoxJsonObject;
 import com.box.androidsdk.content.models.BoxUser;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
@@ -93,8 +94,16 @@ public class CollaboratorsAdapter extends BaseAdapter {
             BoxCollaborator collaborator = collaboration.getAccessibleBy();
             String name;
             if (collaborator == null) {
+                String email = collaboration.getInviteEmail();
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.add(BoxCollaborator.FIELD_NAME, email);
+                BoxCollaborator emailCollab = new BoxUser(jsonObject);
                 name = mContext.getString(R.string.box_sharesdk_another_person);
-                binding.collaboratorInitials.loadUser(mAnotherPersonCollaborator, mBaseShareVM.getAvatarController());
+                if (!(email == null && email.isEmpty())) {
+                    binding.collaboratorInitials.loadUser(emailCollab, mBaseShareVM.getAvatarController());
+                } else {
+                    binding.collaboratorInitials.loadUser(mAnotherPersonCollaborator, mBaseShareVM.getAvatarController());
+                }
             } else {
                 name = collaborator.getName();
                 binding.collaboratorInitials.loadUser(collaborator, mBaseShareVM.getAvatarController());
