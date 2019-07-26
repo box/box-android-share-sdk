@@ -154,7 +154,6 @@ public class SelectRoleShareVM extends ViewModel {
         this.mRemoveSelected = false;
         this.mSelectedRole.postValue(null);
         this.mAllowOwnerRole = false;
-        this.mCollaboration = null;
         this.mRoles = null;
     }
 }
