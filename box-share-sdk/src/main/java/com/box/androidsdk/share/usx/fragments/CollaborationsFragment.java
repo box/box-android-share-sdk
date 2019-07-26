@@ -93,7 +93,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         if (mSelectRoleShareVM.isRemoveSelected()) {
             showSpinner();
             mCollaborationsShareVM.deleteCollaboration(mSelectRoleShareVM.getCollaboration());
-//            mSelectRoleShareVM.setRemoveSelected(false); //reset remove selected
+            mSelectRoleShareVM.reset();
         } else {
             if (mSelectRoleShareVM.getSelectedRole().getValue() != null && mSelectRoleShareVM.getCollaboration() != null) {
                 if (mSelectRoleShareVM.getSelectedRole().getValue() != mSelectRoleShareVM.getCollaboration().getRole()) { //this means user selected a different role.
@@ -110,7 +110,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                         mCollaborationsShareVM.updateCollaboration(mSelectRoleShareVM.getCollaboration(), mSelectRoleShareVM.getSelectedRole().getValue());
 
                     }
-//                    mSelectRoleShareVM.setSelectedRole(null); //reset selected role
+                    mSelectRoleShareVM.reset();
                 }
             }
         }
@@ -119,7 +119,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
         }
 
-        mSelectRoleShareVM.reset();
+
     }
 
     public void setCallback(CollaborationsFragmentCallback callback) {
