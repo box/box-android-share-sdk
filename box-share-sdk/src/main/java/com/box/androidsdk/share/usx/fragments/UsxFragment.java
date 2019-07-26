@@ -37,7 +37,7 @@ public class UsxFragment extends BoxFragment {
     protected void setTitles() {
         ActionbarTitleVM actionbarTitleVM = ViewModelProviders.of(getActivity()).get(ActionbarTitleVM.class);
         actionbarTitleVM.setTitle(mSharedLinkVm.getShareItem().getName());
-        actionbarTitleVM.setSubtitle(CollaborationUtils.capitalizeFirstLetterOfEveryWord(mSharedLinkVm.getShareItem().getType()));
+        actionbarTitleVM.setSubtitle(CollaborationUtils.getSubtitleForItemType(getContext(), mSharedLinkVm.getShareItem().getType()));
     }
 
     public interface UsxNotifiers {

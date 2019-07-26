@@ -9,6 +9,9 @@ import android.os.Build;
 import android.widget.TextView;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
+import com.box.androidsdk.content.models.BoxCollaborationItem;
+import com.box.androidsdk.content.models.BoxFile;
+import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 
@@ -76,12 +79,13 @@ public class CollaborationUtils {
         }
     }
 
-    public static String capitalizeFirstLetterOfEveryWord(String str) {
-        StringBuilder sb = new StringBuilder();
-        for(String curr: str.split(" ")) {
-            sb.append(Character.toUpperCase(curr.charAt(0)) + curr.substring(1) + " ");
+    public static String getSubtitleForItemType(Context context, String type) {
+        if (type.equals(BoxFolder.TYPE)) {
+            return context.getString(R.string.box_sharesdk_subtitle_folder_type);
+        } else if (type.equals(BoxFile.TYPE)) {
+            return context.getString(R.string.box_sharesdk_subtitle_file_type);
         }
-        sb.setLength(sb.length() - 1);
-        return sb.toString();
+        return null;
     }
+
 }

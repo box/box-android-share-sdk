@@ -124,4 +124,6 @@
     <string name="box_sharesdk_send_invitation" description="text for a button for inviting a new collaborator for a file or folder">Send Invitation</string>
     <string name="box_sharesdk_send_or_share" description="text for a title that allows the user to send or share link">Send or Share</string>
     <string name="box_sharesdk_invite_collab_hint">Type a Name or Email Address</string>
+    <string name="box_sharesdk_subtitle_folder_type">Share Folder</string>
+    <string name="box_sharesdk_subtitle_file_type">Share File</string>
 </resources>
