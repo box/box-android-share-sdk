@@ -223,7 +223,7 @@ class ShareSDKTransformerTest {
         val result = inviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
-        assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
+        assertEquals(R.string.box_sharesdk_has_already_been_invited, result.strCode)
         assertEquals(dummyName, result.data)
         assertEquals(true, result.isSuccess) //request failing only due to adding already added collabs is still considered a success
         assertEquals(false, result.isSnackBarMessage)
@@ -242,8 +242,8 @@ class ShareSDKTransformerTest {
         val result = inviteCollabsTransformer.getPresenterDataForFailedRequest(failedCollabs, dummyName, alreadyAddedCount)
 
         //compare values
-        assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
-        assertEquals(dummyName, result.data)
+        assertEquals(R.string.box_sharesdk_num_has_already_been_invited, result.strCode)
+        assertEquals("2", result.data)
         assertEquals(true, result.isSuccess) //request failing only due to adding already added collabs is still considered a success
         assertEquals(false, result.isSnackBarMessage)
         assertEquals(2, result.alreadyAdddedCount)
@@ -318,7 +318,7 @@ class ShareSDKTransformerTest {
         //process request
         val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
-        assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
+        assertEquals(R.string.box_sharesdk_has_already_been_invited, result.strCode)
         assertEquals(dummyName, result.data)
         assertEquals(true, result.isSuccess)
         assertEquals(false, result.isSnackBarMessage)
@@ -337,8 +337,8 @@ class ShareSDKTransformerTest {
         //process request
         val result = inviteCollabsTransformer.getInviteCollabsPresenterDataFromBoxResponse(mockInviteCollabsResponse)
 
-        assertEquals(R.plurals.box_sharesdk_already_been_invited, result.strCode)
-        assertEquals("user3", result.data)
+        assertEquals(R.string.box_sharesdk_num_has_already_been_invited, result.strCode)
+        assertEquals("2", result.data)
         assertEquals(true, result.isSuccess)
         assertEquals(false, result.isSnackBarMessage)
         assertEquals(2, result.alreadyAdddedCount)
