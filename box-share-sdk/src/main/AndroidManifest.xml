@@ -33,6 +33,11 @@
             android:name=".usx.activities.BoxUsxActivity"
             android:theme="@style/ShareThemeUSX" >
         </activity>
+        <activity
+            android:name=".usx.activities.BoxCollaborationsActivity"
+            android:label="@string/box_sharesdk_shared_with"
+            android:theme="@style/ShareThemeUSX" >
+        </activity>
     </application>
 
 </manifest>
