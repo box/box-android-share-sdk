@@ -55,7 +55,7 @@ public class UsxFragment extends BoxFragment {
     }
 
     private static final String UNSHARE_WARNING_TAG = "com.box.sharesdk.unshare_warning";
-    UsxFragmentSharedLinkBinding binding;
+    private UsxFragmentSharedLinkBinding binding;
     private SharedLinkVM mSharedLinkVm;
 
 
