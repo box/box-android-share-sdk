@@ -92,7 +92,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
             BoxCollaborator collaborator = collaboration.getAccessibleBy();
             String name;
             if (collaborator == null) {
-                name = mContext.getString(R.string.box_sharesdk_another_person);
+                name =  name = collaboration.getInviteEmail() != null ? collaboration.getInviteEmail() : mContext.getString(R.string.box_sharesdk_another_person);
                 binding.collaboratorInitials.loadUser(mAnotherPersonCollaborator, mBaseShareVM.getAvatarController());
             } else {
                 name = collaborator.getName();
