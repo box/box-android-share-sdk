@@ -219,7 +219,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         dismissSpinner();
         if (presenterData.isSuccess()) {
             BoxCollaborator collaborator = presenterData.getData().getAccessibleBy();
-            String collabId = collaborator != null ? "" : collaborator.getId();
+            String collabId = collaborator == null ? "" : collaborator.getId();
             if (collabId.equals(mCollaborationsShareVM.getUserId())) { //updated permission of yourself so the list look might need to be updated to match the new permission
                 mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
             }
