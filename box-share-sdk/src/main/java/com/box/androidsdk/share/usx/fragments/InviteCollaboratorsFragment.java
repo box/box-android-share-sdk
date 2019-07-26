@@ -45,14 +45,6 @@ import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.util.List;
 
-/**
- * Fragment to let users invite collaborators on an item.
- *
- * There are two listeners used here:
- * 1. InviteCollaboratorsListener is used to set up a listener by the parent Activity or Fragment on this Fragment.
- * 2. ShowCollaboratorsListener is used to set up a listener by this fragment on the child custom view called CollaboratorsInitialsView.
- */
-
 public class InviteCollaboratorsFragment extends BoxFragment implements TokenCompleteTextView.TokenListener<BoxInvitee> {
 
     private static final Integer MY_PERMISSIONS_REQUEST_READ_CONTACTS = 32;
