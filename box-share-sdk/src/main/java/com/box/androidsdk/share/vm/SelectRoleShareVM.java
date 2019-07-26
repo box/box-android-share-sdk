@@ -144,6 +144,10 @@ public class SelectRoleShareVM extends ViewModel {
         this.mName = name;
     }
 
+
+    /**
+     * Reset the state of SelectRoleShareVM to default values to prevent false updates.
+     */
     public void reset() {
         this.mName = "";
         this.mAllowRemove = false;

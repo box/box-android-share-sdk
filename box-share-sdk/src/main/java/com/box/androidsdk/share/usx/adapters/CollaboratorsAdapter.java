@@ -5,25 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
-import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxUser;
-import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.api.ShareController;
 import com.box.androidsdk.share.databinding.UsxListItemCollaborationBinding;
 import com.box.androidsdk.share.vm.BaseShareVM;
 import com.eclipsesource.json.JsonObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class CollaboratorsAdapter extends BaseAdapter {
@@ -46,7 +41,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
         mAnotherPersonCollaborator = new BoxUser(jsonObject);
     }
 
-    public BoxItem getItem() {
+    public BoxItem getShareItem() {
         return mBaseShareVM.getShareItem();
     }
 
@@ -68,7 +63,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
     @Override
     public boolean isEnabled(int position) {
         // User is allowed to change permissions if he has invite collaborator permissions
-        if (getItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
+        if (getShareItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
             return true;
         }
 
@@ -89,6 +84,7 @@ public class CollaboratorsAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.usx_list_item_collaboration, parent, false);
             binding = DataBindingUtil.bind(convertView);
+            convertView.setTag(binding);
         } else {
             binding = (UsxListItemCollaborationBinding) convertView.getTag();
         }
@@ -107,7 +103,6 @@ public class CollaboratorsAdapter extends BaseAdapter {
                     CollaborationUtils.getRoleName(mContext, collaboration.getRole()) :
                     CollaborationUtils.getCollaborationStatusText(mContext, collaboration.getStatus());
             binding.collaboratorRoleTitle.setText(name);
-            convertView.setTag(binding);
             binding.collaboratorRole.setText(description);
         }
 
