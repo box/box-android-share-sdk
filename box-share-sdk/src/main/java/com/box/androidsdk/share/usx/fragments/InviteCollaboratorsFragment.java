@@ -142,10 +142,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
                     List<BoxCollaboration.Role> roles = mSelectRoleShareVM.getRoles();
                     BoxCollaboration.Role selectedRole = roles != null && roles.size() > 0 ? getBestDefaultRole(collaborationItem.getDefaultInviteeRole(), roles) : null;
                     setSelectedRole(selectedRole);
-                    if (selectedRole == null) { //if user cannot select any role, he does not have permission for inviting.
-                        showNoPermissionToast();
-                        getActivity().finish();
-                    }
                 }
                 mInviteCollaboratorsShareVM.setShareItem(collaborationItem);
             } else {
@@ -330,6 +326,10 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
      * @param role the collaboration role to select
      */
     private void setSelectedRole(BoxCollaboration.Role role) {
+        if (role == null) { //if user cannot select any role, he does not have permission for inviting.
+            showNoPermissionToast();
+            getActivity().finish();
+        }
         mSelectRoleShareVM.setSelectedRole(role);
     }
 
