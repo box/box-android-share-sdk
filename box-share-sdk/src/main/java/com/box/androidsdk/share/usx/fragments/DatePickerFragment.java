@@ -2,7 +2,6 @@ package com.box.androidsdk.share.usx.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.DatePicker;
 

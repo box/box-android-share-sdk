@@ -22,7 +22,6 @@ public class SharedLinkVM extends BaseShareVM {
 
     private final LiveData<PresenterData<BoxItem>> mShareLinkedItem;
 
-    private final MutableLiveData<BoxSharedLink.Access> mSelectedAccess = new MutableLiveData<>();
     private HashSet<BoxSharedLink.Access> mActiveRadioButtons = new HashSet<>();
     private final LiveData<PresenterData<BoxFeatures>> mSupportedFeatures;
 
@@ -45,14 +44,6 @@ public class SharedLinkVM extends BaseShareVM {
 
     public LiveData<PresenterData<BoxItem>> getSharedLinkedItem() {
         return mShareLinkedItem;
-    }
-
-    public void setSelectedAccess(BoxSharedLink.Access access) {
-        if (access != null) mSelectedAccess.postValue(access);
-    }
-
-    public LiveData<BoxSharedLink.Access> getSelectedAccess() {
-        return mSelectedAccess;
     }
 
     public void setActiveRadioButtons(HashSet<BoxSharedLink.Access> activeRadioButtons) {

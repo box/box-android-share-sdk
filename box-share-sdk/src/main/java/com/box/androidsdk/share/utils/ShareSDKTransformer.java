@@ -1,7 +1,6 @@
 package com.box.androidsdk.share.utils;
 
 import androidx.annotation.VisibleForTesting;
-import androidx.lifecycle.LiveData;
 
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.content.models.BoxCollaboration;
