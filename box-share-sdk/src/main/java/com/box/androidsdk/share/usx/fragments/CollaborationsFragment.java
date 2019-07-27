@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -87,9 +88,10 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         return view;
     }
 
+    //fragment is recreated when user click back so this will get triggered.
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         if (mSelectRoleShareVM.isRemoveSelected()) {
             showSpinner();
             mCollaborationsShareVM.deleteCollaboration(mSelectRoleShareVM.getCollaboration());
@@ -118,8 +120,6 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         if (mCollaborationsShareVM.getCollaborations().getValue() == null) {
             mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
         }
-
-
     }
 
     public void setCallback(CollaborationsFragmentCallback callback) {
