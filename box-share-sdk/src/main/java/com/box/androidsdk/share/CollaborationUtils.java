@@ -9,6 +9,9 @@ import android.os.Build;
 import android.widget.TextView;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
+import com.box.androidsdk.content.models.BoxCollaborationItem;
+import com.box.androidsdk.content.models.BoxFile;
+import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 
@@ -76,15 +79,13 @@ public class CollaborationUtils {
         }
     }
 
-
-    public static void setInitialsThumb(Context context, TextView initialsView, int number) {
-        Drawable drawable = initialsView.getResources().getDrawable(R.drawable.initials_count_thumb_background);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-            initialsView.setBackground(drawable);
-        } else {
-            initialsView.setBackgroundDrawable(drawable);
+    public static String getSubtitleForItemType(Context context, String type) {
+        if (type.equals(BoxFolder.TYPE)) {
+            return context.getString(R.string.box_sharesdk_subtitle_folder_type);
+        } else if (type.equals(BoxFile.TYPE)) {
+            return context.getString(R.string.box_sharesdk_subtitle_file_type);
         }
-        initialsView.setText(String.format(context.getResources().getString(R.string.box_sharedsdk_collaborators_initials_count), number));
-        initialsView.setTextColor(context.getResources().getColor(R.color.box_sharesdk_initials_count_color));
+        return null;
     }
+
 }

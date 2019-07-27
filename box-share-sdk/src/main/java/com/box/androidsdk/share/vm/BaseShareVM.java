@@ -1,13 +1,15 @@
 package com.box.androidsdk.share.vm;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
+
+import java.io.Serializable;
 
 
 /**
@@ -42,6 +44,7 @@ public class BaseShareVM extends ViewModel {
         return mShareItem;
     }
 
+
     /**
      * Update the share item with a new share item.
      * @param shareItem the new share item.
@@ -55,7 +58,7 @@ public class BaseShareVM extends ViewModel {
      * Makes a backend call through share repo to get information about the item.
      * @param item the item to get information on
      */
-    public void fetchItemInfoFromRemote(BoxItem item) {
+    public void fetchItemInfo(BoxItem item) {
         mShareRepo.fetchItemInfo(item);
     }
 
@@ -65,5 +68,22 @@ public class BaseShareVM extends ViewModel {
      */
     public LiveData<PresenterData<BoxItem>> getItemInfo() {
         return mItemInfo;
+    }
+
+
+    /**
+     * Returns user id of the current user.
+     * @return user id of the current user
+     */
+    public String getUserId() {
+        return mShareRepo.getUserId();
+    }
+
+    /**
+     * Returns the avatar controller for displaying collaborators' avatars.
+     * @return the avatar controller for displaying collaborators' avatars
+     */
+    public  <E extends BoxAvatarView.AvatarController & Serializable> E getAvatarController() {
+        return mShareRepo.getAvatarController();
     }
 }
