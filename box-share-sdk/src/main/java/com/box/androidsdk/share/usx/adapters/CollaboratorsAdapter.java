@@ -98,10 +98,11 @@ public class CollaboratorsAdapter extends BaseAdapter {
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.add(BoxCollaborator.FIELD_NAME, email);
                 BoxCollaborator emailCollab = new BoxUser(jsonObject);
-                name = mContext.getString(R.string.box_sharesdk_another_person);
                 if (!(email == null && email.isEmpty())) {
+                    name = email;
                     binding.collaboratorInitials.loadUser(emailCollab, mBaseShareVM.getAvatarController());
                 } else {
+                    name = mContext.getString(R.string.box_sharesdk_another_person);
                     binding.collaboratorInitials.loadUser(mAnotherPersonCollaborator, mBaseShareVM.getAvatarController());
                 }
             } else {
