@@ -9,7 +9,6 @@
         android:layout_width="@dimen/box_sharesdk_initials_size"
         android:layout_height="@dimen/box_sharesdk_initials_size"
         android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textAlignment="center"
         android:gravity="center"
         android:layout_gravity="center"
