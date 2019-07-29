@@ -32,8 +32,8 @@ public class SharedLinkAccessFragment extends BoxFragment {
     private static final String PASSWORD_FRAGMENT_TAG = "passwordFrag";
     private static final String ACCESS_RADIAL_FRAGMENT_TAG = "accessFrag";
 
-    SharedLinkVM mShareLinkVM;
-    UsxFragmentSharedLinkAccessBinding binding;
+    private SharedLinkVM mShareLinkVM;
+    private UsxFragmentSharedLinkAccessBinding binding;
 
     private SharedLinkAccessNotifiers notifier = new SharedLinkAccessNotifiers() {
         @Override
