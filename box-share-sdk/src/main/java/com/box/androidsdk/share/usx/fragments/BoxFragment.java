@@ -33,7 +33,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public abstract class BoxFragment extends Fragment {
 
     protected static final String TAG = BoxFragment.class.getName();
-    private BoxItem mShareItem; //changed to private since it should only be used for checking mShareItem's validity during onCreate; throughout the fragment vm will be used instead.
+    ; //changed to private since it should only be used for checking mShareItem's validity during onCreate; throughout the fragment vm will be used instead.
 
     private static final int  DEFAULT_SPINNER_DELAY = 500;
 
@@ -42,6 +42,7 @@ public abstract class BoxFragment extends Fragment {
 
     protected ViewModelProvider.Factory mShareVMFactory;
     private Lock mSpinnerLock;
+    private BaseShareVM vm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,15 +50,16 @@ public abstract class BoxFragment extends Fragment {
         setRetainInstance(true);
         mDialogHandler = new LastRunnableHandler();
         mSpinnerLock = new ReentrantLock();
-        BaseShareVM vm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(getVMClass());
+        BoxItem shareItem = null;
+        vm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(getVMClass());
         if (vm.getShareItem() == null) {
             if (savedInstanceState != null && savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM) != null){
-                mShareItem = (BoxItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
+                shareItem = (BoxItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
             } else if (getArguments() != null) {
                 Bundle args = getArguments();
-                mShareItem = (BoxItem)args.getSerializable(CollaborationUtils.EXTRA_ITEM);
+                shareItem = (BoxItem)args.getSerializable(CollaborationUtils.EXTRA_ITEM);
             }
-            vm.setShareItem(mShareItem);
+            vm.setShareItem(shareItem);
         }
 
 
@@ -72,12 +74,12 @@ public abstract class BoxFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(CollaborationUtils.EXTRA_ITEM, mShareItem);
+        outState.putSerializable(CollaborationUtils.EXTRA_ITEM, vm.getShareItem());
         super.onSaveInstanceState(outState);
     }
 
     public void addResult(Intent data) {
-        data.putExtra(CollaborationUtils.EXTRA_ITEM, mShareItem);
+        data.putExtra(CollaborationUtils.EXTRA_ITEM, vm.getShareItem());
     }
 
     public int getActivityResultCode() {

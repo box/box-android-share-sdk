@@ -97,7 +97,7 @@ public class UsxFragment extends BoxFragment {
         binding.setOnShareViaListener(v -> showShareVia());
         return view;
     }
-
+    
     private void setupListeners() {
         binding.setOnInviteCollabsClickListener(v -> mListener.inviteCollabsClicked());
         binding.setOnEditAccessClickListener(v -> mListener.editAccessClicked());
