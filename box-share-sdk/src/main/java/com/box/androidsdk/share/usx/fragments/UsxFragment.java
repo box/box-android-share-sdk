@@ -34,6 +34,11 @@ public class UsxFragment extends BoxFragment {
     private ClickListener mListener;
 
     @Override
+    public Class<SharedLinkVM> getVMClass() {
+        return SharedLinkVM.class;
+    }
+
+    @Override
     protected void setTitles() {
         ActionbarTitleVM actionbarTitleVM = ViewModelProviders.of(getActivity()).get(ActionbarTitleVM.class);
         actionbarTitleVM.setTitle(mSharedLinkVm.getShareItem().getName());

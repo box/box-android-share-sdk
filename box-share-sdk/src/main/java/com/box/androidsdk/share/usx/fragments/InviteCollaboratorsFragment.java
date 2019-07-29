@@ -223,6 +223,11 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     }
 
     @Override
+    public Class<InviteCollaboratorsShareVM> getVMClass() {
+        return InviteCollaboratorsShareVM.class;
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         if (mSelectRoleShareVM.getSelectedRole() != null) {
             outState.putString(EXTRA_COLLAB_SELECTED_ROLE, mSelectRoleShareVM.getSelectedRole().getValue().toString());

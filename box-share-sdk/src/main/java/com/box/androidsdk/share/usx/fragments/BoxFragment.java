@@ -8,6 +8,7 @@ import android.os.Handler;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -20,6 +21,7 @@ import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.vm.BaseShareVM;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -47,19 +49,26 @@ public abstract class BoxFragment extends Fragment {
         setRetainInstance(true);
         mDialogHandler = new LastRunnableHandler();
         mSpinnerLock = new ReentrantLock();
-        if (savedInstanceState != null && savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM) != null){
-            mShareItem = (BoxItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
-        } else if (getArguments() != null) {
-            Bundle args = getArguments();
-            mShareItem = (BoxItem)args.getSerializable(CollaborationUtils.EXTRA_ITEM);
+        BaseShareVM vm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(getVMClass());
+        if (vm.getShareItem() == null) {
+            if (savedInstanceState != null && savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM) != null){
+                mShareItem = (BoxItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
+            } else if (getArguments() != null) {
+                Bundle args = getArguments();
+                mShareItem = (BoxItem)args.getSerializable(CollaborationUtils.EXTRA_ITEM);
+            }
+            vm.setShareItem(mShareItem);
         }
 
-        if (mShareItem == null){
+
+        if (vm.getShareItem() == null){
             showToast(R.string.box_sharesdk_no_item_selected);
             getActivity().finish();
             return;
         }
     }
+
+    public abstract <T extends BaseShareVM>Class<T> getVMClass();
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

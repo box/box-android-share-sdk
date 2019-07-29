@@ -15,7 +15,8 @@ public class PresenterData<T> {
     public static final int NO_MESSAGE = -1;
     private int mStrRes = NO_MESSAGE;
     private T mData;
-    Exception mException;
+    private Exception mException;
+    private boolean mIsHandled;
 
     public PresenterData() {
 
@@ -75,6 +76,7 @@ public class PresenterData<T> {
      * @return the data
      */
     public T getData() {
+        mIsHandled = true; //if data is called then it's handled.
         return mData;
     }
 
@@ -83,6 +85,7 @@ public class PresenterData<T> {
      * @return the string resource code
      */
     public int getStrCode() {
+        mIsHandled = true; //if str code is called then it's handled.
         return mStrRes;
     }
 
@@ -92,5 +95,9 @@ public class PresenterData<T> {
 
     public void setException(Exception exception) {
         this.mException = exception;
+    }
+
+    public boolean isHandled() {
+        return mIsHandled;
     }
 }
