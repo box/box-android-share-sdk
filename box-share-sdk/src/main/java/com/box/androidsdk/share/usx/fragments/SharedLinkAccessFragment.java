@@ -83,6 +83,11 @@ public class SharedLinkAccessFragment extends BoxFragment {
 
 
     @Override
+    public Class<SharedLinkVM> getVMClass() {
+        return SharedLinkVM.class;
+    }
+
+    @Override
     protected void setTitles() {
         ActionbarTitleVM actionbarTitleVM = ViewModelProviders.of(getActivity()).get(ActionbarTitleVM.class);
         actionbarTitleVM.setTitle(getString(R.string.box_sharesdk_title_link_access));
@@ -99,7 +104,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
         setTitles();
 
         mShareLinkVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(SharedLinkVM.class);
-        mShareLinkVM.getSharedLinkedItem().observe(this, onBoxItemComplete);
+        mShareLinkVM.getSharedLinkedItem().observe(getViewLifecycleOwner(), onBoxItemComplete);
 
         setupUi();
 

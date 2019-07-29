@@ -34,6 +34,11 @@ public class UsxFragment extends BoxFragment {
     private ClickListener mListener;
 
     @Override
+    public Class<SharedLinkVM> getVMClass() {
+        return SharedLinkVM.class;
+    }
+
+    @Override
     protected void setTitles() {
         ActionbarTitleVM actionbarTitleVM = ViewModelProviders.of(getActivity()).get(ActionbarTitleVM.class);
         actionbarTitleVM.setTitle(mSharedLinkVm.getShareItem().getName());
@@ -67,7 +72,6 @@ public class UsxFragment extends BoxFragment {
         setupListeners();
 
         binding.setShareItem(mSharedLinkVm.getShareItem());
-        binding.setShareLinkVm(mSharedLinkVm);
         binding.setUsxNotifier(new UsxNotifiers() {
             @Override
             public void notifyUnshare() {
@@ -84,13 +88,12 @@ public class UsxFragment extends BoxFragment {
         });
 
         setTitles();
+        mSharedLinkVm.getItemInfo().observe(getViewLifecycleOwner(), onBoxItemComplete);
+        mSharedLinkVm.getSharedLinkedItem().observe(getViewLifecycleOwner(), onBoxItemComplete);
 
-        mSharedLinkVm.getSharedLinkedItem().observe(this, onBoxItemComplete);
-        mSharedLinkVm.getItemInfo().observe(this, onBoxItemComplete);
 
         View view = binding.getRoot();
 
-        binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.setOnShareViaListener(v -> showShareVia());
         return view;
     }
@@ -105,21 +108,27 @@ public class UsxFragment extends BoxFragment {
         binding.initialViews.setArguments(vm);
     }
 
-    public void refreshItemInfo() {
-        showSpinner();
-        mSharedLinkVm.fetchItemInfo(mSharedLinkVm.getShareItem());
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mSharedLinkVm.getShareItem().getSharedLink() == null) {
+            showSpinner(0);
+            mSharedLinkVm.fetchItemInfo(mSharedLinkVm.getShareItem());
+        }
     }
 
     private Observer<PresenterData<BoxItem>> onBoxItemComplete = presenterData -> {
-        dismissSpinner();
-        if (presenterData.isSuccess() && presenterData.getData() != null) {
-            //data might still be null if the original request was not BoxRequestItem
-            setShareItem(presenterData.getData());
-        } else {
-            if(presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
-                showToast(presenterData.getStrCode());
+        if (!presenterData.isHandled()) {
+            dismissSpinner();
+            if (presenterData.isSuccess() && presenterData.getData() != null) {
+                //data might still be null if the original request was not BoxRequestItem
+                setShareItem(presenterData.getData());
+            } else {
+                if (presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
+                    showToast(presenterData.getStrCode());
+                }
+                refreshUI();
             }
-            refreshUI();
         }
     };
 
@@ -167,12 +176,6 @@ public class UsxFragment extends BoxFragment {
             clipboard.setPrimaryClip(clipData);
             showToast(R.string.box_sharesdk_link_copied_to_clipboard);
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        refreshItemInfo();
     }
 
     /**

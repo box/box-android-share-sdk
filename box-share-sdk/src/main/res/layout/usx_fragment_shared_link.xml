@@ -17,9 +17,6 @@
             name="onCopyLinkListener"
             type="android.view.View.OnClickListener" />
         <variable
-            name="shareLinkVm"
-            type="com.box.androidsdk.share.vm.SharedLinkVM" />
-        <variable
             name="usxNotifier"
             type="com.box.androidsdk.share.usx.fragments.UsxFragment.UsxNotifiers" />
         <variable

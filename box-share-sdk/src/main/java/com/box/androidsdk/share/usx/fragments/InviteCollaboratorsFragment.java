@@ -88,9 +88,9 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         mInviteCollaboratorsShareVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(InviteCollaboratorsShareVM.class);
         mInviteCollaboratorsShareVM.setInvitationSucceded(true);
 
-        mInviteCollaboratorsShareVM.getRoleItem().observe(this, onRoleItemChange);
-        mInviteCollaboratorsShareVM.getInvitees().observe(this, onInviteesChanged);
-        mInviteCollaboratorsShareVM.getInviteCollabs().observe(this, onInviteCollabs);
+        mInviteCollaboratorsShareVM.getRoleItem().observe(getViewLifecycleOwner(), onRoleItemChange);
+        mInviteCollaboratorsShareVM.getInvitees().observe(getViewLifecycleOwner(), onInviteesChanged);
+        mInviteCollaboratorsShareVM.getInviteCollabs().observe(getViewLifecycleOwner(), onInviteCollabs);
 
 
         if (mSelectRoleShareVM.getSelectedRole() == null && savedInstanceState != null) {
@@ -130,58 +130,64 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     }
 
     private Observer<PresenterData<BoxCollaborationItem>> onRoleItemChange = presenter -> {
-        dismissSpinner();
-        if (presenter.isSuccess() && getCollaborationItem() != null) {
-            if (getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
-                BoxCollaborationItem collaborationItem = presenter.getData();
-                mSelectRoleShareVM.setRoles(collaborationItem.getAllowedInviteeRoles());
-                BoxCollaboration.Role role = mSelectRoleShareVM.getSelectedRole().getValue();
-                if (role != null) {
-                    setSelectedRole(role);
+        if (!presenter.isHandled()) {
+            dismissSpinner();
+            if (presenter.isSuccess() && getCollaborationItem() != null) {
+                if (getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
+                    BoxCollaborationItem collaborationItem = presenter.getData();
+                    mSelectRoleShareVM.setRoles(collaborationItem.getAllowedInviteeRoles());
+                    BoxCollaboration.Role role = mSelectRoleShareVM.getSelectedRole().getValue();
+                    if (role != null) {
+                        setSelectedRole(role);
+                    } else {
+                        List<BoxCollaboration.Role> roles = mSelectRoleShareVM.getRoles();
+                        BoxCollaboration.Role selectedRole = roles != null && roles.size() > 0 ? getBestDefaultRole(collaborationItem.getDefaultInviteeRole(), roles) : null;
+                        setSelectedRole(selectedRole);
+                    }
+                    mInviteCollaboratorsShareVM.setShareItem(collaborationItem);
                 } else {
-                    List<BoxCollaboration.Role> roles = mSelectRoleShareVM.getRoles();
-                    BoxCollaboration.Role selectedRole = roles != null && roles.size() > 0 ? getBestDefaultRole(collaborationItem.getDefaultInviteeRole(), roles) : null;
-                    setSelectedRole(selectedRole);
+                    showNoPermissionToast();
+                    getActivity().finish();
                 }
-                mInviteCollaboratorsShareVM.setShareItem(collaborationItem);
             } else {
-                showNoPermissionToast();
-                getActivity().finish();
+                //need to log Exception
+                BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "Fetch roles request failed",
+                        presenter.getException());
+                showToast(getString(presenter.getStrCode())); //was just collaborationfragment
             }
-        } else {
-            //need to log Exception
-            BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "Fetch roles request failed",
-                    presenter.getException());
-            showToast(getString(presenter.getStrCode())); //was just collaborationfragment
         }
     };
 
     private Observer<PresenterData<BoxIteratorInvitees>> onInviteesChanged = presenterData -> {
+        if (!presenterData.isHandled()) {
             if (presenterData.isSuccess()) {
                 binding.getAdapter().setInvitees(presenterData.getData());
             } else {
                 BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",
                         presenterData.getException());
-                showToast(getString(presenterData.getStrCode()) + ((BoxException)presenterData.getException()).getResponseCode()); //need response code
+                showToast(getString(presenterData.getStrCode()) + ((BoxException) presenterData.getException()).getResponseCode()); //need response code
             }
+        }
     };
 
     private Observer<InviteCollaboratorsPresenterData> onInviteCollabs = presenterData -> {
-        dismissSpinner();
-        String message;
-        if (presenterData.isNonNullData()) {
-            message = getString(presenterData.getStrCode(), presenterData.getData());
-        } else {
-            message = getString(presenterData.getStrCode());
+        if (!presenterData.isHandled()) {
+            dismissSpinner();
+            String message;
+            if (presenterData.isNonNullData()) {
+                message = getString(presenterData.getStrCode(), presenterData.getData());
+            } else {
+                message = getString(presenterData.getStrCode());
+            }
+            if (presenterData.isSnackBarMessage()) {
+                showSnackBar(message);
+                //Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE).show();
+            } else {
+                showToast(message);
+                getActivity().finish();
+            }
+            mInviteCollaboratorsShareVM.setInvitationSucceded(presenterData.isSuccess());
         }
-        if (presenterData.isSnackBarMessage()) {
-            showSnackBar(message);
-            //Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE).show();
-        } else {
-            showToast(message);
-            getActivity().finish();
-        }
-        mInviteCollaboratorsShareVM.setInvitationSucceded(presenterData.isSuccess());
     };
 
     @Override
@@ -220,6 +226,11 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
             BoxLogUtils.e("invalid role name " + roleName, e);
             return roles.get(0);
         }
+    }
+
+    @Override
+    public Class<InviteCollaboratorsShareVM> getVMClass() {
+        return InviteCollaboratorsShareVM.class;
     }
 
     @Override

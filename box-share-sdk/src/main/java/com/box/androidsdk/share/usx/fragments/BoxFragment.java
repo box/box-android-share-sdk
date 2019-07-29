@@ -8,6 +8,7 @@ import android.os.Handler;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -20,6 +21,7 @@ import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.vm.BaseShareVM;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -31,7 +33,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public abstract class BoxFragment extends Fragment {
 
     protected static final String TAG = BoxFragment.class.getName();
-    private BoxItem mShareItem; //changed to private since it should only be used for checking mShareItem's validity during onCreate; throughout the fragment vm will be used instead.
 
     private static final int  DEFAULT_SPINNER_DELAY = 500;
 
@@ -40,6 +41,7 @@ public abstract class BoxFragment extends Fragment {
 
     protected ViewModelProvider.Factory mShareVMFactory;
     private Lock mSpinnerLock;
+    private BaseShareVM vm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,28 +49,36 @@ public abstract class BoxFragment extends Fragment {
         setRetainInstance(true);
         mDialogHandler = new LastRunnableHandler();
         mSpinnerLock = new ReentrantLock();
-        if (savedInstanceState != null && savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM) != null){
-            mShareItem = (BoxItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
-        } else if (getArguments() != null) {
-            Bundle args = getArguments();
-            mShareItem = (BoxItem)args.getSerializable(CollaborationUtils.EXTRA_ITEM);
+        BoxItem shareItem = null;
+        vm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(getVMClass());
+        if (vm.getShareItem() == null) {
+            if (savedInstanceState != null && savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM) != null){
+                shareItem = (BoxItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
+            } else if (getArguments() != null) {
+                Bundle args = getArguments();
+                shareItem = (BoxItem)args.getSerializable(CollaborationUtils.EXTRA_ITEM);
+            }
+            vm.setShareItem(shareItem);
         }
 
-        if (mShareItem == null){
+
+        if (vm.getShareItem() == null){
             showToast(R.string.box_sharesdk_no_item_selected);
             getActivity().finish();
             return;
         }
     }
 
+    public abstract <T extends BaseShareVM>Class<T> getVMClass();
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(CollaborationUtils.EXTRA_ITEM, mShareItem);
+        outState.putSerializable(CollaborationUtils.EXTRA_ITEM, vm.getShareItem());
         super.onSaveInstanceState(outState);
     }
 
     public void addResult(Intent data) {
-        data.putExtra(CollaborationUtils.EXTRA_ITEM, mShareItem);
+        data.putExtra(CollaborationUtils.EXTRA_ITEM, vm.getShareItem());
     }
 
     public int getActivityResultCode() {
@@ -108,6 +118,56 @@ public abstract class BoxFragment extends Fragment {
     protected void showSpinner(){
         showSpinner(R.string.boxsdk_Please_wait, R.string.boxsdk_Please_wait);
     }
+
+    /**
+     * Shows the spinner with the default wait messaging
+     */
+    protected void showSpinner(int delay){
+        showSpinner(R.string.boxsdk_Please_wait, R.string.boxsdk_Please_wait, delay);
+    }
+
+    /**
+     * Shows the spinner with a custom title and description
+     *
+     * @param stringTitleRes string resource for the spinner title
+     * @param stringRes string resource for the spinner description
+     * @param delay delay before spinner is shown
+     */
+    protected void showSpinner(final int stringTitleRes, final int stringRes, int delay) {
+        mDialogHandler.queue(new Runnable() {
+            @Override
+            public void run() {
+                Activity activity = getActivity();
+                if (activity != null && !activity.isFinishing()) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mSpinnerLock.tryLock()) {
+                                try {
+                                    if (mDialog != null) {
+                                        return;
+                                    }
+
+                                    mDialog = SpinnerDialogFragment.createFragment(stringTitleRes,stringRes);
+                                    mDialog.show(getFragmentManager(), TAG);
+                                } catch (Exception e) {
+                                    // WindowManager$BadTokenException will be caught and the app would not display
+                                    // the 'Force Close' message
+                                    mDialog = null;
+                                    return;
+                                } finally {
+                                    mSpinnerLock.unlock();
+                                }
+                            }
+                        }
+                    });
+                }
+
+            }
+        }, delay);
+
+    }
+
 
     /**
      * Shows the spinner with a custom title and description

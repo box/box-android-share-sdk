@@ -30,6 +30,7 @@ import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.usx.adapters.CollaboratorsAdapter;
 import com.box.androidsdk.share.databinding.UsxFragmentCollaborationsBinding;
 import com.box.androidsdk.share.vm.ActionbarTitleVM;
+import com.box.androidsdk.share.vm.BaseShareVM;
 import com.box.androidsdk.share.vm.CollaborationsShareVM;
 import com.box.androidsdk.share.vm.PresenterData;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
@@ -55,6 +56,11 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public Class<CollaborationsShareVM> getVMClass() {
+        return CollaborationsShareVM.class;
+    }
+
 
     @Nullable
     @Override
@@ -73,16 +79,23 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         binding.collaboratorsList.setOnItemClickListener(this);
 
 
-        mCollaborationsShareVM.getCollaborations().observe(this, onCollaborationsChange);
-        mCollaborationsShareVM.getRoleItem().observe(this, onRoleItemChange);
-        mCollaborationsShareVM.getUpdateCollaboration().observe(this ,onUpdateCollaboration);
-        mCollaborationsShareVM.getUpdateOwner().observe(this, onUpdateOwnerCollaboration);
-        mCollaborationsShareVM.getDeleteCollaboration().observe(this, onDeleteCollaboration);
+        mCollaborationsShareVM.getCollaborations().observe(getViewLifecycleOwner(), onCollaborationsChange);
+        mCollaborationsShareVM.getRoleItem().observe(getViewLifecycleOwner(), onRoleItemChange);
+        mCollaborationsShareVM.getUpdateCollaboration().observe(getViewLifecycleOwner(), onUpdateCollaboration);
+        mCollaborationsShareVM.getUpdateOwner().observe(getViewLifecycleOwner(), onUpdateOwnerCollaboration);
+        mCollaborationsShareVM.getDeleteCollaboration().observe(getViewLifecycleOwner(), onDeleteCollaboration);
 
-        mCollaborationsShareVM.getItemInfo().observe(this, onBoxItemComplete);
+        mCollaborationsShareVM.getItemInfo().observe(getViewLifecycleOwner(), onBoxItemComplete);
         // Get serialized roles or fetch them if they are not available
         if (getItem().getAllowedInviteeRoles() == null) {
             fetchRoles();
+        }
+        if (mCollaborationsShareVM.getCachedCollaborations() == null) {
+            //refresh item and fetch collaboration when item is refreshed.
+            showSpinner(0);
+            mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
+        } else {
+            mCollaboratorsAdapter.setItems(mCollaborationsShareVM.getCachedCollaborations());
         }
         return view;
     }
@@ -91,7 +104,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     public void onResume() {
         super.onResume();
         if (mSelectRoleShareVM.isRemoveSelected()) {
-            showSpinner();
+            showSpinner(0);
             mCollaborationsShareVM.deleteCollaboration(mSelectRoleShareVM.getCollaboration());
             mSelectRoleShareVM.setRemoveSelected(false);
         } else {
@@ -103,10 +116,11 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                                 .setPositiveButton(android.R.string.yes, (d, which) -> {
                                     showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
                                     mCollaborationsShareVM.updateOwner(mSelectRoleShareVM.getCollaboration());
-                                }).setNegativeButton(android.R.string.no, (d, which) -> {}).setIcon(android.R.drawable.ic_dialog_alert).create();
+                                }).setNegativeButton(android.R.string.no, (d, which) -> {
+                                }).setIcon(android.R.drawable.ic_dialog_alert).create();
                         dialog.show();
                     } else {
-                        showSpinner();
+                        showSpinner(0);
                         mCollaborationsShareVM.updateCollaboration(mSelectRoleShareVM.getCollaboration(), mSelectRoleShareVM.getSelectedRole().getValue());
 
                     }
@@ -114,12 +128,6 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 }
             }
         }
-
-        if (mCollaborationsShareVM.getCollaborations().getValue() == null) {
-            mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
-        }
-
-
     }
 
     public void setCallback(CollaborationsFragmentCallback callback) {
@@ -222,22 +230,25 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         return fragment;
     }
     private Observer<PresenterData<BoxCollaboration>> onUpdateCollaboration = presenterData -> {
-        dismissSpinner();
-        if (presenterData.isSuccess()) {
-            BoxCollaborator collaborator = presenterData.getData().getAccessibleBy();
-            String collabId = collaborator == null ? "" : collaborator.getId();
-            if (collabId.equals(mCollaborationsShareVM.getUserId())) { //updated permission of yourself so the list look might need to be updated to match the new permission
-                mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
-            }
-            mCollaboratorsAdapter.update(presenterData.getData());
-        } else {
-            BoxLogUtils.e(com.box.androidsdk.share.fragments.CollaborationsFragment.class.getName(), "Update Collaborator request failed",
-                    presenterData.getException());
-            if (presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
-                showToast(presenterData.getStrCode());
-            }
-            if (presenterData.getException() instanceof BoxException) {
-                logBoxException((BoxException) presenterData.getException(), R.string.box_sharesdk_cannot_get_collaborators);
+        if (!presenterData.isHandled()) {
+            dismissSpinner();
+            if (presenterData.isSuccess()) {
+                BoxCollaborator collaborator = presenterData.getData().getAccessibleBy();
+                String collabId = collaborator == null ? "" : collaborator.getId();
+                if (collabId.equals(mCollaborationsShareVM.getUserId())) { //updated permission of yourself so the list look might need to be updated to match the new permission
+                    mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
+                }
+                mCollaboratorsAdapter.update(presenterData.getData());
+                mCollaborationsShareVM.setCachedCollaborations(mCollaboratorsAdapter.getBoxCollaborationList());
+            } else {
+                BoxLogUtils.e(com.box.androidsdk.share.fragments.CollaborationsFragment.class.getName(), "Update Collaborator request failed",
+                        presenterData.getException());
+                if (presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
+                    showToast(presenterData.getStrCode());
+                }
+                if (presenterData.getException() instanceof BoxException) {
+                    logBoxException((BoxException) presenterData.getException(), R.string.box_sharesdk_cannot_get_collaborators);
+                }
             }
         }
     };
@@ -249,75 +260,89 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
 
     private Observer<PresenterData<BoxItem>> onBoxItemComplete = presenterData -> {
-        dismissSpinner();
-        if (presenterData.isSuccess()) {
-            mCollaborationsShareVM.setShareItem(presenterData.getData());
-            fetchCollaborations();
-        } else {
-            if(presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
-                showToast(presenterData.getStrCode());
+        if (!presenterData.isHandled()) {
+            dismissSpinner();
+            if (presenterData.isSuccess()) {
+                mCollaborationsShareVM.setShareItem(presenterData.getData());
+                fetchCollaborations();
+            } else {
+                if (presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
+                    showToast(presenterData.getStrCode());
+                }
             }
         }
     };
 
 
     private Observer<PresenterData<BoxIteratorCollaborations>> onCollaborationsChange = presenterData -> {
-        dismissSpinner();
-        if (presenterData.isSuccess()) {
-            mCollaboratorsAdapter.setItems(presenterData.getData());
-        } else {
-            BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch Collaborators request failed",
-                    presenterData.getException());
+        if (!presenterData.isHandled()) {
+            dismissSpinner();
+            if (presenterData.isSuccess()) {
+//                mCollaborationsShareVM.setCachedCollaborations(presenterData.getData());
+                mCollaboratorsAdapter.setItems(presenterData.getData());
+                mCollaborationsShareVM.setCachedCollaborations(mCollaboratorsAdapter.getBoxCollaborationList());
+            } else {
+                BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch Collaborators request failed",
+                        presenterData.getException());
 
-            if (presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
-                showToast(presenterData.getStrCode());
+                if (presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
+                    showToast(presenterData.getStrCode());
+                }
+                BoxLogUtils.nonFatalE("CollaborationsError", getString(R.string.box_sharesdk_cannot_get_collaborators)
+                        + presenterData.getException(), presenterData.getException());
             }
-            BoxLogUtils.nonFatalE("CollaborationsError", getString(R.string.box_sharesdk_cannot_get_collaborators)
-                    + presenterData.getException(), presenterData.getException());
         }
     };
 
     private Observer<PresenterData<BoxCollaborationItem>> onRoleItemChange = presenterData -> {
-        dismissSpinner();
-        if (presenterData.isSuccess()) {
-            mCollaborationsShareVM.setShareItem(presenterData.getData());
-        } else {
-            BoxLogUtils.e(com.box.androidsdk.share.fragments.CollaborationsFragment.class.getName(), "Fetch roles request failed",
-                    presenterData.getException());
-            showToast(presenterData.getStrCode());
+        if (!presenterData.isHandled()) {
+            dismissSpinner();
+            if (presenterData.isSuccess()) {
+                mCollaborationsShareVM.setShareItem(presenterData.getData());
+            } else {
+                BoxLogUtils.e(com.box.androidsdk.share.fragments.CollaborationsFragment.class.getName(), "Fetch roles request failed",
+                        presenterData.getException());
+                showToast(presenterData.getStrCode());
+            }
         }
     };
 
 
     private Observer<PresenterData<BoxVoid>> onUpdateOwnerCollaboration = presenterData -> {
-        dismissSpinner();
-        if (presenterData.isSuccess()) {
-            mCollaborationsShareVM.setOwnerUpdated(true);
-            getActivity().finish();
-        } else {
-            BoxLogUtils.e(com.box.androidsdk.share.fragments.CollaborationsFragment.class.getName(), "Update Owner request failed",
-                    presenterData.getException());
-            if (presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
-                showToast(presenterData.getStrCode());
+        if (!presenterData.isHandled()) {
+            dismissSpinner();
+            if (presenterData.isSuccess()) {
+                mCollaborationsShareVM.setOwnerUpdated(true);
+                getActivity().finish();
+            } else {
+                BoxLogUtils.e(com.box.androidsdk.share.fragments.CollaborationsFragment.class.getName(), "Update Owner request failed",
+                        presenterData.getException());
+                if (presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
+                    showToast(presenterData.getStrCode());
+                }
+                BoxLogUtils.nonFatalE("UpdateOwner", getString(R.string.box_sharesdk_cannot_get_collaborators)
+                        , presenterData.getException());
             }
-            BoxLogUtils.nonFatalE("UpdateOwner", getString(R.string.box_sharesdk_cannot_get_collaborators)
-                    , presenterData.getException());
         }
     };
 
     private Observer<PresenterData<BoxRequest>> onDeleteCollaboration = presenterData -> {
-        if (presenterData.isSuccess()) {
-            BoxRequestsShare.DeleteCollaboration req = (BoxRequestsShare.DeleteCollaboration) presenterData.getData();
-            mCollaboratorsAdapter.delete(req.getId());
+        if (!presenterData.isHandled()) {
+            dismissSpinner();
+            if (presenterData.isSuccess()) {
+                BoxRequestsShare.DeleteCollaboration req = (BoxRequestsShare.DeleteCollaboration) presenterData.getData();
+                mCollaboratorsAdapter.delete(req.getId());
+                mCollaborationsShareVM.setCachedCollaborations(mCollaboratorsAdapter.getBoxCollaborationList());
+                if (mCollaboratorsAdapter.getCount() == 0) {
+                    fetchCollaborations(); //this will force the view to refresh
+                }
 
-            if (mCollaboratorsAdapter.getCount() == 0) {
-                fetchCollaborations(); //this will force the view to refresh
+                //fetchCollaborations(); //refresh collaborations
+            } else {
+                BoxLogUtils.e(CollaborationsFragment.class.getName(), "Delete Collaborator request failed",
+                        presenterData.getException());
+                showToast(presenterData.getStrCode());
             }
-            //fetchCollaborations(); //refresh collaborations
-        } else {
-            BoxLogUtils.e(CollaborationsFragment.class.getName(), "Delete Collaborator request failed",
-                    presenterData.getException());
-            showToast(presenterData.getStrCode());
         }
     };
 
