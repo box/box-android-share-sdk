@@ -30,6 +30,7 @@ import com.eclipsesource.json.JsonObject;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
 
@@ -81,7 +82,6 @@ public class CollaboratorsInitialsView extends LinearLayout {
         JsonObject jsonObject = new JsonObject();
         jsonObject.add(BoxCollaborator.FIELD_NAME, "");
         mUnknownCollaborator = new BoxUser(jsonObject);
-
     }
 
     protected BoxCollaborationItem getCollaborationItem() {
@@ -116,17 +116,24 @@ public class CollaboratorsInitialsView extends LinearLayout {
         fetchCollaborations();
     }
     private Observer<PresenterData<BoxIteratorCollaborations>> onCollaborationsChange = presenterData -> {
-        mProgressBar.setVisibility(GONE);
-        if (presenterData.isSuccess()) {
-            updateView(presenterData.getData());
-        } else {
-            showToast(getContext(), getString(presenterData.getStrCode()));
-            if (presenterData.getException() instanceof BoxException) {
-                if (((BoxException)presenterData.getException()).getResponseCode() == HTTP_NOT_FOUND) {
-                    ((Activity)getContext()).finish();
+        if (!presenterData.isHandled()) {
+            if (presenterData.isSuccess()) {
+                updateView(presenterData.getData());
+            } else {
+                showToast(getContext(), getString(presenterData.getStrCode()));
+                if (presenterData.getException() instanceof BoxException) {
+                    if (((BoxException)presenterData.getException()).getResponseCode() == HTTP_NOT_FOUND) {
+                        ((Activity)getContext()).finish();
+                    }
                 }
             }
+        } else {
+            PresenterData<BoxIteratorCollaborations> boxCollaborations = mCollaboratorsInitialsVM.getCollaborations().getValue();
+            if (boxCollaborations != null) {
+                updateView(boxCollaborations.getData());
+            }
         }
+
     };
 
     private void updateViewVisibilityForNoCollaborators() {
@@ -141,6 +148,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
     }
 
     private void updateView(BoxIteratorCollaborations boxIteratorCollaborations) {
+        mProgressBar.setVisibility(GONE);
         mCollaborations = boxIteratorCollaborations;
         if (mCollaborations == null || mCollaborations.size() == 0) {
             // There are no collaborators for mShareitem
@@ -185,7 +193,6 @@ public class CollaboratorsInitialsView extends LinearLayout {
         mCollabsCount.setText(getResources().getQuantityString(R.plurals.box_sharesdk_collaborators_count_plurals, totalCollaborators, totalCollaborators));
     }
 
-
     private void clearInitialsView() {
         mInitialsListView.removeAllViewsInLayout();
     }
@@ -210,7 +217,10 @@ public class CollaboratorsInitialsView extends LinearLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        this.fetchCollaborations();
+        if (mCollaboratorsInitialsVM != null && mCollaboratorsInitialsVM.getCollaborations().getValue() == null) {
+            this.fetchCollaborations();
+        }
+
     }
 
     private void showToast(Context context, String mssg) {

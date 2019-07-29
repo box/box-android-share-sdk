@@ -119,6 +119,56 @@ public abstract class BoxFragment extends Fragment {
     }
 
     /**
+     * Shows the spinner with the default wait messaging
+     */
+    protected void showSpinner(int delay){
+        showSpinner(R.string.boxsdk_Please_wait, R.string.boxsdk_Please_wait, delay);
+    }
+
+    /**
+     * Shows the spinner with a custom title and description
+     *
+     * @param stringTitleRes string resource for the spinner title
+     * @param stringRes string resource for the spinner description
+     * @param delay delay before spinner is shown
+     */
+    protected void showSpinner(final int stringTitleRes, final int stringRes, int delay) {
+        mDialogHandler.queue(new Runnable() {
+            @Override
+            public void run() {
+                Activity activity = getActivity();
+                if (activity != null && !activity.isFinishing()) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mSpinnerLock.tryLock()) {
+                                try {
+                                    if (mDialog != null) {
+                                        return;
+                                    }
+
+                                    mDialog = SpinnerDialogFragment.createFragment(stringTitleRes,stringRes);
+                                    mDialog.show(getFragmentManager(), TAG);
+                                } catch (Exception e) {
+                                    // WindowManager$BadTokenException will be caught and the app would not display
+                                    // the 'Force Close' message
+                                    mDialog = null;
+                                    return;
+                                } finally {
+                                    mSpinnerLock.unlock();
+                                }
+                            }
+                        }
+                    });
+                }
+
+            }
+        }, delay);
+
+    }
+
+
+    /**
      * Shows the spinner with a custom title and description
      *
      * @param stringTitleRes string resource for the spinner title

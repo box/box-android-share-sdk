@@ -21,6 +21,7 @@ import com.box.androidsdk.share.vm.BaseShareVM;
 import com.eclipsesource.json.JsonObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CollaboratorsAdapter extends BaseAdapter {
 
@@ -41,6 +42,11 @@ public class CollaboratorsAdapter extends BaseAdapter {
         jsonObject.add(BoxCollaborator.FIELD_NAME, mContext.getString(R.string.box_sharesdk_another_person));
         mAnotherPersonCollaborator = new BoxUser(jsonObject);
     }
+
+    public List<BoxCollaboration> getBoxCollaborationList() {
+        return mItems;
+    }
+
 
     public BoxItem getShareItem() {
         return mBaseShareVM.getShareItem();
@@ -130,6 +136,12 @@ public class CollaboratorsAdapter extends BaseAdapter {
         for (int i = 0; i < items.size(); i++) {
             mItems.add(items.get(i));
         }
+        notifyDataSetChanged();
+    }
+
+    public synchronized void setItems(List<BoxCollaboration> items) {
+        mItems.clear();
+        mItems.addAll(items);
         notifyDataSetChanged();
     }
 

@@ -11,12 +11,15 @@ import com.box.androidsdk.content.requests.BoxRequest;
 import com.box.androidsdk.share.sharerepo.ShareRepo;
 import com.box.androidsdk.share.utils.ShareSDKTransformer;
 
+import java.util.List;
+
 public class CollaborationsShareVM extends BaseShareVM{
     private final LiveData<PresenterData<BoxRequest>> mDeleteCollaboration;
     private final LiveData<PresenterData<BoxVoid>> mUpdateOwner;
     private final LiveData<PresenterData<BoxCollaboration>> mUpdateCollaboration;
     private final LiveData<PresenterData<BoxCollaborationItem>> mRoleItem;
     private final LiveData<PresenterData<BoxIteratorCollaborations>> mCollaborations;
+    private List<BoxCollaboration> mCachedCollaborations;
     private boolean mOwnerUpdated;
 
     public CollaborationsShareVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
@@ -90,6 +93,11 @@ public class CollaborationsShareVM extends BaseShareVM{
         return mRoleItem;
     }
 
+    public List<BoxCollaboration> getCachedCollaborations() {
+        return mCachedCollaborations;
+    }
 
-
+    public void setCachedCollaborations(List<BoxCollaboration> cachedCollaborations) {
+        this.mCachedCollaborations = cachedCollaborations;
+    }
 }

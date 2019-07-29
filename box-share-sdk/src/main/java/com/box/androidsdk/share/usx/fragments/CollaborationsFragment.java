@@ -81,7 +81,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
         mCollaborationsShareVM.getCollaborations().observe(this, onCollaborationsChange);
         mCollaborationsShareVM.getRoleItem().observe(this, onRoleItemChange);
-        mCollaborationsShareVM.getUpdateCollaboration().observe(this ,onUpdateCollaboration);
+        mCollaborationsShareVM.getUpdateCollaboration().observe(this, onUpdateCollaboration);
         mCollaborationsShareVM.getUpdateOwner().observe(this, onUpdateOwnerCollaboration);
         mCollaborationsShareVM.getDeleteCollaboration().observe(this, onDeleteCollaboration);
 
@@ -90,6 +90,13 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         if (getItem().getAllowedInviteeRoles() == null) {
             fetchRoles();
         }
+        if (mCollaborationsShareVM.getCachedCollaborations() == null) {
+            //refresh item and fetch collaboration when item is refreshed.
+            showSpinner();
+            mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
+        } else {
+            mCollaboratorsAdapter.setItems(mCollaborationsShareVM.getCachedCollaborations());
+        }
         return view;
     }
 
@@ -97,7 +104,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     public void onResume() {
         super.onResume();
         if (mSelectRoleShareVM.isRemoveSelected()) {
-            showSpinner();
+            showSpinner(0);
             mCollaborationsShareVM.deleteCollaboration(mSelectRoleShareVM.getCollaboration());
             mSelectRoleShareVM.setRemoveSelected(false);
         } else {
@@ -109,10 +116,11 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                                 .setPositiveButton(android.R.string.yes, (d, which) -> {
                                     showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
                                     mCollaborationsShareVM.updateOwner(mSelectRoleShareVM.getCollaboration());
-                                }).setNegativeButton(android.R.string.no, (d, which) -> {}).setIcon(android.R.drawable.ic_dialog_alert).create();
+                                }).setNegativeButton(android.R.string.no, (d, which) -> {
+                                }).setIcon(android.R.drawable.ic_dialog_alert).create();
                         dialog.show();
                     } else {
-                        showSpinner();
+                        showSpinner(0);
                         mCollaborationsShareVM.updateCollaboration(mSelectRoleShareVM.getCollaboration(), mSelectRoleShareVM.getSelectedRole().getValue());
 
                     }
@@ -120,12 +128,6 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 }
             }
         }
-
-        if (mCollaborationsShareVM.getCollaborations().getValue() == null) {
-            mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
-        }
-
-
     }
 
     public void setCallback(CollaborationsFragmentCallback callback) {
@@ -237,6 +239,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                     mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
                 }
                 mCollaboratorsAdapter.update(presenterData.getData());
+                mCollaborationsShareVM.setCachedCollaborations(mCollaboratorsAdapter.getBoxCollaborationList());
             } else {
                 BoxLogUtils.e(com.box.androidsdk.share.fragments.CollaborationsFragment.class.getName(), "Update Collaborator request failed",
                         presenterData.getException());
@@ -275,7 +278,9 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         if (!presenterData.isHandled()) {
             dismissSpinner();
             if (presenterData.isSuccess()) {
+//                mCollaborationsShareVM.setCachedCollaborations(presenterData.getData());
                 mCollaboratorsAdapter.setItems(presenterData.getData());
+                mCollaborationsShareVM.setCachedCollaborations(mCollaboratorsAdapter.getBoxCollaborationList());
             } else {
                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch Collaborators request failed",
                         presenterData.getException());
@@ -323,13 +328,15 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
     private Observer<PresenterData<BoxRequest>> onDeleteCollaboration = presenterData -> {
         if (!presenterData.isHandled()) {
+            dismissSpinner();
             if (presenterData.isSuccess()) {
                 BoxRequestsShare.DeleteCollaboration req = (BoxRequestsShare.DeleteCollaboration) presenterData.getData();
                 mCollaboratorsAdapter.delete(req.getId());
-
+                mCollaborationsShareVM.setCachedCollaborations(mCollaboratorsAdapter.getBoxCollaborationList());
                 if (mCollaboratorsAdapter.getCount() == 0) {
                     fetchCollaborations(); //this will force the view to refresh
                 }
+
                 //fetchCollaborations(); //refresh collaborations
             } else {
                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "Delete Collaborator request failed",
