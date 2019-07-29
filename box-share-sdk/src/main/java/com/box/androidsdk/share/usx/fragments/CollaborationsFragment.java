@@ -92,7 +92,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         }
         if (mCollaborationsShareVM.getCachedCollaborations() == null) {
             //refresh item and fetch collaboration when item is refreshed.
-            showSpinner();
+            showSpinner(0);
             mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
         } else {
             mCollaboratorsAdapter.setItems(mCollaborationsShareVM.getCachedCollaborations());
