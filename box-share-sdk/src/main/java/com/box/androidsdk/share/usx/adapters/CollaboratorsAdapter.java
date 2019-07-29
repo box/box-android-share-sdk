@@ -47,7 +47,6 @@ public class CollaboratorsAdapter extends BaseAdapter {
         return mItems;
     }
 
-
     public BoxItem getShareItem() {
         return mBaseShareVM.getShareItem();
     }
@@ -80,10 +79,8 @@ public class CollaboratorsAdapter extends BaseAdapter {
                 collaboration.getAccessibleBy().getId().equals(mBaseShareVM.getUserId())) {
             return true;
         }
-
         return false;
     }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

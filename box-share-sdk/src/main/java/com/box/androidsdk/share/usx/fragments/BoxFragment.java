@@ -33,7 +33,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public abstract class BoxFragment extends Fragment {
 
     protected static final String TAG = BoxFragment.class.getName();
-    ; //changed to private since it should only be used for checking mShareItem's validity during onCreate; throughout the fragment vm will be used instead.
 
     private static final int  DEFAULT_SPINNER_DELAY = 500;
 
