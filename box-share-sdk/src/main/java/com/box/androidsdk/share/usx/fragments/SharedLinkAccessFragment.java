@@ -104,7 +104,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
         setTitles();
 
         mShareLinkVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(SharedLinkVM.class);
-        mShareLinkVM.getSharedLinkedItem().observe(this, onBoxItemComplete);
+        mShareLinkVM.getSharedLinkedItem().observe(getViewLifecycleOwner(), onBoxItemComplete);
 
         setupUi();
 

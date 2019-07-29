@@ -88,8 +88,8 @@ public class UsxFragment extends BoxFragment {
         });
 
         setTitles();
-        mSharedLinkVm.getItemInfo().observe(this, onBoxItemComplete);
-        mSharedLinkVm.getSharedLinkedItem().observe(this, onBoxItemComplete);
+        mSharedLinkVm.getItemInfo().observe(getViewLifecycleOwner(), onBoxItemComplete);
+        mSharedLinkVm.getSharedLinkedItem().observe(getViewLifecycleOwner(), onBoxItemComplete);
 
 
         View view = binding.getRoot();
@@ -97,7 +97,7 @@ public class UsxFragment extends BoxFragment {
         binding.setOnShareViaListener(v -> showShareVia());
         return view;
     }
-    
+
     private void setupListeners() {
         binding.setOnInviteCollabsClickListener(v -> mListener.inviteCollabsClicked());
         binding.setOnEditAccessClickListener(v -> mListener.editAccessClicked());

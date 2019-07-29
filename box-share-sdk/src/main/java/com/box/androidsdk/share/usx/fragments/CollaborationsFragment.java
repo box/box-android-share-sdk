@@ -79,13 +79,13 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         binding.collaboratorsList.setOnItemClickListener(this);
 
 
-        mCollaborationsShareVM.getCollaborations().observe(this, onCollaborationsChange);
-        mCollaborationsShareVM.getRoleItem().observe(this, onRoleItemChange);
-        mCollaborationsShareVM.getUpdateCollaboration().observe(this, onUpdateCollaboration);
-        mCollaborationsShareVM.getUpdateOwner().observe(this, onUpdateOwnerCollaboration);
-        mCollaborationsShareVM.getDeleteCollaboration().observe(this, onDeleteCollaboration);
+        mCollaborationsShareVM.getCollaborations().observe(getViewLifecycleOwner(), onCollaborationsChange);
+        mCollaborationsShareVM.getRoleItem().observe(getViewLifecycleOwner(), onRoleItemChange);
+        mCollaborationsShareVM.getUpdateCollaboration().observe(getViewLifecycleOwner(), onUpdateCollaboration);
+        mCollaborationsShareVM.getUpdateOwner().observe(getViewLifecycleOwner(), onUpdateOwnerCollaboration);
+        mCollaborationsShareVM.getDeleteCollaboration().observe(getViewLifecycleOwner(), onDeleteCollaboration);
 
-        mCollaborationsShareVM.getItemInfo().observe(this, onBoxItemComplete);
+        mCollaborationsShareVM.getItemInfo().observe(getViewLifecycleOwner(), onBoxItemComplete);
         // Get serialized roles or fetch them if they are not available
         if (getItem().getAllowedInviteeRoles() == null) {
             fetchRoles();
