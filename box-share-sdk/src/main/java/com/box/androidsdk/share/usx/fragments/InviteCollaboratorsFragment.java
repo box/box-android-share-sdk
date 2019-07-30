@@ -235,7 +235,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        if (mSelectRoleShareVM.getSelectedRole() != null) {
+        if (mSelectRoleShareVM.getSelectedRole() != null && mSelectRoleShareVM.getSelectedRole().getValue() != null) {
             outState.putString(EXTRA_COLLAB_SELECTED_ROLE, mSelectRoleShareVM.getSelectedRole().getValue().toString());
         }
         super.onSaveInstanceState(outState);
