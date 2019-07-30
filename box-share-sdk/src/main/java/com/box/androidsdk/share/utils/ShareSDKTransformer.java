@@ -211,8 +211,6 @@ public class ShareSDKTransformer {
                     data.setException(response.getException());
                 } else if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
                     data.failure(R.string.box_sharesdk_insufficient_permissions, boxException);
-                } else {
-                    data.setException(boxException);
                 }
                 return data;
             }
