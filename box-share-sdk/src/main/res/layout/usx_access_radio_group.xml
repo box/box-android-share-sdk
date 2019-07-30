@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:background="@color/box_sharesdk_components_background"
             android:id="@+id/link_access_layout"
+            android:enabled="@{viewModel.activeRadioButtons.contains(Access.OPEN)}"
             android:onClick="@{()->SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(true, Access.OPEN, sharedLinkAccessNotifier)}"
             android:layout_height="wrap_content">
 
@@ -78,6 +79,7 @@
             android:layout_width="match_parent"
             android:background="@color/box_sharesdk_components_background"
             android:id="@+id/company_access_layout"
+            android:enabled="@{viewModel.activeRadioButtons.contains(Access.COMPANY)}"
             android:onClick="@{()->SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(true, Access.COMPANY, sharedLinkAccessNotifier)}"
             android:layout_height="wrap_content">
 
@@ -132,6 +134,7 @@
             android:layout_width="match_parent"
             android:background="@color/box_sharesdk_components_background"
             android:id="@+id/folder_access_layout"
+            android:enabled="@{viewModel.activeRadioButtons.contains(Access.COLLABORATORS)}"
             android:onClick="@{()->SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(true, Access.COLLABORATORS, sharedLinkAccessNotifier)}"
             android:layout_height="wrap_content">
 

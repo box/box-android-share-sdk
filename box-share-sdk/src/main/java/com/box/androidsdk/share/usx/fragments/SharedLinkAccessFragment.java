@@ -32,8 +32,8 @@ public class SharedLinkAccessFragment extends BoxFragment {
     private static final String PASSWORD_FRAGMENT_TAG = "passwordFrag";
     private static final String ACCESS_RADIAL_FRAGMENT_TAG = "accessFrag";
 
-    SharedLinkVM mShareLinkVM;
-    UsxFragmentSharedLinkAccessBinding binding;
+    private SharedLinkVM mShareLinkVM;
+    private UsxFragmentSharedLinkAccessBinding binding;
 
     private SharedLinkAccessNotifiers notifier = new SharedLinkAccessNotifiers() {
         @Override
@@ -250,14 +250,16 @@ public class SharedLinkAccessFragment extends BoxFragment {
 
     private Observer<PresenterData<BoxItem>> onBoxItemComplete = boxItemPresenterData -> {
         dismissSpinner();
-        if (boxItemPresenterData.isSuccess() && boxItemPresenterData.getData() != null) {
-            //data might still be null if the original request was not BoxRequestItem
-            setShareItem(boxItemPresenterData.getData());
-        } else {
-            if(boxItemPresenterData.getStrCode() != PresenterData.NO_MESSAGE) {
-                showToast(boxItemPresenterData.getStrCode());
+        if (!boxItemPresenterData.isHandled()) {
+            if (boxItemPresenterData.isSuccess() && boxItemPresenterData.getData() != null) {
+                //data might still be null if the original request was not BoxRequestItem
+                setShareItem(boxItemPresenterData.getData());
+            } else {
+                if(boxItemPresenterData.getStrCode() != PresenterData.NO_MESSAGE) {
+                    showToast(boxItemPresenterData.getStrCode());
+                }
+                refreshUI();
             }
-            refreshUI();
         }
     };
 
@@ -265,8 +267,10 @@ public class SharedLinkAccessFragment extends BoxFragment {
         if (mShareLinkVM.getShareItem().getSharedLink() == null) {
             showToast(R.string.box_sharesdk_problem_accessing_this_shared_link);
             getActivity().finish();
+        } else {
+            binding.setShareItem(mShareLinkVM.getShareItem());
         }
-        binding.setShareItem(mShareLinkVM.getShareItem());
+
     }
 
     public void setShareItem(BoxItem item) {
