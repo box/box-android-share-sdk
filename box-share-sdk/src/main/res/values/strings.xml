@@ -42,7 +42,8 @@
     <string name="box_sharesdk_access_collaborator_file" description="description for collaborator access for a file">People in this file and folder</string>
     <string name="box_sharesdk_access_collaborator" description="description for collaborator access">People in this folder</string>
     <string name="box_sharesdk_password" description="header for password section">Password</string>
-    <string name="box_sharesdk_set_password" description="hint for password dialog">Set password</string>
+    <string name="box_sharesdk_set_password" description="title for password dialog">Set Password</string>
+    <string name="box_sharesdk_choose_password" description="hint for password dialog">Choose a Password</string>
     <string name="box_sharesdk_require_password" description="toggle of using password or not">Require Password</string>
     <string name="box_sharesdk_link_expiration" description="header for link expiration section">Link Expiration</string>
     <string name="box_sharesdk_link_expire_link" description="toggle of whether to expire links">Expire Link</string>

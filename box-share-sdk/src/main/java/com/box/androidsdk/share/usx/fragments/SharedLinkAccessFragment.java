@@ -189,7 +189,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
             return;
         }
         PasswordDialogFragment fragment = PasswordDialogFragment.
-                createFragment(R.string.box_sharesdk_password, R.string.box_sharesdk_set_password, R.string.box_sharesdk_ok, R.string.box_sharesdk_cancel, new PositiveNegativeDialogFragment.OnPositiveOrNegativeButtonClickedListener() {
+                createFragment(R.string.box_sharesdk_set_password, R.string.box_sharesdk_choose_password, R.string.box_sharesdk_ok, R.string.box_sharesdk_cancel, new PositiveNegativeDialogFragment.OnPositiveOrNegativeButtonClickedListener() {
                     @Override
                     public void onPositiveButtonClicked(PositiveNegativeDialogFragment fragment) {
                         try {
