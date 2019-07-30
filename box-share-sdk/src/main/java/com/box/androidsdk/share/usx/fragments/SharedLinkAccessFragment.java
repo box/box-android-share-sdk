@@ -265,8 +265,10 @@ public class SharedLinkAccessFragment extends BoxFragment {
         if (mShareLinkVM.getShareItem().getSharedLink() == null) {
             showToast(R.string.box_sharesdk_problem_accessing_this_shared_link);
             getActivity().finish();
+        } else {
+            binding.setShareItem(mShareLinkVM.getShareItem());
         }
-        binding.setShareItem(mShareLinkVM.getShareItem());
+
     }
 
     public void setShareItem(BoxItem item) {
