@@ -17,7 +17,7 @@
     <string name="box_sharesdk_accessible_collaborator_usx" description="description for collaborator access">This content is only accessible to people who are collaborated into this folder.h</string>
     <string name="box_sharesdk_password_protected" description="description for if a shared link is password proceted">Password protected</string>
     <string name="box_sharesdk_fetching_collaborators" description="message to show on spinner when we are fetching collaborators">Fetching collaborators</string>
-    <string name="box_sharesdk_fetching_roles" description="message to show on spinner when we are fetching collaborators">Fetching collaborators</string>
+    <string name="box_sharesdk_fetching_roles" description="message to show on spinner when we are fetching roles">Fetching roles</string>
     <string name="box_sharesdk_adding_collaborators" description="message to show on spinner when we are adding collaborators">Adding collaborators</string>
     <string name="box_sharesdk_enabling_share_link" description="message to show on spinner when we are enabling share link">Enabling share link</string>
     <string name="box_sharesdk_disabling_share_link" description="message to show on spinner when we are disabling share link">Disabling share link</string>
