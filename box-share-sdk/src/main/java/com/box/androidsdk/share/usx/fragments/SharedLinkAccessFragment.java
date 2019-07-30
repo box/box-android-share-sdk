@@ -99,31 +99,46 @@ public class SharedLinkAccessFragment extends BoxFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_shared_link_access, container, false);
         binding.setLifecycleOwner(getViewLifecycleOwner());
+        binding.setSharedLinkAccessNotifier(notifier);
+        binding.setOnPasswordListener(v -> showPasswordChooserDialog());
+        binding.setOnDateListener(v -> showDatePicker(mShareLinkVM.getShareItem().getSharedLink().getUnsharedDate()));
+
         View view = binding.getRoot();
 
         setTitles();
 
         mShareLinkVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(SharedLinkVM.class);
+        mShareLinkVM.getItemInfo().observe(getViewLifecycleOwner(), onBoxItemComplete);
         mShareLinkVM.getSharedLinkedItem().observe(getViewLifecycleOwner(), onBoxItemComplete);
 
-        setupUi();
+
+        if (checkIfHasRequiredFields(mShareLinkVM.getShareItem())) {
+            refreshUI();
+        } else {
+            refreshShareItemInfo();
+        }
 
         return view;
     }
 
 
-    private void setupUi() {
-        binding.setViewModel(mShareLinkVM);
-        //binding.accessRadioGroup.setViewModel(mShareLinkVM);
-        //binding.accessRadioGroup.setShareItem(mShareLinkVM.getShareItem());
-        if (mShareLinkVM.getActiveRadioButtons().isEmpty()) mShareLinkVM.setActiveRadioButtons(mShareLinkVM.generateActiveButtons());
+    /**
+     * Refreshes the information of the shared link
+     */
+    public void refreshShareItemInfo() {
+        showSpinner(0);
+        mShareLinkVM.fetchItemInfo(mShareLinkVM.getShareItem());
+    }
 
-        binding.setSharedLinkAccessNotifier(notifier);
-       // binding.accessRadioGroup.setSharedLinkAccessNotifier(notifier);
-        binding.setOnPasswordListener(v -> showPasswordChooserDialog());
-        binding.setOnDateListener(v -> showDatePicker(mShareLinkVM.getShareItem().getSharedLink().getUnsharedDate()));
-        refreshUI();
 
+    /**
+     * Check if the required fields are available on the BoxItem
+     *
+     * @param shareItem the BoxItem to verify
+     * @return whether or not all the required fields are present
+     */
+    private boolean checkIfHasRequiredFields(BoxItem shareItem){
+        return shareItem.getSharedLink() != null && shareItem.getAllowedSharedLinkAccessLevels() != null;
     }
 
 
@@ -251,8 +266,9 @@ public class SharedLinkAccessFragment extends BoxFragment {
     private Observer<PresenterData<BoxItem>> onBoxItemComplete = boxItemPresenterData -> {
         dismissSpinner();
         if (!boxItemPresenterData.isHandled()) {
-            if (boxItemPresenterData.isSuccess() && boxItemPresenterData.getData() != null) {
+            if (boxItemPresenterData.isSuccess() && boxItemPresenterData.getData() != null && checkIfHasRequiredFields(boxItemPresenterData.getData())) {
                 //data might still be null if the original request was not BoxRequestItem
+
                 setShareItem(boxItemPresenterData.getData());
             } else {
                 if(boxItemPresenterData.getStrCode() != PresenterData.NO_MESSAGE) {
@@ -270,6 +286,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
             getActivity().finish();
         } else {
             binding.setShareItem(mShareLinkVM.getShareItem());
+            binding.setActiveRadioButtons(mShareLinkVM.getActiveRadioButtons());
         }
 
     }

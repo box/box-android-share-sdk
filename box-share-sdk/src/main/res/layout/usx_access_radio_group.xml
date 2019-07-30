@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="viewModel"
-            type="com.box.androidsdk.share.vm.SharedLinkVM" />
+            name="activeRadioButtons"
+            type="java.util.HashSet" />
         <import type="com.box.androidsdk.content.models.BoxSharedLink.Access" />
         <variable
             name="shareItem"
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:background="@color/box_sharesdk_components_background"
             android:id="@+id/link_access_layout"
-            android:enabled="@{viewModel.activeRadioButtons.contains(Access.OPEN)}"
+            android:enabled="@{activeRadioButtons.contains(Access.OPEN)}"
             android:onClick="@{()->SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(true, Access.OPEN, sharedLinkAccessNotifier)}"
             android:layout_height="wrap_content">
 
@@ -35,7 +35,7 @@
                 android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin"
                 android:translationX="@dimen/box_sharesdk_radio_horizontal_offset"
                 android:paddingRight="@dimen/box_sharesdk_radio_horizontal_offset"
-                android:enabled="@{viewModel.activeRadioButtons.contains(Access.OPEN)}"
+                android:enabled="@{activeRadioButtons.contains(Access.OPEN)}"
                 android:checked="@{shareItem.sharedLink.effectiveAccess  == Access.OPEN}"
                 android:onCheckedChanged="@{(view, checked) -> SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(checked, Access.OPEN, sharedLinkAccessNotifier)}"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:background="@color/box_sharesdk_components_background"
             android:id="@+id/company_access_layout"
-            android:enabled="@{viewModel.activeRadioButtons.contains(Access.COMPANY)}"
+            android:enabled="@{activeRadioButtons.contains(Access.COMPANY)}"
             android:onClick="@{()->SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(true, Access.COMPANY, sharedLinkAccessNotifier)}"
             android:layout_height="wrap_content">
 
@@ -91,7 +91,7 @@
                 android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin"
                 android:translationX="@dimen/box_sharesdk_radio_horizontal_offset"
                 android:paddingRight="@dimen/box_sharesdk_radio_horizontal_offset"
-                android:enabled="@{viewModel.activeRadioButtons.contains(Access.COMPANY)}"
+                android:enabled="@{activeRadioButtons.contains(Access.COMPANY)}"
                 android:onCheckedChanged="@{(view, checked) -> SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(checked, Access.COMPANY, sharedLinkAccessNotifier)}"
                 android:checked="@{shareItem.sharedLink.effectiveAccess  == Access.COMPANY}"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -134,7 +134,7 @@
             android:layout_width="match_parent"
             android:background="@color/box_sharesdk_components_background"
             android:id="@+id/folder_access_layout"
-            android:enabled="@{viewModel.activeRadioButtons.contains(Access.COLLABORATORS)}"
+            android:enabled="@{activeRadioButtons.contains(Access.COLLABORATORS)}"
             android:onClick="@{()->SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(true, Access.COLLABORATORS, sharedLinkAccessNotifier)}"
             android:layout_height="wrap_content">
 
@@ -147,7 +147,7 @@
                 android:translationX="@dimen/box_sharesdk_radio_horizontal_offset"
                 android:paddingRight="@dimen/box_sharesdk_radio_horizontal_offset"
                 android:onCheckedChanged="@{(view, checked) -> SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(checked, Access.COLLABORATORS, sharedLinkAccessNotifier)}"
-                android:enabled="@{viewModel.activeRadioButtons.contains(Access.COLLABORATORS)}"
+                android:enabled="@{activeRadioButtons.contains(Access.COLLABORATORS)}"
                 android:checked="@{shareItem.sharedLink.effectiveAccess   == Access.COLLABORATORS}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
