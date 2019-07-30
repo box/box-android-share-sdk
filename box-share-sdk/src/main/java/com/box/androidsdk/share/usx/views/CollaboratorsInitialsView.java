@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
 
     private ProgressBar mProgressBar;
     private TextView mCollabsCount;
+    private int mViewCount = -1;
 
     private CollaboratorsInitialsVM mCollaboratorsInitialsVM;
 
@@ -68,6 +70,12 @@ public class CollaboratorsInitialsView extends LinearLayout {
     public void setArguments(CollaboratorsInitialsVM vm) {
         mCollaboratorsInitialsVM = vm;
         mCollaboratorsInitialsVM.getCollaborations().observe((LifecycleOwner) getContext(), onCollaborationsChange);
+    }
+
+    public void setArguments(CollaboratorsInitialsVM vm, int viewCount) {
+        mCollaboratorsInitialsVM = vm;
+        mCollaboratorsInitialsVM.getCollaborations().observe((LifecycleOwner) getContext(), onCollaborationsChange);
+        mViewCount = viewCount;
     }
 
     /**
@@ -166,31 +174,89 @@ public class CollaboratorsInitialsView extends LinearLayout {
 
 
         clearInitialsView();
-        int viewsCount = 6;
-        int addedViewCount = 0;
-        View viewAdded = null;
-        for (int i = 0; i < totalCollaborators && addedViewCount < viewsCount; i++) {
-            BoxCollaborator collaborator = collaborations.get(i).getAccessibleBy();
-            if (collaborator != null) {
-                viewAdded = addInitialsToList(collaborator);
-                addedViewCount++;
+        if (mViewCount == -1) { //use the default logic (for BoxItemInfoFragment in the future)
+            final int remainingWidth = mInitialsListView.getWidth();
+            System.out.println(remainingWidth);
+            mInitialsListView.post(new Runnable() {
+                @Override
+                public void run() {
+                    //Add the first item to calculate the width
+                    final View initialsView = addInitialsToList(collaborations.get(0).getAccessibleBy());
+                    initialsView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        private boolean initialsAdded = false;
+
+                        @Override
+                        public void onGlobalLayout() {
+                            if (initialsView.isShown() && !initialsAdded) {
+                                initialsAdded = true;
+                                int viewWidth = initialsView.getWidth();
+                                int viewsCount = remainingWidth / viewWidth;
+                                int addedViewCount = 0;
+
+                                clearInitialsView(); //resetting the initialsView since width is calculated already and the first collab might not be a valid collab to be shown in the initials
+
+                                View viewAdded = null;
+                                for (int i = 0; addedViewCount < viewsCount && i < collaborations.size(); i++) {
+                                    BoxCollaborator collaborator = collaborations.get(i).getAccessibleBy();
+                                    if (collaborator != null) {
+                                        viewAdded = addInitialsToList(collaborator);
+                                        addedViewCount++;
+                                    }
+                                }
+                                if (addedViewCount < totalCollaborators) {
+                                    int remaining = totalCollaborators - addedViewCount;
+                                    if (addedViewCount < mViewCount || viewAdded == null) {
+                                        viewAdded = addInitialsToList(null); //create a view to not replace the current collab.
+                                    } else {
+                                        remaining++; //a known collab will be replaced so count him as remaining
+                                    }
+                                    BoxAvatarView initials = (BoxAvatarView) viewAdded.findViewById(R.id.collaborator_initials);
+                                    JsonObject jsonObject = new JsonObject();
+                                    jsonObject.set(BoxCollaborator.FIELD_NAME, Integer.toString(remaining));
+                                    jsonObject.set(BoxCollaboration.FIELD_ID, "collab_initials_number_user");
+                                    BoxUser numberUser = new BoxUser(jsonObject);
+                                    initials.loadUser(numberUser, mCollaboratorsInitialsVM.getAvatarController());
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        } else {
+            int addedViewCount = 0;
+            View viewAdded = null;
+            for (int i = 0; i < collaborations.size() && addedViewCount < mViewCount; i++) {
+                BoxCollaborator collaborator = collaborations.get(i).getAccessibleBy();
+                if (collaborator != null) {
+                    viewAdded = addInitialsToList(collaborator);
+                    addOffset(viewAdded);
+                    addedViewCount++;
+                }
+            }
+            if (addedViewCount < totalCollaborators) {
+                int remaining = totalCollaborators - addedViewCount;
+                if (addedViewCount < mViewCount || viewAdded == null) { //viewAdded == null should never be true but added that just in case
+                    viewAdded = addInitialsToList(null); //create a view to not replace the current collab.
+                    addOffset(viewAdded);
+                } else {
+                    remaining++; //a known collab will be replaced so count him as remaining
+                }
+                BoxAvatarView initials = (BoxAvatarView) viewAdded.findViewById(R.id.collaborator_initials);
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.set(BoxCollaborator.FIELD_NAME, Integer.toString(remaining));
+                jsonObject.set(BoxCollaboration.FIELD_ID, "collab_initials_number_user");
+                BoxUser numberUser = new BoxUser(jsonObject);
+                initials.loadUser(numberUser, mCollaboratorsInitialsVM.getAvatarController());
             }
         }
-        if (addedViewCount < totalCollaborators) {
-            int remaining = totalCollaborators - addedViewCount;
-            if (addedViewCount < viewsCount) {
-                viewAdded = addInitialsToList(null); //create a view to not replace the current collab.
-            } else {
-                remaining++; //a known collab will be replaced so count him as remaining
-            }
-            BoxAvatarView initials = (BoxAvatarView) viewAdded.findViewById(R.id.collaborator_initials);
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.set(BoxCollaborator.FIELD_NAME, Integer.toString(remaining));
-            jsonObject.set(BoxCollaboration.FIELD_ID, "collab_initials_number_user");
-            BoxUser numberUser = new BoxUser(jsonObject);
-            initials.loadUser(numberUser, mCollaboratorsInitialsVM.getAvatarController());
-        }
+
         mCollabsCount.setText(getResources().getQuantityString(R.plurals.box_sharesdk_collaborators_count_plurals, totalCollaborators, totalCollaborators));
+    }
+
+    private void addOffset(View view) {
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        layoutParams.leftMargin = (int) getResources().getDimension(R.dimen.box_sharesdk_initials_offset);
+        view.setLayoutParams(layoutParams);
     }
 
     private void clearInitialsView() {
@@ -201,9 +267,6 @@ public class CollaboratorsInitialsView extends LinearLayout {
         View layoutContainer =  LayoutInflater.from((Activity)getContext()).inflate(R.layout.usx_view_initials, null);
         BoxAvatarView initialsView = (BoxAvatarView) layoutContainer.findViewById(R.id.collaborator_initials);
         // initialsView.setBackground(getResources().getDrawable(R.drawable.ic_box_sharesdk_circle_bg));
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = (int) getResources().getDimension(R.dimen.box_sharesdk_initials_offset);
-        layoutContainer.setLayoutParams(layoutParams);
         if (collaborator == null) {
             initialsView.loadUser(mUnknownCollaborator, mCollaboratorsInitialsVM.getAvatarController());
         } else {

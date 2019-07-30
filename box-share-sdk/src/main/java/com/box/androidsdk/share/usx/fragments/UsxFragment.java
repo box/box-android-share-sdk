@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.models.BoxPermission;
 import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
@@ -25,6 +26,8 @@ import com.box.androidsdk.share.vm.CollaboratorsInitialsVM;
 import com.box.androidsdk.share.vm.PresenterData;
 import com.box.androidsdk.share.vm.ShareVMFactory;
 import com.box.androidsdk.share.vm.SharedLinkVM;
+
+import java.util.EnumSet;
 
 /**
  * Created by varungupta on 3/5/2016.
@@ -95,6 +98,10 @@ public class UsxFragment extends BoxFragment {
         View view = binding.getRoot();
 
         binding.setOnShareViaListener(v -> showShareVia());
+
+        binding.setIsAllowedToInviteCollaborator(isAllowedToInviteCollab());
+        binding.setIsAllowedToShare(isAllowedToShare());
+
         return view;
     }
 
@@ -102,10 +109,9 @@ public class UsxFragment extends BoxFragment {
         binding.setOnInviteCollabsClickListener(v -> mListener.inviteCollabsClicked());
         binding.setOnEditAccessClickListener(v -> mListener.editAccessClicked());
         binding.setOnCollabsListener(v -> mListener.collabsClicked());
-
         binding.setOnCopyLinkListener(v -> copyLink());
         CollaboratorsInitialsVM vm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaboratorsInitialsVM.class);
-        binding.initialViews.setArguments(vm);
+        binding.initialViews.setArguments(vm, 6);
     }
 
     @Override
@@ -131,6 +137,18 @@ public class UsxFragment extends BoxFragment {
             }
         }
     };
+
+
+    private boolean isAllowedToInviteCollab() {
+        EnumSet<BoxItem.Permission> permission = mSharedLinkVm.getShareItem().getPermissions();
+        return permission == null || permission.contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR); //returning true by default since API will block them anyways.
+
+    }
+
+    private boolean isAllowedToShare() {
+        EnumSet<BoxItem.Permission> permission = mSharedLinkVm.getShareItem().getPermissions();
+        return permission == null || permission.contains(BoxItem.Permission.CAN_SHARE); //returning true by default since API will block them anyways.
+    }
 
     private void refreshUI() {
         binding.setShareItem(mSharedLinkVm.getShareItem()); //data binding is used to display data based on this item. This will force the UI to refresh.

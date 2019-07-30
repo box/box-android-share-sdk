@@ -22,6 +22,12 @@
         <variable
             name="shareItem"
             type="com.box.androidsdk.content.models.BoxItem" />
+        <variable
+            name="isAllowedToInviteCollaborator"
+            type="boolean" />
+        <variable
+            name="isAllowedToShare"
+            type="boolean" />
     </data>
     <FrameLayout
         android:orientation="vertical"
@@ -122,7 +128,6 @@
                             app:layout_constraintTop_toBottomOf="@id/shared_link_switch"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            tools:text="@string/lorem_placeholder"
                             app:layout_constraintLeft_toLeftOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <View style="@style/BoxInsetDivider" android:visibility="@{sharedLinkSwitch.checked ? View.VISIBLE : View.GONE}"/>

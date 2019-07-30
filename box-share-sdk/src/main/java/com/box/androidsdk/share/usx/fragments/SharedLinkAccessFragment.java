@@ -263,6 +263,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
         }
     };
 
+
     public void refreshUI() {
         if (mShareLinkVM.getShareItem().getSharedLink() == null) {
             showToast(R.string.box_sharesdk_problem_accessing_this_shared_link);

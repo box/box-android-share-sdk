@@ -70,8 +70,6 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_collaborations, container, false);
         mCollaborationsShareVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaborationsShareVM.class);
         mSelectRoleShareVM = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
-        binding.setViewModel(mCollaborationsShareVM);
-        binding.setLifecycleOwner(this);
         View view = binding.getRoot();
         binding.collaboratorsList.setDivider(null);
         mCollaboratorsAdapter = new CollaboratorsAdapter(getActivity(), mCollaborationsShareVM);
@@ -97,6 +95,8 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         } else {
             mCollaboratorsAdapter.setItems(mCollaborationsShareVM.getCachedCollaborations());
         }
+
+        updateView();
         return view;
     }
 
@@ -174,6 +174,9 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             if (allowOwner){
                 // currently changing owner only seems to be supported for folders (does not show up as a allowed invitee role).
                 allowOwner = getItem() instanceof BoxFolder;
+            }
+            if (rolesArr.isEmpty() && role != null) {
+                rolesArr.add(role); //user should be able to see what their own role is still on this page.
             }
             mSelectRoleShareVM.setSelectedRole(role);
             mSelectRoleShareVM.setRoles(rolesArr);
@@ -281,6 +284,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 //                mCollaborationsShareVM.setCachedCollaborations(presenterData.getData());
                 mCollaboratorsAdapter.setItems(presenterData.getData());
                 mCollaborationsShareVM.setCachedCollaborations(mCollaboratorsAdapter.getBoxCollaborationList());
+                updateView();
             } else {
                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "Fetch Collaborators request failed",
                         presenterData.getException());
@@ -293,6 +297,14 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             }
         }
     };
+
+    private void updateView() {
+        if (mCollaboratorsAdapter.getCount() > 0) {
+            showHasCollabsView();
+        } else if (mCollaborationsShareVM.getCachedCollaborations() != null) {
+            showNoCollabView(); //the list might be empty because collaborations have not been retrieved yet.
+        }
+    }
 
     private Observer<PresenterData<BoxCollaborationItem>> onRoleItemChange = presenterData -> {
         if (!presenterData.isHandled()) {
@@ -326,6 +338,16 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         }
     };
 
+    private void showHasCollabsView() {
+        binding.collaboratorsList.setVisibility(View.VISIBLE);
+        binding.noCollaboratorsText.setVisibility(View.GONE);
+    }
+
+    private void showNoCollabView() {
+        binding.collaboratorsList.setVisibility(View.GONE);
+        binding.noCollaboratorsText.setVisibility(View.VISIBLE);
+    }
+
     private Observer<PresenterData<BoxRequest>> onDeleteCollaboration = presenterData -> {
         if (!presenterData.isHandled()) {
             dismissSpinner();
@@ -333,10 +355,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 BoxRequestsShare.DeleteCollaboration req = (BoxRequestsShare.DeleteCollaboration) presenterData.getData();
                 mCollaboratorsAdapter.delete(req.getId());
                 mCollaborationsShareVM.setCachedCollaborations(mCollaboratorsAdapter.getBoxCollaborationList());
-                if (mCollaboratorsAdapter.getCount() == 0) {
-                    fetchCollaborations(); //this will force the view to refresh
-                }
-
+                updateView();
                 //fetchCollaborations(); //refresh collaborations
             } else {
                 BoxLogUtils.e(CollaborationsFragment.class.getName(), "Delete Collaborator request failed",
