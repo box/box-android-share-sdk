@@ -1,5 +1,6 @@
 package com.box.androidsdk.share.vm;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
@@ -17,6 +18,13 @@ public class CollaboratorsInitialsVM extends BaseShareVM {
         ShareSDKTransformer transformer = new ShareSDKTransformer();
         mCollaborations = Transformations.map(shareRepo.getCollaborations(), response -> transformer.getIntialsViewCollabsPresenterData(response, getCollaborationsValue()));
     }
+
+    @VisibleForTesting
+    CollaboratorsInitialsVM(ShareRepo shareRepo, BoxCollaborationItem shareItem, ShareSDKTransformer transformer) {
+        super(shareRepo, shareItem);
+        mCollaborations = Transformations.map(shareRepo.getCollaborations(), transformer::getIntialsViewCollabsPresenterData);
+    }
+
 
     public void fetchCollaborations(BoxCollaborationItem item) {
         mShareRepo.fetchCollaborations(item);
