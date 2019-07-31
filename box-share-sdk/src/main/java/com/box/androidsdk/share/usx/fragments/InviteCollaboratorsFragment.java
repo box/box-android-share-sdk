@@ -285,7 +285,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
             return;
         }
 
-        showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
+        showSpinner(R.string.box_sharesdk_fetching_roles, R.string.boxsdk_Please_wait);
         mInviteCollaboratorsShareVM.fetchRoles(getCollaborationItem());
     }
     /**

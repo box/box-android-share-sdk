@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="viewModel"
-            type="com.box.androidsdk.share.vm.SharedLinkVM" />
+            name="activeRadioButtons"
+            type="java.util.HashSet" />
         <variable
             name="shareItem"
             type="com.box.androidsdk.content.models.BoxItem" />
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
-                app:viewModel="@{viewModel}"
+                app:activeRadioButtons="@{activeRadioButtons}"
                 app:shareItem="@{shareItem}"
                 app:sharedLinkAccessNotifier="@{sharedLinkAccessNotifier}"
                 android:id="@+id/access_radio_group"/>

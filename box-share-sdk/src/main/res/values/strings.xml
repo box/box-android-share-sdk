@@ -17,6 +17,7 @@
     <string name="box_sharesdk_accessible_collaborator_usx" description="description for collaborator access">This content is only accessible to people who are collaborated into this folder.h</string>
     <string name="box_sharesdk_password_protected" description="description for if a shared link is password proceted">Password protected</string>
     <string name="box_sharesdk_fetching_collaborators" description="message to show on spinner when we are fetching collaborators">Fetching collaborators</string>
+    <string name="box_sharesdk_fetching_roles" description="message to show on spinner when we are fetching roles">Fetching roles</string>
     <string name="box_sharesdk_adding_collaborators" description="message to show on spinner when we are adding collaborators">Adding collaborators</string>
     <string name="box_sharesdk_enabling_share_link" description="message to show on spinner when we are enabling share link">Enabling share link</string>
     <string name="box_sharesdk_disabling_share_link" description="message to show on spinner when we are disabling share link">Disabling share link</string>
@@ -41,7 +42,8 @@
     <string name="box_sharesdk_access_collaborator_file" description="description for collaborator access for a file">People in this file and folder</string>
     <string name="box_sharesdk_access_collaborator" description="description for collaborator access">People in this folder</string>
     <string name="box_sharesdk_password" description="header for password section">Password</string>
-    <string name="box_sharesdk_set_password" description="hint for password dialog">Set password</string>
+    <string name="box_sharesdk_set_password" description="title for password dialog">Set Password</string>
+    <string name="box_sharesdk_choose_password" description="hint for password dialog">Choose a Password</string>
     <string name="box_sharesdk_require_password" description="toggle of using password or not">Require Password</string>
     <string name="box_sharesdk_link_expiration" description="header for link expiration section">Link Expiration</string>
     <string name="box_sharesdk_link_expire_link" description="toggle of whether to expire links">Expire Link</string>
