@@ -98,7 +98,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_shared_link_access, container, false);
-        binding.setLifecycleOwner(getViewLifecycleOwner());
+
         binding.setSharedLinkAccessNotifier(notifier);
         binding.setOnPasswordListener(v -> showPasswordChooserDialog());
         binding.setOnDateListener(v -> showDatePicker(mShareLinkVM.getShareItem().getSharedLink().getUnsharedDate()));
@@ -110,7 +110,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
         mShareLinkVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(SharedLinkVM.class);
         mShareLinkVM.getItemInfo().observe(getViewLifecycleOwner(), onBoxItemComplete);
         mShareLinkVM.getSharedLinkedItem().observe(getViewLifecycleOwner(), onBoxItemComplete);
-
+        setShareItem(mShareLinkVM.getShareItem());
 
         if (checkIfHasRequiredFields(mShareLinkVM.getShareItem())) {
             refreshUI();

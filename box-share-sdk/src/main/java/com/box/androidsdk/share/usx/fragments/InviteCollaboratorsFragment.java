@@ -302,15 +302,17 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
      * Executes the request to add collaborations to the item
      */
     public void addCollaborations() {
-        List<BoxInvitee> invitees = mInviteCollaboratorsShareVM.getInviteesList();
-        String[] emailParts = new String[invitees.size()];
-        int i = 0;
-        for (BoxInvitee invitee: invitees) {
-            emailParts[i++] = invitee.getEmail();
-        }
+        if (mSelectRoleShareVM.getSelectedRole() != null) {
+            List<BoxInvitee> invitees = mInviteCollaboratorsShareVM.getInviteesList();
+            String[] emailParts = new String[invitees.size()];
+            int i = 0;
+            for (BoxInvitee invitee: invitees) {
+                emailParts[i++] = invitee.getEmail();
+            }
 
-        showSpinner(R.string.box_sharesdk_adding_collaborators, R.string.boxsdk_Please_wait);
-        mInviteCollaboratorsShareVM.inviteCollabs(getCollaborationItem(), mSelectRoleShareVM.getSelectedRole().getValue(), emailParts);
+            showSpinner(R.string.box_sharesdk_adding_collaborators, R.string.boxsdk_Please_wait);
+            mInviteCollaboratorsShareVM.inviteCollabs(getCollaborationItem(), mSelectRoleShareVM.getSelectedRole().getValue(), emailParts);
+        }
     }
 
 

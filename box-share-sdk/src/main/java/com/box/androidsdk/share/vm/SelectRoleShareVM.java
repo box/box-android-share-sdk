@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
 public class SelectRoleShareVM extends ViewModel {
 
 
-    private List<BoxCollaboration.Role> mRoles;
+    private List<BoxCollaboration.Role> mRoles = new ArrayList<>();
     private boolean mAllowOwnerRole = false;
     private MutableLiveData<BoxCollaboration.Role> mSelectedRole = new MutableLiveData<>();
     private boolean mAllowRemove = false;
