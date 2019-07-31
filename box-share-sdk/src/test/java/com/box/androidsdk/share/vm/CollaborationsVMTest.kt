@@ -117,7 +117,7 @@ class CollaborationsVMTest {
         assertNull(collaborationsShareVM.collaborations.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.fetchCollaborations(mockShareItem)
+        collaborationsShareVM.fetchCollaborations(mockShareItem)
 
         Assert.assertEquals(mockCollaborationsPresenterData, collaborationsShareVM.collaborations.value)
     }
@@ -128,7 +128,7 @@ class CollaborationsVMTest {
         assertNull(collaborationsShareVM.updateCollaboration.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.updateCollaboration(mockCollaboration, newRole)
+        collaborationsShareVM.updateCollaboration(mockCollaboration, newRole)
 
         Assert.assertEquals(mockUpdateCollaborationsPresenterData, collaborationsShareVM.updateCollaboration.value)
     }
@@ -139,7 +139,7 @@ class CollaborationsVMTest {
         assertNull(collaborationsShareVM.updateOwner.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.updateOwner(mockCollaboration)
+        collaborationsShareVM.updateOwner(mockCollaboration)
 
         Assert.assertEquals(mockUpdateOwnerPresenterData, collaborationsShareVM.updateOwner.value)
     }
@@ -150,7 +150,7 @@ class CollaborationsVMTest {
         assertNull(collaborationsShareVM.deleteCollaboration.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.deleteCollaboration(mockCollaboration)
+        collaborationsShareVM.deleteCollaboration(mockCollaboration)
 
         Assert.assertEquals(mockDeleteCollaborationPresenterData, collaborationsShareVM.deleteCollaboration.value)
     }
@@ -161,7 +161,7 @@ class CollaborationsVMTest {
         assertNull(collaborationsShareVM.roleItem.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.fetchRolesFromRemote(mockShareItem)
+        collaborationsShareVM.fetchRoles(mockShareItem)
 
         Assert.assertEquals(mockRolePresenterData, collaborationsShareVM.roleItem.value)
     }
@@ -171,7 +171,7 @@ class CollaborationsVMTest {
         assertNull(initialsVM.collaborations.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.fetchCollaborations(mockShareItem)
+        collaborationsShareVM.fetchCollaborations(mockShareItem)
 
         Assert.assertEquals( mockCollaborationsPresenterData, initialsVM.collaborations.value)
 
