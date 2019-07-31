@@ -90,8 +90,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         }
         if (mCollaborationsShareVM.getCachedCollaborations() == null) {
             //refresh item and fetch collaboration when item is refreshed.
-            showSpinner(0);
-            mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
+            fetchCollaborations();
         } else {
             mCollaboratorsAdapter.setItems(mCollaborationsShareVM.getCachedCollaborations());
         }
@@ -193,7 +192,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
     /**
-     * Executes the request to retrieve collaborations for the item
+     * Executes the request to refresh item, then retrieve collaborations for the item
      */
     public void fetchCollaborations() {
         if (getItem() == null || SdkUtils.isBlank(getItem().getId())) {
@@ -201,8 +200,11 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             return;
         }
 
-        showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
-        mCollaborationsShareVM.fetchCollaborations(getItem());
+        showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait, 0);
+        mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
+
+//        showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
+//        mCollaborationsShareVM.fetchCollaborations(getItem());
     }
 
     /**
@@ -264,11 +266,12 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
     private Observer<PresenterData<BoxItem>> onBoxItemComplete = presenterData -> {
         if (!presenterData.isHandled()) {
-            dismissSpinner();
+            //dismissSpinner(); will be fetching collaboration. So, we will keep spinner up for that.
             if (presenterData.isSuccess()) {
                 mCollaborationsShareVM.setShareItem(presenterData.getData());
-                fetchCollaborations();
+                mCollaborationsShareVM.fetchCollaborations(getItem()); //item is refreshed so fetch collaborations
             } else {
+                dismissSpinner(); //if failure we need to dismiss spinner.
                 if (presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
                     showToast(presenterData.getStrCode());
                 }
