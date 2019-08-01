@@ -104,7 +104,6 @@
                     android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin_cell_component"
                     app:layout_constraintTop_toBottomOf="@id/role_name"
                     app:roleDescription="@{role}"
-                    tools:text="@string/lorem_placeholder"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent" />
 

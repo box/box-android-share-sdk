@@ -321,7 +321,7 @@ public class ShareSDKTransformer {
             // The user is not a collaborator anymore
             data.failure(R.string.box_sharesdk_item_unavailable, response.getException()); //still clear data if user is not a collaborator anymore
         } else {
-            data.failure(boxCollaborations, R.string.box_sharesdk_network_error, response.getException());
+            data.failure(boxCollaborations, PresenterData.NO_MESSAGE, response.getException());
         }
         return data;
     }

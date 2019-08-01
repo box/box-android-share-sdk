@@ -153,7 +153,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
                 //need to log Exception
                 BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "Fetch roles request failed",
                         presenter.getException());
-                showToast(getString(presenter.getStrCode())); //was just CollaborationFragment
+                showToast(getString(presenter.getStrCode()));
                 getActivity().finish(); //if you cannot fetch any role there is no use staying on this activity.
             }
         }
@@ -166,7 +166,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
             } else {
                 BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",
                         presenterData.getException());
-                showToast(getString(presenterData.getStrCode()));
+                //showToast(getString(presenterData.getStrCode())); remove constant toasting for failing to fetch invitees
             }
         }
     };

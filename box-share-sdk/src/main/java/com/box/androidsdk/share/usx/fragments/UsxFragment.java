@@ -14,8 +14,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
+import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 import com.box.androidsdk.content.models.BoxPermission;
 import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.share.CollaborationUtils;
@@ -62,6 +65,10 @@ public class UsxFragment extends BoxFragment {
         void collabsClicked();
     }
 
+    public interface RefreshUserRole {
+        void refresh();
+    }
+
     private static final String UNSHARE_WARNING_TAG = "com.box.sharesdk.unshare_warning";
     private UsxFragmentSharedLinkBinding binding;
     private SharedLinkVM mSharedLinkVm;
@@ -72,6 +79,8 @@ public class UsxFragment extends BoxFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_shared_link, container, false);
         mSharedLinkVm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(SharedLinkVM.class);
+        binding.setIsAllowedToInviteCollaborator(isAllowedToInvite());
+        binding.setIsAllowedToShare(isAllowedToShare());
         setupListeners();
 
         binding.setShareItem(mSharedLinkVm.getShareItem());
@@ -118,7 +127,7 @@ public class UsxFragment extends BoxFragment {
 
         binding.setOnCopyLinkListener(v -> copyLink());
         CollaboratorsInitialsVM vm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaboratorsInitialsVM.class);
-        binding.initialViews.setArguments(vm);
+        binding.initialViews.setArguments(vm, this::refreshUserRole);
     }
 
     @Override
@@ -147,6 +156,27 @@ public class UsxFragment extends BoxFragment {
 
     private void refreshUI() {
         binding.setShareItem(mSharedLinkVm.getShareItem()); //data binding is used to display data based on this item. This will force the UI to refresh.
+        binding.setIsAllowedToInviteCollaborator(isAllowedToInvite());
+        binding.setIsAllowedToShare(isAllowedToShare());
+    }
+
+    private void refreshUserRole() {
+        binding.setUserRole(getUserRole());
+    }
+
+    private BoxCollaboration.Role getUserRole() {
+        CollaboratorsInitialsVM vm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaboratorsInitialsVM.class);
+        BoxIteratorCollaborations collaborations = vm.getCollaborations().getValue().getData();
+        if (collaborations != null) {
+            for (BoxCollaboration collaboration: collaborations) {
+                BoxCollaborator collaborator = collaboration.getAccessibleBy();
+                boolean currentUser = collaborator != null && collaborator.getId().equals(mSharedLinkVm.getUserId());
+                if (currentUser) {
+                    return collaboration.getRole();
+                }
+            }
+        }
+        return null;
     }
 
     public void refreshInitialsViews() {

@@ -128,5 +128,10 @@
     <string name="box_sharesdk_invite_collab_hint">Type a Name or Email Address</string>
     <string name="box_sharesdk_subtitle_folder_type">Share Folder</string>
     <string name="box_sharesdk_subtitle_file_type">Share File</string>
-    <string name="box_sharesdk_no_collaborators_initials" description="shown when there are no collaborators for the sahre item">No Collaborators</string>
+    <string name="box_sharesdk_item_type_folder">folder</string>
+    <string name="box_sharesdk_item_type_file">file</string>
+    <string name="box_sharesdk_item_type_default">item</string>
+    <string name="box_share_sdk_no_permission_invite_people">Invite collaborators is unavailable for collaborators with %s permissions. To invite collaborators, contact the owner of this %s.</string>
+    <string name="box_share_sdk_no_permission_share_link">Shared links are unavailable for collaborators with %s permissions. To share, contact the owner of this %s.</string>
+    <string name="box_sharesdk_no_collaborators_initials" description="shown when there are no collaborators for the share item">No Collaborators</string>
 </resources>

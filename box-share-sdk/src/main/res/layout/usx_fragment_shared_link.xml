@@ -28,6 +28,9 @@
         <variable
             name="isAllowedToShare"
             type="boolean" />
+        <variable
+            name="userRole"
+            type="com.box.androidsdk.content.models.BoxCollaboration.Role" />
     </data>
     <FrameLayout
         android:orientation="vertical"
@@ -45,21 +48,55 @@
                     style="@style/BoxCellTitle"
                     android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
                     android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_usx"
-                    android:text="@string/box_sharesdk_invite_collaborators"
+                    android:text="@string/box_sharedsdk_collaborators_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <LinearLayout
                     android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
+                    android:background="@color/box_sharesdk_components_background"
+                    android:orientation="vertical"
+                    android:visibility="@{isAllowedToInviteCollaborator ? View.GONE : View.VISIBLE, default=gone}"
+                    android:layout_width="match_parent"
+                    tools:visibility="visible"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        style="@style/BoxCellSubHeader"
+                        android:layout_marginTop="@dimen/box_sharesdk_vertical_margin"
+                        android:layout_width="wrap_content"
+                        tools:text="Placeholder"
+                        app:roleName="@{userRole}"
+                        android:textAllCaps="true"
+                        android:layout_gravity="center"
+                        android:textColor="@color/box_sharesdk_cell_text"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        style="@style/BoxCellText"
+                        android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
+                        android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin"
+                        android:layout_width="wrap_content"
+                        tools:text="Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder"
+                        app:noInvitePermissionRole='@{userRole}'
+                        app:itemType='@{shareItem.type}'
+                        android:layout_marginLeft="@dimen/permission_text_block_margin"
+                        android:layout_marginRight="@dimen/permission_text_block_margin"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
                     android:background="@color/box_sharesdk_components_background"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
                         android:textAppearance="@style/BoxCellTitle"
                         android:id="@+id/inviteCollabs"
                         android:layout_width="match_parent"
                         android:focusable="false"
+                        android:visibility="@{isAllowedToInviteCollaborator ? View.VISIBLE : View.GONE, default=gone}"
                         android:layout_height="@dimen/box_sharesdk_small_cell_height"
                         android:paddingLeft="@dimen/box_sharesdk_horizontal_margin_usx"
                         android:paddingRight="@dimen/box_sharesdk_horizontal_margin_usx"
@@ -90,10 +127,44 @@
                     android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_usx"
                     android:text="@string/box_sharesdk_title_share_link" />
                 <LinearLayout
+                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
+                    android:background="@color/box_sharesdk_components_background"
+                    android:orientation="vertical"
+                    android:visibility="@{isAllowedToShare ? View.GONE : View.VISIBLE, default=gone}"
+                    android:layout_width="match_parent"
+                    tools:visibility="visible"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        style="@style/BoxCellSubHeader"
+                        android:layout_marginTop="@dimen/box_sharesdk_vertical_margin"
+                        android:layout_width="wrap_content"
+                        tools:text="Placeholder"
+                        app:roleName="@{userRole}"
+                        android:textAllCaps="true"
+                        android:layout_gravity="center"
+                        android:textColor="@color/box_sharesdk_cell_text"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        style="@style/BoxCellText"
+                        android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
+                        android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin"
+                        android:layout_width="wrap_content"
+                        tools:text="Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder"
+                        app:noSharePermissionRole='@{userRole}'
+                        app:itemType='@{shareItem.type}'
+                        android:layout_marginLeft="@dimen/permission_text_block_margin"
+                        android:layout_marginRight="@dimen/permission_text_block_margin"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:background="@color/box_sharesdk_components_background"
                     android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
+                    android:visibility="@{isAllowedToShare ? View.VISIBLE : View.GONE, default=gone}"
                     android:layout_height="wrap_content">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
