@@ -48,7 +48,7 @@
                     style="@style/BoxCellTitle"
                     android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
                     android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_usx"
-                    android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin_usx"
+                    android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin_title_to_cell"
                     android:text="@string/box_sharedsdk_collaborators_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
