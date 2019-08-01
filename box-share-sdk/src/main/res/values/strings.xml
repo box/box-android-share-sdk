@@ -128,4 +128,5 @@
     <string name="box_sharesdk_invite_collab_hint">Type a Name or Email Address</string>
     <string name="box_sharesdk_subtitle_folder_type">Share Folder</string>
     <string name="box_sharesdk_subtitle_file_type">Share File</string>
+    <string name="box_sharesdk_no_collaborators_initials" description="shown when there are no collaborators for the sahre item">No Collaborators</string>
 </resources>

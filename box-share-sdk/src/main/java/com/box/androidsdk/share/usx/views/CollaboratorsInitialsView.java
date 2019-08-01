@@ -120,17 +120,26 @@ public class CollaboratorsInitialsView extends LinearLayout {
             if (presenterData.isSuccess()) {
                 updateView(presenterData.getData());
             } else {
-                showToast(getContext(), getString(presenterData.getStrCode()));
+                if (presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
+                    showToast(getContext(), getString(presenterData.getStrCode()));
+                }
+
                 if (presenterData.getException() instanceof BoxException) {
                     if (((BoxException)presenterData.getException()).getResponseCode() == HTTP_NOT_FOUND) {
                         ((Activity)getContext()).finish();
                     }
+                }
+                PresenterData<BoxIteratorCollaborations> boxCollaborations = mCollaboratorsInitialsVM.getCollaborations().getValue();
+                if (boxCollaborations != null) {
+                    updateView(boxCollaborations.getData());
                 }
             }
         } else {
             PresenterData<BoxIteratorCollaborations> boxCollaborations = mCollaboratorsInitialsVM.getCollaborations().getValue();
             if (boxCollaborations != null) {
                 updateView(boxCollaborations.getData());
+            } else {
+                updateView(null);
             }
         }
 
@@ -139,7 +148,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
     private void updateViewVisibilityForNoCollaborators() {
         mInitialsListView.setVisibility(GONE);
         mCollabsCount.setVisibility(VISIBLE);
-        mCollabsCount.setText(R.string.box_sharesdk_no_collaborators);
+        mCollabsCount.setText(R.string.box_sharesdk_no_collaborators_initials);
     }
 
     private void updateViewVisibilityIfCollaboratorsFound() {
