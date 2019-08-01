@@ -18,7 +18,7 @@ public class SharedLinkAccessToggleListeners {
 
 
     public static void onDownloadToggle(boolean checked, BoxItem shareItem, SharedLinkAccessFragment.SharedLinkAccessNotifiers notifiers) {
-        if (shareItem instanceof BoxBookmark || shareItem.getSharedLink().getPermissions().getCanDownload() == checked ){
+        if (shareItem == null || shareItem.getSharedLink() == null || shareItem instanceof BoxBookmark || shareItem.getSharedLink().getPermissions().getCanDownload() == checked ){
             // if there is no change or we are busy with another task then do nothing.
             return;
         }
@@ -26,7 +26,7 @@ public class SharedLinkAccessToggleListeners {
     }
 
     public static void onPasswordToggle(boolean checked, BoxItem shareItem, SharedLinkAccessFragment.SharedLinkAccessNotifiers notifiers) {
-        if (shareItem.getSharedLink().getIsPasswordEnabled() == checked){
+        if (shareItem == null || shareItem.getSharedLink() == null ||shareItem.getSharedLink().getIsPasswordEnabled() == checked){
             // if there is no change or we are busy with another task then do nothing.
             return;
         }
@@ -34,7 +34,7 @@ public class SharedLinkAccessToggleListeners {
       }
 
     public static void onExpireToggle(boolean checked, BoxItem shareItem, SharedLinkAccessFragment.SharedLinkAccessNotifiers notifiers) {
-        if ((shareItem.getSharedLink().getUnsharedDate() != null) == checked) {
+        if (shareItem == null || shareItem.getSharedLink() == null || (shareItem.getSharedLink().getUnsharedDate() != null) == checked) {
             // if there is no change or we are busy with another task then do nothing.
             return;
         }

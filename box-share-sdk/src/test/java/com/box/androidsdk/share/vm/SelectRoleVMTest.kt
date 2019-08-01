@@ -57,7 +57,7 @@ class SelectRoleVMTest {
 
     @Test
     fun `test set roles update the variable correctly`() {
-        assertNull(selectRoleShareVM.roles)
+        assertEquals(0, selectRoleShareVM.roles.size)
         selectRoleShareVM.roles = mockRolesList
 
         assertEquals(mockRolesList, selectRoleShareVM.roles)
