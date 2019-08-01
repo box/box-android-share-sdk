@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.models.BoxPermission;
 import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
@@ -25,6 +26,8 @@ import com.box.androidsdk.share.vm.CollaboratorsInitialsVM;
 import com.box.androidsdk.share.vm.PresenterData;
 import com.box.androidsdk.share.vm.ShareVMFactory;
 import com.box.androidsdk.share.vm.SharedLinkVM;
+
+import java.util.EnumSet;
 
 /**
  * Created by varungupta on 3/5/2016.
@@ -96,6 +99,16 @@ public class UsxFragment extends BoxFragment {
 
         binding.setOnShareViaListener(v -> showShareVia());
         return view;
+    }
+
+    private boolean isAllowedToInvite() {
+        EnumSet<BoxItem.Permission> permissions = mSharedLinkVm.getShareItem().getPermissions();
+        return permissions != null && permissions.contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR);
+    }
+
+    private boolean isAllowedToShare() {
+        EnumSet<BoxItem.Permission> permissions = mSharedLinkVm.getShareItem().getPermissions();
+        return permissions != null && permissions.contains(BoxItem.Permission.CAN_SHARE);
     }
 
     private void setupListeners() {
