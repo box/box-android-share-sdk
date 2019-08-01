@@ -53,7 +53,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <LinearLayout
-                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
                     android:background="@color/box_sharesdk_components_background"
                     android:orientation="vertical"
                     android:visibility="@{isAllowedToInviteCollaborator ? View.GONE : View.VISIBLE, default=gone}"
