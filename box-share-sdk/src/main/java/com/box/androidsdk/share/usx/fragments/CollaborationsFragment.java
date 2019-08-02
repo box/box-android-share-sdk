@@ -174,6 +174,9 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 // currently changing owner only seems to be supported for folders (does not show up as a allowed invitee role).
                 allowOwner = getItem() instanceof BoxFolder;
             }
+            if (rolesArr == null) {
+                rolesArr = new ArrayList<>(); //null safety
+            }
             if (rolesArr.isEmpty() && role != null) {
                 rolesArr.add(role); //user should be able to see what their own role is still on this page.
             }
