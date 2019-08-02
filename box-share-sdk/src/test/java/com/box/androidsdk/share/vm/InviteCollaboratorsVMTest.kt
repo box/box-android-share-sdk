@@ -44,10 +44,12 @@ class InviteCollaboratorsVMTest {
     @Before
     fun setup() {
         mockShareRepo()
+        mockTransformers()
+
         inviteCollabVM = InviteCollaboratorsShareVM(mockShareRepo, mockShareItem, mockTransformer)
 
         attachObservers()
-        mockTransformers()
+
 
     }
 
@@ -88,9 +90,9 @@ class InviteCollaboratorsVMTest {
         assertNull(inviteCollabVM.roleItem.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.fetchRolesFromRemote(mockShareItem)
+        inviteCollabVM.fetchRoles(mockShareItem)
 
-        assertEquals(inviteCollabVM.roleItem.value, mockFetchRolesTransformedResponse)
+        assertEquals(mockFetchRolesTransformedResponse, inviteCollabVM.roleItem.value)
     }
 
     @Test
@@ -98,9 +100,9 @@ class InviteCollaboratorsVMTest {
         assertNull(inviteCollabVM.inviteCollabs.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.inviteCollabs(mockShareItem, mockSelectedRole,mockEmailList)
+        inviteCollabVM.inviteCollabs(mockShareItem, mockSelectedRole,mockEmailList)
 
-        assertEquals(inviteCollabVM.inviteCollabs.value, mockInviteCollabsTransformedResponse)
+        assertEquals(mockInviteCollabsTransformedResponse, inviteCollabVM.inviteCollabs.value)
     }
 
     @Test
@@ -108,9 +110,9 @@ class InviteCollaboratorsVMTest {
         assertNull(inviteCollabVM.invitees.value)
 
         //trigger a network request which make changes in LiveData
-        mockShareRepo.fetchInviteesFromRemote(mockShareItem, mockFilter)
+        inviteCollabVM.fetchInvitees(mockShareItem, mockFilter)
 
-        assertEquals(inviteCollabVM.invitees.value, mockGetInviteeTransformedResponse)
+        assertEquals(mockGetInviteeTransformedResponse, inviteCollabVM.invitees.value)
     }
 
 }

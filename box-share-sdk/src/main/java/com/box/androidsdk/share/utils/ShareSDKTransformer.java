@@ -317,7 +317,7 @@ public class ShareSDKTransformer {
         PresenterData<BoxIteratorCollaborations> data = new PresenterData<>();
         if (response.isSuccess()) {
             data.success(response.getResult());
-        } else if (((BoxException)response.getException()).getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND) {
+        } else if (response.getException() instanceof BoxException && ((BoxException)response.getException()).getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND) {
             // The user is not a collaborator anymore
             data.failure(R.string.box_sharesdk_item_unavailable, response.getException()); //still clear data if user is not a collaborator anymore
         } else {
