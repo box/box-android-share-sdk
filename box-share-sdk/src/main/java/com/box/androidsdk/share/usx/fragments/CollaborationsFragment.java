@@ -221,10 +221,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
     public ArrayList<BoxCollaboration.Role> getRoles() {
-        if (getItem().getAllowedInviteeRoles() != null) {
-            return getItem().getAllowedInviteeRoles();
-        }
-        return null;
+        return getItem().getAllowedInviteeRoles();
     }
 
 
