@@ -140,7 +140,7 @@ public class UsxFragment extends BoxFragment {
         super.onResume();
         showSpinner(0);
         mSharedLinkVm.fetchItemInfo(mSharedLinkVm.getShareItem());
-        refreshUserRole();
+        refreshInitialsViews();
     }
 
     private Observer<PresenterData<BoxItem>> onBoxItemComplete = presenterData -> {
@@ -186,7 +186,6 @@ public class UsxFragment extends BoxFragment {
         if (binding !=  null && binding.initialViews != null) {
             binding.initialViews.refreshView();
         }
-
     }
 
     public static UsxFragment newInstance(BoxItem item, ClickListener listener, ShareVMFactory factory) {
