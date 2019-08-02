@@ -46,7 +46,6 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     private CollaborationsFragmentCallback mCallback;
     private UsxFragmentCollaborationsBinding binding;
     private CollaborationsShareVM mCollaborationsShareVM;
-    private CollaboratorsInitialsVM mCollaborationsInitalsVM;
     private SelectRoleShareVM mSelectRoleShareVM;
 
     public interface CollaborationsFragmentCallback {
@@ -71,7 +70,6 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
 
         binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_collaborations, container, false);
         mCollaborationsShareVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaborationsShareVM.class);
-        mCollaborationsInitalsVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaboratorsInitialsVM.class);
         mSelectRoleShareVM = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
         View view = binding.getRoot();
         binding.collaboratorsList.setDivider(null);
@@ -92,14 +90,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             fetchRoles();
         }
         if (mCollaborationsShareVM.getCachedCollaborations() == null) {
-            BoxIteratorCollaborations collaborations = mCollaborationsInitalsVM.getCollaborationsValue();
-            if (collaborations == null) {
-                fetchCollaborations();
-            } else {
-                mCollaboratorsAdapter.setItems(collaborations);
-                mCollaborationsShareVM.setCachedCollaborations(mCollaboratorsAdapter.getBoxCollaborationList());
-            }
-
+            fetchCollaborations();
         } else {
             mCollaboratorsAdapter.setItems(mCollaborationsShareVM.getCachedCollaborations());
         }
