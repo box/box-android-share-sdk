@@ -155,8 +155,11 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             ArrayList<BoxCollaboration.Role> rolesArr = getRoles();
             BoxCollaborator collaborator = collaboration.getAccessibleBy();
             String collabId = collaborator == null ? "" : collaborator.getId();
-
-            if ((rolesArr == null || rolesArr.size() == 0) && !collabId.equals(mCollaborationsShareVM.getUserId())) {
+            if (rolesArr == null) {
+                showToast(R.string.box_sharesdk_network_error);
+                return;
+            }
+            if (rolesArr.size() == 0 && !collabId.equals(mCollaborationsShareVM.getUserId())) {
                 showToast(R.string.box_sharesdk_cannot_get_collaborators);
                 return;
             }
@@ -174,9 +177,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 // currently changing owner only seems to be supported for folders (does not show up as a allowed invitee role).
                 allowOwner = getItem() instanceof BoxFolder;
             }
-            if (rolesArr == null) {
-                rolesArr = new ArrayList<>(); //null safety
-            }
+
             if (rolesArr.isEmpty() && role != null) {
                 rolesArr.add(role); //user should be able to see what their own role is still on this page.
             }
