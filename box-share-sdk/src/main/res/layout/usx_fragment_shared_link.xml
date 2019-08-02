@@ -80,7 +80,7 @@
                         app:itemType='@{shareItem.type}'
                         android:layout_marginLeft="@dimen/permission_text_block_margin"
                         android:layout_marginRight="@dimen/permission_text_block_margin"
-                        android:textAlignment="center"
+                        android:gravity="center"
                         android:layout_gravity="center"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -154,7 +154,7 @@
                         app:itemType='@{shareItem.type}'
                         android:layout_marginLeft="@dimen/permission_text_block_margin"
                         android:layout_marginRight="@dimen/permission_text_block_margin"
-                        android:textAlignment="center"
+                        android:gravity="center"
                         android:layout_gravity="center"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
