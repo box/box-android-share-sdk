@@ -181,6 +181,9 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             if (rolesArr.isEmpty() && role != null) {
                 rolesArr.add(role); //user should be able to see what their own role is still on this page.
             }
+            if (role != null && !rolesArr.contains(role)) {
+                rolesArr.add(role); //a temporary fix for a user role that is sometimes not included in list of roles. ideally API should include this.
+            }
             mSelectRoleShareVM.setSelectedRole(role);
             mSelectRoleShareVM.setRoles(rolesArr);
             mSelectRoleShareVM.setName(name);
