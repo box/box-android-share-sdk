@@ -22,7 +22,7 @@ public class CollaboratorsInitialsVM extends BaseShareVM {
     @VisibleForTesting
     CollaboratorsInitialsVM(ShareRepo shareRepo, BoxCollaborationItem shareItem, ShareSDKTransformer transformer) {
         super(shareRepo, shareItem);
-        mCollaborations = Transformations.map(shareRepo.getCollaborations(), transformer::getIntialsViewCollabsPresenterData);
+        mCollaborations = Transformations.map(shareRepo.getCollaborations(), response -> transformer.getIntialsViewCollabsPresenterData(response, getCollaborationsValue()));
     }
 
 

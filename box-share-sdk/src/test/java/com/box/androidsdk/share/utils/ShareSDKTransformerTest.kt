@@ -716,7 +716,7 @@ class ShareSDKTransformerTest {
         val boxIterCollab: BoxIteratorCollaborations = mock()
         whenever(boxResponse.result).thenReturn(boxIterCollab)
 
-        val result = shareSDKTransformer.getIntialsViewCollabsPresenterData(boxResponse)
+        val result = shareSDKTransformer.getIntialsViewCollabsPresenterData(boxResponse, null)
 
         assertEquals(true, result.isSuccess)
         assertEquals(boxIterCollab, result.data)
@@ -727,7 +727,7 @@ class ShareSDKTransformerTest {
         val boxException: BoxException = mock()
         whenever(boxException.responseCode).thenReturn(HTTP_NOT_FOUND)
         val boxResponse = createFailedBoxIterCollaborationResponse(boxException)
-        val result = shareSDKTransformer.getIntialsViewCollabsPresenterData(boxResponse)
+        val result = shareSDKTransformer.getIntialsViewCollabsPresenterData(boxResponse, null)
 
         assertEquals(false, result.isSuccess)
         assertEquals(null, result.data)
@@ -736,13 +736,14 @@ class ShareSDKTransformerTest {
 
 
     @Test
-    fun `test get initials collab transformer failure generic` () {
+    fun `test get initials collab transformer failure generic cached` () {
+        val mockData: BoxIteratorCollaborations = mock()
         val boxResponse = createFailedBoxIterCollaborationResponse(mockGenericException)
-        val result = shareSDKTransformer.getIntialsViewCollabsPresenterData(boxResponse)
+        val result = shareSDKTransformer.getIntialsViewCollabsPresenterData(boxResponse, mockData)
 
         assertEquals(false, result.isSuccess)
-        assertEquals(null, result.data)
-        assertEquals(R.string.box_sharesdk_network_error, result.strCode)
+        assertEquals(mockData, result.data)
+        assertEquals(PresenterData.NO_MESSAGE, result.strCode)
     }
     @Test
     fun `test get supported features transformer success` () {

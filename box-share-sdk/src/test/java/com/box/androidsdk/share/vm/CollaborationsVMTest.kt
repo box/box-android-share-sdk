@@ -7,6 +7,7 @@ import com.box.androidsdk.content.requests.BoxRequest
 import com.box.androidsdk.content.requests.BoxResponse
 import com.box.androidsdk.share.sharerepo.ShareRepo
 import com.box.androidsdk.share.utils.ShareSDKTransformer
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.clearInvocations
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -64,7 +65,7 @@ class CollaborationsVMTest {
 
         whenever(mockTransformer.getDeleteCollaborationPresenterData(mockDeleteCollaborationsResponse)).thenReturn(mockDeleteCollaborationPresenterData)
 
-        whenever(mockTransformer.getIntialsViewCollabsPresenterData(mockFetchCollaborationResponse)).thenReturn(mockCollaborationsPresenterData)
+        whenever(mockTransformer.getIntialsViewCollabsPresenterData(mockFetchCollaborationResponse, null)).thenReturn(mockCollaborationsPresenterData)
 
     }
 
