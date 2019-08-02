@@ -72,13 +72,16 @@ public class UsxFragment extends BoxFragment {
     private static final String UNSHARE_WARNING_TAG = "com.box.sharesdk.unshare_warning";
     private UsxFragmentSharedLinkBinding binding;
     private SharedLinkVM mSharedLinkVm;
+    CollaboratorsInitialsVM mInitialsVM;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_shared_link, container, false);
+        mInitialsVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaboratorsInitialsVM.class);
         mSharedLinkVm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(SharedLinkVM.class);
+        binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_shared_link, container, false);
+
         binding.setIsAllowedToInviteCollaborator(isAllowedToInvite());
         binding.setIsAllowedToShare(isAllowedToShare());
         setupListeners();
@@ -126,8 +129,7 @@ public class UsxFragment extends BoxFragment {
         binding.setOnCollabsListener(v -> mListener.collabsClicked());
 
         binding.setOnCopyLinkListener(v -> copyLink());
-        CollaboratorsInitialsVM vm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaboratorsInitialsVM.class);
-        binding.initialViews.setArguments(vm, this::refreshUserRole);
+        binding.initialViews.setArguments(mInitialsVM, this::refreshUserRole);
     }
 
     @Override
@@ -165,8 +167,7 @@ public class UsxFragment extends BoxFragment {
     }
 
     private BoxCollaboration.Role getUserRole() {
-        CollaboratorsInitialsVM vm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaboratorsInitialsVM.class);
-        BoxIteratorCollaborations collaborations = vm.getCollaborations().getValue().getData();
+        BoxIteratorCollaborations collaborations = mInitialsVM.getCollaborations().getValue().getData();
         if (collaborations != null) {
             for (BoxCollaboration collaboration: collaborations) {
                 BoxCollaborator collaborator = collaboration.getAccessibleBy();
