@@ -82,8 +82,11 @@ public class UsxFragment extends BoxFragment {
         mSharedLinkVm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(SharedLinkVM.class);
         binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_shared_link, container, false);
 
-        binding.setIsAllowedToInviteCollaborator(isAllowedToInvite());
-        binding.setIsAllowedToShare(isAllowedToShare());
+
+        //show the full UI until the item fully refreshes. Then show the UI with permission blocked.
+        binding.setIsAllowedToInviteCollaborator(true);
+        binding.setIsAllowedToShare(true);
+
         setupListeners();
 
         binding.setShareItem(mSharedLinkVm.getShareItem());
