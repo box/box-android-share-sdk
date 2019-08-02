@@ -137,6 +137,7 @@ public class UsxFragment extends BoxFragment {
         super.onResume();
         showSpinner(0);
         mSharedLinkVm.fetchItemInfo(mSharedLinkVm.getShareItem());
+        refreshUserRole();
     }
 
     private Observer<PresenterData<BoxItem>> onBoxItemComplete = presenterData -> {
