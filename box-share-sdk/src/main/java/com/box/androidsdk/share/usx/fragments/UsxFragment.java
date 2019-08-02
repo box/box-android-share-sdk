@@ -135,10 +135,8 @@ public class UsxFragment extends BoxFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (mSharedLinkVm.getShareItem().getSharedLink() == null) {
-            showSpinner(0);
-            mSharedLinkVm.fetchItemInfo(mSharedLinkVm.getShareItem());
-        }
+        showSpinner(0);
+        mSharedLinkVm.fetchItemInfo(mSharedLinkVm.getShareItem());
     }
 
     private Observer<PresenterData<BoxItem>> onBoxItemComplete = presenterData -> {
@@ -167,7 +165,7 @@ public class UsxFragment extends BoxFragment {
     }
 
     private BoxCollaboration.Role getUserRole() {
-        BoxIteratorCollaborations collaborations = mInitialsVM.getCollaborations().getValue().getData();
+        BoxIteratorCollaborations collaborations = mInitialsVM.getCollaborationsValue();
         if (collaborations != null) {
             for (BoxCollaboration collaboration: collaborations) {
                 BoxCollaborator collaborator = collaboration.getAccessibleBy();

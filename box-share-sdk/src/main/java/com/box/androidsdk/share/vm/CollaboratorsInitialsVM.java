@@ -26,7 +26,7 @@ public class CollaboratorsInitialsVM extends BaseShareVM {
         return mCollaborations;
     }
 
-    private BoxIteratorCollaborations getCollaborationsValue() {
+    public BoxIteratorCollaborations getCollaborationsValue() {
         if (mCollaborations != null && mCollaborations.getValue() != null) {
             return mCollaborations.getValue().getData();
         }
