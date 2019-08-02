@@ -313,6 +313,9 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
             showSpinner(R.string.box_sharesdk_adding_collaborators, R.string.boxsdk_Please_wait);
             mInviteCollaboratorsShareVM.inviteCollabs(getCollaborationItem(), mSelectRoleShareVM.getSelectedRole().getValue(), emailParts);
+        } else {
+            showToast(R.string.box_sharesdk_unable_to_invite); //should never get here but added for safety
+            getActivity().finish();
         }
     }
 
