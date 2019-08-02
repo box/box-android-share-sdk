@@ -153,7 +153,8 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
                 //need to log Exception
                 BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "Fetch roles request failed",
                         presenter.getException());
-                showToast(getString(presenter.getStrCode())); //was just collaborationfragment
+                showToast(getString(presenter.getStrCode()));
+                getActivity().finish(); //if you cannot fetch any role there is no use staying on this activity.
             }
         }
     };
@@ -165,7 +166,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
             } else {
                 BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",
                         presenterData.getException());
-                showToast(getString(presenterData.getStrCode()) + ((BoxException) presenterData.getException()).getResponseCode()); //need response code
+                //showToast(getString(presenterData.getStrCode())); remove constant toasting for failing to fetch invitees
             }
         }
     };
@@ -312,6 +313,9 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
             showSpinner(R.string.box_sharesdk_adding_collaborators, R.string.boxsdk_Please_wait);
             mInviteCollaboratorsShareVM.inviteCollabs(getCollaborationItem(), mSelectRoleShareVM.getSelectedRole().getValue(), emailParts);
+        } else {
+            showToast(R.string.box_sharesdk_unable_to_invite); //should never get here but added for safety
+            getActivity().finish();
         }
     }
 

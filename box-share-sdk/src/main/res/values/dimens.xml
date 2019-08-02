@@ -45,4 +45,5 @@
     <dimen name="box_sharesdk_initials_offset">-7dp</dimen>
 
     <dimen name="box_sharesdk_calendar_icon_margin">12dp</dimen>
+    <dimen name="permission_text_block_margin">56dp</dimen>
 </resources>

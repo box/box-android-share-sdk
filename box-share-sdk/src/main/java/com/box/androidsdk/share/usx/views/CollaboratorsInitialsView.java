@@ -24,6 +24,7 @@ import com.box.androidsdk.content.models.BoxUser;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.usx.fragments.UsxFragment;
 import com.box.androidsdk.share.vm.CollaboratorsInitialsVM;
 import com.box.androidsdk.share.vm.PresenterData;
 import com.eclipsesource.json.JsonObject;
@@ -50,6 +51,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
     private TextView mCollabsCount;
 
     private CollaboratorsInitialsVM mCollaboratorsInitialsVM;
+    private UsxFragment.RefreshUserRole mRefreshUserRole;
 
     public CollaboratorsInitialsView(Context context) {
         this(context, null);
@@ -65,9 +67,10 @@ public class CollaboratorsInitialsView extends LinearLayout {
     }
 
 
-    public void setArguments(CollaboratorsInitialsVM vm) {
+    public void setArguments(CollaboratorsInitialsVM vm, UsxFragment.RefreshUserRole refreshUserRole) {
         mCollaboratorsInitialsVM = vm;
         mCollaboratorsInitialsVM.getCollaborations().observe((LifecycleOwner) getContext(), onCollaborationsChange);
+        mRefreshUserRole = refreshUserRole;
     }
 
     /**
@@ -120,18 +123,30 @@ public class CollaboratorsInitialsView extends LinearLayout {
             if (presenterData.isSuccess()) {
                 updateView(presenterData.getData());
             } else {
-                showToast(getContext(), getString(presenterData.getStrCode()));
+                if (presenterData.getStrCode() != PresenterData.NO_MESSAGE) {
+                    showToast(getContext(), getString(presenterData.getStrCode()));
+                }
+
                 if (presenterData.getException() instanceof BoxException) {
                     if (((BoxException)presenterData.getException()).getResponseCode() == HTTP_NOT_FOUND) {
                         ((Activity)getContext()).finish();
                     }
+                }
+                PresenterData<BoxIteratorCollaborations> boxCollaborations = mCollaboratorsInitialsVM.getCollaborations().getValue();
+                if (boxCollaborations != null) {
+                    updateView(boxCollaborations.getData());
                 }
             }
         } else {
             PresenterData<BoxIteratorCollaborations> boxCollaborations = mCollaboratorsInitialsVM.getCollaborations().getValue();
             if (boxCollaborations != null) {
                 updateView(boxCollaborations.getData());
+            } else {
+                updateView(null);
             }
+        }
+        if (mRefreshUserRole != null) {
+            mRefreshUserRole.refresh();
         }
 
     };
@@ -139,7 +154,7 @@ public class CollaboratorsInitialsView extends LinearLayout {
     private void updateViewVisibilityForNoCollaborators() {
         mInitialsListView.setVisibility(GONE);
         mCollabsCount.setVisibility(VISIBLE);
-        mCollabsCount.setText(R.string.box_sharesdk_no_collaborators);
+        mCollabsCount.setText(R.string.box_sharesdk_no_collaborators_initials);
     }
 
     private void updateViewVisibilityIfCollaboratorsFound() {

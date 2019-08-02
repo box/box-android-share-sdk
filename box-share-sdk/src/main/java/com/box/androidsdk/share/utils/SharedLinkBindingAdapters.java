@@ -26,7 +26,7 @@ public class SharedLinkBindingAdapters {
     public static void setAccess(TextView textView, BoxSharedLink link) {
         String text = "";
         if (link != null) {
-            BoxSharedLink.Access access = link.getAccess();
+            BoxSharedLink.Access access = link.getEffectiveAccess();
             if (access != null){
                 switch(access){
                     case OPEN:

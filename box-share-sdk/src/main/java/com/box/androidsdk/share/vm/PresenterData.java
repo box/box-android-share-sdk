@@ -4,6 +4,7 @@ import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
 
 import com.box.androidsdk.content.BoxException;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 
 /**
  * A data wrapper that can also take an accompanying string resource to display message to users.
@@ -56,9 +57,16 @@ public class PresenterData<T> {
     /**
      * Updates the item with the stringCode passed in. Use this if request was unsuccessful
      * @param strRes the String resource for the error message
+     *
      */
     public void failure(@StringRes @PluralsRes int strRes, Exception exception) {
         this.mData = null;
+        this.mStrRes = strRes;
+        this.mException = exception;
+    }
+
+    public void failure(T data, @StringRes@PluralsRes int strRes, Exception exception) {
+        this.mData = data;
         this.mStrRes = strRes;
         this.mException = exception;
     }

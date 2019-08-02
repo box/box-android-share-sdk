@@ -313,15 +313,15 @@ public class ShareSDKTransformer {
         return data;
     }
 
-    public PresenterData<BoxIteratorCollaborations> getIntialsViewCollabsPresenterData(BoxResponse<BoxIteratorCollaborations> response) {
+    public PresenterData<BoxIteratorCollaborations> getIntialsViewCollabsPresenterData(BoxResponse<BoxIteratorCollaborations> response, BoxIteratorCollaborations boxCollaborations) {
         PresenterData<BoxIteratorCollaborations> data = new PresenterData<>();
         if (response.isSuccess()) {
             data.success(response.getResult());
         } else if (((BoxException)response.getException()).getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND) {
             // The user is not a collaborator anymore
-            data.failure(R.string.box_sharesdk_item_unavailable, response.getException());
+            data.failure(R.string.box_sharesdk_item_unavailable, response.getException()); //still clear data if user is not a collaborator anymore
         } else {
-            data.failure(R.string.box_sharesdk_network_error, response.getException());
+            data.failure(boxCollaborations, PresenterData.NO_MESSAGE, response.getException());
         }
         return data;
     }

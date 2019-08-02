@@ -32,6 +32,7 @@ import com.box.androidsdk.share.databinding.UsxFragmentCollaborationsBinding;
 import com.box.androidsdk.share.vm.ActionbarTitleVM;
 import com.box.androidsdk.share.vm.BaseShareVM;
 import com.box.androidsdk.share.vm.CollaborationsShareVM;
+import com.box.androidsdk.share.vm.CollaboratorsInitialsVM;
 import com.box.androidsdk.share.vm.PresenterData;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
 import com.box.androidsdk.share.vm.ShareVMFactory;
@@ -89,9 +90,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             fetchRoles();
         }
         if (mCollaborationsShareVM.getCachedCollaborations() == null) {
-            //refresh item and fetch collaboration when item is refreshed.
-            showSpinner(0);
-            mCollaborationsShareVM.fetchItemInfo(mCollaborationsShareVM.getShareItem());
+            fetchCollaborations();
         } else {
             mCollaboratorsAdapter.setItems(mCollaborationsShareVM.getCachedCollaborations());
         }
@@ -156,8 +155,11 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             ArrayList<BoxCollaboration.Role> rolesArr = getRoles();
             BoxCollaborator collaborator = collaboration.getAccessibleBy();
             String collabId = collaborator == null ? "" : collaborator.getId();
-
-            if ((rolesArr == null || rolesArr.size() == 0) && !collabId.equals(mCollaborationsShareVM.getUserId())) {
+            if (rolesArr == null) {
+                showToast(R.string.box_sharesdk_network_error);
+                return;
+            }
+            if (rolesArr.size() == 0 && !collabId.equals(mCollaborationsShareVM.getUserId())) {
                 showToast(R.string.box_sharesdk_cannot_get_collaborators);
                 return;
             }
@@ -175,8 +177,12 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                 // currently changing owner only seems to be supported for folders (does not show up as a allowed invitee role).
                 allowOwner = getItem() instanceof BoxFolder;
             }
+
             if (rolesArr.isEmpty() && role != null) {
                 rolesArr.add(role); //user should be able to see what their own role is still on this page.
+            }
+            if (role != null && !rolesArr.contains(role)) {
+                rolesArr.add(role); //a temporary fix for a user role that is sometimes not included in list of roles. ideally API should include this.
             }
             mSelectRoleShareVM.setSelectedRole(role);
             mSelectRoleShareVM.setRoles(rolesArr);
@@ -218,10 +224,7 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
     public ArrayList<BoxCollaboration.Role> getRoles() {
-        if (getItem().getAllowedInviteeRoles() != null) {
-            return getItem().getAllowedInviteeRoles();
-        }
-        return null;
+        return getItem().getAllowedInviteeRoles();
     }
 
 

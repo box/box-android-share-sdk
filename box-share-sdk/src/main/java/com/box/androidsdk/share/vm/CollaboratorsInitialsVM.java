@@ -15,7 +15,7 @@ public class CollaboratorsInitialsVM extends BaseShareVM {
     public CollaboratorsInitialsVM(ShareRepo shareRepo, BoxCollaborationItem shareItem) {
         super(shareRepo, shareItem);
         ShareSDKTransformer transformer = new ShareSDKTransformer();
-        mCollaborations = Transformations.map(shareRepo.getCollaborations(), transformer::getIntialsViewCollabsPresenterData);
+        mCollaborations = Transformations.map(shareRepo.getCollaborations(), response -> transformer.getIntialsViewCollabsPresenterData(response, getCollaborationsValue()));
     }
 
     public void fetchCollaborations(BoxCollaborationItem item) {
@@ -24,5 +24,12 @@ public class CollaboratorsInitialsVM extends BaseShareVM {
 
     public LiveData<PresenterData<BoxIteratorCollaborations>> getCollaborations() {
         return mCollaborations;
+    }
+
+    public BoxIteratorCollaborations getCollaborationsValue() {
+        if (mCollaborations != null && mCollaborations.getValue() != null) {
+            return mCollaborations.getValue().getData();
+        }
+        return null;
     }
 }
