@@ -40,7 +40,6 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     protected TextView mNoCollaboratorsText;
     protected CollaboratorsAdapter mCollaboratorsAdapter;
     protected BoxIteratorCollaborations mCollaborations;
-    protected ArrayList<BoxCollaboration.Role> rolesArr = null;
 
     private boolean mOwnerUpdated = false;
 
@@ -102,13 +101,18 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CollaboratorsAdapter.ViewHolder holder = (CollaboratorsAdapter.ViewHolder) view.getTag();
         if (holder != null && holder.collaboration != null) {
+            ArrayList<BoxCollaboration.Role> rolesArr = getRoles();
+
             BoxCollaborator collaborator = holder.collaboration.getAccessibleBy();
 
             String userId = mController.getCurrentUserId();
             boolean isCollaboratorCurrentUser = collaborator != null && collaborator.getId().equals(userId);
 
-            if (rolesArr == null || (rolesArr.size() == 0 && !isCollaboratorCurrentUser)) {
-                SdkUtils.toastSafely(getContext(), R.string.box_sharesdk_cannot_get_collaborators, Toast.LENGTH_SHORT);
+            if (rolesArr == null) {
+                SdkUtils.toastSafely(getContext(), R.string.box_sharesdk_generic_error, Toast.LENGTH_SHORT);
+                return;
+            }  else if (rolesArr.size() == 0 && !isCollaboratorCurrentUser) {
+                SdkUtils.toastSafely(getContext(), R.string.box_sharesdk_insufficient_permissions, Toast.LENGTH_SHORT);
                 return;
             }
 
@@ -301,7 +305,6 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
                                 response.getException());
                         mController.showToast(getActivity(), getString(R.string.box_sharesdk_network_error));
                     }
-                    rolesArr = getRoles();
                 }
             });
 
