@@ -32,7 +32,7 @@
         android:id="@+id/roles_text_layout"
         android:tag="@{roleTag}"
         android:onClickListener="@{listener}"
-        android:layout_height="@dimen/box_sharesdk_radio_height">
+        android:layout_height="wrap_content">
 
         <RadioButton
             android:id="@+id/roles_radio"

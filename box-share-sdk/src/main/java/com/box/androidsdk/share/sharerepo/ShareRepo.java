@@ -6,11 +6,24 @@ import androidx.lifecycle.MutableLiveData;
 import com.box.androidsdk.content.BoxFutureTask;
 import com.box.androidsdk.content.models.BoxCollaboration;
 import com.box.androidsdk.content.models.BoxCollaborationItem;
+import com.box.androidsdk.content.models.BoxFile;
+import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.content.models.BoxItem;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
+import com.box.androidsdk.content.models.BoxSharedLink;
+import com.box.androidsdk.content.models.BoxVoid;
+import com.box.androidsdk.content.requests.BoxRequestsFile;
+import com.box.androidsdk.content.requests.BoxRequestsFolder;
 import com.box.androidsdk.content.requests.BoxResponse;
 import com.box.androidsdk.content.requests.BoxResponseBatch;
+import com.box.androidsdk.content.views.BoxAvatarView;
 import com.box.androidsdk.share.api.ShareController;
+import com.box.androidsdk.share.internal.models.BoxFeatures;
 import com.box.androidsdk.share.internal.models.BoxIteratorInvitees;
+
+import java.io.Serializable;
+import java.text.ParseException;
+import java.util.Date;
 
 
 /**
@@ -20,14 +33,34 @@ public class ShareRepo  {
 
     private ShareController mController;
 
-    private final MutableLiveData<BoxResponse<BoxIteratorInvitees>> mInvitees = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mRoleItem = new MutableLiveData<>();
-    private final MutableLiveData<BoxResponse<BoxResponseBatch>> mInviteCollabsBatchResponse = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxIteratorInvitees>> mInvitees;
+    private final MutableLiveData<BoxResponse<BoxCollaborationItem>> mRoleItem;
+    private final MutableLiveData<BoxResponse<BoxResponseBatch>> mInviteCollabsBatchResponse;
 
-    private final MutableLiveData<BoxResponse<BoxItem>> mItemInfo = new MutableLiveData<>();
+    private final MutableLiveData<BoxResponse<BoxItem>> mItemInfo;
+
+    private final MutableLiveData<BoxResponse<BoxItem>> mSharedLinkedItem; //this item will be used for doing any shared link related operations
+
+    private final MutableLiveData<BoxResponse<BoxIteratorCollaborations>> mCollaborations;
+    private final MutableLiveData<BoxResponse<BoxFeatures>> mSupportedFeatures;
+
+    private final MutableLiveData<BoxResponse<BoxVoid>> mDeleteCollaboration;
+    private final MutableLiveData<BoxResponse<BoxVoid>> mUpdateOwner;
+    private final MutableLiveData<BoxResponse<BoxCollaboration>> mUpdateCollaboration;
 
     public ShareRepo(ShareController controller) {
         this.mController = controller;
+        mInvitees = new MutableLiveData<>();
+        mRoleItem = new MutableLiveData<>();
+        mInviteCollabsBatchResponse = new MutableLiveData<>();
+        mItemInfo = new MutableLiveData<>();
+        mSharedLinkedItem = new MutableLiveData<>();
+        mCollaborations = new MutableLiveData<>();
+        mSupportedFeatures = new MutableLiveData<>();
+        mDeleteCollaboration = new MutableLiveData<>();
+        mUpdateOwner = new MutableLiveData<>();
+        mUpdateCollaboration = new MutableLiveData<>();
+
     }
 
     /**
@@ -105,4 +138,178 @@ public class ShareRepo  {
     public LiveData<BoxResponse<BoxItem>> getItemInfo() {
         return mItemInfo;
     }
+
+    /**
+     * Create a default shared link of an item.
+     * @param boxCollaborationItem the item to get share link on
+     */
+    public void createDefaultSharedLink(BoxCollaborationItem boxCollaborationItem) {
+        handleTaskAndPostValue(mController.createDefaultSharedLink(boxCollaborationItem), mSharedLinkedItem);
+    }
+
+    /**
+     * Disable shared link of an item.
+     * @param boxCollaborationItem the item to disable share link on
+     */
+    public void disableSharedLink(BoxCollaborationItem boxCollaborationItem) {
+        handleTaskAndPostValue(mController.disableShareLink(boxCollaborationItem), mSharedLinkedItem);
+    }
+
+    /**
+     * Change the download permission of a share item
+     * @param boxCollaborationItem the item to change download permission on
+     * @param canDownload the new download permission
+     */
+    public void changeDownloadPermission(BoxCollaborationItem boxCollaborationItem, boolean canDownload) throws IllegalArgumentException {
+        if (boxCollaborationItem instanceof BoxFile) {
+            handleTaskAndPostValue(mController.executeRequest(BoxItem.class, ((BoxRequestsFile.UpdatedSharedFile) mController.getCreatedSharedLinkRequest(boxCollaborationItem)).setCanDownload(canDownload)), mSharedLinkedItem);
+        }
+        else if (boxCollaborationItem instanceof BoxFolder) {
+            handleTaskAndPostValue(mController.executeRequest(BoxItem.class, ((BoxRequestsFolder.UpdateSharedFolder) mController.getCreatedSharedLinkRequest(boxCollaborationItem)).setCanDownload(canDownload)), mSharedLinkedItem);
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * Change expiry date of a shared link of box collaboration item.
+     * @param boxCollaborationItem the item to change expiry date on
+     * @param date the expiry date
+     * @throws ParseException
+     */
+    public void setExpiryDate(BoxCollaborationItem boxCollaborationItem, Date date) throws ParseException {
+        handleTaskAndPostValue(mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(boxCollaborationItem).setUnsharedAt(date)), mSharedLinkedItem);
+    }
+
+    /**
+     * Remove expiry date of a shared link of box collaboration item.
+     * @param boxCollaborationItem the item to remove expiry date on
+     * @throws ParseException
+     */
+    public void removeExpiryDate(BoxCollaborationItem boxCollaborationItem) throws ParseException {
+        handleTaskAndPostValue(mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(boxCollaborationItem).setRemoveUnsharedAtDate()), mSharedLinkedItem);
+    }
+
+    /**
+     * Change access level of a box collaboration item.
+     * @param boxCollaborationItem the item to change access level on
+     * @param access the new access level
+     */
+    public void changeAccessLevel(BoxCollaborationItem boxCollaborationItem, BoxSharedLink.Access access) {
+        handleTaskAndPostValue(mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(boxCollaborationItem).setAccess(access)), mSharedLinkedItem);
+    }
+
+    /**
+     * Change password of a box collaboration item.
+     * @param boxCollaborationItem the item to change password on
+     * @param password the new password
+     */
+    public void changePassword(BoxCollaborationItem boxCollaborationItem, String password) {
+        handleTaskAndPostValue(mController.executeRequest(BoxItem.class, mController.getCreatedSharedLinkRequest(boxCollaborationItem).setPassword(password)), mSharedLinkedItem);
+    }
+
+    /**
+     * Fetch collaborators for a box collaboration item.
+     * @param boxCollaborationItem the item to fetch collaborations for
+     */
+    public void fetchCollaborations(BoxCollaborationItem boxCollaborationItem) {
+        handleTaskAndPostValue(mController.fetchCollaborations(boxCollaborationItem), mCollaborations);
+    }
+
+    /**
+     * Fetch supported features for the shared link.
+     */
+    public void fetchSupportedFeatures() {
+        handleTaskAndPostValue(mController.getSupportedFeatures(), mSupportedFeatures); //this api might not be working as intended.
+    }
+
+    /**
+     * Returns a LiveData which holds supported features for the shared link.
+     * @return a LiveData which holds supported features for the shared link
+     */
+    public LiveData<BoxResponse<BoxFeatures>> getSupportFeatures() {
+        return mSupportedFeatures;
+    }
+
+
+    /**
+     * Returns a LiveData which holds information related to sharing about the item.
+     * @return a LiveData which holds information related to sharing about the item
+     */
+    public LiveData<BoxResponse<BoxItem>> getShareLinkedItem() {
+        return mSharedLinkedItem;
+    }
+
+    /**
+     * Returns a LiveData which holds collaborations information about the item.
+     * @return a LiveData which holds collaborations information about the item
+     */
+    public LiveData<BoxResponse<BoxIteratorCollaborations>> getCollaborations() {
+        return mCollaborations;
+    }
+
+    /**
+     * Returns a controller for avatar.
+     * @return a controller for avatar
+     */
+    public  <E extends BoxAvatarView.AvatarController & Serializable> E getAvatarController() {
+        return mController.getAvatarController();
+    }
+
+    /**
+     * Returns a LiveData which holds information about a deleted collaboration.
+     * @return a LiveData which holds information about a deleted collaboration
+     */
+    public LiveData<BoxResponse<BoxVoid>> getDeleteCollaboration() {
+        return mDeleteCollaboration;
+    }
+
+    /**
+     * Returns a LiveData which holds information about a updated collaboration.
+     * @return a LiveData which holds information about a updated collaboration
+     */
+    public LiveData<BoxResponse<BoxCollaboration>> getUpdateCollaboration() {
+        return mUpdateCollaboration;
+    }
+
+    /**
+     * Returns a LiveData which holds information about a updated owner collaboration.
+     * @return a LiveData which holds information about a updated owner collaboration
+     */
+    public LiveData<BoxResponse<BoxVoid>> getUpdateOwner() {
+        return mUpdateOwner;
+    }
+
+    /**
+     * Delete a collaboration from a box collaboration item.
+     * @param collaboration the box collaboration item which will be modified
+     */
+    public void deleteCollaboration(BoxCollaboration collaboration) {
+        handleTaskAndPostValue(mController.deleteCollaboration(collaboration), mDeleteCollaboration);
+    }
+    /**
+     * Update a collaboration from a box collaboration item.
+     * @param collaboration the box collaboration item which will be modified
+     */
+    public void updateCollaboration(BoxCollaboration collaboration, BoxCollaboration.Role role) {
+        handleTaskAndPostValue(mController.updateCollaboration(collaboration, role), mUpdateCollaboration);
+    }
+    /**
+     * Update the owner of a box collaboration item.
+     * @param collaboration the box collaboration item which will be modified
+     */
+    public void updateOwner(BoxCollaboration collaboration) {
+        handleTaskAndPostValue(mController.updateOwner(collaboration), mUpdateOwner);
+    }
+
+
+    /**
+     * Returns current user's id.
+     * @return current user's id
+     */
+    public String getUserId() {
+        return mController.getCurrentUserId();
+    }
+
+
 }

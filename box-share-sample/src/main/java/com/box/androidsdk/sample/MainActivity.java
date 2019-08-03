@@ -27,6 +27,7 @@ import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.share.usx.activities.BoxActivity;
 import com.box.androidsdk.share.usx.activities.BoxInviteCollaboratorsActivity;
+import com.box.androidsdk.share.usx.activities.BoxUsxActivity;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -185,8 +186,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void onShareLinkButtonClickNew(final View view){
-        if (mSampleItem != null) Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
-            //startActivityForResult(BoxSharedLinkActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_SHARE_LINK);
+        if (mSampleItem != null)
+            startActivityForResult(BoxUsxActivity.getLaunchIntent(this, mSampleItem, mSession), REQUEST_CODE_SHARE_LINK);
     }
 
     /**

@@ -12,10 +12,12 @@ import androidx.annotation.Nullable;
 import com.box.androidsdk.content.BoxException;
 import com.box.androidsdk.share.databinding.UsxFragmentInviteCollaboratorsBinding;
 import com.box.androidsdk.share.internal.models.BoxInvitee;
+import com.box.androidsdk.share.vm.ActionbarTitleVM;
 import com.box.androidsdk.share.vm.InviteCollaboratorsPresenterData;
 import com.box.androidsdk.share.vm.InviteCollaboratorsShareVM;
 import com.box.androidsdk.share.vm.PresenterData;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
+import com.box.androidsdk.share.vm.ShareVMFactory;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.core.app.ActivityCompat;
@@ -43,17 +45,7 @@ import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.util.List;
 
-/**
- * Fragment to let users invite collaborators on an item.
- *
- * There are two listeners used here:
- * 1. InviteCollaboratorsListener is used to set up a listener by the parent Activity or Fragment on this Fragment.
- * 2. ShowCollaboratorsListener is used to set up a listener by this fragment on the child custom view called CollaboratorsInitialsView.
- */
-
 public class InviteCollaboratorsFragment extends BoxFragment implements TokenCompleteTextView.TokenListener<BoxInvitee> {
-
-
 
     private static final Integer MY_PERMISSIONS_REQUEST_READ_CONTACTS = 32;
     public static final String TAG = InviteCollaboratorsFragment.class.getName();
@@ -61,20 +53,22 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     public static final String EXTRA_COLLAB_SELECTED_ROLE = "collabSelectedRole";
 
     private String mFilterTerm;
-    UsxFragmentInviteCollaboratorsBinding binding;
+    private UsxFragmentInviteCollaboratorsBinding binding;
 
-    private View.OnClickListener mOnEditAccessListener;
-    InviteCollaboratorsShareVM mInviteCollaboratorsShareVM;
-    SelectRoleShareVM mSelectRoleShareVM;
+    private InviteCollaboratorsShareVM mInviteCollaboratorsShareVM;
+    private SelectRoleShareVM mSelectRoleShareVM;
+    private ClickListener mListener;
 
-
+    public interface ClickListener {
+        void editAccessClicked();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_invite_collaborators, container,false);
         View view = binding.getRoot();
         binding.setLifecycleOwner(getViewLifecycleOwner());
-
+        setTitles();
         mSelectRoleShareVM = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
 
         InviteeAdapter adapter = createInviteeAdapter(getActivity());
@@ -83,19 +77,20 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
         binding.setAdapter(adapter);
         binding.setTokenizer(tokenizer);
-        binding.setOnRoleClickedListener(mOnEditAccessListener);
+        binding.setOnRoleClickedListener(v -> mListener.editAccessClicked());
         binding.setOnSendInvitationClickedListener(v -> addCollaborations());
         binding.setTokenListener(this);
         binding.setCollaboratorsPresent(mSelectRoleShareVM.isSendInvitationEnabled());
 
+        binding.inviteCollaboratorAutocomplete.requestFocus();
 
         mFilterTerm = "";
         mInviteCollaboratorsShareVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(InviteCollaboratorsShareVM.class);
         mInviteCollaboratorsShareVM.setInvitationSucceded(true);
 
-        mInviteCollaboratorsShareVM.getRoleItem().observe(this, onRoleItemChange);
-        mInviteCollaboratorsShareVM.getInvitees().observe(this, onInviteesChanged);
-        mInviteCollaboratorsShareVM.getInviteCollabs().observe(this, onInviteCollabs);
+        mInviteCollaboratorsShareVM.getRoleItem().observe(getViewLifecycleOwner(), onRoleItemChange);
+        mInviteCollaboratorsShareVM.getInvitees().observe(getViewLifecycleOwner(), onInviteesChanged);
+        mInviteCollaboratorsShareVM.getInviteCollabs().observe(getViewLifecycleOwner(), onInviteCollabs);
 
 
         if (mSelectRoleShareVM.getSelectedRole() == null && savedInstanceState != null) {
@@ -135,62 +130,65 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     }
 
     private Observer<PresenterData<BoxCollaborationItem>> onRoleItemChange = presenter -> {
-        dismissSpinner();
-        if (presenter.isSuccess() && getCollaborationItem() != null) {
-            if (getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
-                BoxCollaborationItem collaborationItem = presenter.getData();
-                mSelectRoleShareVM.setRoles(collaborationItem.getAllowedInviteeRoles());
-                BoxCollaboration.Role role = mSelectRoleShareVM.getSelectedRole().getValue();
-                if (role != null) {
-                    setSelectedRole(role);
-                } else {
-                    List<BoxCollaboration.Role> roles = mSelectRoleShareVM.getRoles();
-                    BoxCollaboration.Role selectedRole = roles != null && roles.size() > 0 ? getBestDefaultRole(collaborationItem.getDefaultInviteeRole(), roles) : null;
-                    if (selectedRole == null) { //if user cannot select any role, he does not have permission for inviting.
-                        showNoPermissionToast();
-                        getActivity().finish();
+        if (!presenter.isHandled()) {
+            dismissSpinner();
+            if (presenter.isSuccess() && getCollaborationItem() != null) {
+                if (getCollaborationItem().getPermissions().contains(BoxItem.Permission.CAN_INVITE_COLLABORATOR)) {
+                    BoxCollaborationItem collaborationItem = presenter.getData();
+                    mSelectRoleShareVM.setRoles(collaborationItem.getAllowedInviteeRoles());
+                    BoxCollaboration.Role role = mSelectRoleShareVM.getSelectedRole().getValue();
+                    if (role != null) {
+                        setSelectedRole(role);
+                    } else {
+                        List<BoxCollaboration.Role> roles = mSelectRoleShareVM.getRoles();
+                        BoxCollaboration.Role selectedRole = roles != null && roles.size() > 0 ? getBestDefaultRole(collaborationItem.getDefaultInviteeRole(), roles) : null;
+                        setSelectedRole(selectedRole);
                     }
-                    setSelectedRole(selectedRole);
+                    mInviteCollaboratorsShareVM.setShareItem(collaborationItem);
+                } else {
+                    showNoPermissionToast();
+                    getActivity().finish();
                 }
-                mInviteCollaboratorsShareVM.setShareItem(collaborationItem);
             } else {
-                showNoPermissionToast();
-                getActivity().finish();
+                //need to log Exception
+                BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "Fetch roles request failed",
+                        presenter.getException());
+                showToast(getString(presenter.getStrCode()));
+                getActivity().finish(); //if you cannot fetch any role there is no use staying on this activity.
             }
-        } else {
-            //need to log Exception
-            BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "Fetch roles request failed",
-                    presenter.getException());
-            showToast(getString(presenter.getStrCode())); //was just collaborationfragment
         }
     };
 
-    private Observer<PresenterData<BoxIteratorInvitees>> onInviteesChanged = presenter -> {
-            if (presenter.isSuccess()) {
-                binding.getAdapter().setInvitees(presenter.getData());
+    private Observer<PresenterData<BoxIteratorInvitees>> onInviteesChanged = presenterData -> {
+        if (!presenterData.isHandled()) {
+            if (presenterData.isSuccess()) {
+                binding.getAdapter().setInvitees(presenterData.getData());
             } else {
                 BoxLogUtils.e(InviteCollaboratorsFragment.class.getName(), "get invitees request failed",
-                        presenter.getException());
-                showToast(getString(presenter.getStrCode()) + ((BoxException)presenter.getException()).getResponseCode()); //need response code
+                        presenterData.getException());
+                //showToast(getString(presenterData.getStrCode())); remove constant toasting for failing to fetch invitees
             }
+        }
     };
 
-    private Observer<InviteCollaboratorsPresenterData> onInviteCollabs = presenter -> {
-        dismissSpinner();
-        String message;
-        if (presenter.isNonNullData()) {
-            message = getString(presenter.getStrCode(), presenter.getData());
-        } else {
-            message = getString(presenter.getStrCode());
+    private Observer<InviteCollaboratorsPresenterData> onInviteCollabs = presenterData -> {
+        if (!presenterData.isHandled()) {
+            dismissSpinner();
+            String message;
+            if (presenterData.isNonNullData()) {
+                message = getString(presenterData.getStrCode(), presenterData.getData());
+            } else {
+                message = getString(presenterData.getStrCode());
+            }
+            if (presenterData.isSnackBarMessage()) {
+                showSnackBar(message);
+                //Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE).show();
+            } else {
+                showToast(message);
+                getActivity().finish();
+            }
+            mInviteCollaboratorsShareVM.setInvitationSucceded(presenterData.isSuccess());
         }
-        if (presenter.isSnackBarMessage()) {
-            showSnackBar(message);
-            //Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE).show();
-        } else {
-            showToast(message);
-            getActivity().finish();
-        }
-        mInviteCollaboratorsShareVM.setInvitationSucceded(presenter.isSuccess());
     };
 
     @Override
@@ -200,6 +198,13 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
 
         }
         return Activity.RESULT_CANCELED;
+    }
+
+    @Override
+    protected void setTitles() {
+        ActionbarTitleVM actionbarTitleVM = ViewModelProviders.of(getActivity()).get(ActionbarTitleVM.class);
+        actionbarTitleVM.setTitle(getString(R.string.box_sharesdk_invite_collaborators_activity_title));
+        actionbarTitleVM.setSubtitle(null);
     }
 
 
@@ -225,8 +230,13 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     }
 
     @Override
+    public Class<InviteCollaboratorsShareVM> getVMClass() {
+        return InviteCollaboratorsShareVM.class;
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
-        if (mSelectRoleShareVM.getSelectedRole() != null) {
+        if (mSelectRoleShareVM.getSelectedRole() != null && mSelectRoleShareVM.getSelectedRole().getValue() != null) {
             outState.putString(EXTRA_COLLAB_SELECTED_ROLE, mSelectRoleShareVM.getSelectedRole().getValue().toString());
         }
         super.onSaveInstanceState(outState);
@@ -242,13 +252,13 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     }
     private InviteeAdapter.InviteeAdapterListener createInviteeAdapterListener() {
         return constraint -> {
-                if (constraint.length() >= 3) {
-                    String firstThreeChars = constraint.subSequence(0, 3).toString();
-                    if (!firstThreeChars.equals(mFilterTerm)) {
-                        mFilterTerm = firstThreeChars;
-                        fetchInvitees();
-                    }
+            if (constraint.length() >= 3) {
+                String firstThreeChars = constraint.subSequence(0, 3).toString();
+                if (!firstThreeChars.equals(mFilterTerm)) {
+                    mFilterTerm = firstThreeChars;
+                    fetchInvitees();
                 }
+            }
         };
     }
 
@@ -268,9 +278,6 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         }
     }
 
-    public void setOnEditAccessListener(View.OnClickListener listener) {
-        mOnEditAccessListener = listener;
-    }
     /**
      * Executes the request to retrieve the available roles for the item
      */
@@ -279,8 +286,8 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
             return;
         }
 
-        showSpinner(R.string.box_sharesdk_fetching_collaborators, R.string.boxsdk_Please_wait);
-        mInviteCollaboratorsShareVM.fetchRolesFromRemote(getCollaborationItem());
+        showSpinner(R.string.box_sharesdk_fetching_roles, R.string.boxsdk_Please_wait);
+        mInviteCollaboratorsShareVM.fetchRoles(getCollaborationItem());
     }
     /**
      * Executes the request to retrieve the invitees that can be auto-completed
@@ -288,7 +295,7 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
     private void fetchInvitees() {
         if (getCollaborationItem() instanceof BoxFolder) {
             // Currently this request is only supported for folders.
-            mInviteCollaboratorsShareVM.fetchInviteesFromRemote(getCollaborationItem(), mFilterTerm);
+            mInviteCollaboratorsShareVM.fetchInvitees(getCollaborationItem(), mFilterTerm);
         }
     }
 
@@ -296,15 +303,20 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
      * Executes the request to add collaborations to the item
      */
     public void addCollaborations() {
-        List<BoxInvitee> invitees = mInviteCollaboratorsShareVM.getInviteesList();
-        String[] emailParts = new String[invitees.size()];
-        int i = 0;
-        for (BoxInvitee invitee: invitees) {
-            emailParts[i++] = invitee.getEmail();
-        }
+        if (mSelectRoleShareVM.getSelectedRole() != null) {
+            List<BoxInvitee> invitees = mInviteCollaboratorsShareVM.getInviteesList();
+            String[] emailParts = new String[invitees.size()];
+            int i = 0;
+            for (BoxInvitee invitee: invitees) {
+                emailParts[i++] = invitee.getEmail();
+            }
 
-        showSpinner(R.string.box_sharesdk_adding_collaborators, R.string.boxsdk_Please_wait);
-        mInviteCollaboratorsShareVM.inviteCollabs(getCollaborationItem(), mSelectRoleShareVM.getSelectedRole().getValue(), emailParts);
+            showSpinner(R.string.box_sharesdk_adding_collaborators, R.string.boxsdk_Please_wait);
+            mInviteCollaboratorsShareVM.inviteCollabs(getCollaborationItem(), mSelectRoleShareVM.getSelectedRole().getValue(), emailParts);
+        } else {
+            showToast(R.string.box_sharesdk_unable_to_invite); //should never get here but added for safety
+            getActivity().finish();
+        }
     }
 
 
@@ -331,6 +343,10 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
      * @param role the collaboration role to select
      */
     private void setSelectedRole(BoxCollaboration.Role role) {
+        if (role == null) { //if user cannot select any role, he does not have permission for inviting.
+            showNoPermissionToast();
+            getActivity().finish();
+        }
         mSelectRoleShareVM.setSelectedRole(role);
     }
 
@@ -338,15 +354,18 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         return (BoxCollaborationItem) mInviteCollaboratorsShareVM.getShareItem();
     }
 
-    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem) {
-        return newInstance(collaborationItem, true);
+    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem
+    , ClickListener listener, ShareVMFactory factory) {
+        return newInstance(collaborationItem, listener, factory, true);
     }
 
-    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem, boolean useContactsProvider) {
+    public static InviteCollaboratorsFragment newInstance(BoxCollaborationItem collaborationItem, ClickListener listener, ShareVMFactory factory, boolean useContactsProvider) {
         Bundle args = BoxFragment.getBundle(collaborationItem);
         InviteCollaboratorsFragment fragment = new InviteCollaboratorsFragment();
         args.putBoolean(EXTRA_USE_CONTACTS_PROVIDER, useContactsProvider);
         fragment.setArguments(args);
+        fragment.mListener = listener;
+        fragment.mShareVMFactory = factory;
         return fragment;
     }
 
@@ -362,13 +381,4 @@ public class InviteCollaboratorsFragment extends BoxFragment implements TokenCom
         if (mInviteCollaboratorsShareVM.getInviteesList().isEmpty()) mSelectRoleShareVM.setSendInvitationEnabled(false);
     }
 
-    @Override
-    public int getFragmentTitle() {
-        return R.string.box_sharesdk_invite_collaborators_activity_title;
-    }
-
-    @Override
-    public int getFragmentSubtitle() {
-        return -1;
-    }
 }

@@ -13,8 +13,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.box.androidsdk.content.models.BoxCollaboration;
+import com.box.androidsdk.content.models.BoxFile;
+import com.box.androidsdk.content.models.BoxFolder;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
 import com.box.androidsdk.share.databinding.UsxRadioItemRolesBinding;
@@ -77,15 +80,43 @@ public class CollaborationRoleBindingAdapters {
             binding.setIsLastDivider(true);
         }
 
-
-        if (!allowRemove) {
-            removeButton.setVisibility(View.GONE);
+        if (allowRemove) {
+            removeButton.setVisibility(View.VISIBLE);
+            removeButton.setOnClickListener(v -> notifier.notifyRemove());
         }
     }
+
     @BindingAdapter(value = {"roleOptions"})
     public static void addRoleOption(RadioButton button, HashSet roleOptions) {
         roleOptions.add(button);
     }
 
+    @BindingAdapter(value = {"noSharePermissionRole", "itemType"})
+    public static void setNoPermissionTextForShareLink(TextView textview, BoxCollaboration.Role role, String type) {
+        Context context = textview.getContext();
+        String translatedType = context.getResources().getString(translatedType(type));
+        String translatedRole = role != null ? CollaborationUtils.getRoleName(context, role): "";
+        String message = context.getResources().getString(R.string.box_share_sdk_no_permission_share_link, translatedRole, translatedType);
+        textview.setText(message);
+    }
+
+    @BindingAdapter(value = {"noInvitePermissionRole", "itemType"})
+    public static void setNoInviteTextForShareLink(TextView textview, BoxCollaboration.Role role, String type) {
+        Context context = textview.getContext();
+        String translatedType = context.getResources().getString(translatedType(type));
+        String translatedRole = role != null ? CollaborationUtils.getRoleName(context, role): "";
+        String message = context.getResources().getString(R.string.box_share_sdk_no_permission_invite_people, translatedRole, translatedType);
+        textview.setText(message);
+    }
+
+    private static int translatedType(String type) {
+        if (type.equals(BoxFolder.TYPE)) {
+            return R.string.box_sharesdk_item_type_folder;
+        } else if (type.equals(BoxFile.TYPE)) {
+            return R.string.box_sharesdk_item_type_file;
+        } else {
+            return R.string.box_sharesdk_item_type_default;
+        }
+    }
 
 }

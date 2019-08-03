@@ -24,6 +24,12 @@ public class ShareVMFactory implements ViewModelProvider.Factory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(InviteCollaboratorsShareVM.class)) {
             return (T) new InviteCollaboratorsShareVM(mShareRepo, mShareItem);
+        } else if (modelClass.isAssignableFrom(SharedLinkVM.class)) {
+            return (T) new SharedLinkVM(mShareRepo, mShareItem);
+        } else if (modelClass.isAssignableFrom(CollaborationsShareVM.class)) {
+            return (T) new CollaborationsShareVM(mShareRepo, mShareItem);
+        } else if (modelClass.isAssignableFrom(CollaboratorsInitialsVM.class)) {
+            return (T) new CollaboratorsInitialsVM(mShareRepo, mShareItem);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class");

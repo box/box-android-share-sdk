@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="activeRadioButtons"
+            type="java.util.HashSet" />
+        <variable
+            name="shareItem"
+            type="com.box.androidsdk.content.models.BoxItem" />
+        <variable
+            name="sharedLinkAccessNotifier"
+            type="com.box.androidsdk.share.usx.fragments.SharedLinkAccessFragment.SharedLinkAccessNotifiers" />
+        <variable
+            name="onPasswordListener"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="onDateListener"
+            type="android.view.View.OnClickListener" />
+        <import type="android.view.View" />
+        <import type="com.box.androidsdk.content.models.BoxSharedLink.Access" />
+        <import type="com.box.androidsdk.share.utils.SharedLinkAccessToggleListeners" />
+        <import type="java.text.SimpleDateFormat" />
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:background="@color/box_sharesdk_screen_background"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                style="@style/BoxCellTitle"
+                android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_usx"
+                android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                android:text="@string/box_sharesdk_select_an_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <include layout="@layout/usx_access_radio_group"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
+                app:activeRadioButtons="@{activeRadioButtons}"
+                app:shareItem="@{shareItem}"
+                app:sharedLinkAccessNotifier="@{sharedLinkAccessNotifier}"
+                android:id="@+id/access_radio_group"/>
+            <LinearLayout
+                android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_cell_component"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:background="@color/box_sharesdk_components_background"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:visibility="@{shareItem.sharedLink.effectiveAccess != Access.COLLABORATORS ? View.VISIBLE : View.GONE}"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Switch
+                        android:textAppearance="@style/BoxCellSubHeader"
+                        android:id="@+id/shared_link_allow_download_btn"
+
+                        android:checked="@{shareItem.sharedLink.permissions.canDownload}"
+                        android:onCheckedChanged="@{(view, checked) -> SharedLinkAccessToggleListeners.onDownloadToggle(checked, shareItem, sharedLinkAccessNotifier)}"
+                        android:layout_height="@dimen/box_sharesdk_small_cell_height"
+                        android:paddingLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                        android:paddingRight="@dimen/box_sharesdk_horizontal_margin_usx"
+                        style="@style/BoxSwitchUSX"
+                        android:text="@string/box_sharesdk_downloads_allowed_usx" />
+                    <View
+                        style="@style/BoxDivider" />
+                </LinearLayout>
+                <Switch
+                    android:textAppearance="@style/BoxCellSubHeader"
+                    android:id="@+id/shared_link_expire_link_btn"
+                    android:layout_height="@dimen/box_sharesdk_small_cell_height"
+                    android:paddingLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                    android:paddingRight="@dimen/box_sharesdk_horizontal_margin_usx"
+                    android:checked="@{shareItem.sharedLink.unsharedDate != null}"
+                    android:onCheckedChanged="@{@{(view, checked) -> SharedLinkAccessToggleListeners.onExpireToggle(checked, shareItem, sharedLinkAccessNotifier)}}"
+                    style="@style/BoxSwitchUSX"
+                    android:text="@string/box_sharesdk_link_expire_link" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/box_ripple_btn_blue"
+                    android:onClickListener="@{onDateListener}"
+                    android:gravity="center_vertical"
+                    android:visibility="@{sharedLinkExpireLinkBtn.checked ? View.VISIBLE : View.GONE}"
+                    android:layout_height="@dimen/box_sharesdk_small_cell_height">
+                    <View style="@style/BoxInsetDivider"
+                        android:id="@+id/expire_link_divider"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toLeftOf="parent"/>
+                    <TextView
+                        android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                        android:textAppearance="@style/BoxCellSubHeader"
+                        android:text="@string/box_sharesdk_expire_on"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/expire_link_divider"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        app:layout_constraintTop_toBottomOf="@id/expire_link_divider"
+                        app:layout_constraintRight_toLeftOf="@id/expire_link_date"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginRight="@dimen/box_sharesdk_calendar_icon_margin"
+                        android:src="@drawable/ic_box_sharesdk_expire_calendar_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/expire_link_date"
+                        app:layout_constraintTop_toBottomOf="@id/expire_link_divider"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:textAppearance="@style/BoxCellSubHeader"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text='@{shareItem.sharedLink.unsharedDate != null ? SimpleDateFormat.getDateInstance.format(shareItem.sharedLink.unsharedDate) : "" }'
+                        android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin_usx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:visibility="@{shareItem.sharedLink.effectiveAccess == Access.OPEN ? View.VISIBLE : View.GONE}"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <View style="@style/BoxDivider" />
+                    <Switch
+                        android:textAppearance="@style/BoxCellSubHeader"
+                        android:id="@+id/shared_link_require_password_btn"
+                        android:checked="@{shareItem.sharedLink.isPasswordEnabled}"
+                        android:onCheckedChanged="@{(view, checked) -> SharedLinkAccessToggleListeners.onPasswordToggle(checked, shareItem, sharedLinkAccessNotifier)}"
+                        android:layout_height="@dimen/box_sharesdk_small_cell_height"
+                        android:paddingLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                        android:paddingRight="@dimen/box_sharesdk_horizontal_margin_usx"
+                        style="@style/BoxSwitchUSX"
+                        android:text="@string/box_sharesdk_require_password" />
+                </LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:background="@drawable/box_ripple_btn_blue"
+                    android:onClickListener="@{onPasswordListener}"
+                    android:gravity="center_vertical"
+                    android:visibility="@{sharedLinkRequirePasswordBtn.checked &amp;&amp; shareItem.sharedLink.effectiveAccess == Access.OPEN  ? View.VISIBLE : View.GONE}"
+                    android:layout_height="@dimen/box_sharesdk_small_cell_height">
+                    <View
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:id="@+id/password_divider"
+                        style="@style/BoxInsetDivider" />
+                    <TextView
+                        app:layout_constraintTop_toBottomOf="@id/password_divider"
+                        android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                        android:textAppearance="@style/BoxCellSubHeader"
+                        android:text="@string/box_sharesdk_password"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        app:layout_constraintTop_toBottomOf="@id/password_divider"
+                        android:textAppearance="@style/BoxCellSubHeader"
+                        android:text="****"
+                        android:layout_marginRight="@dimen/box_sharesdk_horizontal_margin_usx"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

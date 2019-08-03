@@ -4,16 +4,20 @@ import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
 
 import com.box.androidsdk.content.BoxException;
+import com.box.androidsdk.content.models.BoxIteratorCollaborations;
 
 /**
  * A data wrapper that can also take an accompanying string resource to display message to users.
  * @param <T> the data type of the item in the response that will be returned
  */
 public class PresenterData<T> {
+
+
+    public static final int NO_MESSAGE = -1;
+    private int mStrRes = NO_MESSAGE;
     private T mData;
-    private int mStrRes;
-    public static final int SUCCESS = -1;
-    Exception mException;
+    private Exception mException;
+    private boolean mIsHandled;
 
     public PresenterData() {
 
@@ -36,7 +40,7 @@ public class PresenterData<T> {
      */
     public void success(T data) {
         this.mData = data;
-        this.mStrRes = SUCCESS;
+        this.mStrRes = NO_MESSAGE;
     }
 
     /**
@@ -53,9 +57,16 @@ public class PresenterData<T> {
     /**
      * Updates the item with the stringCode passed in. Use this if request was unsuccessful
      * @param strRes the String resource for the error message
+     *
      */
     public void failure(@StringRes @PluralsRes int strRes, Exception exception) {
         this.mData = null;
+        this.mStrRes = strRes;
+        this.mException = exception;
+    }
+
+    public void failure(T data, @StringRes@PluralsRes int strRes, Exception exception) {
+        this.mData = data;
         this.mStrRes = strRes;
         this.mException = exception;
     }
@@ -73,6 +84,7 @@ public class PresenterData<T> {
      * @return the data
      */
     public T getData() {
+        mIsHandled = true; //if data is called then it's handled.
         return mData;
     }
 
@@ -81,6 +93,7 @@ public class PresenterData<T> {
      * @return the string resource code
      */
     public int getStrCode() {
+        mIsHandled = true; //if str code is called then it's handled.
         return mStrRes;
     }
 
@@ -90,5 +103,9 @@ public class PresenterData<T> {
 
     public void setException(Exception exception) {
         this.mException = exception;
+    }
+
+    public boolean isHandled() {
+        return mIsHandled;
     }
 }

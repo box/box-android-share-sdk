@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="activeRadioButtons"
+            type="java.util.HashSet" />
+        <import type="com.box.androidsdk.content.models.BoxSharedLink.Access" />
+        <variable
+            name="shareItem"
+            type="com.box.androidsdk.content.models.BoxItem" />
+        <variable
+            name="sharedLinkAccessNotifier"
+            type="com.box.androidsdk.share.usx.fragments.SharedLinkAccessFragment.SharedLinkAccessNotifiers" />
+        <import type="com.box.androidsdk.share.utils.SharedLinkAccessToggleListeners" />
+    </data>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@color/box_sharesdk_components_background"
+            android:id="@+id/link_access_layout"
+            android:enabled="@{activeRadioButtons.contains(Access.OPEN)}"
+            android:onClick="@{()->SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(true, Access.OPEN, sharedLinkAccessNotifier)}"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/link_access"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/box_sharesdk_radio_button_size"
+                android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_left"
+                android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin"
+                android:translationX="@dimen/box_sharesdk_radio_horizontal_offset"
+                android:paddingRight="@dimen/box_sharesdk_radio_horizontal_offset"
+                android:enabled="@{activeRadioButtons.contains(Access.OPEN)}"
+                android:checked="@{shareItem.sharedLink.effectiveAccess  == Access.OPEN}"
+                android:onCheckedChanged="@{(view, checked) -> SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(checked, Access.OPEN, sharedLinkAccessNotifier)}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/BoxCellSubHeader"
+                android:id="@+id/link_access_name"
+                android:text="@string/box_sharesdk_access_public"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin"
+                android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_components"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/link_access"/>
+
+            <TextView
+                style="@style/BoxCellText"
+                android:id="@+id/link_access_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_components"
+                android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin_components"
+                android:layout_marginRight="@dimen/box_sharesdk_radio_horizontal_margin_right"
+                android:layout_marginBottom="@dimen/box_sharesdk_radio_vertical_margin"
+                android:text='@string/box_sharesdk_accessible_public_usx'
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/link_access"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/link_access_name" />
+
+            <View
+                style="@style/BoxInsetDivider"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_left"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@color/box_sharesdk_components_background"
+            android:id="@+id/company_access_layout"
+            android:enabled="@{activeRadioButtons.contains(Access.COMPANY)}"
+            android:onClick="@{()->SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(true, Access.COMPANY, sharedLinkAccessNotifier)}"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/company_access"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/box_sharesdk_radio_button_size"
+                android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_left"
+                android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin"
+                android:translationX="@dimen/box_sharesdk_radio_horizontal_offset"
+                android:paddingRight="@dimen/box_sharesdk_radio_horizontal_offset"
+                android:enabled="@{activeRadioButtons.contains(Access.COMPANY)}"
+                android:onCheckedChanged="@{(view, checked) -> SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(checked, Access.COMPANY, sharedLinkAccessNotifier)}"
+                android:checked="@{shareItem.sharedLink.effectiveAccess  == Access.COMPANY}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/BoxCellSubHeader"
+                android:id="@+id/company_access_name"
+                android:text="@string/box_sharesdk_access_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin"
+                android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_components"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/company_access"/>
+
+            <TextView
+                style="@style/BoxCellText"
+                android:id="@+id/company_access_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_components"
+                android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin_components"
+                android:layout_marginRight="@dimen/box_sharesdk_radio_horizontal_margin_right"
+                android:layout_marginBottom="@dimen/box_sharesdk_radio_vertical_margin"
+                android:text='@string/box_sharesdk_accessible_company_usx'
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/company_access"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/company_access_name" />
+
+            <View
+                style="@style/BoxInsetDivider"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_left"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@color/box_sharesdk_components_background"
+            android:id="@+id/folder_access_layout"
+            android:enabled="@{activeRadioButtons.contains(Access.COLLABORATORS)}"
+            android:onClick="@{()->SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(true, Access.COLLABORATORS, sharedLinkAccessNotifier)}"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/folder_access"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/box_sharesdk_radio_button_size"
+                android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_left"
+                android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin"
+                android:translationX="@dimen/box_sharesdk_radio_horizontal_offset"
+                android:paddingRight="@dimen/box_sharesdk_radio_horizontal_offset"
+                android:onCheckedChanged="@{(view, checked) -> SharedLinkAccessToggleListeners.onAccessLevelCheckChanged(checked, Access.COLLABORATORS, sharedLinkAccessNotifier)}"
+                android:enabled="@{activeRadioButtons.contains(Access.COLLABORATORS)}"
+                android:checked="@{shareItem.sharedLink.effectiveAccess   == Access.COLLABORATORS}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/BoxCellSubHeader"
+                android:id="@+id/folder_access_name"
+                android:text="@string/box_sharesdk_access_collaborator_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin"
+                android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_components"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/folder_access"/>
+
+            <TextView
+                style="@style/BoxCellText"
+                android:id="@+id/folder_access_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/box_sharesdk_radio_horizontal_margin_components"
+                android:layout_marginTop="@dimen/box_sharesdk_radio_vertical_margin_components"
+                android:layout_marginRight="@dimen/box_sharesdk_radio_horizontal_margin_right"
+                android:layout_marginBottom="@dimen/box_sharesdk_radio_vertical_margin"
+                android:text="@string/box_sharesdk_accessible_collaborator_usx"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/folder_access"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/folder_access_name" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </RadioGroup>
+</layout>

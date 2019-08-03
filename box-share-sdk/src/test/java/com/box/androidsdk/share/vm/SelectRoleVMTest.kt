@@ -2,8 +2,6 @@ package com.box.androidsdk.share.vm
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.box.androidsdk.content.models.BoxCollaboration
-import com.box.androidsdk.content.models.BoxCollaborationItem
-import com.box.androidsdk.share.sharerepo.ShareRepo
 import com.nhaarman.mockitokotlin2.mock
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNull
@@ -17,8 +15,6 @@ class SelectRoleVMTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-    private val mockRepo: ShareRepo = mock()
-    private val mockShareItem: BoxCollaborationItem = mock()
     private lateinit var selectRoleShareVM: SelectRoleShareVM
 
     private val mockRolesList: List<BoxCollaboration.Role> = mock()
@@ -57,18 +53,51 @@ class SelectRoleVMTest {
 
     @Test
     fun `test set roles update the variable correctly`() {
-        assertNull(selectRoleShareVM.roles)
+        assertEquals(0, selectRoleShareVM.roles.size)
         selectRoleShareVM.roles = mockRolesList
 
         assertEquals(mockRolesList, selectRoleShareVM.roles)
     }
 
     @Test
-    fun `test set collaboration he variable correctly`() {
+    fun `test set collaboration update the variable correctly`() {
         assertNull(selectRoleShareVM.collaboration)
         selectRoleShareVM.collaboration = mockCollaboration
 
         assertEquals(mockCollaboration, selectRoleShareVM.collaboration)
+    }
+
+
+    @Test
+    fun `test set send invitation enabled update the variable correctly`() {
+        assertEquals(false, selectRoleShareVM.isSendInvitationEnabled.value)
+        selectRoleShareVM.setSendInvitationEnabled(true)
+
+        assertEquals(true, selectRoleShareVM.isSendInvitationEnabled.value)
+    }
+
+    @Test
+    fun `test set show send update the variable correctly`() {
+        assertEquals(true, selectRoleShareVM.isShowSend.value)
+        selectRoleShareVM.setShowSend(false)
+
+        assertEquals(false, selectRoleShareVM.isShowSend.value)
+    }
+
+    @Test
+    fun `test set remove selected update the variable correctly`() {
+        assertEquals(false, selectRoleShareVM.isRemoveSelected)
+        selectRoleShareVM.isRemoveSelected = true
+
+        assertEquals(true, selectRoleShareVM.isRemoveSelected)
+    }
+
+    @Test
+    fun `test set name update the variable correctly`() {
+        assertEquals("", selectRoleShareVM.name)
+        selectRoleShareVM.name  = "user"
+
+        assertEquals("user", selectRoleShareVM.name)
     }
 
 }

@@ -8,13 +8,17 @@
             name="roleUpdateNotifier"
             type="com.box.androidsdk.share.usx.fragments.CollaboratorsRolesFragment.RoleUpdateNotifier" />
     </data>
+    <FrameLayout
+        android:filterTouchesWhenObscured="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <ScrollView
             android:layout_width="match_parent"
             android:background="@color/box_sharesdk_screen_background"
             android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginBottom="@dimen/box_sharesdk_vertical_margin">
                 <TextView
@@ -22,8 +26,8 @@
                     android:id="@+id/collaborator_role_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_new"
-                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_new"
+                    android:layout_marginLeft="@dimen/box_sharesdk_horizontal_margin_usx"
+                    android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_usx"
                     android:text="@string/box_sharesdk_select_an_option" />
                 <RadioGroup
                     android:layout_marginTop="@dimen/box_sharesdk_vertical_margin_title_to_cell"
@@ -41,7 +45,7 @@
                     android:id="@+id/remove_btn"
                     style="@style/BoxRemoveButtonText"
                     android:layout_width="match_parent"
-                    android:paddingLeft="@dimen/box_sharesdk_horizontal_margin_new"
+                    android:paddingLeft="@dimen/box_sharesdk_horizontal_margin_usx"
                     android:text="@string/box_sharesdk_role_remove_person"
                     android:layout_marginTop="@dimen/box_sharesdk_remove_button_margin"
                     android:visibility="gone"
@@ -49,4 +53,5 @@
                     android:layout_height="@dimen/box_sharesdk_small_cell_height" />
             </LinearLayout>
         </ScrollView>
+    </FrameLayout>
 </layout>
