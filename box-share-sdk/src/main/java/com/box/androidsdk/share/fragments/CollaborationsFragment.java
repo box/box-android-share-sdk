@@ -108,8 +108,11 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
             String userId = mController.getCurrentUserId();
             boolean isCollaboratorCurrentUser = collaborator != null && collaborator.getId().equals(userId);
 
-            if ((rolesArr == null || rolesArr.size() == 0) && !isCollaboratorCurrentUser) {
-                SdkUtils.toastSafely(getContext(), R.string.box_sharesdk_cannot_get_collaborators, Toast.LENGTH_SHORT);
+            if (rolesArr == null) {
+                SdkUtils.toastSafely(getContext(), R.string.box_sharesdk_generic_error, Toast.LENGTH_SHORT);
+                return;
+            }  else if (rolesArr.size() == 0 && !isCollaboratorCurrentUser) {
+                SdkUtils.toastSafely(getContext(), R.string.box_sharesdk_insufficient_permissions, Toast.LENGTH_SHORT);
                 return;
             }
 
