@@ -1,16 +1,23 @@
 <resources>
     <string name="box_sharesdk_shared_with">Gedeeld met</string>
     <string name="box_sharesdk_invite_collaborators">Personen uitnodigen</string>
-    <string name="box_sharesdk_invite_collaborators_activity_title">Invite</string>
+    <string name="box_sharesdk_invite_collaborators_activity_title">Uitnodigen</string>
     <string name="box_sharesdk_session_is_not_authenticated">Sessie is niet geverifieerd</string>
     <string name="box_sharesdk_no_item_selected">Er is geen item geselecteerd</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">LINK KOPIËREN</string>
+    <string description="button to copy link to clipboard" name="box_sharesdk_copy_link_usx">Kopieer link naar klembord</string>
+    <string description="button to share link via another app" name="box_sharesdk_share_via">Delen via...</string>
     <string description="button to send link to another application" name="box_sharesdk_send_link">LINK VERZENDEN</string>
+    <!--<string name="box_sharesdk_share_link_function_description" description="description that is shown for what enabling share link will do">Enabling creates a sharable link that others can use to access and view this content.</string>-->
     <string description="description for public access" name="box_sharesdk_accessible_public">Deze inhoud is toegankelijk voor iedereen met de link. Inloggen is niet vereist.</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public_usx">Deze inhoud is toegankelijk voor iedereen met de link. Inloggen is niet vereist.</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">Toegankelijk voor personen in uw bedrijf</string>
+    <string description="description for company access" name="box_sharesdk_accessible_company_usx">Deze inhoud is toegankelijk voor iedereen binnen uw organisatie en voor personen die zijn uitgenodigd voor deze map</string>
     <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator">Toegankelijk voor personen met wie het item is gedeeld</string>
+    <string description="description for collaborator access" name="box_sharesdk_accessible_collaborator_usx">Deze inhoud is alleen toegankelijk voor personen die zijn uitgenodigd voor deze map.</string>
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">Met wachtwoord beveiligd</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">Medebewerkers ophalen</string>
+    <string description="message to show on spinner when we are fetching roles" name="box_sharesdk_fetching_roles">Rollen ophalen</string>
     <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">Medebewerkers toevoegen</string>
     <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">Gedeelde link inschakelen</string>
     <string description="message to show on spinner when we are disabling share link" name="box_sharesdk_disabling_share_link">Gedeelde link uitschakelen</string>
@@ -18,11 +25,13 @@
 
     <string description="shown if share link is enabled" name="box_sharesdk_share_link_enabled">Gedeelde link ingeschakeld</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed">Downloads toegestaan</string>
+    <string description="shown if user has permission to download link" name="box_sharesdk_downloads_allowed_usx">Downloaden toestaan</string>
     <string description="shown if user has permission to download link" name="box_sharesdk_downloads_disabled">Downloads uitgeschakeld</string>
     <string description="start of the string telling when link expires" name="box_sharesdk_link_expires_on_x_date">Link vervalt op %1$s</string>
     <string description="button to change access properties of link" name="box_sharesdk_edit_link_access">TOEGANG TOT DE LINK BEWERKEN</string>
     <string description="button to cancel an action" name="box_sharesdk_cancel">ANNULEREN</string>
     <string description="button to cancel an action" name="box_sharesdk_ok">OK</string>
+    <string description="title description for enabling link" name="box_sharesdk_enable_share_link">Schakel link in</string>
     <string description="button to disable a shared link" name="box_sharesdk_disable_share_link">GEDEELDE LINK UITSCHAKELEN</string>
     <string description="shown as title of warning dialog before disabling a shared link" name="box_sharesdk_disable_title">Gedeelde link uitschakelen?</string>
     <string description="shown as message of warning dialog before disabling a shared link" name="box_sharesdk_disable_message">Als u de link definitief uitschakelt, wordt de huidige gedeelde link verwijderd. Als u de link daarna opnieuw inschakelt, wordt een nieuwe en unieke gedeelde link gemaakt. Wilt u de gedeelde link uitschakelen?</string>
@@ -33,7 +42,8 @@
     <string description="description for collaborator access for a file" name="box_sharesdk_access_collaborator_file">Personen in dit bestand en deze map</string>
     <string description="description for collaborator access" name="box_sharesdk_access_collaborator">Personen in deze map</string>
     <string description="header for password section" name="box_sharesdk_password">Wachtwoord</string>
-    <string description="hint for password dialog" name="box_sharesdk_set_password">Wachtwoord instellen</string>
+    <string description="title for password dialog" name="box_sharesdk_set_password">Wachtwoord instellen</string>
+    <string description="hint for password dialog" name="box_sharesdk_choose_password">Kies een wachtwoord</string>
     <string description="toggle of using password or not" name="box_sharesdk_require_password">Wachtwoord vereisen</string>
     <string description="header for link expiration section" name="box_sharesdk_link_expiration">Vervaldatum van link</string>
     <string description="toggle of whether to expire links" name="box_sharesdk_link_expire_link">Link laten vervallen</string>
@@ -42,21 +52,21 @@
     <string description="Toast shown if there is a problem modifying the shared link" name="box_sharesdk_unable_to_modify_toast">Er is een probleem met het aanpassen/maken van deze gedeelde link.</string>
     <string name="box_sharesdk_title_link_access">Toegang tot link</string>
     <string name="box_sharesdk_title_share_link">Link delen</string>
-    <string name="box_sharesdk_title_access_level">Access Level</string>
-    <string name="box_sharesdk_change_access">Change Access</string>
+    <string name="box_sharesdk_title_access_level">Toegangsniveau</string>
+    <string name="box_sharesdk_change_access">Toegang wijzigen</string>
     <string description="description shown when there is no shared link enabled" name="box_sharesdk_no_shared_link_instructions">Door een link in te schakelen ontstaat een gedeelde link waarmee anderen deze inhoud kunnen gebruiken en bekijken.</string>
     <string description="toast after copying a link using copy link button" name="box_sharesdk_link_copied_to_clipboard">Link gekopieerd naar klembord</string>
     <string description="message displayed in user's email when item is shared" name="box_sharesdk_I_have_shared_x_with_you">Ik heb \"%1$s\" met u gedeeld op Box.</string>
     <string description="Title for intent chooser when choosing way to send shared content." name="box_sharesdk_send_with">Verzenden met:</string>
     <string description="Title indicating that an error occurred while performing an action" name="box_sharesdk_network_error">Netwerkfout. Probeer het opnieuw.</string>
-    <string description="indicating that an error occurred while performing an action" name="box_sharesdk_generic_error">An error occurred. Please try again.</string>
+    <string description="indicating that an error occurred while performing an action" name="box_sharesdk_generic_error">Er is een fout opgetreden. Probeer het opnieuw.</string>
 
     <string description="Title for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_title">Eigenaar wijzigen</string>
     <string description="Message for the alert dialog to confirm owner update" name="box_sharesdk_change_owner_alert_message">Als u deze gebruiker eigenaar van het item maakt, bent u geen eigenaar van het item meer en wordt u editor. Wilt u doorgaan?</string>
 
 
     <!-- menu items -->
-    <string description="shown as title for letting a user choose the access level for a collaborator" name="box_sharesdk_select_an_option">Select an Option</string>
+    <string description="shown as title for letting a user choose the access level for a collaborator" name="box_sharesdk_select_an_option">Selecteer een optie</string>
 
     <!-- role names -->
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_editor">Editor</string>
@@ -67,7 +77,7 @@
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">Viewer Uploader</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">Mede-eigenaar</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">Eigenaar</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">Persoon verwijderen</string>
+    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">Verwijder deze persoon</string>
     <string description="The status to indicate that a person was invited, but they have not accepted the collaboration request" name="box_sharesdk_invited_status">Uitgenodigd</string>
     <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">Geweigerd</string>
 
@@ -78,14 +88,14 @@
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">Alleen bestanden uploaden.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">Voorbeelden bekijken en bestanden uploaden.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">Voorbeelden bekijken en bestanden uploaden, downloaden en delen.</string>
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">Dezelfde machtigingen als de eigenaar</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">Dezelfde machtigingen als de eigenaar.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_owner">Eigenaar</string>
 
     <!-- invite collaborators -->
     <string description="Menu item for submitting the invite collaborators request" name="box_sharesdk_action_send">Verzenden</string>
     <string description="The label for the field where users will enter the collaborators they would like to invite" name="box_sharesdk_to">Naar</string>
     <string description="Error message for when an incorrect object type is used to launch the collaborations page" name="box_sharesdk_selected_item_not_expected_type">Het geselecteerde item is niet van het verwachte type</string>
-    <string description="Success message for inviting collaborators" name="box_sharesdk_a_collaborator_invited">A collaborator have been invited</string>
+    <string description="Success message for inviting collaborators" name="box_sharesdk_a_collaborator_invited">Er is een medebewerkers uitgenodigd</string>
     <string description="Success message for inviting a collaborator" name="box_sharesdk_collaborator_invited">%s is uitgenodigd</string>
     <string description="Success message for inviting collaborators" name="box_sharesdk_collaborators_invited">Medebewerkers zijn uitgenodigd</string>
     <string description="Error message shown when the user does not have sufficient permissions to view the collaborations or is not available" name="box_sharesdk_cannot_view_collaborations">U kunt de samenwerkingen voor dit item niet bekijken.</string>
@@ -94,6 +104,12 @@
     <string description="The string displayed when a person was already invited, %s being the email of the person" name="box_sharesdk_has_already_been_invited">%s is al uitgenodigd voor dit item</string>
     <string description="The string displayed when some number of people have already been invited, %s being number of people" name="box_sharesdk_num_has_already_been_invited">%s personen zijn al uitgenodigd voor dit item</string>
     <string name="box_sharedsdk_collaborators_initials_count">+%d</string>
+    <plurals name="box_sharesdk_collaborators_count_plurals">
+        <item quantity="one">@string/box_sharedsdk_collaborators_count_1</item>
+        <item quantity="other">@string/box_sharedsdk_collaborators_count</item>
+    </plurals>
+    <string name="box_sharedsdk_collaborators_count_1">%d medebewerker</string>
+    <string name="box_sharedsdk_collaborators_count">%d medebewerkers</string>
     <string name="box_sharedsdk_collaborators_title">Medebewerkers</string>
     <string description="The string displayed when some people could not be invited, first param is the list of emails, and the second is the entity type (file/folder)" name="box_sharesdk_num_collaborators_error">%s kan niet worden uitgenodigd voor deze %s</string>
     <string description="Error message to display when users cannot be invited to current item, for truncation purposes emails must be at the end" name="box_sharesdk_following_collaborators_error">De volgende medebewerkers kunnen niet worden uitgenodigd: %s</string>
@@ -105,12 +121,17 @@
     <string name="box_sharesdk_unable_to_invite">Kan medebewerkers niet uitnodigen. Neem contact op met de ondersteuning als het probleem zich blijft voordoen.</string>
     <string description="Title for the alert dialog to confirm removing a collaborator for a parent of selected item" name="box_sharesdk_title_remove_different_collaboration_folder">Medebewerker verwijderen</string>
     <string description="shown as message of warning dialog before removing collaboration for a different than selected item" name="box_sharesdk_warn_remove_different_collaboration_folder">Hiermee verwijdert u de toegang van %1$s tot alle bestanden in %2$s. Weet u het zeker?</string>
-    <string description="text for a button that can be clicked to add a personal message when inviting a new collaborator for a file or folder" name="box_sharesdk_add_a_personal_message">Add a personal message</string>
-    <string description="title for a textfield to add a personal message when inviting a new collaborator for a file or folder" name="box_sharesdk_personal_message">Personal Message</string>
-    <string description="text for a button for inviting a new collaborator for a file or folder" name="box_sharesdk_send_invitation">Send Invitation</string>
-    <plurals name="box_sharesdk_already_been_invited">
-        <item quantity="one">@string/box_sharesdk_has_already_been_invited</item>
-        <item quantity="other">@string/box_sharesdk_num_has_already_been_invited</item>
-    </plurals>
-
+    <string description="text for a button that can be clicked to add a personal message when inviting a new collaborator for a file or folder" name="box_sharesdk_add_a_personal_message">Voeg een persoonlijk bericht toe</string>
+    <string description="title for a textfield to add a personal message when inviting a new collaborator for a file or folder" name="box_sharesdk_personal_message">Persoonlijk bericht</string>
+    <string description="text for a button for inviting a new collaborator for a file or folder" name="box_sharesdk_send_invitation">Uitnodiging verzenden</string>
+    <string description="text for a title that allows the user to send or share link" name="box_sharesdk_send_or_share">Verzenden of delen</string>
+    <string name="box_sharesdk_invite_collab_hint">Voer een naam of e-mailadres in</string>
+    <string name="box_sharesdk_subtitle_folder_type">Deel map</string>
+    <string name="box_sharesdk_subtitle_file_type">Deel bestand</string>
+    <string name="box_sharesdk_item_type_folder">map</string>
+    <string name="box_sharesdk_item_type_file">bestand</string>
+    <string name="box_sharesdk_item_type_default">item</string>
+    <string name="box_share_sdk_no_permission_invite_people">Medebewerkers uitnodigen is niet beschikbaar voor medebewerkers met machtigingsniveau %s. Als u medebewerkers wilt uitnodigen, neemt u contact op met de %s-eigenaar.</string>
+    <string name="box_share_sdk_no_permission_share_link">Gedeelde links zijn niet beschikbaar voor medebewerkers met machtigingsniveau %s. Als u links wilt delen, neemt u contact op met de %s-eigenaar.</string>
+    <string description="shown when there are no collaborators for the share item" name="box_sharesdk_no_collaborators_initials">Geen medebewerkers</string>
 </resources>
