@@ -67,7 +67,6 @@
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">مُشاهد محمِّل ملفات</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">مالك شريك</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">مالك</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">إزالة الشخص</string>
     <string description="The status to indicate that a person was invited, but they have not accepted the collaboration request" name="box_sharesdk_invited_status">مدعو</string>
     <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">مرفوض</string>
 

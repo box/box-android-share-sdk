@@ -67,7 +67,6 @@
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">С правом просмотра и загрузки</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">Совладелец</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">Владелец</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">Удалить пользователя</string>
     <string description="The status to indicate that a person was invited, but they have not accepted the collaboration request" name="box_sharesdk_invited_status">Приглашен</string>
     <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">Отклонен</string>
 

@@ -67,7 +67,6 @@
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">ビューアー/アップローダー</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">共同所有者</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">所有者</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">ユーザーを削除</string>
     <string description="The status to indicate that a person was invited, but they have not accepted the collaboration request" name="box_sharesdk_invited_status">招待済み</string>
     <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">拒否済み</string>
 

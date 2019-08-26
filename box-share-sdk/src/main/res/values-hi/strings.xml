@@ -67,7 +67,6 @@
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">व्यूअर अपलोडर</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">सह-स्वामी</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">स्वामी</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">व्यक्ति को निकालें</string>
     <string description="The status to indicate that a person was invited, but they have not accepted the collaboration request" name="box_sharesdk_invited_status">आमंत्रित</string>
     <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">अस्वीकृत</string>
 

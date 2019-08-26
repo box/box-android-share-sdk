@@ -67,7 +67,6 @@
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_viewer_uploader">Viewer Uploader</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_co_owner">Mede-eigenaar</string>
     <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_name_owner">Eigenaar</string>
-    <string description="Name of role, which is the level of permission the person will be granted" name="box_sharesdk_role_remove_person">Persoon verwijderen</string>
     <string description="The status to indicate that a person was invited, but they have not accepted the collaboration request" name="box_sharesdk_invited_status">Uitgenodigd</string>
     <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">Geweigerd</string>
 
