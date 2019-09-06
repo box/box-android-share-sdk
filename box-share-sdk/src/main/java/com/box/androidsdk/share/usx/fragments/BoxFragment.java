@@ -4,18 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.annotation.StringRes;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.utils.BoxLogUtils;
@@ -39,7 +39,6 @@ public abstract class BoxFragment extends Fragment {
     private SpinnerDialogFragment mDialog;
     private LastRunnableHandler mDialogHandler;
 
-    protected ViewModelProvider.Factory mShareVMFactory;
     private Lock mSpinnerLock;
     private BaseShareVM vm;
 
@@ -49,8 +48,14 @@ public abstract class BoxFragment extends Fragment {
         setRetainInstance(true);
         mDialogHandler = new LastRunnableHandler();
         mSpinnerLock = new ReentrantLock();
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         BoxItem shareItem = null;
-        vm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(getVMClass());
+        vm = ViewModelProviders.of(getActivity(), ((ShareVMFactoryProvider)getActivity()).getShareVMFactory()).get(getVMClass());
         if (vm.getShareItem() == null) {
             if (savedInstanceState != null && savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM) != null){
                 shareItem = (BoxItem)savedInstanceState.getSerializable(CollaborationUtils.EXTRA_ITEM);
@@ -62,7 +67,7 @@ public abstract class BoxFragment extends Fragment {
         }
 
 
-        if (vm.getShareItem() == null){
+        if (vm.getShareItem() == null) {
             showToast(R.string.box_sharesdk_no_item_selected);
             getActivity().finish();
             return;
@@ -281,5 +286,9 @@ public abstract class BoxFragment extends Fragment {
      * Implement this and change title and subtitle through using ActionBarTitleVM.
      */
     protected abstract void setTitles();
+
+    public interface ShareVMFactoryProvider {
+        ViewModelProvider.Factory getShareVMFactory();
+    }
 
 }

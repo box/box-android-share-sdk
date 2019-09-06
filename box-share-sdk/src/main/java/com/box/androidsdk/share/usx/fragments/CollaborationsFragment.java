@@ -27,15 +27,12 @@ import com.box.androidsdk.content.utils.BoxLogUtils;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
-import com.box.androidsdk.share.usx.adapters.CollaboratorsAdapter;
 import com.box.androidsdk.share.databinding.UsxFragmentCollaborationsBinding;
+import com.box.androidsdk.share.usx.adapters.CollaboratorsAdapter;
 import com.box.androidsdk.share.vm.ActionbarTitleVM;
-import com.box.androidsdk.share.vm.BaseShareVM;
 import com.box.androidsdk.share.vm.CollaborationsShareVM;
-import com.box.androidsdk.share.vm.CollaboratorsInitialsVM;
 import com.box.androidsdk.share.vm.PresenterData;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
-import com.box.androidsdk.share.vm.ShareVMFactory;
 
 import java.util.ArrayList;
 
@@ -69,9 +66,15 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         setTitles();
 
         binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_collaborations, container, false);
-        mCollaborationsShareVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaborationsShareVM.class);
-        mSelectRoleShareVM = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
         View view = binding.getRoot();
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mCollaborationsShareVM = ViewModelProviders.of(getActivity(), ((ShareVMFactoryProvider)getActivity()).getShareVMFactory()).get(CollaborationsShareVM.class);
+        mSelectRoleShareVM = ViewModelProviders.of(getActivity()).get(SelectRoleShareVM.class);
         binding.collaboratorsList.setDivider(null);
         mCollaboratorsAdapter = new CollaboratorsAdapter(getActivity(), mCollaborationsShareVM);
         binding.collaboratorsList.setAdapter(mCollaboratorsAdapter);
@@ -96,7 +99,6 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
         }
 
         updateView();
-        return view;
     }
 
     @Override
@@ -228,11 +230,10 @@ public class CollaborationsFragment extends BoxFragment implements AdapterView.O
     }
 
 
-    public static CollaborationsFragment newInstance(BoxCollaborationItem collaborationItem, ShareVMFactory factory) {
+    public static CollaborationsFragment newInstance(BoxCollaborationItem collaborationItem) {
         Bundle args = BoxFragment.getBundle(collaborationItem);
         CollaborationsFragment fragment = new CollaborationsFragment();
         fragment.setArguments(args);
-        fragment.mShareVMFactory = factory;
         return fragment;
     }
     private Observer<PresenterData<BoxCollaboration>> onUpdateCollaboration = presenterData -> {

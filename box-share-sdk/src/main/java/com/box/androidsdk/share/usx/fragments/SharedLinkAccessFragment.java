@@ -98,16 +98,18 @@ public class SharedLinkAccessFragment extends BoxFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_shared_link_access, container, false);
+        View view = binding.getRoot();
+        return view;
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         binding.setSharedLinkAccessNotifier(notifier);
         binding.setOnPasswordListener(v -> showPasswordChooserDialog());
         binding.setOnDateListener(v -> showDatePicker(mShareLinkVM.getShareItem().getSharedLink().getUnsharedDate()));
-
-        View view = binding.getRoot();
-
         setTitles();
-
-        mShareLinkVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(SharedLinkVM.class);
+        mShareLinkVM = ViewModelProviders.of(getActivity(), ((ShareVMFactoryProvider)getActivity()).getShareVMFactory()).get(SharedLinkVM.class);
         mShareLinkVM.getItemInfo().observe(getViewLifecycleOwner(), onBoxItemComplete);
         mShareLinkVM.getSharedLinkedItem().observe(getViewLifecycleOwner(), onBoxItemComplete);
         setShareItem(mShareLinkVM.getShareItem());
@@ -117,10 +119,7 @@ public class SharedLinkAccessFragment extends BoxFragment {
         } else {
             refreshShareItemInfo();
         }
-
-        return view;
     }
-
 
     /**
      * Refreshes the information of the shared link
@@ -258,7 +257,6 @@ public class SharedLinkAccessFragment extends BoxFragment {
         Bundle args = BoxFragment.getBundle(boxItem);
         SharedLinkAccessFragment fragment = new SharedLinkAccessFragment();
         fragment.setArguments(args);
-        fragment.mShareVMFactory = factory;
         return fragment;
     }
 

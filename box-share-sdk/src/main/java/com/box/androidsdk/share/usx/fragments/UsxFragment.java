@@ -19,7 +19,6 @@ import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxCollaborator;
 import com.box.androidsdk.content.models.BoxItem;
 import com.box.androidsdk.content.models.BoxIteratorCollaborations;
-import com.box.androidsdk.content.models.BoxPermission;
 import com.box.androidsdk.content.models.BoxSharedLink;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
@@ -78,16 +77,25 @@ public class UsxFragment extends BoxFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mInitialsVM = ViewModelProviders.of(getActivity(), mShareVMFactory).get(CollaboratorsInitialsVM.class);
-        mSharedLinkVm = ViewModelProviders.of(getActivity(), mShareVMFactory).get(SharedLinkVM.class);
         binding = DataBindingUtil.inflate(inflater, R.layout.usx_fragment_shared_link, container, false);
+        View view = binding.getRoot();
+        return view;
+    }
 
-
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mInitialsVM = ViewModelProviders.of(getActivity(), ((ShareVMFactoryProvider)getActivity()).getShareVMFactory()).get(CollaboratorsInitialsVM.class);
+        mSharedLinkVm = ViewModelProviders.of(getActivity(), ((ShareVMFactoryProvider)getActivity()).getShareVMFactory()).get(SharedLinkVM.class);
+        setupListeners();
+        setTitles();
+        mSharedLinkVm.getItemInfo().observe(getViewLifecycleOwner(), onBoxItemComplete);
+        mSharedLinkVm.getSharedLinkedItem().observe(getViewLifecycleOwner(), onBoxItemComplete);
         //show the full UI until the item fully refreshes. Then show the UI with permission blocked.
         binding.setIsAllowedToInviteCollaborator(true);
         binding.setIsAllowedToShare(true);
 
-        setupListeners();
+
 
         binding.setShareItem(mSharedLinkVm.getShareItem());
         binding.setUsxNotifier(new UsxNotifiers() {
@@ -104,16 +112,7 @@ public class UsxFragment extends BoxFragment {
             @Override
             public void linkClicked() { copyLink();}
         });
-
-        setTitles();
-        mSharedLinkVm.getItemInfo().observe(getViewLifecycleOwner(), onBoxItemComplete);
-        mSharedLinkVm.getSharedLinkedItem().observe(getViewLifecycleOwner(), onBoxItemComplete);
-
-
-        View view = binding.getRoot();
-
         binding.setOnShareViaListener(v -> showShareVia());
-        return view;
     }
 
     private boolean isAllowedToInvite() {
@@ -193,7 +192,6 @@ public class UsxFragment extends BoxFragment {
         UsxFragment fragment = new UsxFragment();
         fragment.setArguments(args);
         fragment.mListener = listener;
-        fragment.mShareVMFactory = factory;
         return fragment;
     }
 
