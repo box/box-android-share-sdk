@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.Menu;
@@ -16,6 +17,7 @@ import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.usx.fragments.BoxFragment;
 import com.box.androidsdk.share.usx.fragments.CollaboratorsRolesFragment;
 import com.box.androidsdk.share.usx.fragments.InviteCollaboratorsFragment;
 import com.box.androidsdk.share.vm.SelectRoleShareVM;
@@ -61,7 +63,7 @@ public class BoxInviteCollaboratorsActivity extends BoxActivity {
                 selectRoleShareVM.setShowSend(false);
                 ft.commit();
             }
-        }, mShareVMFactory);
+        });
         ft.replace(R.id.fragmentContainer, mFragment, InviteCollaboratorsFragment.TAG);
         ft.commit();
     }

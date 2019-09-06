@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.View;
@@ -37,13 +38,13 @@ import com.box.androidsdk.share.vm.ShareVMFactory;
  *
  * All BoxRequest tasks should be submitted to getApiExecutor and then handled by overriding handleBoxResponse
  */
-public abstract class BoxActivity extends AppCompatActivity {
+public abstract class BoxActivity extends AppCompatActivity implements BoxFragment.ShareVMFactoryProvider {
 
     protected BoxSession mSession;
     protected BoxFragment mFragment;
     protected ProgressDialog mProgress;
     protected BaseShareVM baseShareVM;
-    protected ShareVMFactory mShareVMFactory;
+    private ShareVMFactory mShareVMFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,5 +199,10 @@ public abstract class BoxActivity extends AppCompatActivity {
     }
     protected void showToast(@StringRes int strRes) {
         Toast.makeText(this, getString(strRes), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public ShareVMFactory getShareVMFactory() {
+        return mShareVMFactory;
     }
 }

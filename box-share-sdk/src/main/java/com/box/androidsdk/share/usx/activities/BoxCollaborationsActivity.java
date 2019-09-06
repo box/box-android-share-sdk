@@ -6,12 +6,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.box.androidsdk.content.models.BoxCollaborationItem;
 import com.box.androidsdk.content.models.BoxSession;
 import com.box.androidsdk.content.utils.SdkUtils;
 import com.box.androidsdk.share.CollaborationUtils;
 import com.box.androidsdk.share.R;
+import com.box.androidsdk.share.usx.fragments.BoxFragment;
 import com.box.androidsdk.share.usx.fragments.CollaborationsFragment;
 import com.box.androidsdk.share.usx.fragments.CollaboratorsRolesFragment;
 
@@ -60,7 +62,7 @@ public class BoxCollaborationsActivity extends BoxActivity {
     private void setupCollaborationsFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-        mFragment = CollaborationsFragment.newInstance( (BoxCollaborationItem) baseShareVM.getShareItem(), mShareVMFactory);
+        mFragment = CollaborationsFragment.newInstance( (BoxCollaborationItem) baseShareVM.getShareItem());
         ((CollaborationsFragment)mFragment).setCallback(this::switchToRolesFragment);
         ft.replace(R.id.fragmentContainer, mFragment);
         ft.commit();
