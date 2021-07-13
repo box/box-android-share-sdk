@@ -18,7 +18,7 @@
     <string description="description for if a shared link is password proceted" name="box_sharesdk_password_protected">パスワードによる保護</string>
     <string description="message to show on spinner when we are fetching collaborators" name="box_sharesdk_fetching_collaborators">コラボレータの取得</string>
     <string description="message to show on spinner when we are fetching roles" name="box_sharesdk_fetching_roles">ロールを取得しています</string>
-    <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">コラボレータの追加</string>
+    <string description="message to show on spinner when we are adding collaborators" name="box_sharesdk_adding_collaborators">コラボレータを追加</string>
     <string description="message to show on spinner when we are enabling share link" name="box_sharesdk_enabling_share_link">リンクの共有の有効化</string>
     <string description="message to show on spinner when we are disabling share link" name="box_sharesdk_disabling_share_link">リンクの共有の無効化</string>
     <string description="message to show on spinner when we are updating link access" name="box_sharesdk_updating_link_access">リンクアクセスの更新</string>
@@ -33,7 +33,7 @@
     <string description="button to cancel an action" name="box_sharesdk_ok">OK</string>
     <string description="title description for enabling link" name="box_sharesdk_enable_share_link">リンクを有効にする</string>
     <string description="button to disable a shared link" name="box_sharesdk_disable_share_link">共有リンクを無効化</string>
-    <string description="shown as title of warning dialog before disabling a shared link" name="box_sharesdk_disable_title">共有リンクを無効化しますか？</string>
+    <string description="shown as title of warning dialog before disabling a shared link" name="box_sharesdk_disable_title">共有リンクを無効化しますか?</string>
     <string description="shown as message of warning dialog before disabling a shared link" name="box_sharesdk_disable_message">リンクを無効化すると 、現在の共有リンクは完全に削除されます。再度リンクを有効化するには、全く新しい独自の共有リンクを作成する必要があります。共有リンクを無効化しますか?</string>
     <string description="separates ui between the shared link box and options to change access" name="box_sharesdk_link_access">アクセス</string>
     <string description="header for different access types" name="box_sharesdk_access">リンクアクセス</string>
@@ -82,7 +82,7 @@
     <string description="The status to indicate that a person has rejected a collaboration request" name="box_sharesdk_rejected_status">拒否済み</string>
 
     <!-- role descriptions -->
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_editor">ファイルのアップロード、ダウンロード、プレビュー、共有、編集ができます。</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_editor">ファイルのアップロード、ダウンロード、プレビュー、共有、編集が可能です。</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer">ファイルのダウンロード、プレビュー、共有ができます。</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer">ファイルのプレビューのみ実行できます。</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">ファイルのアップロードのみ実行できます。</string>
