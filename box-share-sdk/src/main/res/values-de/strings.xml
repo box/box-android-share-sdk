@@ -88,7 +88,7 @@
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">Nur Dateien hochladen.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">Dateien in der Vorschau anzeigen und hochladen.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">Dateien hochladen, herunterladen, in der Vorschau anzeigen und freigeben.</string>
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">Die gleichen Berechtigungen wie der Eigentümer.</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">Dieselben Berechtigungen wie der Eigentümer.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_owner">Eigentümer</string>
 
     <!-- invite collaborators -->
@@ -131,7 +131,7 @@
     <string name="box_sharesdk_item_type_folder">Ordner</string>
     <string name="box_sharesdk_item_type_file">Datei</string>
     <string name="box_sharesdk_item_type_default">Element</string>
-    <string name="box_share_sdk_no_permission_invite_people">Die Option zum Einladen von Mitarbeitern ist für Mitarbeiter mit %s-Berechtigungen nicht verfügbar. Um Mitarbeiter einzuladen, wenden Sie sich an den Eigentümer von diesem/r %s.</string>
-    <string name="box_share_sdk_no_permission_share_link">Freigabe-Links sind für Mitarbeiter mit %s-Berechtigungen nicht verfügbar. Zum Freigeben wenden Sie sich an den Eigentümer von diesem/r %s.</string>
+    <string name="box_share_sdk_no_permission_invite_people">Die Option zum Einladen von Mitarbeitern ist für Mitarbeiter mit %s-Berechtigungen nicht verfügbar. Um Mitarbeiter einzuladen, wenden Sie sich an den %s-Eigentümer.</string>
+    <string name="box_share_sdk_no_permission_share_link">Freigabe-Links sind für Mitarbeiter mit %s-Berechtigungen nicht verfügbar. Zum Freigeben wenden Sie sich an den %s-Eigentümer.</string>
     <string description="shown when there are no collaborators for the share item" name="box_sharesdk_no_collaborators_initials">Keine Mitarbeiter</string>
 </resources>

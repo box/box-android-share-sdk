@@ -1,7 +1,7 @@
 <resources>
     <string name="box_sharesdk_shared_with">Compartido con</string>
     <string name="box_sharesdk_invite_collaborators">Invitar personas</string>
-    <string name="box_sharesdk_invite_collaborators_activity_title">Invitación</string>
+    <string name="box_sharesdk_invite_collaborators_activity_title">Invitar</string>
     <string name="box_sharesdk_session_is_not_authenticated">La sesión no se ha autenticado</string>
     <string name="box_sharesdk_no_item_selected">No hay elementos seleccionados</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">COPIAR VÍNCULO</string>

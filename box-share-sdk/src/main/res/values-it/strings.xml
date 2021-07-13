@@ -132,6 +132,6 @@
     <string name="box_sharesdk_item_type_file">file</string>
     <string name="box_sharesdk_item_type_default">elemento</string>
     <string name="box_share_sdk_no_permission_invite_people">Invita collaboratori non è disponibile per i collaboratori con autorizzazioni %s. Per invitare i collaboratori, contatta il proprietario di questo/a %s.</string>
-    <string name="box_share_sdk_no_permission_share_link">I collegamenti condivisi non sono disponibili per i collaboratori con autorizzazioni %s. Per eseguire la condivisione, contatta il proprietario di questo/a %s.</string>
+    <string name="box_share_sdk_no_permission_share_link">I collegamenti condivisi non sono disponibili per i collaboratori con autorizzazioni %s. Per eseguire la condivisione, contatta il proprietario di questo %s.</string>
     <string description="shown when there are no collaborators for the share item" name="box_sharesdk_no_collaborators_initials">Nessun collaboratore</string>
 </resources>
