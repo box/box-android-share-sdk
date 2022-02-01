@@ -1,7 +1,7 @@
 <resources>
     <string name="box_sharesdk_shared_with">Compartido con</string>
     <string name="box_sharesdk_invite_collaborators">Invitar personas</string>
-    <string name="box_sharesdk_invite_collaborators_activity_title">Invitación</string>
+    <string name="box_sharesdk_invite_collaborators_activity_title">Invitar</string>
     <string name="box_sharesdk_session_is_not_authenticated">La sesión no se ha autenticado</string>
     <string name="box_sharesdk_no_item_selected">No hay elementos seleccionados</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">COPIAR</string>
@@ -88,7 +88,7 @@
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_uploader">Solo cargar archivos.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_previewer_uploader">Previsualizar y cargar archivos.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_viewer_uploader">Cargar, descargar, previsualizar y compartir archivos.</string>
-    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">Mismos permisos que el propietario</string>
+    <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_co_owner">Mismos permisos que el propietario.</string>
     <string description="Description of the role, which is the level of permission the person will be granted" name="box_sharesdk_role_description_owner">Propietario</string>
 
     <!-- invite collaborators -->
