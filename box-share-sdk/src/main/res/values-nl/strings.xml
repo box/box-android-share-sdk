@@ -5,7 +5,7 @@
     <string name="box_sharesdk_session_is_not_authenticated">Sessie is niet geverifieerd</string>
     <string name="box_sharesdk_no_item_selected">Er is geen item geselecteerd</string>
     <string description="button to copy link to clipboard" name="box_sharesdk_copy_link">LINK KOPIËREN</string>
-    <string description="button to copy link to clipboard" name="box_sharesdk_copy_link_usx">Kopieer link naar klembord</string>
+    <string description="button to copy link to clipboard" name="box_sharesdk_copy_link_usx">Link naar klembord kopiëren</string>
     <string description="button to share link via another app" name="box_sharesdk_share_via">Delen via...</string>
     <string description="button to send link to another application" name="box_sharesdk_send_link">LINK VERZENDEN</string>
     <!--<string name="box_sharesdk_share_link_function_description" description="description that is shown for what enabling share link will do">Enabling creates a sharable link that others can use to access and view this content.</string>-->
