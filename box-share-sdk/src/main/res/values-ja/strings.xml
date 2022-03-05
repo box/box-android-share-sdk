@@ -9,7 +9,7 @@
     <string description="button to share link via another app" name="box_sharesdk_share_via">共有方法 ...</string>
     <string description="button to send link to another application" name="box_sharesdk_send_link">リンクを送信</string>
     <!--<string name="box_sharesdk_share_link_function_description" description="description that is shown for what enabling share link will do">Enabling creates a sharable link that others can use to access and view this content.</string>-->
-    <string description="description for public access" name="box_sharesdk_accessible_public">このコンテンツは、リンクを知っているすべてのユーザーがアクセスできます。ログインは不要です。</string>
+    <string description="description for public access" name="box_sharesdk_accessible_public">このコンテンツは、リンクを知っている全員がアクセスできます。ログインは不要です。</string>
     <string description="description for public access" name="box_sharesdk_accessible_public_usx">このコンテンツは、リンクを知っている全ユーザーがアクセスできます。ログインは不要です。</string>
     <string description="description for company access" name="box_sharesdk_accessible_company">会社のユーザーがアクセス可能</string>
     <string description="description for company access" name="box_sharesdk_accessible_company_usx">このコンテンツには、組織のすべてのユーザーおよびコラボレータとしてフォルダに追加されているユーザーがアクセスできます</string>
